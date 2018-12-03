@@ -1,0 +1,273 @@
+
+<!-- 内容区域 -->
+<view class='container' >
+
+<scroll-view scroll-y="true" style="height:100vh;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" scroll-with-animation="true">
+<!-- 视图1 -->
+ <view class='detail scroll-view-item' id='one'>
+ 
+<!-- 轮播图 -->
+<view class='swipercontent'>
+  <swiper class='swiper' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
+    <block wx:for="{{imgUrls}}" wx:key="unique">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" width="355" height="150"/>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="dotes">
+      <view class="nums">{{swiperCurrent +1}}/{{imgUrls.length}}</view>
+  </view>
+  <view class=' back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/back.png'></image>
+  </view>
+</view>
+<!-- 特权 -->
+<view class='privilege'>
+  <view class='pri-left'>
+    <view class='tequan'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_tequan.png'></image>
+        活动特权
+    </view>
+    <text class='present'>购买可获得免费赠礼领现金特权</text>
+  </view>
+  <view class='pri-right'>
+    查看详情
+  </view>
+</view>
+<!-- 价格 -->
+<view class='price'>
+  <view class='one'>
+    <text class="yang">￥</text>
+    <text class='nl'>599.00</text>
+  </view>
+  <text class='two'>￥789</text>
+  <text class='ys'>已售6789件</text>
+</view>
+<!-- 标题 -->
+<view class='title'>
+  <text class='circle'>自营</text> {{shopInfo.shop_name}}
+  
+</view>
+<!-- 选择规格 -->
+<view class='choose'>
+  <view class='choose-one' bindtap='chooseSize'>
+  <text class='o' decode="{{true}}">已选择    {{color[cindex].name}}    {{guige[gindex].name}}码  {{num}}件</text>
+  <text class="right iconfont icon-arrow"></text>
+  </view>
+
+  <view class='choose-two'>
+  <view>
+  <text class='zp'>正品保证</text>
+    <text class='zp'>全场包邮</text>
+    <text class='zp'>48小时发货</text>
+  </view>
+  <text class="right iconfont icon-arrow"></text>
+  
+    
+  </view>
+</view>
+<!-- 评价 -->
+<view class='evaluate'>
+    <text class='eva'>商品评价</text>
+  <view style='color:#666;font-size:29.17rpx;'>查看全部
+  <text  class="right iconfont icon-arrow" style='margin-left:10px'></text>
+  
+ </view>
+    
+</view>
+<!-- 店铺 -->
+<view class='store'>
+    <view class='store-image'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_logo.png'></image>
+    </view>
+    <view class='store-details'>
+      <text class='tit'>梵羽熙官方店</text>
+      <text class='small'  decode="{{true}}">商品数量：8968件 &nbsp; 已售3040件</text>
+    </view>
+    <view class='store-btn'>
+      <button>进店逛逛</button>
+    </view>
+</view>
+<!-- 店铺推荐 -->
+<view class='recommend'>
+  <view class='rec-title'>
+  店铺推荐
+  </view>
+  
+  <view class='rec-conts'>
+    <view class='rec-detail'>
+        <image src='http://oss.myzy.com.cn/wechat/images/yifu.png'></image>
+        <view class='biaoti'>
+          <text class='titles'>2018冬季新款加… </text>
+          <view class='jg'>
+          <view class='one'>
+            <text class="yang">￥</text>
+            <text class='nl'>599.00</text>
+          <text class='two'>已售480件</text>
+            
+          </view>
+          </view>
+        </view>
+    </view>
+
+     <view class='rec-detail'>
+        <image src='http://oss.myzy.com.cn/wechat/images/yifu.png'></image>
+        <view class='biaoti'>
+          <text class='titles'>2018冬季新款加… </text>
+          <view class='jg'>
+          <view class='one'>
+            <text class="yang">￥</text>
+            <text class='nl'>599.00</text>
+          <text class='two'>已售480件</text>
+            
+          </view>
+          </view>
+        </view>
+    </view>
+
+
+
+     <view class='rec-detail'>
+        <image src='http://oss.myzy.com.cn/wechat/images/yifu.png'></image>
+        <view class='biaoti'>
+          <text class='titles'>2018冬季新款加冬季新款2018冬季新款加冬季新款</text>
+          <view class='jg'>
+          <view class='one'>
+            <text class="yang">￥</text>
+            <text class='nl'>599.00</text>
+          <text class='two'>已售480件</text>
+            
+          </view>
+          </view>
+        </view>
+    </view>
+  </view>
+</view>
+<!-- 上拉显示全部 -->
+  <!-- hidden="{{ScrollFlag}}"  -->
+  <view class='up-all' hidden='{{!hides}}'>
+      <image src='http://oss.myzy.com.cn/wechat/images/shangla-2.png'></image>上拉查看图文详情
+  </view>
+
+  <view>
+
+  </view>
+</view>
+
+
+
+<!-- 详情模块 -->
+<view id='two' class='scroll-view-item' hidden='{{hides}}'>
+  <view class='show-conts'>
+        <view class="wrapper">
+  <view class=' back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/back.png'></image>
+  </view>
+  <view class="tetxs">商品详情</view>
+</view>
+  </view>
+
+</view>
+
+</scroll-view>
+
+ </view> 
+
+
+
+
+<!-- 底部 -->
+<view class='footer'>
+    <view class='f-l'>
+        <view class='shop'>
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_dp_sj.png'></image>
+          <text>店铺</text>
+        </view>
+        <view class='sx'></view>
+        <view class='service'>
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_dp_kf.png'></image>
+          <text>客服</text>
+        </view>
+    </view>
+    <view class='f-r'>
+    <view>
+    <button  bindtap='buy' >立即购买</button>
+    
+    </view>
+    </view>
+</view>
+
+
+
+<!-- 弹出框 -->
+ 
+<!--屏幕背景变暗的背景  -->
+  <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+  <!--弹出框  -->
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <view class='chosoe-top'>
+    <view class='top-left'>
+      <image src='{{imgUrls[0]}}'></image>
+    </view>
+    <view class='top-right'>
+      <view class='one'>
+        <text class="yang">￥</text>
+        <text class='nl'>599.00</text>
+        </view>
+        <text class='two'>库存5双</text>
+        <text class='ys yes' >已选:{{color[cindex].name}},{{guige[gindex].name}}码</text>
+    </view>   
+    <view class='choose-top' bindtap='cloose'>
+      <image src='http://oss.myzy.com.cn/wechat/images/close.png'></image>
+    </view>
+  
+  </view>
+
+
+  <!-- 规格可滚动区域 -->
+  <view class='scroll-views'>
+  <scroll-view scroll-y  style="height:400px">
+  <view>
+  
+  <view class='colors'>颜色：</view>
+  <view class='dis'>
+    <block wx:for="{{color}}" wx:key="{{index}}">
+      <view class="{{cindex==index?'color':''}}" bindtap='color' data-index='{{item.id}}' data-current='{{index}}'>{{item.name}}</view>
+    </block>
+  </view>
+  <view class='colors'>鞋码：</view>
+  <view class='dis'>
+    <block wx:for="{{guige}}" wx:key="{{index}}">
+      <view class="{{gindex==index?'color':''}}" bindtap='guige' data-index='{{item.id}}'    
+           data-current='{{index}}'>{{item.name}}</view>
+    </block>
+  </view>
+<!-- <view>{{guige[gindex].name}}:{{color[cindex].name}}</view> -->
+  
+<!-- 数量增减 -->
+<!-- 主容器 -->
+<view class='shul'>
+  <view class='left'>商品数量:</view>
+
+
+<view class="stepper">
+	<!-- 减号 -->
+	<text class="{{minusStatus}} nos" bindtap="bindMinus">
+  <text class='iconfont icon-jianhaob'></text>
+  </text>
+	<!-- 数值 -->
+	<input type="number" bindchange="bindManual" value="{{num}}" />
+	<!-- 加号 -->
+	<text class="normal no" bindtap="bindPlus">
+      <text class='iconfont icon-jiahaob'></text>
+  
+  </text>
+</view>
+</view>
+  </view>
+</scroll-view>
+</view>
+
+<button class='btn' bindtap='Confirm'>完成</button>
+</view>

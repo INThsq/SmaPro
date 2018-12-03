@@ -1,0 +1,61 @@
+/* pages/Coindeposit/Coindeposit.wxss */
+.coin-cont{
+  padding:100rpx  40rpx 80rpx 40rpx;
+  margin-top: 132rpx;
+  display: flex;
+  background: white;
+  border-bottom:.5px solid #F3F3F3;
+}
+.coin-cont>view,.coin-cont>view text{
+  display: block;
+  font-size: 34rpx;
+  color: #333;
+  letter-spacing: 1rpx;
+}
+.coin-left image,.coin-left{
+  width:88rpx;
+  height:460rpx;
+}
+.coin-right{
+  margin-left: 40rpx;
+}
+.chuli{
+  margin-top:150rpx;
+}
+.time{
+  font-size:28rpx!important;
+  color: #999!important;
+  line-height:2;
+}
+.success{
+  font-size: 36rpx!important;
+  color: #999!important;
+  margin-top:118rpx;
+}
+.coin-conts{
+  background: white;
+  padding: 40rpx;
+  margin-top:2rpx;
+}
+
+.coin-conts>view{
+  display: flex;
+  justify-content: space-between;
+}
+.coin-conts>view text{
+  display: flex;
+}
+.coin-conts>view text:first-child{
+    font-size: 32rpx;
+    color: #666;
+
+}
+page{
+  height: 90vh;
+  background: white;
+}
+.coin-conts>view text:last-child{
+   font-size: 32rpx;
+    color: #333;
+    line-height: 2;
+}

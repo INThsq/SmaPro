@@ -1,0 +1,147 @@
+/* pages/Address/Address.wxss */
+.container{
+  margin-top:140rpx;
+  height:89.5vh;
+  background: white;
+  text-align: center;
+}
+.container image{
+width: 121px; 
+margin-top: 124px;
+  height:119px;
+}
+.container text{
+  display: block;
+  margin-top: 32rpx;
+  font-size: 33.3rpx;
+  color:#999;
+}
+
+button::after{
+  border: none;
+}
+.button-hover{
+  color: white!important;
+}
+.btns{
+  display: flex;
+  position: absolute;
+  bottom: 30rpx;
+  padding: 0 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+.getAdress{
+  margin-right:20rpx;
+}
+.add  image{
+  width: 12px;
+  height: 12px;
+}
+button{
+  width:48%;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 33.3rpx;
+  color: white;
+}
+.getAdress{
+  background:#FD6740;
+border-radius:4px;
+}
+.addAdress{
+  background:#F43736;
+border-radius:4px;
+}
+/* 收货信息 */
+.containers{
+  margin-top: 156rpx;
+}
+.containers .top text{
+  display: block;
+  
+}
+.name{
+font-size: 33.3rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom:6rpx;
+}
+.adress{
+  font-size: 29.17rpx;
+  color: #666;
+}
+.items{
+  padding:24rpx 0;
+  margin-bottom: 16rpx;
+  background: white;
+  
+}
+.top{
+  padding-bottom:20rpx;
+  padding-left: 30rpx;
+  border-bottom:1px solid #f3f3f3;
+}
+.bottom{
+  display: flex;
+  font-size: 29.17rpx;
+  color: #666;
+  padding-left: 30rpx;
+  padding-top:16rpx;
+}
+.circles{
+  width: 16px;
+  height: 16px;
+  display:inline-block;
+  border-radius: 50%;
+  border:1px solid #999;
+ top:8rpx;
+ margin-right: 12rpx;
+  position: relative;
+}
+.circlel{
+    width: 16px;
+  height: 16px;
+  display:inline-block;
+  border-radius: 50%;
+ top:8rpx;
+ background:url('http://oss.myzy.com.cn/wechat/images/icon_kd_xuanzhong.png') center;
+ background-size: 100% 100%;
+ margin-right: 12rpx;
+  position: relative;
+}
+.circle{
+  width:60%;
+margin-top: 4rpx;
+  
+}
+.edit image,.del image{
+width: 13px;
+height: 13px;
+margin-top: 4rpx;
+}
+.edit{
+  margin-right: 50rpx;
+}
+.edit,.del{
+  margin-top: 8rpx;
+}
+.del image{
+ width: 15px;
+ height: 15px;
+}
+.add{
+    height:42px;
+background:#F43736;
+border-radius:4px;
+width: 100%!important;
+ 
+}
+.adds{
+  padding: 0 30rpx!important;
+box-sizing: border-box;
+ position: absolute;
+bottom:30rpx;
+width: 100%;
+
+}

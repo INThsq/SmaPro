@@ -1,0 +1,168 @@
+<!--pages/OpenShop/OpenShop.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>开店</view> 
+  </my-component>
+</view>
+
+<!-- 内容 -->
+<view class='container'>
+    <view class='item' catchtap='onshowActionSheet'>
+      <view class='text'>店铺头像</view>
+      <view>
+       <image src='{{avatarUrl}}'></image>
+  <text  class="right iconfont icon-arrow" style='margin-left:10px'></text>
+      </view>
+    </view>
+    <!-- 店铺名称 -->
+    <view class='item'>
+      <view class='text'>
+      店铺名称
+      </view>
+       <view>
+        <input placeholder='输入名称'></input>  
+        </view>
+    </view>
+  <!-- 店铺认证 -->
+  <view class='item'>
+    <view class='text'>
+    店铺认证
+    </view>
+    <view class='texts'>
+    个人店铺
+    </view>
+  </view>
+  <!-- 经营类目 -->
+   <view class='item' bindtap='chooseAddress'>
+      <view class='text'>经营类目</view>
+      <view class='texts' style='text-align:right'>
+       {{province == ''?'请选择':province}}
+  <text  class="right iconfont icon-arrow" style='margin-left:10px'></text>
+      </view>
+    </view>
+
+  <!-- 店铺类型 -->
+  <view class='shop-type'>
+      <view class='text'>店铺类型</view>
+      <view class='menu_box'>
+        <view class='menu1' bindtap='menuTap' data-current="0">
+        <block wx:if="{{menuTapCurrent== 0}}">
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_xuanzhong.png'></image>
+          </block>
+          <block wx:else>
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_weixuanzhong.png'></image>
+          
+          </block>
+        促销店</view>
+        <view class='menu2'  bindtap='menuTap' data-current="1">
+         <block wx:if="{{menuTapCurrent== 1}}">
+         <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_xuanzhong.png'></image>
+         </block>
+         <block wx:else>
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_weixuanzhong.png'></image>
+          
+          </block>
+        商品店</view>
+        
+      </view>
+  </view>
+  <block wx:if="{{menuTapCurrent== 1}}">
+  <!-- 权限须知 -->
+  <view class='limits'>
+  <text>商品店铺权限须知</text>
+  <text>1.不享有用户消费平台津贴10%-50%的奖励</text>
+  <text>2.不享有官方店铺推荐、会员裂变奖励</text>
+  <text>3.不享有商品活动促销</text>
+  </view>
+  </block>
+
+  <!-- 用户条款 -->
+  <view class='clause'>
+     <view>
+     <checkbox></checkbox>
+     勾选即代表你同意<text style="color:#3660E0">《用户使用条款》</text>
+     </view>
+  </view>
+
+
+<block wx:if="{{menuTapCurrent== 0}}">
+  <!-- 提示信息 -->
+  <view class='prompt'>
+    <text>温馨提示：开通促销店成功即可享有促销店所有权利 同时也支持商品店。</text>
+  </view>
+
+
+  <!-- 付款按钮 -->
+  <view class='payfor'>
+    <view class='left'>
+      实付款:
+      <text class='m'>￥</text>
+      <text>8999.00</text>
+    </view>
+    <view class='btn' bindtap='setted'>
+    在线付款
+    </view>
+  </view>
+  </block>
+
+
+
+
+  <block wx:if="{{menuTapCurrent== 1}}">
+  <!-- 提示信息 -->
+  <view class='prompt'>
+    <text>温馨提示：开通商品店成功后期随时可升级促销店，升级完毕 即可享有促销店所有权利同时也支持商品店。</text>
+  </view>
+
+
+  <!-- 付款按钮 -->
+  <view class='payfor'>
+    <view class='left'>
+      实付款:
+      <text class='m'>￥</text>
+      <text>00.00</text>
+    </view>
+    <view class='btn'>
+    立即开通
+    </view>
+  </view>
+  </block>
+</view>
+
+
+<!-- 弹窗 -->
+<nyz_area_picker
+  show="{{show}}"
+  bind:sureSelectArea="sureSelectAreaListener"
+>
+</nyz_area_picker>
+
+
+ 
+<!--屏幕背景变暗的背景  -->
+  <!-- <view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+ 
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+
+  <view class='titles'>
+    <view class='lefts' bindtap='close'>取消</view>
+    <view class='rights' bindtap='close'>确定</view>
+  </view>
+  <view class='scroll'>
+<scroll-view  scroll-y  style="height:160px">
+      <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+
+        <view class="nav-item {{currentTab == idx ?'active':''}}" data-text="{{navItem.text}}"  data-current="{{idx}}" 
+        bindtap="switchNav">{{navItem.text}}</view>
+        </block>
+
+ </scroll-view>
+
+  </view>
+ 
+
+  </view> -->
+
+

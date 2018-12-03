@@ -1,0 +1,45 @@
+/* pages/UserCenter/userCenter.wxss */
+.conts{
+  padding:10rpx 34rpx 34rpx;
+  margin-top: 130rpx;
+}
+.bg{
+  width:100%;
+  height: 288rpx;
+  display: inline-block;
+  text-align: center;
+  
+}
+.list{
+  margin-top:24rpx;
+}
+
+.bg text{
+  font-size: 44rpx;
+  letter-spacing: 1rpx;
+  color: white;
+  line-height:300rpx;
+  display: inline-block;
+}
+.list-title{
+  box-shadow:0px 1px 6px 0px rgba(225,225,225,0.5);
+border-radius:6px;
+  font-size: 32rpx;
+padding: 0 30rpx;
+  color:#666;
+  line-height:96rpx;
+  height: 96rpx;
+  background: white;
+  position: relative;
+}
+.list-title text{
+  display: inline-block;
+}
+.list-title image{
+  display: inline-block;
+  width:18.75rpx;
+  height:20.833rpx;
+  position:absolute;
+  right:40rpx;
+  top:40rpx;
+}

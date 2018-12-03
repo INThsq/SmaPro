@@ -1,0 +1,228 @@
+<!--pages/Confirm/Confirm.wxml-->
+ <view>
+  <my-component>
+     <view>确认支付</view> 
+  </my-component>
+</view> 
+
+<!-- 内容区域 -->
+<view class='container'>
+<!-- 地址提示 -->
+<view class='tool' wx:if="{{addressDetails.sa_addr_true==0}}">
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_tishi.png'></image>
+  该地区因物流问题不能发货
+</view>
+
+  <!-- 有默认地址 -->
+  <view class='address-yes' wx:if="{{datas.sa_name}}" bindtap='addAdress'>
+      <view class='yes-left'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_dizhi.png'></image>
+      </view>
+      <view class='yes-right'>
+        <text class='right-user'>收货人：{{datas.sa_name}}   {{datas.sa_tel}}</text>
+        <text>{{datas.choose.sheng.item_name}}{{datas.choose.shi.item_name}}{{datas.choose.qu.item_name}}{{datas.sa_area_xx}}</text>
+      </view>
+      <view class='yes-rights'>
+      <text  class="right iconfont icon-arrow"></text>
+        
+      </view>
+  </view>
+
+  <!-- 无默认地址 -->
+  <view wx:else class='adress' bindtap='addAdress'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_querendingdan_tianjia.png'></image>
+    
+     添加收货地址
+  </view>
+
+  <!-- 彩色条框 -->
+    <view class='b-bro'>
+    </view>
+  <!-- 商品信息 -->
+    <view class="order-list" bindtap='details'>
+        <view class="order-num">
+        <view class='touxiang'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>fanyuxi官方店</text>
+        </view>
+        </view>
+        <view class="order-con">
+          <image src="{{shopInfo.shop_img}}"></image>
+          <view>
+            <view class="name">{{shopInfo.shop_name}}</view>
+            <text class="size">颜色:{{shopInfo.shop_color}},尺码:{{shopInfo.shop_size}}</text>
+            <view class='one'>
+            <text class="yang">￥</text>
+            <text class='nl'>599.00</text>
+          <text class='two'>已售480件</text>
+            
+          </view>
+          </view>
+        </view>
+    </view>
+  <!-- 购买数量   -->
+  <view class='shul'>
+  <view class='shuls'>
+  <view class='left'>购买数量:</view>
+    <view class="stepper">
+    <!-- 减号 -->
+    <text class="{{minusStatus}} nos" bindtap="bindMinus">
+      <text class='iconfont icon-jianhaob'></text>
+    </text>
+    <!-- 数值 -->
+    <input type="number" bindchange="bindManual" value="{{num}}" />
+    <!-- 加号 -->
+    
+    <text class="normal no" bindtap="bindPlus">
+      <text class='iconfont icon-jiahaob'></text>
+      
+    </text>
+    </view>
+  </view>
+  </view>
+  
+  <!-- 运费 -->
+  <view class='freight'>
+    <text>运费</text>
+    <text>免费包邮</text>
+  </view>
+
+  <!-- 本单抵现 -->
+  <view class='withdraw'>
+  <view class='with-l'>
+    <view class='with-l-o'>
+    <text class='ben'>本单抵现 </text>
+    <block wx:if="{{addressDetails.sa_addr_true==1}}">
+    <text class='bens'> -￥10.00</text>
+    </block>
+
+    <block wx:else>
+    <view class='ones'>
+            <text class='nl'>-￥599.00</text>
+    </view>
+    </block>
+   </view>
+    <view class='with-l-t'>
+    <view>剩余￥1.66,可下次抵扣  抵现规则 
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_tishi_wenhao.png'></image>
+    </view>
+  </view>
+  </view>
+  
+  <view class='with-r'>
+  <switch color='#FF4949' style='height:27px;' checked="{{addressDetails.sa_addr_true==0?true:false}}" bindchange="checkboxChange"/>
+  </view>
+  </view>
+</view>
+
+
+<!-- 优惠条例 -->
+<block wx:if="{{addressDetails.sa_addr_true==0}}">
+  <view class='discounts'>
+    <text>已经优惠￥440.00</text>
+    <text>11.10-11.15 付款成功赚钱翻倍</text>
+  </view>
+
+</block>
+
+  <!-- 付款按钮 -->
+  <view class='payfor'>
+    <view class='left'>
+      实付款:
+      <text class='m'>￥</text>
+      <text>{{totalPrice}}</text>
+    </view>
+    <block wx:if="{{addressDetails.sa_addr_true==1}}">
+    <view class='submit' bindtap='submits'>
+    提交订单
+    </view>
+    </block>
+
+    <block wx:else>
+    <view class='submits' bindtap='submits'>
+      <text>提交订单</text>
+      <text>赚￥8.00 ×2</text>
+    </view>
+    </block>
+
+  </view>
+
+
+<!-- 模态框 -->
+
+<view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+  <!--弹出框  -->
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+
+  <view class='titles'bindtap="close">
+      <image style='width:14px;height:14px' src='http://oss.myzy.com.cn/wechat/images/icon_del_vip.png'></image>
+  </view>
+  <!-- 方式 -->
+  <view class='way'>
+  <view class='way-title'>
+  选择支付方式
+  </view>
+ 
+ <view class='way-cont'>
+        <view class='way-list'  bindtap='menuTap' data-current="0">
+            <view class='way-left'>
+             <block wx:if="{{menuTapCurrent== 0}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+              </block>
+              <block wx:else>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+              
+              </block>
+            </view>
+            <view class='way-icon'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixin.png'></image>
+            </view>
+            <view class='way-text'>
+              <text>微信支付</text>
+              <text class='small'>推荐已安装微信用户使用</text>
+            </view>
+        </view>
+        <view class='way-list'  bindtap='menuTap' data-current="1">
+            <view class='way-left'>
+            <block wx:if="{{menuTapCurrent== 1}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+              </block>
+              <block wx:else>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+              
+              </block>
+            </view>
+            <view class='way-icon'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_yue.png'></image>
+            </view>
+            <block wx:if="{{nedPay !== 0}}">
+            <view class='way-text'>
+              <text>余额支付 (剩余:￥8819.00）</text>
+              <text class='small'>账户余额支付</text>
+            </view>
+            </block>
+            <block wx:else>
+            <view class='way-text way-texts'>
+              <text>余额支付 (剩余:￥8819.00）</text>
+              <text class='small'>账户余额支付</text>
+            </view>
+
+            </block>
+        </view>
+ </view>
+  
+<!-- 需付款 -->
+  <view class='way-pay'>
+    <text class='w'>需付款</text>
+    <text class='m'>￥</text>
+    <text class='q'>{{totalPrice}}</text>
+  </view>
+
+  <!-- 支付按钮 -->
+  <view class='pay'>
+  <button class='pay-btn' bindtap='topay'>立即支付</button>
+  </view>
+
+  </view>
+  </view>
+

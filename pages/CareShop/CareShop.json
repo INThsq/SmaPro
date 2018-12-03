@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "惠小店",
+  "usingComponents": {
+        "my-component": "../../public/components/component-tag-name"
+  }
+}

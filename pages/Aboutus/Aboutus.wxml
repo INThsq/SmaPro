@@ -1,0 +1,39 @@
+<!--pages/Aboutus/Aboutus.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>关于我们</view> 
+  </my-component>
+</view>
+
+
+<view class='conts'>
+    <view class='icon'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_logo.png'></image>
+    <text class='success'>V1.0</text>
+    </view>
+</view>
+
+
+<view class='agree'>
+  <view>
+  <text class='left'>隐私协议</text>
+  <text class="right iconfont icon-arrow"></text>
+  </view>
+  <view>
+  <text class='left'>软件更新</text>
+  <text class=" right">已经是最新版本</text>
+  </view>
+  <view>
+  <text class='left'>客服电话</text>
+  <text class="tel right">4008-010-168</text>
+  </view>
+</view>
+
+
+
+<view class='copyright'>
+  <text class='all'>惠选购 版权所有</text>
+  <view class='time'>Copyright@2018 MYZY.COM.CN All Rights Reserved</view>
+</view>

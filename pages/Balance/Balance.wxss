@@ -1,0 +1,36 @@
+/* pages/Balance/Balance.wxss */
+.bal-conts{
+  margin-top:130rpx; 
+  padding:120rpx 30rpx 30rpx; 
+}
+.bal-conts text{
+  display: block;
+  text-align: center;
+}
+.bal-conts .title{
+  font-size: 36rpx;
+  margin-bottom:32rpx;
+}
+.bal-conts .money{
+  font-size: 100rpx;
+  margin-bottom: 140rpx;
+}
+button{
+  color: white;
+}
+.deposit{
+  border: none;
+ background:#F43736;
+ margin-bottom: 10px;
+}
+.recharge{
+  color: #333;
+}
+.ques{
+  font-size: 26rpx;
+  color: #999;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  margin-left:-50rpx;
+}

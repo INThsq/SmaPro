@@ -1,0 +1,17 @@
+/* components/component-tag-name.wxss */
+.wrapper{
+  width: 100%;
+  height:110rpx;
+  font-size:36rpx;
+  font-weight:bold;
+  padding-top:30rpx;
+  line-height: 110rpx;
+  background:white;
+  letter-spacing: 2rpx;
+  font-family:SourceHanSansSC-Medium;
+  text-align: center;
+  color:#333;
+  position: fixed;
+  z-index: 666;
+  top: 0;
+  }

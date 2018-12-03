@@ -1,0 +1,17 @@
+<!--pages/Balance/Balance.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>余额</view> 
+  </my-component>
+</view>
+
+<!-- 内容部分 -->
+<view class='bal-conts'>  
+  <text class='title'>总资产(元)</text>
+  <text class='money'>{{balance}}</text>
+  <button class='btn deposit' bindtap='deposit'>提现</button>
+  <button class='btn recharge' bindtap='recharge'>充值</button>
+  <text class='ques'>常见问题</text>
+</view>

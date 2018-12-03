@@ -1,0 +1,95 @@
+/* pages/Payment/Payment.wxss */
+.container{
+  margin-top: 140rpx;
+}
+.container .top-title image{
+  width: 50rpx;
+  height: 50rpx;
+  vertical-align: middle;
+  margin-right: 20rpx;
+}
+.top-title{
+ font-size: 37.5rpx;
+  color: #333;
+  font-weight:bold;
+  margin-bottom: 26rpx;
+}
+.top{
+  padding:42rpx 0 34rpx;
+  background: white;
+  text-align: center;
+}
+.top-cont{
+  font-size: 29.17rpx;
+  color: #666;
+}
+
+/* buttons */
+button::after{
+  border:none;
+}
+.buttons{
+  background: white;
+}
+.buttons view{
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+.br{
+  width: 100%;
+  height: 16rpx;
+  background: #F3F3F3;
+}
+page{
+  background: white;
+}
+.check-order{
+  height: 84rpx;
+  line-height: 84rpx;
+  color:white;
+  font-size: 33.3rpx;
+  background: #F54545;
+  margin-bottom: 20rpx;
+}
+.to-shop{
+    height: 84rpx;
+  line-height: 84rpx;
+  color:#666;
+  font-size: 33.3rpx;
+  background: white;
+  border:1px solid #C3C3C3;
+}
+.detail{
+  background: white;
+}
+.detail-head{
+  text-align: center;
+  padding: 30rpx 0 28rpx;
+  border-bottom: .5px solid #F3F3F3;
+}
+.detail-head image{
+  width: 106rpx;
+  height: 106rpx;
+  border-radius: 50%;
+}
+.detail{
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+
+.item{
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: .5px solid #F3F3F3;
+}
+.item .left{
+  font-size: 33.3rpx;
+  color: #666666;
+}
+.item .right{
+  font-size: 29.17rpx;
+  color: #999;
+  text-align: right;
+}

@@ -1,0 +1,97 @@
+/* pages/Recharge/Recharge.wxss */
+/* pages/Deposit/Deposit.wxss */
+.Deposit-cont{
+  padding: 0 20rpx;
+  display: flex;
+}
+
+.pa{
+  position: absolute;
+line-height: 80rpx;
+font-size: 56rpx;
+}
+
+.Deposit-title image{
+  width:76rpx;
+  height: 64rpx;
+  margin-right: 24rpx;
+}
+
+.Deposit-money{
+  padding: 0 30rpx 10rpx 30rpx;
+  margin-top: 154rpx;
+  
+}
+.Deposit-mon{
+  background: white;
+   box-shadow:0px 0px 4px 0px rgba(246,246,246,1);
+  border-radius:6px; 
+  margin-top: 24rpx;
+  padding:30px 70rpx;
+  box-sizing: border-box;
+}
+.tx-jine{
+font-size: 32rpx;
+color: #333;
+letter-spacing: 1rpx;
+height: 80rpx;
+line-height: 80rpx;
+}
+.Deposit-mon input{
+  border-bottom: 1px #f3f3f3 solid;
+ height: 80rpx;
+ margin-top: 24rpx;
+ padding-left:56rpx;
+ font-size: 56rpx;
+}
+.fh{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+}
+.about,.abouts{
+  font-size: 26rpx;
+  color: #666;
+  letter-spacing: 1rpx;
+  margin-top: 24rpx;
+
+  
+}
+.abouts{
+  color: #FF0B00;
+  
+}
+.all{
+  line-height:2;
+}
+.all text{
+  display: block;
+}
+.Deposit-money button{
+  margin-top: 24rpx;
+  border: none;
+  color: white;
+  line-height: 42px;
+  height: 42px;
+}
+button::after{
+  border:none;
+}
+.toasts{
+  font-size: 24rpx;
+  color: #999;
+}
+.btns{
+  background:#F43736;
+  border-radius:4px;
+  opacity:0.6;
+}
+.btn{
+  background:#F43736;
+border-radius:4px;
+}
+.about{
+  font-size: 26rpx;
+  color: #666;
+}

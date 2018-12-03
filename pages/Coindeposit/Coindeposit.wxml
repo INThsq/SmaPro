@@ -1,0 +1,38 @@
+<!--pages/Coindeposit/Coindeposit.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>提现</view> 
+  </my-component>
+</view>
+
+
+
+<!-- 内容 -->
+<view class='coin-cont'>
+  <view class='coin-left'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_daozhangchenggong.png'></image>
+  </view>
+  <view class='coin-right'>
+    <view class='fq'>
+    发起提现申请
+    </view>
+    <view class='chuli'>
+    <text>银行处理中</text>
+    <text class='time'>预计2018-02-01 15:58到账</text>
+    <text class='success'>到账成功</text>
+    </view>
+  </view>
+</view>
+
+
+<view class='coin-conts'>
+  <view class='contes'>
+  <text>提现金额</text>
+  <text>￥{{txmoney}}</text>
+  </view>
+  <view class='contes'>
+  <text>手续费</text>
+  <text>￥1.88</text>
+  </view>
+</view>

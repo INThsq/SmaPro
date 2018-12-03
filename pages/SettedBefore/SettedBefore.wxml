@@ -1,0 +1,82 @@
+<!--pages/SettedBefore/SettedBefore.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>入驻</view> 
+  </my-component>
+</view>
+
+
+
+<!-- 主体 -->
+<view class='container'>
+    <view class='top'>
+      <text class='title' decode="{{true}}">成为合伙人 &nbsp;月入十万</text>
+    </view>
+    <view class='check'>
+        <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_zhishi.png'></image>
+        <text>点击查看教程</text>
+    </view>
+
+    <!-- 流程 -->
+    <view class='lc'>
+    <text decode="{{true}}">[ &nbsp;在线开通&nbsp;→&nbsp;签约上架&nbsp;→ &nbsp;开店成功&nbsp;]</text>
+    </view>
+      <!-- 加入我们 -->
+      <view class='join'>
+        <view class='carret'></view>
+        <text>加入我们一起赚钱</text>
+        <view class='carrets'></view>
+        
+      </view>
+
+
+    <!-- 优势 -->
+    <view class='adv'>
+      <view class='adv-title'>
+         <view class='hr'></view>
+         <text>合伙人的优势</text>    
+      </view>
+    <!-- 内容 -->
+    <view class='adv-conts'>
+        <view class='adv-list'>
+          <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_dianpu.png'></image>
+          <view class='f-r'>
+          <text class='list-title'>促销利器，独立专属店铺</text>
+          <text class='atricle'>
+          鼓励消费者每日抢礼物，极大提升消费者活跃度，快捷高效的管理功能一键开店，操作简单
+          </text>
+          </view>
+          
+        </view>
+
+        <view class='adv-list '>
+          <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_tuijian.png'></image>
+          <view class='f-r no'>
+          <text class='list-title'>裂变透传，店铺官方推荐</text>
+          <text class='atricle'>
+          活动、商品、礼物支持分享功能，参加即可成为店铺会员,店铺会员发起的活动分享的活动、礼物、商品参加也均属于本店会员。量身定制，精准定位，快速推广，快速搭建粉丝专属店铺
+          </text>
+          </view>
+          
+        </view>
+
+          <view class='adv-list '>
+          <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_tuijian.png'></image>
+          <view class='f-r frs'>
+          <text class='list-title'>高转化，额外高额奖励</text>
+          <text class='atricle'>
+          凡店铺会员在本店铺消费额，奖励10%，最高随机奖励50%
+          </text>
+          </view>
+          
+        </view>
+
+      <button bindtap='go'>立即开通</button>
+
+    </view>
+</view>
+    </view>
+
+

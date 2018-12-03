@@ -1,0 +1,64 @@
+<!--pages/Recharge/Recharge.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>充值</view> 
+  </my-component>
+</view>
+
+
+<!-- 充值内容 -->
+ <view class="Deposit-money">
+    <view class='Deposit-mon'>
+        <text class='tx-jine'>充值金额</text>
+        <view>
+        <view class='pa'>
+        ￥
+        </view>
+         <input type='digit' name='name' placeholder="0" class='regCon-txt'  value='{{money}}'                  bindinput='money' />
+        </view>
+        
+        <view class='all' wx:if="{{money > 5}}">
+        <text class='abouts'>单笔金额最多可充值10000.00元</text>
+        <text class='toasts'>温馨提示：充值后可使用余额进行交易支付</text>
+        
+        </view>
+         <view class='all'  wx:elif="{{money == 0}}">
+        <text class='about'>单笔金额最多可充值10000.00元</text>        
+        <text class='toasts'>温馨提示：充值后可使用余额进行交易支付</text>
+        </view>
+        <view class='all' wx:else>
+        <text class='about'>单笔金额最多可充值10000.00元</text>        
+        <text class='toasts'>温馨提示：充值后可使用余额进行交易支付</text>
+        </view>
+    </view>
+
+    <block  wx:if="{{money > 5}}">
+    <button class='btns' bindtap='toDespositfalse'>充值</button>    
+    </block>
+    <block  wx:elif="{{money == 0 || money == null}}">
+    <button class='btns' bindtap='toDespositzero'>充值</button>    
+    </block>
+    <block  wx:else>  
+    <button class='btn' catchtap='_onShowModal'>充值
+    </button>
+    </block>
+     
+  </view>
+
+
+  <!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>您确定充值金额{{money}}元？</view>     
+    </view>
+
+</dialog>

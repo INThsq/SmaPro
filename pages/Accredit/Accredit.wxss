@@ -1,0 +1,58 @@
+/* pages/Accredit/Accredit.wxss */
+.acc_conts{
+  margin-top:140rpx;
+  padding: 30rpx;
+}
+button{
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  outline: none;
+}
+.login{
+  background:rgba(26,201,28,1);
+  color:white;
+  font-size: 33.333rpx;
+  margin-bottom: 28rpx;
+}
+.back{
+   background:#F3F3F3;
+  color:#333;
+  font-size: 33.333rpx;
+  margin-bottom: 28rpx;
+}
+page{
+  background: white;
+}
+button::after{
+  border: none;
+}
+.acc_header{
+  display: flex;
+  justify-content: center;
+   align-items: center;
+}
+ text{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+
+}
+.name{
+  font-size: 33.3rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+.state{
+  font-size: 29.17rpx;
+  color: #666;
+  margin-bottom: 80rpx;
+}
+image{
+  display: flex;
+  width: 71px;
+  height: 71px;
+  margin: 98rpx 0 30rpx;
+  border-radius: 50%;
+}

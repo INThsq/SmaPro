@@ -1,0 +1,83 @@
+<!--pages/Address/Address.wxml-->
+
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>收货地址</view> 
+  </my-component>
+</view>
+
+
+<!-- 内容 -->
+<!-- 没有信息显示 -->
+<view class='container' wx:if="{{datas == null}}">
+    <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+    <text>抱歉，暂无数据</text>
+    <view class='btns'>
+  <button class='getAdress' bindtap='getAdress'>微信获取地址</button>
+  <button class='addAdress' bindtap='addAdress'>手动添加地址</button>
+</view>
+</view>
+
+<!-- 有信息 -->
+<view class='containers' wx:else>
+<block >
+  <view class='items' bindtap='chooseAdress'>
+  <view class='top'>
+      <text class='name'  decode="{{true}}">{{datas.sa_name}}&nbsp;&nbsp;&nbsp;{{datas.sa_tel}}</text>
+      <text class='adress'>{{datas.choose.sheng.item_name}}{{datas.choose.shi.item_name}}{{datas.choose.qu.item_name}}{{datas.sa_area_xx}}</text>
+  </view>
+  <view class='bottom'>
+     <!-- <icon wx:if="{{item.sa_addr_true==0}}" type="success" color="#b2282e" data-index="{{index}}"  class="cart-pro-select"  bindtap="selectList"/>
+          <icon wx:else type="circle" class="cart-pro-select" data-index="{{index}}" bindtap="selectList"/>
+  </view> -->
+  <view class='circle'>
+  <block  wx:if="{{datas.sa_addr_true==0}}">
+      <view class='circlel' data-index="{{0}}"  bindtap="selectList"></view>设为默认地址
+  
+  </block>
+  <block wx:else>
+      <view    class='circles' data-index="{{1}}"  bindtap="selectList"></view>设为默认地址
+  </block>    
+  </view>
+  <view class='edit' bindtap='edit'> 
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_tianxiedizhi_bianji.png'></image>
+    编辑 
+  </view>
+  <view class='del' bindtap='del'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_tianxiedizhi_shanchu.png'></image>
+  
+  删除
+  </view>
+  </view>
+
+</view>
+</block>
+
+<!-- 新增按钮 -->
+<view class='adds'>
+<button class='add'  bindtap='addAdr'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_shouhuodizhi_jiahao.png'></image>
+新建收货地址</button>
+</view>
+
+</view>
+
+<!-- 提示窗口 -->
+
+  <!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>您确定删除此条地址?</view>     
+    </view>
+    
+</dialog>
+

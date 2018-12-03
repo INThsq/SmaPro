@@ -1,0 +1,12 @@
+/* pages/IndexThird/IndexThird.wxss */
+/* 引入公共样式 */
+@import "../index/index.wxss";
+.cont,.tab-bar{
+  top: 136rpx!important;
+}
+/* .tab-bar{
+  border-top: 1px solid #f7f7f7;
+} */
+.order-conts{
+  margin-top:216rpx;
+}

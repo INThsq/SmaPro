@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "粉丝",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback"
+  }
+}

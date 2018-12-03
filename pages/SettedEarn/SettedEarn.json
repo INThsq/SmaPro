@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "收益报表",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback"
+  }
+}

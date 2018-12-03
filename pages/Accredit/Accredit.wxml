@@ -1,0 +1,22 @@
+<!--pages/Accredit/Accredit.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>登录账号</view> 
+  </my-component>
+</view>
+
+
+<!-- 内容 -->
+<view class='acc_conts'>
+    <view class='acc_header'>
+      <image src='../../static/imgs/touxiang.jpg'></image>
+    </view>
+
+    <text class='name'>遵命老婆大人</text>
+      <text class='state' >您尚未登录惠选购商城账号</text>
+      <view class='btns'>
+        <button class='login' bindtap='login'>授权登录</button>
+        <button class='back' bindtap='back'>返回首页</button>
+      </view>
+</view>

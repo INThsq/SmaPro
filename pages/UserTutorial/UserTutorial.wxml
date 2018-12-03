@@ -1,0 +1,41 @@
+<!--pages/UserCenter/userCenter.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>新手教程</view> 
+  </my-component>
+</view>
+
+<!-- 内容 -->
+<view class='conts'>
+      <!-- One -->
+      <view class='list'>
+        <view class='bg' style='background:url("http://oss.myzy.com.cn/wechat/images/img_xsjc_1.png") no-repeat center; background-size:cover;'>
+        <text>如何送礼得礼金介绍</text>
+        </view>
+        <view class='list-title' >
+        <text>免费领取即送佣金，送的越多赚得越多！</text> 
+        <image src='http://oss.myzy.com.cn/wechat/images/img_xsjc_4.png'></image>
+         </view>
+      </view>
+      <!-- Two -->
+       <view class='list'>
+        <view class='bg' style='background:url("http://oss.myzy.com.cn/wechat/images/img_xsjc_2.png") no-repeat center; background-size:cover;'>
+        <text>如何入驻商家介绍</text>
+        </view>
+        <view class='list-title' >
+        <text>入驻商家快速吸粉，商品促销供不应求！</text> 
+        <image src='http://oss.myzy.com.cn/wechat/images/img_xsjc_4.png'></image>
+         </view>
+      </view>
+      <!-- Three -->
+       <view class='list'>
+        <view class='bg' style='background:url("http://oss.myzy.com.cn/wechat/images/img_xsjc_3.png") no-repeat center; background-size:cover;'>
+        <text>如何推广得佣金介绍</text>
+        </view>
+        <view class='list-title' >
+        <text>分享好友成功购买，即得佣金！</text> 
+        <image src='http://oss.myzy.com.cn/wechat/images/img_xsjc_4.png'></image>
+         </view>
+      </view>
+</view>

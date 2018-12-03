@@ -1,0 +1,125 @@
+/* pages/FenNum/FenNum.wxss */
+@import "../index/index.wxss";
+.container{
+  margin-top:244rpx;
+}
+.fanNum{
+  height:250rpx;
+  font-size:34rpx;
+  color: white;
+  padding: 60rpx 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+.fanNum image{
+  width:34rpx;
+  height: 32rpx;
+  margin-right: 20rpx;
+  vertical-align: middle;
+}
+
+.fanNum .bottom{
+  font-size: 60rpx;
+  font-weight: bold;
+  margin-top: 30rpx;
+}
+/* //选项卡 */
+@import '../SettedEarn/SettedEarn.wxss';
+.swiper-tab-item text{
+display: block;
+}
+.tab{
+  padding:20rpx 0 0!important;
+  margin-bottom: 24rpx;
+}
+.swiper-tab{
+  border-radius: 0!important;
+  border:0!important;
+ height: auto!important;
+}
+.swiper-tab-item{
+  border-right: none;
+  padding-bottom:20rpx;
+}
+.bl{
+  width:1.5px;
+  display: inline-block;
+  height:60rpx;
+  background:#f3f3f3;
+  margin-top: 20rpx;
+  z-index: 99;
+}
+.swiper-tab-item text{
+  font-size:26rpx;
+  color: #333;
+  line-height:50rpx;
+}
+page{
+  background: #FAFAFA;
+}
+.swiper-tab-item:last-child{
+  width: 40%!important;
+}
+.active{
+  background: white!important;
+  border-bottom: 2px solid #FF0000;
+}
+.active text{
+  color: #FF0000!important;
+
+}
+.nums{
+  font-size: 32rpx!important;
+  color: #333;
+}
+.tab_cont{
+  margin-top: 0!important;
+  padding: 0!important;
+}
+.num{
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+.num text{
+  line-height: 24rpx;
+  text-align: left;
+}
+.time,.money{
+  font-size: 26rpx;
+}
+.time{
+  color: #999;
+  line-height:1.2!important;
+}
+.num-right text{
+  font-size: 26rpx;
+  color: #333;
+  line-height:1.6;
+}
+.money{
+  text-align: right!important;
+}
+.num-left .name{
+  font-size: 26rpx;color: #333;
+  line-height: 2;
+}
+.num-right{
+  padding-left:5%;
+}
+.num text{
+  display: block;
+}
+.num-left{
+  width: 70%!important;
+}
+.num image{
+  width:80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  float: left;
+  vertical-align: middle;
+  margin-right: 30rpx;
+}
+.search-box{
+  padding:20rpx!important;
+}

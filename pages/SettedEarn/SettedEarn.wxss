@@ -1,0 +1,151 @@
+/* pages/Earn/Ear.wxss */
+.withdraw{
+  height: 180rpx;
+  background:url("http://oss.myzy.com.cn/wechat/images/img_sybb_beijing.png") no-repeat center;          background-size:cover;
+  display: flex;
+  color: white;
+  padding: 50rpx;
+  box-sizing: border-box;
+  justify-content: space-between;
+  margin-top: 130rpx;
+}
+.withdraw_left text{
+  display: block;
+}
+.mon_title{
+  font-size: 28rpx; 
+  margin-bottom:20rpx;
+}
+.money{
+  font-size: 44rpx;
+}
+.withdraw_right{
+  position: relative;
+  right: 0;
+  display: block;
+  font-size: 28rpx;
+  letter-spacing: 2px;
+}
+.btn{
+  padding:2rpx 28rpx;
+  border-radius:20px;
+  border: 1px solid white;
+  margin-top:56rpx;
+}
+.earn{
+    display:flex;
+    background: white;
+    height:80rpx;
+    padding:0 40rpx;
+    box-sizing: border-box;
+    line-height:80rpx;
+    border-bottom:1px solid #F3F3F3;
+}
+.myEarn{
+    flex:1;
+    font-size:30rpx;
+    font-family:SourceHanSansSC-Regular;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    padding-left: 24rpx;
+}
+.earn .xian{
+  display: block;
+  width:8rpx;
+  height: 24rpx;
+  background:#FF2742;
+  margin-top: 28rpx;
+}
+.all_earn{
+  display: flex;
+  flex-flow: wrap;
+  background: white;
+  margin-bottom: 16rpx;
+  padding:32rpx 0;
+}
+
+.all_earn .all_earn_item{
+ display: flex;
+  width:49.5%;
+  border-right:1px solid #F3F3F3;
+  font-size:28rpx;
+  color:#666;
+  justify-content:center;
+}
+.all_earn_item text{
+  display: block;
+  text-align: center;
+}
+.all_earn_item .money{
+   font-size:34rpx;
+  margin-top: 14rpx;
+  color: #333;
+  letter-spacing: 1px;
+}
+.all_earn .all_earn_item:last-child{
+  border: none;
+}
+.all_earn{
+  position: relative;
+}
+.all_earn_item image{
+  width: 24rpx;
+  height: 24rpx;
+  position: absolute;
+  right:62%;
+  top:25%;
+}
+.swiper-tab{
+    background: white;
+    text-align: center;
+    height:60rpx;
+    line-height:60rpx;
+    display: flex;
+    flex-flow: row;
+    font-size:26rpx;
+    justify-content: space-between;
+    border:1px solid #FF4A47;
+    border-radius: 5px;
+}
+.swiper-tab-item{
+    width: 30%; 
+    color:#FF4A47;
+    border-right: 1px solid #FF4A47;
+}
+.swiper-tab-item:last-child{
+  border-right: none;
+}
+.tab{
+  background: white;
+  padding: 32rpx 32rpx 0 32rpx;
+  box-sizing: border-box;
+}
+.tab_cont{
+  padding: 0 32rpx;
+  background: white;
+}
+.active{
+    color:white;
+    background: #F43736;
+}
+swiper{
+  text-align: center;
+  height: 700rpx;
+}
+swiper-item{
+  background: white;
+  font-size:28rpx;
+  color:#666;
+
+}
+swiper .number{
+  color: #333;
+}
+.num{
+  display: flex;
+  line-height: 100rpx;
+  
+  justify-content: space-between;
+  border-bottom: 1px solid #F3F3F3;
+}
+

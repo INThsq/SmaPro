@@ -1,0 +1,160 @@
+/* pages/SettedBefore/SettedBefore.wxss */
+.container{
+  margin-top: 140rpx;
+}
+.top{
+  padding-top:62rpx;
+  background: white;
+  text-align: center;
+  font-weight: bold;
+  color: #E02929;
+}
+.title{
+  font-size:60rpx;
+  
+}
+.check{
+  text-align: center;
+  padding:32rpx 0;
+  background: white;
+  
+}
+.check text{
+  display:inline-block;
+  height: 25px;
+  box-sizing: border-box;
+  
+  padding: 12rpx 22rpx;
+  line-height:14px;
+  border-radius: 12px;
+  border:1px solid rgba(224,41,41,1);
+  color: #E02929;
+  font-size: 29.17rpx;
+}
+.check image{
+  width: 26px;
+height: 18px;
+margin-right: 14rpx;
+}
+.lc{
+  text-align: center;
+}
+.lc text{
+  font-size: 29.17rpx;
+  color: white;
+  text-align: center;
+}
+
+/* 优势 */
+.adv{
+  background: white;
+  margin-top:16rpx;
+  padding: 54rpx 30rpx 30rpx 34rpx;
+}
+.adv-title{
+  text-align: center;
+  padding: 0 160rpx 34rpx;
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+}
+.adv-title text{
+  padding: 0 14rpx;
+background: white;  
+z-index:999;
+position: relative;
+}
+.adv-title .hr{
+  height: 1px;
+  background: #B7B7B7;
+  position: relative;
+  top: 14px;
+  z-index: 0;
+}
+
+/* 优势 */
+.adv-conts{
+  background: white;
+}
+.adv-list image{
+  width:89px;
+  height:110px;
+  margin-right: 30rpx;
+  float: left;
+}
+.adv-list{
+  clear: both;
+  display: flex;
+}
+.f-r{
+  padding-top:16rpx;
+  height: 110px;
+  width:460rpx;
+  box-sizing: border-box;
+}
+.list-title{
+  font-size:33.3rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+.atricle{
+  font-size: 25rpx;
+  color: #666;
+  line-height:18px;
+}
+.adv-list:first-child,.adv-list:nth-child(2){
+  margin-bottom:40rpx!important;
+}
+.no{
+  padding-top: 0!important;
+  margin-top: -10px;
+}
+.frs{
+  padding-top:20px!important;
+}
+button::after{
+  border: none;
+ 
+}
+button{
+ height: 42px;
+  line-height: 42px;
+  background: #FF4949;
+  color: white;
+  margin-top: 14rpx;
+}
+.join{
+  background: white;
+  text-align: center;
+  font-size: 33.3rpx;
+  color: #E02929;
+  padding: 50rpx 0 42rpx;
+}
+.lc{
+  line-height: 78rpx;
+  background:#E02929;
+  height: 78rpx;
+
+}
+.join text{
+  font-weight: bold;
+}
+.carret{
+    height:0;
+    display: inline-block;
+    overflow:hidden;
+    border-width:6px;
+    border-left:9px;
+    
+    border-style:solid;  /*ie6下会出现不透明的兼容问题*/
+    border-color: transparent   transparent transparent #E02929; 
+}
+.carrets{
+  height:0;
+    display: inline-block;
+    overflow:hidden;
+    border-width:6px;
+    border-right:9px;
+    border-style:solid;  /*ie6下会出现不透明的兼容问题*/
+    border-color: transparent #E02929  transparent transparent; 
+}

@@ -1,0 +1,28 @@
+/* components/component-tag-name.wxss */
+.wrapper{
+  width: 100%;
+  height:110rpx;
+  font-size:36rpx;
+  font-weight:bold;
+  padding-top:30rpx;
+  line-height: 110rpx;
+  background:white;
+  letter-spacing: 2rpx;
+  font-family:SourceHanSansSC-Medium;
+  color:#333;
+  position: fixed;
+  text-align: center;
+  justify-content:center;
+  display: flex;
+  top: 0;
+  z-index: 9999;
+  }
+  .back{
+  position: absolute;
+  left:15px;
+  margin-top:8rpx;
+}
+.back image{
+  width:40rpx;
+  height:28rpx;
+}

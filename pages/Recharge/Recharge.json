@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "充值",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback",
+    "dialog": "../../public/Dialog/dialog"
+  }
+}

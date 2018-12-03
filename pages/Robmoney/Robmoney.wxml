@@ -1,0 +1,95 @@
+<!--pages/Robmoney/Robmoney.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>天天抢钱</view> 
+  </my-component>
+</view>
+
+<!-- 内容 -->
+<view class='container'>
+    <view class='rob-top'>
+        <text class='top-title'>免费领取好礼</text>
+        <!-- 规则 -->
+        <view class='top-rules'>
+        规则
+        </view>
+        <!-- 内容 -->
+        <view class='top-conts'>
+            <view class='item'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_liwu.png'></image>
+            </view>
+            <view class='item'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_haoyou.png'></image>
+            </view>
+            <view class='item'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_shouhuo.png'></image>
+            </view>
+        </view>
+        <view class='cont-text'>
+        <text>分享心意商品</text>
+        <text>好友免费领取(包邮)</text>
+        <text>签收佣金到账</text>
+        </view>
+    </view>
+    <!-- 全部商品 -->
+  <view class='all'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_sjzx_qb.png'></image>
+  <text>全部商品</text>
+  <image class='right' src='http://oss.myzy.com.cn/wechat/images/icon_quanbushangpin_xiangxia.png'></image>
+</view>
+<!-- 列表 -->
+<view class='list-conts'>
+      <view class='list'>
+      <view class='list-left'>
+        <image class='pr' src='http://oss.myzy.com.cn/wechat/images/tupian.png'></image>
+        <image class='pa' src='http://oss.myzy.com.cn/wechat/images/img_hekahuiyuan.png'></image>
+      </view>
+      <view class='list-right'>
+      <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+      <view class='list-bottom'>
+        <view class='bottom-left'>
+          <text class='free'>免费赠送</text>
+          <text class='price'>￥8.00</text>
+          <text class='pur'>限购8976件</text>
+          <view class='pro'>
+    <progress class='tx_top_progress' percent="30" border-radius='4px' stroke-width="5" backgroundColor="#F3F3F3" activeColor="#F43736" active></progress>
+           <view class='ll'>已抢39%</view>
+          </view>
+        </view>
+        <view class='bottom-right'>
+            <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+            <text class='yj'>赚￥100.99</text>
+        </view>
+      </view>
+      </view>
+      
+    </view>
+
+    <view class='list'>
+      <view class='list-left'>
+        <image class='pr' src='http://oss.myzy.com.cn/wechat/images/tupian.png'></image>
+        <image class='pa' src='http://oss.myzy.com.cn/wechat/images/img_hekahuiyuan.png'></image>
+      </view>
+      <view class='list-right'>
+      <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+      <view class='list-bottom'>
+        <view class='bottom-left'>
+          <text class='free'>免费赠送</text>
+          <text class='price'>￥8.00</text>
+          <text class='pur'>限购8976件</text>
+          <view class='pro'>
+    <progress class='tx_top_progress' percent="30" border-radius='4' stroke-width="5" backgroundColor="#F3F3F3" activeColor="#F43736" active></progress>
+           <view class='ll'>已抢39%</view>
+          </view>
+        </view>
+        <view class='bottom-right'>
+            <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+            <text class='yj'>赚￥100.99</text>
+        </view>
+      </view>
+      </view>
+      
+    </view>
+</view>
+</view>

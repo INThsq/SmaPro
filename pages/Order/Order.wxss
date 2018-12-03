@@ -1,0 +1,182 @@
+.swiper-tab{
+    width: 100%;
+    border-bottom: 2rpx solid #f3f3f3;
+    text-align: center;
+    height:62rpx;
+    line-height:62rpx;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    background: white;
+    font-size:28rpx;
+    color: #333;  
+    position: fixed;
+    top:138rpx;  
+    z-index: 999;
+}
+.wrapper{
+  width: 100%;
+  height:100rpx;
+  font-size:36rpx;
+  font-weight:bold;
+  padding-top:30rpx;
+  line-height: 100rpx;
+  background:white;
+  letter-spacing: 2rpx;
+  font-family:SourceHanSansSC-Medium;
+  color:#333;
+  position: fixed;
+  text-align: center;
+  justify-content:center;
+  display: flex;
+  top: 0;
+  z-index: 9999;
+  }
+.swiper-tab-item{
+    width: 30%; 
+    color:#434343;
+}
+.active{
+    color:#FF2742;
+    border-bottom: 4rpx solid #FF2742;
+}
+.back{
+  position: absolute;
+  left: 20px;
+}
+swiper{
+  height:110vh;
+}
+/* pages/Fanorder/Fanorder.wxss */
+.order-lists{
+  margin-top: 24rpx;
+}
+.order-list{
+  background: #fafafa;
+  /* padding: 0 40rpx; */
+  font-size: 28rpx;
+}
+.order-list>view{
+  display: flex;
+}
+.order-num image{
+  width: 42rpx;
+  height: 42rpx;
+  vertical-align: middle;
+  border-radius:4px;
+}
+.touxiang text{
+  margin-left:30rpx;
+}
+
+.order-list .order-num{
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #333;
+  background: white;
+  padding:15rpx 40rpx;
+}
+.order-list .order-num .wait{
+  color: #FF2742;
+}
+.order-list .order-con{
+  padding: 30rpx 40rpx 0;
+  box-sizing: border-box;
+}
+.order-list .order-con image{
+  width: 25%;
+  height: 165rpx;
+}
+.tab_cont{
+  margin-top:200rpx;
+}
+.order-list .order-con>view{
+  width:75%;
+}
+.order-list .order-con>view .name{
+  white-space:initial;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+    line-height:44rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+.order-fans{
+  display: flex;
+  justify-content:flex-end;
+  background: white;
+  padding: 15rpx 30rpx;
+  border-bottom: 1px solid #f3f3f3;
+}
+button{
+  border-radius:8rpx!important;
+}
+.confirm::after,.pay::after{
+  border: none;
+}
+.order-fans>view{
+  display: flex;
+}
+.order-fans .names image{
+  width:64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+}
+.order-fans .names text,.order-fans .sf{
+  line-height: 20rpx;
+  color: #666;
+  margin-left: 20rpx;
+}
+.order-fans .sf{
+  line-height:60rpx;
+  color: #333;
+}
+.order-list .order-con>view .size{
+  font-size: 26rpx;
+  color: #999;
+  line-height:50rpx;
+}
+.order-list .order-con>view .price{
+  font-size: 26rpx;
+  color: #333;
+  display: block;
+  line-height:50rpx;
+  
+}
+.order-lists:first-child{
+  margin-top: 0;
+}
+.order-lists .order-con>text{
+  width: 15%;
+  text-align: center;
+  color: #999;
+}
+
+.order-lists .btn{
+  justify-content: flex-end;
+  padding:22rpx 0;
+  border-bottom: none;
+  display: flex;
+  background: white;
+}
+.order-lists button{
+ width: 150rpx;
+ height:56rpx;
+ font-size: 28rpx;
+ color: #333;
+ line-height: 56rpx;
+ padding:0 10rpx;
+ margin: 0;
+ background: white;
+ margin-right: 30rpx;
+}
+
+.order-lists .btn .pay,.confirm{
+  color: #fff!important;
+  background:linear-gradient(90deg,rgba(255,73,73,1) 0%,rgba(255,100,40,1) 100%)!important;
+  border: none!important;
+}
+

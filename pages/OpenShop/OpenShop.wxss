@@ -1,0 +1,249 @@
+/* pages/OpenShop/OpenShop.wxss */
+.container{
+  margin-top: 140rpx;
+}
+.item{
+  height: 48px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  font-size: 33.3rpx;
+  line-height:48px;
+  padding: 0 30rpx;
+  border-bottom:.5px solid #F3F3F3;
+}
+.item:first-child{
+  height: 124rpx;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+}
+input{
+  width:164rpx;
+  height:100%; 
+  text-align: right
+}
+.texts{
+  width:164rpx;
+  text-align: right;  
+  color: #908090;
+}
+.texts .right{
+  top:0!important;
+  margin-left: 5px!important;
+}
+.item image{
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  margin-top: 4rpx;
+}
+.right{
+  color: #999;
+  display: inline-block;
+  position: relative;
+  top:-30%;
+  line-height: 48px;
+}
+.item:first-child .text{
+  line-height:90rpx!important;
+}
+
+/* 店铺类型 */
+.shop-type{
+  margin-top: 16rpx;
+  display: flex;
+  padding: 0 30rpx;
+  font-size: 33.3rpx;
+  justify-content: space-between;
+  background: white;
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #F3F3F3;
+}
+.menu_box{
+width:300rpx;
+display: flex;
+}
+.menu_box image{
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-top: -4rpx;
+}
+.menu1{
+  margin-right: 20rpx;
+}
+
+.borders{
+  background:url('http://oss.myzy.com.cn/wechat/images/icon_xuanzhong.png')no-repeat 50%;
+
+}
+
+.prompt{
+  padding: 26rpx 30rpx 0 30rpx;
+  font-size:29.17rpx;
+  color: #FF8D6F;
+}
+.payfor{
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  left: 0;
+  bottom:0;
+  width:100%;
+  display: inline-block;
+}
+.left{
+  background: white;
+  width:55.5%;
+  display: inline-block;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+  font-size: 33.3rpx;
+}
+.m{
+  margin-left: 12rpx;
+  font-size: 10px;
+}
+.btn{
+ background:#F43736;
+ color: white;
+ font-size: 33.3rpx;
+ width:44.5%;
+ display: inline-block;
+ text-align: center;
+}
+.limits text{
+  display: block;
+  font-size: 29.17rpx;
+  color: #999;
+  margin-top:10rpx;
+}
+.limits{
+  background: white;
+  padding:30rpx 26rpx;
+}
+.clause{
+  font-size:29.17rpx;
+
+}
+checkbox {
+  width:12px;
+  height:12px;
+  display: inline-block;
+   position: relative;
+  top:4rpx;
+  margin-right: 12rpx;
+}
+checkbox .wx-checkbox-input {
+ width:12px;
+  height:12px;
+  position: relative;
+  top: -4rpx;
+}
+/*checkbox选中后样式  */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background:#fff;
+  border-color:#3660E0;
+}
+/*checkbox选中后图标样式  */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  width: 28rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color:#3660E0;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+.clause{
+  position: absolute;
+  bottom: 70px;
+  width: 100%;
+  text-align: center
+}
+.clause block{
+  color: #3660E0;
+}
+
+/* 弹窗 */
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  overflow: hidden;
+  z-index: 1000;
+  color: #fff;
+}
+/*对话框 */
+.commodity_attr_box {
+  height:460rpx;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+}
+
+.titles{
+  padding: 0 30rpx;
+  display: flex;
+  font-size: 29.17rpx;
+  height: 46px;
+  line-height: 46px;
+  justify-content:space-between;
+  border-bottom: 1px solid #F3F3F3;
+}
+.titles .lefts{
+  color: #333;
+}
+.scroll{
+  padding: 30rpx 0;
+  height: 130px;
+  overflow: hidden;
+}
+.titles .rights{
+ color:#FF2742;
+}
+.nav-item{
+  height:34px;
+  line-height: 34px;
+  font-size:29.17rpx;
+  color: #999;
+  text-align: center;
+}
+.active{
+  background: #F3F3F3;
+  font-size: 33.3rpx!important;
+  color: #333;
+  
+}
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}

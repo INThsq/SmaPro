@@ -1,0 +1,86 @@
+/* pages/Aboutus/Aboutus.wxss */
+/* pages/RechSucess/RechSucess.wxss */
+.conts{
+  display: flex;
+  padding-top:240rpx;
+  margin-bottom: 50rpx;
+}
+.conts>view{
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.conts>view image{
+  width:168rpx;
+  height:168rpx;
+  display: inline-block;
+}
+.conts view text{
+  display: block;
+  margin-left: -10rpx;
+  font-size: 36rpx;
+  color: #999;
+  letter-spacing: 1rpx;
+  line-height: 2;
+  text-align: center;
+}
+page{
+  height: 100vh;
+}
+.money{
+  font-size: 64rpx!important;
+  color: #000;
+}
+.btn{
+  width: 328rpx;
+  height:64rpx;
+  line-height: 64rpx;
+  box-shadow:0px 2px 6px 0px rgba(255,230,223,1);
+border-radius:4px;
+background: white;
+position: absolute;
+bottom:140rpx;
+left: 50%;
+margin-left: -164rpx;
+font-size:32rpx;
+color: #666;
+letter-spacing: 1rpx;
+}
+.agree{
+  padding: 0 40rpx;
+  background: white;
+  
+}
+.agree view{
+  display: flex;
+  justify-content: space-between;
+  line-height: 96rpx;
+  border-bottom: .5px solid #FAFBFD;
+}
+.left{
+  font-size: 32rpx;
+  color: #333;
+}
+.right{
+  font-size: 32rpx;
+  color: #999;
+}
+.all{
+  font-size: 29.17rpx;
+}
+.tel{
+  color: #FF0B00;
+}
+.copyright{
+  text-align: center;
+  font-size:19.17rpx;
+  color: #999;
+  line-height: 2;
+  position: absolute;
+  bottom:50rpx;
+}
+.time{
+  font-size: 25rpx;
+  display: inline-block;
+  margin-top: 10rpx;
+}

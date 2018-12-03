@@ -1,0 +1,78 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/Share/Share",
+    "pages/Details/Details",
+    "pages/Robmoney/Robmoney",
+    "pages/Accredit/Accredit",
+    "pages/Payment/Payment",
+    "pages/Address_es/Address_es",
+    "pages/Coindeposit/Coindeposit",
+    "pages/Recharge/Recharge",
+    "pages/Order/Order",
+    "pages/FenNum/FenNum",
+    "pages/Earn/Earning",
+    "pages/Deposit/Deposit",
+    "pages/Balance/Balance",
+    "pages/Setted/Setted",
+    "pages/Address/Address",
+    "pages/Aboutus/Aboutus",
+    "pages/RechSucess/RechSucess",
+    "pages/UserCenter/userCenter",
+    "pages/Confirm/Confirm",
+    "pages/OpenShop/OpenShop",
+    "pages/UserTutorial/UserTutorial",
+    "pages/SettedBefore/SettedBefore",
+    "pages/CareShop/CareShop",
+    "pages/Notgift/Notgift",
+    "pages/Fanorder/Fanorder",
+    "pages/ShopSoul/ShopSoul",
+    "pages/Bussiness/bussiness",
+    "pages/SettedEarn/SettedEarn",
+    "pages/IndexThird/IndexThird"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#b4282d",
+    "navigationBarTitleText": "惠选购",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#F90000",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/imgs/icon_tab_1 copy.png",
+        "selectedIconPath": "static/imgs/icon_tab_5 copy.png"
+      },
+      {
+        "pagePath": "pages/UserTutorial/UserTutorial",
+        "text": "新手教程",
+        "iconPath": "static/imgs/icon_tab_xsjc copy.png",
+        "selectedIconPath": "static/imgs/icon_tab_xsjc1 copy.png"
+      },
+      {
+        "pagePath": "pages/CareShop/CareShop",
+        "text": "惠小店",
+        "iconPath": "static/imgs/icon_tab_9 copy.png",
+        "selectedIconPath": "static/imgs/icon_tab_10 copy.png"
+      },
+      {
+        "pagePath": "pages/Setted/Setted",
+        "text": "入驻",
+        "iconPath": "static/imgs/icon_tab_3 copy 21.png",
+        "selectedIconPath": "static/imgs/icon_tab_7 copy.png"
+      },
+      {
+        "pagePath": "pages/UserCenter/userCenter",
+        "text": "我的",
+        "iconPath": "static/imgs/icon_tab_4 copy.png",
+        "selectedIconPath": "static/imgs/icon_tab_8 copy.png"
+      }
+    ]
+  }
+}

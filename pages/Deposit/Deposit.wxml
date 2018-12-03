@@ -1,0 +1,64 @@
+<!--pages/Deposit/Deposit.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>提现</view> 
+  </my-component>
+</view>
+
+<!-- 提现内容 -->
+<view class='Deposit-cont'>
+  <view class='Deposit-title'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_wechat.png'></image>
+  <text>微信提现</text>
+  </view>
+</view>
+
+
+  <view class="Deposit-money">
+    <view class='Deposit-mon'>
+        <text class='tx-jine'>提现金额(服务费:2元/笔)</text>
+        <view>
+        <view class='pa'>
+        ￥
+        </view>
+        <input type='digit' name='name' placeholder="0"  value='{{money}}'                  bindinput='money' />
+        </view>
+        
+        <!-- <view class='fh'>￥</view> -->
+        <view class='all' wx:if="{{money > 5}}">
+        <text class='abouts'>输入金额超过余额</text>
+        
+        </view>
+        <view class='all' wx:else>
+        <text class='about'>预计48小时到账</text>        
+        
+        </view>
+    </view>
+
+    <block  wx:if="{{money > 5}}">
+    <button class='btns' bindtap='toDespositfalse'>提现</button>    
+    </block>
+    <block  wx:else>  
+    
+    <button class='btn' catchtap='_onShowModal'>提现</button>
+    </block>
+     
+  </view>
+
+
+  <!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>您确定提现金额{{money}}元?</view>     
+    </view>
+
+</dialog>

@@ -1,0 +1,94 @@
+<!--pages/Address_es/Address_es.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view wx:if="{{pageType==1}}">添加收货地址</view> 
+     <view wx:if="{{pageType==2}}">编辑收货地址</view> 
+  </my-component>
+</view>
+
+
+
+<!-- 内容 -->
+<view class="addAddress-container">
+<!-- 收货人 -->
+    <view class='item'>
+        <text>收货人</text>
+         <input placeholder="会飞的猪" placeholder-class="placeholderStyle" bindinput='inputDataChenge' data-item='sa_name' value='{{addressDetails.sa_name}}'/>
+    </view>
+    <!-- 手机号 -->
+<view class='item'>
+        <text>手机号码</text>
+         <input placeholder="联系人手机号" type='number' placeholder-class="placeholderStyle" bindinput='inputDataChenge' data-item='sa_tel' value='{{addressDetails.sa_tel}}' />
+    </view>
+
+    <!-- 所在区域 -->
+<view class='item' bindtap='choosearea'>
+          <text>所在区域</text>
+          <view class='area'  decode="{{true}}">{{choose.sheng.item_name}}   {{choose.shi.item_name}}  {{choose.qu.item_name}}</view>
+  <view  class="right iconfont icon-arrow" style='margin-left:10px'></view>
+          
+    </view>
+    <!-- 详细地址 -->
+    <view class='remarks-wrap'>
+    <textarea wx:if="{{!isShowText}}" placeholder='详细地址：如道路、门牌号等' class='remarks' bindblur='onRemarkInput' bindconfirm='onShowText'     focus='{{onFacus}}' maxlength='20'  value='{{addressDetails.sa_area_xx}}'></textarea>
+    <text wx:else class='remarks' bindtap='onShowText'>{{addressDetails.sa_area_xx}}</text>
+  </view>
+
+   
+    <!-- 设置默认地址 -->
+    <view class='item defalut'>
+        <text>设为默认地址</text>
+         <switch color='#FF4949' style='height:27px;' checked="{{addressDetails.sa_addr_true==0?true:false}}" bindchange="checkboxChange"/>
+    </view>
+</view>
+
+<view class='btn'>
+<button bindtap='save'>保存</button>
+
+</view>
+
+ 
+<!-- 地址弹出框 -->
+<!--屏幕背景变暗的背景  -->
+  <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+  <!--弹出框  -->
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <!-- 标题 -->
+    <view class='title'>
+      <text>配送至</text>
+      <image bindtap='close' src='http://oss.myzy.com.cn/wechat/images/close.png'></image>
+    </view>
+    <!-- tab -->
+    <view class='tabs' bindtap='changetab'>
+        <view class="nav-name {{chooseType==1?'nav-hover':''}}" data-index="1"  bindtap='changetab'>
+                {{choose.sheng?choose.sheng.item_name:'请选择'}}
+       </view>
+       
+        <view class="nav-name {{chooseType==2?'nav-hover':''}}" data-index="2"  bindtap='changetab'>
+                {{choose.shi?choose.shi.item_name:''}}
+       </view>
+        <view class="nav-name {{chooseType==3?'nav-hover':''}}"  data-index="3" bindtap='changetab'>
+                {{choose.qu?choose.qu.item_name:''}}
+       </view>
+    </view>
+ 
+    <!-- 滑动区域 -->
+      <scroll-view scroll-y  style="height:700rpx">
+       <view class="scroll-y" >
+            <view wx:for="{{defaultsheng}}" wx:key="{{index}}" hidden="{{hiddens}}"> 
+                <view class="items {{currentTab1 == index ?'cur':''}}" catchtap='handleTap' data-type="1"  data-text="{{item}}" data-index="{{index}}">{{item.item_name}}</view>
+            </view>
+
+            <view wx:for="{{defaultCity}}"  wx:key="{{index}}" hidden="{{hiddent}}">
+                <view class="items {{currentTab2 == index ?'cur':''}}" catchtap='handleTap' data-type="2"  data-text="{{item}}" data-index="{{index}}">{{item.item_name}}</view>
+            </view>
+
+             <view wx:for="{{defaultQu}}"  wx:key="{{index}}"  hidden="{{hiddenth}}">
+                <view class="items {{currentTab3 == index ?'cur':''}}" catchtap='handleTap' data-type="3"  data-text="{{item}}" data-index="{{index}}">{{item.item_name}}</view>
+            </view>
+
+        </view>
+      </scroll-view>
+  </view>
+ 

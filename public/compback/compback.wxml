@@ -1,0 +1,7 @@
+<!-- 组件模板 -->
+<view class="wrapper">
+  <view class=' back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/back.png'></image>
+  </view>
+  <slot class="tetxs"></slot>
+</view>

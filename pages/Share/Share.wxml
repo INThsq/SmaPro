@@ -1,0 +1,94 @@
+<!--pages/Share/Share.wxml-->
+<!--pages/Confirm/Confirm.wxml-->
+ <view>
+  <my-component>
+     <view>提现</view> 
+  </my-component>
+</view>
+
+<!-- 内容区域 -->
+
+<view class='container'>
+
+  <view class='tx_top'>
+    <view class='tx_top_title'>已存入账户,请尽快提现</view>
+    <view class='tx_top_time'>提现在<text class='tx_top_time_color'>{{dtime}}</text>后过期</view>
+    <view class='tx_top_money'>最多提现<text class='tx_top_time_color'>￥</text><text class='tx_top_time_color tx_top_money_money'>{{info.maxPrice}}</text></view>
+
+    <view class='tx_top_progress_box'>
+      <progress class='tx_top_progress' percent="{{info.percent}}" border-radius='30' stroke-width="5" backgroundColor="#FFECD9" activeColor="#FF843A"></progress>
+      <view class="tx_top_progress_money" style='left:{{left}}rpx;'>￥<text class='tx_top_progress_money_money'>{{info.price}}</text></view>
+      <view class='clear'></view>
+    </view>
+
+    <button class='tx_top_button' bindtap='fxclick'>
+      <image class='tx_top_button_img' src='http://oss.myzy.com.cn/wechat/images/wechat.png'></image>
+      <text class='tx_top_button_txt'>立即分享</text>
+    </button>
+
+    <view class='tx_top_bottomLine1'>提现金额可在下次购物时直接使用</view>
+
+    <view class='tx_top_bottomLine2'><text decode='true'>邀请3~4名您用户下单即可完成提现&nbsp;<text class='tx_top_bottomLine2_txt'>了解更多</text></text></view>
+
+  </view>
+  <view class='boxs'></view>
+  <view class='tx_list_box'>
+
+    <view class='tx_list_box_title' hidden="{{clickType}}">{{info.title}}</view>
+    <view class='tx_list_box_title' hidden="{{!clickType}}">{{info.ctitle}}</view>
+  <scroll-view scroll-y style='height:220px;'>
+    
+    <view class='tx_list_box_list' wx:if='{{!clickType}}'>
+      <view class='tx_list_box_list_tx'>
+        <image class='tx_list_box_list_tx_back' src='http://oss.myzy.com.cn/wechat/images/icon_tx_huangguan.png'></image>
+        <image class='tx_list_box_list_tx_tx' src='{{max.imgSrc}}'></image>
+      </view>
+
+      <view class='tx_list_box_list_title'>{{max.name}}</view>
+      <view class='tx_list_box_list_right' style='font-weight:bold;'>最高战力￥{{max.price}}</view>
+      <view class='clear'></view>
+    </view>
+
+    <view class='tx_list_box_list' wx:for="{{list}}" wx:key="{{index}}">
+      <view class='tx_list_box_list_tx'>
+        <image class='tx_list_box_list_tx_tx' src='{{item.imgSrc}}'></image>
+      </view>
+
+      <view class='tx_list_box_list_title'>{{item.name}}</view>
+      <view class='tx_list_box_list_right'>
+      <text wx:if="{{!clickType}}" class='tx_list_box_list_right_color'>助力</text>
+      <text wx:if="{{clickType}}" class='tx_list_box_list_right_color'>{{item.time}}分钟前,提现了</text>￥{{item.price}}</view>
+      <view class='clear'></view>
+      
+    </view>
+  </scroll-view>
+    
+  </view>
+  
+
+</view>
+
+
+
+<!-- 支付成功红包模态框-->
+<view class='packet' hidden='{{hide}}'>
+  <view class='packet-conts'>
+  <view class='packet-main'>
+    <view class='money'>
+      <text class='big'>10</text>
+      <text class='small'>元</text>
+    </view>
+    <view class='info'>
+      <image src='../../static/imgs/touxiang.jpg'></image>
+      <text>会飞的猪</text>
+    </view>
+  </view>
+  <!-- 关闭按钮 -->
+  <view class='close' bindtap='ClosePacket'>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_tanchuang1.png'></image>
+  </view>
+  </view>
+  
+
+</view>
+ 

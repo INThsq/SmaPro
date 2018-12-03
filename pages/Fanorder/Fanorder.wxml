@@ -1,0 +1,93 @@
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>粉丝订单</view> 
+  </my-component>
+</view>
+
+<!-- 订单主体 -->
+ <view class='order-conts'>
+    <view class="order-info">
+    <view class='order-lists'>
+      <view class="order-list">
+        <view class="order-num">
+        <view class='touxiang'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>fanyuxi官方店</text>
+        </view>
+        <view class='wait'>
+        商品
+        </view>
+        </view>
+        <view class="order-con">
+          <image src="../../static/imgs/goods3.png"></image>
+          <view>
+            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+            <text class="size">颜色:白色,尺码:XL</text>
+            <text class="price">￥888</text>
+          </view>
+        </view>
+        <view class='order-fans'>
+          <view  class='names'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>
+          INT(直属粉丝邀请)
+          </text>
+          </view>
+          <view class='sf'>
+          实付:￥888.00
+          </view>
+        </view>
+      </view>
+      <view class='predeit'>
+        预计佣金:
+        <text class='pre-mon'>+35.80</text>
+      </view>
+    </view>
+
+
+    <view class='order-lists'>
+      <view class="order-list">
+        <view class="order-num">
+        <view class='touxiang'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>fanyuxi官方店</text>
+        </view>
+        <view class='wait'>
+        赠品
+        </view>
+        </view>
+        <view class="order-con">
+          <image src="../../static/imgs/goods3.png"></image>
+          <view>
+            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+            <text class="size">颜色:白色,尺码:XL</text>
+            <text class="price">￥888</text>
+          </view>
+        </view>
+        <view class='order-fans'>
+          <view  class='names'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>
+          INT(直属粉丝)
+          </text>
+          </view>
+          <view class='sf'>
+          实付:￥888.00
+          </view>
+        </view>
+      </view>
+      <view class='predeit'>
+        预计佣金:
+        <text class='pre-mon'>+35.80</text>
+      </view>
+    </view>
+      
+        
+      </view>
+ </view>
+     
+     
+
+

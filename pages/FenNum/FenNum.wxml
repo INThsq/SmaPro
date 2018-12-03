@@ -1,0 +1,93 @@
+<!--pages/FenNum/FenNum.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>粉丝</view> 
+  </my-component>
+</view>
+
+
+<view class='container'>
+<!-- 搜索栏 -->
+ <view class="search-box">
+  <navigator url="../index/index" class="search">
+  <text class="iconfont icon-search"></text>
+请输入昵称或手机号
+  </navigator></view>
+
+<!-- 粉丝总数   -->
+<view class='fanNum' style='background:url("http://oss.myzy.com.cn/wechat/images/img_fsrs_beijing.png") no-repeat center; background-size:cover;'>
+  <view class='top'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_fensirenshu.png'></image>
+    <text>粉丝总数(人)</text>
+  </view>
+  <view class='bottom'>
+  7373
+  </view>
+</view>
+
+<!-- 选项卡 -->
+<view class='tab'>
+<view class="swiper-tab">
+    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">
+      <text class='nums' data-current="0">10</text>
+      <text  data-current="0">今日</text>
+    </view>
+    <view class='bl'>
+    </view>
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">
+      <text class='nums' data-current="1">10</text>
+      <text  data-current="1">昨日</text>
+    </view>
+    <view class='bl'>
+    </view>
+    <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">
+        <text class='nums' data-current="2">373</text>
+      <text  data-current="2">直属粉丝</text>
+    </view>
+    <view class='bl'>
+    </view>
+     <view class="swiper-tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="clickTab">
+       <text class='nums' data-current="3">7000</text>
+      <text  data-current="0">直属粉丝邀请</text>
+     </view>
+</view>
+</view>
+
+<view class='tab_cont'>
+<swiper current="{{currentTab}}" duration="300"  bindchange="swiperTab">
+    <swiper-item >
+    <view class='conts'>
+        <view class='num'>
+            <view class='num-left'>
+              <image src='../../static/imgs/touxiang.jpg'></image>
+              <view>
+              <text class='name'>人生若如初见</text>
+              <text class='time'>注册时间:2018-10-26 19:04</text>
+              </view>
+            
+            </view>
+              <view class='bl'>
+    </view>
+            <view class='num-right' bindtap='Fanorder'>
+              <text class='xf'>消费:366.00元</text>
+              <text class='money'>1个订单</text>
+            </view>
+        </view>
+       
+       
+    </view>
+    </swiper-item>
+    <swiper-item><view>2</view></swiper-item>
+    <swiper-item><view>3</view></swiper-item>
+    <swiper-item><view>4</view></swiper-item>
+    
+</swiper>
+
+</view>
+
+
+
+
+</view>
+

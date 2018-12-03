@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "粉丝订单",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback"
+  }
+}

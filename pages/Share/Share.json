@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "分享",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback"
+  }
+}

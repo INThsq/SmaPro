@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "使用教程",
+  "usingComponents": {
+    "my-component": "../../public/components/component-tag-name"
+  }
+}

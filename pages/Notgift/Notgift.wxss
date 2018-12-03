@@ -1,0 +1,46 @@
+/* pages/Notgift/Notgift.wxss */
+@import "../Fanorder/Fanorder.wxss";
+.order-lists{
+  margin-top: 24rpx!important;
+}
+.order-conts{
+  margin-top:154rpx!important;
+}
+.order-lists .btn{
+  justify-content: flex-end;
+  padding:28rpx 0;
+  border-bottom: none;
+  display: flex;
+  background: white;
+ border-top:.5px solid #f3f3f3;
+  
+}
+.order-lists button{
+ width: 150rpx;
+ height:56rpx;
+ font-size: 28rpx;
+ color: #333;
+ line-height: 56rpx;
+ padding:0 10rpx;
+ margin: 0;
+ background: white;
+ margin-right: 36rpx;
+}
+.order-fans{
+  padding: 15rpx 40rpx 10rpx;
+}
+.sf{
+  color: #1E8713!important;
+}
+.out{
+  color: #333;
+}
+.order-lists .btn .pay,.confirm{
+  color: #fff!important;
+  background:linear-gradient(90deg,rgba(255,73,73,1) 0%,rgba(255,100,40,1) 100%)!important;
+  border: none!important;
+}
+.pay{
+  width: 240rpx!important;
+  border:none!important;
+}

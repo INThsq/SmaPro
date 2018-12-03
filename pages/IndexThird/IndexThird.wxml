@@ -1,0 +1,132 @@
+<!--pages/IndexThird/IndexThird.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>{{texte}}</view> 
+  </my-component>
+</view>
+
+
+<!-- tab导航栏 -->
+<view>
+<view class='tab-bar'  hidden="{{!hiddenName}}">
+    <!-- scroll-left属性可以控制滚动条位置 -->
+    <!-- scroll-with-animation滚动添加动画过渡 -->
+    <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+        <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
+
+        <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" bindtap="switchNav">{{navItem.text}}</view>
+        </block>        
+    </scroll-view>
+
+    <view class='menu' catchtap='show'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye2.png'></image>
+    </view>
+    
+</view>
+</view>
+
+
+
+<!-- 折叠导航 -->
+<view class='cont'  hidden="{{hiddenName}}">
+ <view class='tab-conts'>
+
+  <view class='tabbars' catchtap='hide'>
+  <view>全部分类</view>
+  <view>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye3.png'></image>
+  </view>
+  </view>
+
+  <!-- 导航栏 -->
+  <view class='top_nav'>
+  <view class="nav-name {{item.typeId == currentId ? 'nav-hover':''}}" wx:for="{{navData}}" wx:key="id" id='{{item.typeId}}' catchtap='handleTap'>
+    {{item.text}}
+  </view>
+</view>
+</view>
+</view>
+
+
+
+<!-- 商品列表 -->
+   <view class='order-conts'>
+        <view class="order-info">
+        <view class='order-lists'>
+          <view class="order-list">
+            
+            <view class="order-con">
+              <image src="../../static/imgs/goods3.png"></image>
+              <view>
+                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <text class='one'>￥789</text>
+                   <text class='two'>￥789</text>
+                   <text class='ys'>已售6789件</text>
+                  </view>
+                  <view class='leftes'>
+                    <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+           <view class="order-list">
+            
+            <view class="order-con">
+              <image src="../../static/imgs/goods3.png"></image>
+              <view>
+                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <text class='one'>￥789</text>
+                   <text class='two'>￥789</text>
+                   <text class='ys'>已售6789件</text>
+                  </view>
+                  <view class='leftes'>
+                    <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+          <view class="order-list">
+            
+            <view class="order-con">
+              <image src="../../static/imgs/goods3.png"></image>
+              <view>
+                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <text class='one'>￥789</text>
+                   <text class='two'>￥789</text>
+                   <text class='ys'>已售6789件</text>
+                  </view>
+                  <view class='leftes'>
+                    <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+        </view>
+        </view>
+        </view>
+       
+
+
+
+
+    
+
+
+    

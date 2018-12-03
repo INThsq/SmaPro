@@ -1,0 +1,178 @@
+<!--pages/CareShop/CareShop.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>惠选购商城</view> 
+  </my-component>
+</view>
+
+<scroll-view style='height:100vh'  scroll-y="true" bindscroll="scrollTopFun">
+
+<!-- 店铺内容 -->
+<view class='CareShop' >
+<!-- logo -->
+    <view class='logo'>
+    <image src='../../static/imgs/touxiang.jpg'></image>
+    </view>
+<!-- title -->
+  <view class='title'>
+  <text>花花公子贵宾英明专卖店</text>
+  
+  </view>
+<!-- small -->
+<view class='small'>
+<text>已售59909件</text>
+</view>
+<!-- 客服 -->
+<view class='kefu'>
+  <view class='left'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_sjzx_kf.png'></image>
+  <text>客服</text>
+  </view>
+  <view class='right' bindtap='collect' data-col='{{datacol}}'>
+  <image src='{{collect}}'></image>
+  <text>收藏</text>
+  </view>
+</view>
+<!-- 全部商品 -->
+<view class='all'>
+
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_sjzx_qb.png'></image>
+  <text>全部商品</text>
+</view>
+    <view class="{{top>180 ? 'topnav' : ''}}" data-top="{{top}}">
+<view class='sort-wrap ' bindtap='tabFun'>
+  <view class="sort-btn {{tabArr.curHdIndex=='0'? 'active' : ''}}" data-id="0">
+    综合
+  </view>
+  <view class="sort-btn {{tabArr.curHdIndex=='1'? 'active' : ''}}" data-id="1">
+    新品
+  </view>
+  <view class="sort-btn {{tabArr.curHdIndex=='2'? 'active' : ''}}" data-id="2">
+    销量
+  </view>
+  <view class="sort-btn {{tabArr.curHdIndex=='3'? 'active' : ''}}" data-id="3" bindtap='changechoose' data-index="{{dataindex}}">
+    价格
+    <image src="{{imageurl2}}"></image>
+  </view>
+  </view>
+  
+  
+
+    
+    </view>
+</view>
+
+
+
+ <!-- 商品列表 -->
+   <view class='order-conts'>
+        <view class="order-info">
+        <view class='order-lists'>
+         <view class="order-list">
+            
+            <view class="order-con">
+              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
+              <view>
+                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <view class='one'>
+                    <text class="yang">￥</text>
+                    <text class='nl'>789</text>
+                   </view>
+                   <text class='two'>￥789</text>
+                   <text class='ys'>已售6789件</text>
+                  </view>
+                  <view class='leftes'>
+                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text> -->
+                     <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+          
+         <view class="order-list">
+            
+            <view class="order-con">
+              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
+              <view>
+                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <view class='one'>
+                    <text class="yang">￥</text>
+                    <text class='nl'>789</text>
+                   </view>
+                   <text class='two'>￥789</text>
+                   <text class='ys'>已售6789件</text>
+                  </view>
+                  <view class='leftes'>
+                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text> -->
+                     <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+        </view>
+         <view class="order-list">
+            
+            <view class="order-con">
+              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
+              <view>
+                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <view class='one'>
+                    <text class="yang">￥</text>
+                    <text class='nl'>789</text>
+                   </view>
+                   <text class='two'>￥789</text>
+                   <text class='ys'>已售6789件</text>
+                  </view>
+                  <view class='leftes'>
+                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text> -->
+                     <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+        </view>
+        <view class="order-list">
+            
+            <view class="order-con">
+              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
+              <view>
+                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <view class='one'>
+                    <text class="yang">￥</text>
+                    <text class='nl'>789</text>
+                   </view>
+                   <text class='two'>￥789</text>
+                   <text class='ys'>已售6789件</text>
+                  </view>
+                  <view class='leftes'>
+                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text> -->
+                     <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+        
+</view>
+
+</scroll-view>

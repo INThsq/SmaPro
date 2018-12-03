@@ -1,0 +1,113 @@
+/* pages/CareShop/CareShop.wxss */
+@import "../index/index.wxss";
+.logo image{
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 4px;
+  display: inline-block;
+}
+.logo{
+  display: block;
+  text-align: center;
+  padding:40rpx 0 20rpx;
+}
+.CareShop{
+  margin-top:130rpx;
+  background: white;
+  border-top: .5px solid #f3f3f3;
+  text-align: center;
+}
+.title,.small{
+  text-align: center;
+  line-height:1.6;
+}
+.title text{
+  font-size: 36rpx;
+  color: #333;
+  line-height:1.6;
+}
+.small text{
+  font-size: 26rpx;
+  color: #666;
+}
+.kefu image{
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: middle;
+  margin-right: 16rpx;
+}
+.left{
+  text-align: right!important;
+  padding-right: 46rpx;
+  border-right:.5px solid #f3f3f3; 
+  box-sizing: border-box;
+  
+}
+.right{
+  text-align: left!important;
+  padding-left:46rpx;
+  box-sizing: border-box;
+}
+.kefu view{
+  display: inline-block;
+  width:49.9%;
+  font-size: 32rpx;
+  color: #666;
+}
+.all{
+  display: inline-block;
+  font-size: 32rpx;
+  color: #FF0000;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 40rpx 0 10rpx;
+}
+.all image{
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: middle;
+  letter-spacing: 1rpx;
+  display: inline-block;
+  margin-right: 20rpx;
+  margin-top: -3px;
+}
+.all text{
+  display: inline-block;
+}
+.topnav{
+    position: fixed;
+    top: 130rpx;
+    z-index:99;
+    background: #fff;
+    width: 100%;
+}
+.sort-wrap{
+  height:78rpx;
+  background-color:#fff;
+}
+.sort-btn{
+  width:25%;
+  float:left;
+  text-align: center;
+  height:78rpx;
+  line-height:78rpx;
+  font-size:30rpx;
+  color:#333;
+}
+.sort-btn image{
+  width: 9rpx;
+  height: 18rpx;
+  margin-left:6rpx;
+}
+.active{
+  color: #FF0000;
+}
+.order-info{
+  margin-top: 16rpx;
+}
+page{
+  background: #FAFAFA!important;
+}
+.order-conts{
+  background: white!important;
+}

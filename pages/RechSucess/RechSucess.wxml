@@ -1,0 +1,11 @@
+<!--pages/RechSucess/RechSucess.wxml-->
+<view class='conts'>
+    <view class='icon'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_zfcg.png'></image>
+    <text class='success'>充值成功</text>
+    <text class='money'>￥{{czmoney}}</text>
+    
+    </view>
+</view>
+
+<button class='btn' bindtap='toIndex'>完成</button>

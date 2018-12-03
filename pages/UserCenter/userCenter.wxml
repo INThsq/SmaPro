@@ -1,0 +1,212 @@
+<!--pages/UserCenter/userCenter.wxml-->
+<!-- 用户信息 -->
+<!--userCenter.wxml-->
+<!-- <text>个人中心.wxml</text> -->
+<view class="head">
+  
+  <view class='head-top' style='background:url("http://oss.myzy.com.cn/wechat/images/icon_sc_6.png") no-repeat center; background-size:cover;'>
+  <view class='arrwo'>
+  <image src='../../static/imgs/icon_wdym_gdt.png'></image>
+  </view>
+
+    <!-- 会员卡片 -->
+    <view class='card pro-attention'   bindtap='toAttention' animation='{{attentionAnim}}'>
+    <!-- <text>再消费100升级黑卡</text> -->
+      <image src='../../static/imgs/img_wdym_hyk.png'></image>
+    </view>
+
+    <view class="head-left">
+        <navigator url="../index/index">
+          <image src="../../static/imgs/touxiang.jpg" alt="" class="tx" />
+        </navigator>
+        <view class="head-info">
+            <navigator>
+              <view class="name">会飞的猪</view>
+              <view class='leavl'>
+                普通会员
+              </view>
+            </navigator>
+            <view class="tel">15110542969</view>
+        </view>
+    </view>
+
+     
+    </view>
+     
+    
+    <!-- <text class="iconfont icon-tubiaozhizuomoban"></text>         -->
+</view>
+
+
+
+<!-- 账户金额 -->
+<view class='accout'>
+    <view class='accout_item' bindtap='toBalance'>
+      <navigator hover-class="none">
+        <text class='money'>350.00</text>
+        <text class='m_text'>账户余额(元)</text>
+      </navigator>
+    </view>
+    <view class='accout_item' hover-class="none">
+      <navigator>
+        <text class='money'>50.00</text>
+        <text class='m_text'>累计收益(元)</text>
+      </navigator>
+    </view>
+    <view class='accout_item' hover-class="none">
+      <navigator>
+        <text class='money'>2500.00</text>
+        <text class='m_text'>即将结算(元)</text>
+      </navigator>
+    </view>
+</view>
+
+
+<!-- 我的订单 -->
+<view class="order-item">
+    <view class="order" >
+        <view class="myOrder">我的订单</view>
+        <view class="icon">
+            <text class='all' catchtap='myOrder'>查看全部</text>
+            <text class="iconfont icon-arrow"></text>
+        </view> 
+    </view>
+    <view class="navCont">
+        <navigator hover-class="none" url="#" id='待支付' class="item" bindtap='gettab'>
+            <image src='../../static/imgs/icon_sc_1.png'></image>
+            <view>待支付</view>
+        </navigator>
+        <navigator  hover-class="none"  url="#" id='待发货' class="item" bindtap='gettab'>
+            <image src='../../static/imgs/icon_sc_2.png'></image>
+            <view>待发货</view>
+        </navigator>
+        <navigator  hover-class="none"  url="#" id='待收货' class="item" bindtap='gettab'>
+            <image src='../../static/imgs/icon_sc_3.png'></image>
+            <view>待收货</view>
+        </navigator>
+        <navigator  hover-class="none" url="#"  class="item">
+            <image src='../../static/imgs/icon_sc_4.png'></image>
+            <view>退款/售后</view>
+        </navigator>
+        <navigator  hover-class="none" url="#" id='待评价' class="item" bindtap='gettab'>
+            <image src='../../static/imgs/icon_sc_5.png'></image>
+            <view>待评价</view>
+        </navigator>
+    </view>
+</view>
+
+
+<!-- 礼尚往来  One -->
+<view class='courtesy'>
+  <view class="courtesy_title" bindtap='Ronmoney'>
+  <view class="myCour">礼尚往来</view>
+   <view class="icon">
+            <image src='../../static/imgs/sl.png'></image>
+        </view> 
+        
+    </view>
+
+    <view class='courtesy_cont One'>
+      <view class='sy' bindtap='navCour'>
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_sc_7.png'></image>
+          <view class='sy_title'>
+          收益报表
+          </view>
+          </navigator>
+      </view>
+      <view class='sy' bindtap='FenNum'>
+          <navigator  hover-class="none">
+          <view>
+          <image src='../../static/imgs/icon_sc_8.png'></image>
+          <text class='sy-tlone'>粉丝</text>          
+          </view>
+          <view class='sy_title'>
+          290
+          </view>
+          </navigator>
+      </view>
+      <view class='sy' bindtap='fanOrder'>
+          <navigator  hover-class="none">
+          <view>
+          <image src='../../static/imgs/icon_sc_9.png'></image>          
+          <text class='sy-tlone'>粉丝订单</text>          
+          </view>
+          <view class='sy_title'>
+          290
+          </view>
+          </navigator>
+      </view>
+    </view>
+
+
+<!-- 礼尚往来  Two -->
+   <view class='courtesy_cont Two'>
+      <view class='sy gift'>
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_wdym_wllw.png'  class=''></image>
+          <view class='gift_bef'>3</view>
+          <view class='circle'>
+          </view>
+          <view class='sy_title'>
+          未领礼物
+          </view>
+          </navigator>
+      </view>
+
+    <view class='sy' bindtap='adress'>
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_wdym_shdz.png'></image>
+          <view class='sy_title'>
+          收货地址
+          </view>
+          </navigator>
+      </view>
+
+    <view class='sy'>
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_wdym_stpj.png'></image>
+          <view class='sy_title'>
+          晒图评价
+          </view>
+          </navigator>
+      </view>
+
+
+     <view class='sy'>
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_wdym_gfkf.png'></image>
+          <view class='sy_title'>
+          官方客服
+          </view>
+          </navigator>
+      </view> 
+
+    <view class='sy'>
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_wdym_wtfk.png'></image>
+          <view class='sy_title'>
+          问题反馈
+          </view>
+          </navigator>
+      </view> 
+     
+        <view class='sy' bindtap='aboutUs'>
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_wdym_gywm.png'></image>
+          <view class='sy_title'>
+          关于我们
+          </view>
+          <view class='small'>
+          惠选购
+          </view>
+          </navigator>
+      </view> 
+      
+    </view>
+
+
+
+</view>
+
+

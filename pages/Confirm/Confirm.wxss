@@ -1,0 +1,484 @@
+/* pages/Confirm/Confirm.wxss */
+.container{
+  margin-top: 140rpx;
+}
+.adress{
+  height: 85px;
+  background: white;
+  line-height: 85px;
+  text-align: center;
+  color: #333;
+  font-size: 29.17rpx;
+
+}
+.adress image{
+  width: 12px;
+  height: 12px;
+  margin-right: 16rpx;
+}
+.tool image{
+width: 30rpx;
+height: 30rpx;
+margin-right: 20rpx;
+vertical-align: middle;
+}
+.tool{
+  padding: 34rpx 0 32rpx 30rpx;
+  background: #FDFAE5;
+  color: #F89232;
+  font-size: 29.17rpx;
+
+}
+.b-bro{
+  width: 100%;
+  height: 2px;
+  background: url('http://oss.myzy.com.cn/wechat/images/imag_caidai.png') no-repeat;
+  background-size: 100% 100%;
+}
+.ones .nl{
+  font-size: 33.3rpx;
+  color: #FF0000;
+}
+.ones{
+  color: #FF0000;
+  display: inline-block;
+}
+/* pages/Fanorder/Fanorder.wxss */
+.order-lists{
+  margin-top: 24rpx;
+}
+.order-list{
+  background: #fafafa;
+  /* padding: 0 40rpx; */
+  font-size: 28rpx;
+  margin-top: 16rpx;
+}
+.order-list>view{
+  display: flex;
+}
+.size{
+  color: #999;
+  font-size: 25rpx;
+  margin: 10rpx 0;
+}
+.order-num image{
+  width: 48rpx;
+  height: 48rpx;
+  vertical-align: middle;
+  border-radius:4px;
+}
+.one{
+  font-size:29.17rpx;
+  color: #FF2742;
+  line-height:2;
+}
+.two{
+  margin-left: 18rpx;
+  color: #999;
+  font-size:25rpx;
+  text-decoration: initial;
+}
+.yang{
+  font-size: 10px;
+}
+.touxiang text{
+  margin-left:30rpx;
+}
+
+.order-list .order-num{
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #333;
+  background: white;
+  padding:15rpx 40rpx;
+}
+.order-list .order-num .wait{
+  color: #FF2742;
+}
+.order-list .order-con{
+  padding:14rpx 30rpx;
+  box-sizing: border-box;
+}
+.order-list .order-con image{
+  width: 25%;
+  height: 165rpx;
+  margin-right: 34rpx;
+}
+.order-list .order-con>view{
+  width:75%;
+}
+.order-list .order-con>view .name{
+ white-space:initial;
+overflow : hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+  line-height:44rpx;
+font-size: 26rpx;
+color: #333;
+}
+.shul,.shuls{
+  color: #333;
+  background: white;
+  font-size: 29.17rpx;
+ 
+  
+}
+.shuls{
+ box-sizing: border-box;
+padding:20rpx 30rpx 16rpx 28rpx;
+  overflow: hidden;
+
+}
+.shuls .left{
+  padding-left: 0!important;
+}
+.freight{
+  display: flex;
+  justify-content: space-between;
+  padding:28rpx 30rpx 34rpx;
+  margin-top: 16rpx;
+  color: #333;
+  font-size: 29.17rpx;
+  background: white;
+}
+/*主容器*/
+.stepper {
+	width:100px;
+	height:30px;
+  
+	/*给主容器设一个边框*/
+	float: right;
+}
+.with-l{
+  overflow:hidden;
+}
+.ben{
+  color: #333;
+  margin-right: 20rpx;
+}
+.bens{
+  color: #999;
+  font-size: 33.3rpx;
+}
+.withdraw{
+  margin-top: 16rpx;
+  background: white;
+  padding: 18rpx 30rpx 22rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.with-l-o{
+  font-size: 29.17rpx;
+  margin-bottom: 20rpx;
+}
+.with-l{
+  float: left;
+}
+.with-r{
+  float: right;
+}
+.wx-switch-input{width:42px !important;height:26px !important;margin-top: 24%;}
+.wx-switch-input::before{width:41px !important;height:24px !important;}
+.wx-switch-input::after{width: 23px !important;height:23px !important;}
+.item:last-child text{
+  width: 120px!important;
+}
+.with-l-t{
+  font-size: 25rpx;
+  color: #666;
+  float: right;
+}
+.with-l-t image{
+  width: 12px;
+  height: 12px;
+  margin-left: 8rpx;
+  margin-top: 4rpx;
+}
+::-webkit-scrollbar{
+
+width: 0;
+
+height: 0;
+
+color: transparent;
+
+}
+.nos{
+  margin-right: 2px;
+  font-size: 29.17rpx;
+  
+}
+.no{
+  margin-left: 2px;
+  font-size: 29.17rpx;
+}
+.dis{
+  padding-bottom: 28rpx;
+  border-bottom: 1px solid #F3F3F3;
+  width: 100%;
+}
+/*加号和减号*/
+.stepper text {
+	width:30px;
+	line-height:30px;
+	text-align: center;
+	float: left;
+  background: #F3F3F3;
+  
+}
+.shul .left{
+width: 50%;
+float: left;
+line-height: 30px;
+}
+ 
+/*数值*/
+.stepper input {
+	width: 32px;
+	height:30px;
+	float: left;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 12px;
+  background: #F3F3F3;
+  
+	/*给中间的input设置左右边框即可*/
+}
+ 
+/*普通样式*/
+.stepper .normal{
+	color: #979797;
+  background: #F3F3F3;
+}
+ 
+/*禁用样式*/
+.stepper .disabled{
+  width: 30px;
+  height: 30px;
+  color: #979797;
+  background: #F4F4F4;  
+  }
+  .payfor{
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  left: 0;
+  bottom:0;
+  width:100%;
+  /* display: inline-block; */
+  border-top: 1px solid #EDEDED;
+}
+.left{
+  background: white;
+  width:55.5%;
+  padding-left: 30rpx;
+  line-height: 50px;
+  box-sizing: border-box;
+  font-size: 33.3rpx;
+  color: #333;
+  float: left;
+}
+.m+text{
+  font-size: 18px;
+  color: #FF0000;
+}
+.m{
+  margin-left: 12rpx;
+  font-size: 10px;
+  color: #FF0000;
+}
+.submit{
+ background:#F43736;
+ color: white;
+ font-size: 33.3rpx;
+ width:44.5%;
+ display: block;
+ overflow: hidden;
+ text-align: center;
+ height: 50px;
+}
+.submits{
+   background:#F43736;
+ color: white;
+ font-size: 33.3rpx;                                                                                                            
+ width:44.5%;
+ display: block;
+ overflow: hidden;
+ text-align: center;
+ height: 50px;
+ padding: 10rpx 0 16rpx;
+ box-sizing: border-box;
+}
+.submits text{
+  display:block;
+  text-align: center;
+  width: 100%;
+  height: 20px;
+  line-height: 20px;
+}
+
+.discounts{
+  padding: 16rpx 0;
+  background:#FFF8E6;
+  position: absolute;
+  bottom: 51px;
+  width: 100%;
+}
+.discounts text{
+  font-size: 25rpx;
+  color: #FE5124;
+  display: block;
+  line-height: 18px;
+  text-align: center;
+}
+
+.submits text{
+  display:block;
+}
+/* 弹窗 */
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.6;
+  overflow: hidden;
+  z-index: 1000;
+  color: #fff;
+}
+/*对话框 */
+.commodity_attr_box {
+  height:692rpx;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+
+/* commodity_screen */
+.titles{
+  padding: 20rpx 0 22rpx;
+  border-bottom: 1px solid #F3F3F3;
+}
+.way-title{
+  font-size:29.17rpx;
+  color: #333;
+  line-height: 20px;
+  padding: 24rpx 0;
+}
+.way-list{
+  display: flex;
+  padding: 36rpx 0 26rpx;
+  border-bottom: 1px solid #F3F3F3;
+}
+.way-list image{
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.way-left image{
+width:40rpx;
+  height:40rpx;
+  margin-right: 30rpx;
+  display:inline-block;
+  line-height: 40rpx;
+  margin-top: 10rpx;
+}
+
+.way-text{
+  margin-top: -14rpx;
+}
+.way-texts text{
+  color:#999!important;
+}
+.way-text text{
+  display: block;
+  margin-left: 30rpx;
+}
+.way-text text:first-child{
+  color: #333;
+  font-size: 29.17rpx;
+}
+.way-text text:last-child{
+  color: #999;
+  font-size: 29.17rpx;
+  line-height: 20px;
+  margin-top: 8rpx;
+}
+.way-pay .w{
+  font-size:25rpx!important;
+
+}
+.way-pay{
+  padding: 32rpx 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+.pay-btn{
+  height: 42px;
+  color: white;
+  background:#F43736;
+border-radius:4px;
+font-size: 33.3rpx;
+line-height: 42px;
+
+}
+.pay{
+position:absolute;
+bottom:30rpx;
+width: 100%;
+box-sizing: border-box;
+left: 0;
+padding: 0 30rpx;
+}
+.way{
+  height:600rpx;
+}
+button::after{
+  border: none;
+}
+
+.address-yes{
+  display: flex;
+  padding:16rpx 30rpx 24rpx;
+  background: white;
+  box-sizing: border-box;
+  height: 88px;
+}
+.yes-left{
+  line-height:70px;
+
+}
+.address-yes image{
+  width: 16px;
+  height: 21px;
+  margin-right: 20rpx;
+  display: inline-block;
+}
+.yes-right text{
+  display: block;
+  font-size: 29.17rpx;
+  color: #333;
+  line-height:20px;
+}
+.yes-right text:first-child{
+  margin-bottom:10rpx;
+}
+.yes-rights{
+  line-height:70px;
+  padding-left: 42rpx;
+  
+}
+.yes-rights text{
+  display: inline-block;
+  color: #999;
+}
