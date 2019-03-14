@@ -1,289 +1,146 @@
 <!-- 引用组件的页面模版 -->
-<view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>全部订单</view> 
-  </my-component>
+ <view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">我的订单</view>
 </view>
-
 
 
 <!-- 选项卡 -->
 <view class='tab'>
-<view class="swiper-tab">
-    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">全部</view>
-    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">待付款</view>
-    <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">待发货</view>
-     <view class="swiper-tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="clickTab">待收货</view>
-     <view class="swiper-tab-item {{currentTab==4?'active':''}}" data-current="4" bindtap="clickTab">待评价</view>
-</view>
+<scroll-view scroll-x style="width: 100%" scroll-left="{{navScrollLeft}}rpx" scroll-with-animation="{{true}}"  class="swiper-tab">
+     <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-id="" data-current="0" bindtap="clickTab">全部</view>
+     <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-id='0' data-current="1" bindtap="clickTab">待付款</view>
+     <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-id='1' data-current="2" bindtap="clickTab">待助力</view>
+     <view class="swiper-tab-item {{currentTab==3?'active':''}}" data-id='2' data-current="3" bindtap="clickTab">待发货</view>
+     <view class="swiper-tab-item {{currentTab==4?'active':''}}" data-id='3' data-current="4" bindtap="clickTab">待收货</view>
+     <view class="swiper-tab-item {{currentTab==5?'active':''}}" data-id='4' data-current="5" bindtap="clickTab">待评价</view>
+     <view class="swiper-tab-item {{currentTab==6?'active':''}}" data-id='5' data-current="6" bindtap="clickTab">退款中</view>
+     <view class="swiper-tab-item {{currentTab==7?'active':''}}" data-id='6' data-current="7" bindtap="clickTab">已完成</view>
+     <view class="swiper-tab-item {{currentTab==8?'active':''}}" data-id='7' data-current="8" bindtap="clickTab">已失效</view>
+</scroll-view>
 </view>
 
 <view class='tab_cont'>
-<swiper current="{{currentTab}}" style='height:{{height}}'  bindchange="swiperTab">
+<view>
   <!-- 全部 -->
-    <swiper-item >
-      <view class='order-conts'>
-        <view class="order-info">
-        <view class='order-lists'>
-          <view class="order-list">
+    <view style="padding-bottom:150rpx;">
+      <view class='order-conts' >
+          <view class='noW' wx:if ="{{listData.length == 0}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+              <text>抱歉，暂无数据</text>
+              </view>
+
+        <view class="order-info" wx:else>
+        <view class='order-lists' wx:for="{{listData}}" wx:key="index" >
+          <view class="order-list" >
             <view class="order-num">
             <view class='touxiang'>
-              <image src='../../static/imgs/touxiang.jpg'></image>
-              <text>fanyuxi官方店</text>
+              <image src='{{item.member_mall.logo}}'></image>
+              <text>{{item.member_mall.name}}</text>
             </view>
-            <view class='wait'>
+            <view class='wait' wx:if="{{item.order_status == '0'}}">
             待支付
             </view>
+                <view class='wait' wx:if="{{item.order_status == '7'}}">
+            已失效
             </view>
-            <view class="order-con">
-              <image src="../../static/imgs/goods3.png"></image>
+            <view class='wait' wx:if="{{item.share_queue.state == 0 && item.order_status == 2}}">
+            待发货
+            </view>
+            <view class='wait' wx:if ="{{item.share_queue.state ==1 && item.order_status == 2}}">
+            待助力
+            </view>
+            <view class='wait' wx:if ="{{item.order_status ==3}}">
+            已发货
+            </view>
+            <view class='wait' wx:if ="{{item.order_status ==4}}">
+            已签收
+            </view>
+            </view>
+            <view class="order-con" data-order="{{item.order_num}}" data-status="{{item.order_status}}" bindtap='toPays'>
+              <image src="{{item.image}}"></image>
               <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <text class="size">颜色:白色,尺码:XL</text>
-                <text class="price">￥888</text>
+                <view class="name">{{item.title}}</view>
+                <text class="size">{{item.sku_names}}</text>
+                <text class="price">￥{{item.price}} X {{item.buy_num}}</text>
               </view>
             </view>
             <view class='order-fans'>
               <view class='sf'>
-              实付:￥888.00
+              实付:￥{{item.total_price}}
               </view>
             </view>
           </view>
-          <view class='btn'>
-            <button class='canel'>取消订单</button>
-            <button class='pay'>去支付</button>
+          
+          <!-- 待支付 -->
+          <view class='btn' wx:if="{{item.order_status == 0}}">
+            <button class='canel' bindtap='_onShowModal' data-index="{{index}}" data-order="{{item.order_num}}" >取消订单</button>
+            <button class='pay' data-order="{{item.order_num}}" bindtap='toPay' 
+            data-status='{{item.order_status}}'>去支付</button>
           </view>
-        </view>
-
-    <view class='order-lists'>
-      <view class="order-list">
-        <view class="order-num">
-        <view class='touxiang'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>fanyuxi官方店</text>
-        </view>
-        <view class='wait'>
-        买家已付款
-        </view>
-        </view>
-        <view class="order-con">
-          <image src="../../static/imgs/goods3.png"></image>
-          <view>
-            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-            <text class="size">颜色:白色,尺码:XL</text>
-            <text class="price">￥888</text>
-          </view>
-        </view>
-        <view class='order-fans'>
-           <view class='sf'>
-          实付:￥888.00
-          </view>
+            <!-- 待发货 -->
+           <view class='btn' wx:if="{{item.share_queue.state==0 && item.order_status == 2 }}">
+            <button class='check' data-id='{{item.order_num}}' bindtap='check'>查看物流</button>
+            <button class='pay'  bindtap='remind'>提醒发货</button>
+            </view>
+            <!-- 待收货 -->
+            <view class='btn' wx:if="{{item.order_status == 3}}">
+            <button class='check' data-id='{{item.order_num}}' bindtap='check'>查看物流</button>
+            <button class='pay' bindtap='_Modals'  data-order="{{item.order_num}}">确认收货</button>
+            </view>
+            <!-- 待评价 -->
+            <view class='btn' wx:if="{{item.order_status == 4}}">
+            <button class='check' data-id='{{item.order_num}}' >立即晒单</button>
+            </view>
+            <!-- 待助力 -->
+            <view class='btn' wx:if="{{item.share_queue.state ==1 }}" bindtap='helpD' data-num="{{item.order_num}}">
+            <block wx:if ="{{item.hh != '00'}}">
+            <view class='count-down'>
+            <text class='zuan' >{{item.share_queue.balance == "0.00" ? '' : '赚￥'+item.share_queue.balance}}</text>
+              倒计时 <text style='color:#EE1E2A'>{{item.hh}}:{{item.mm}}:{{item.ss}}:{{item.ms}}</text>
+              </view>
+              </block>
+              <block wx:else> 
+                <text class='overdue'>已过期</text>
+              </block>
+              <button class='pay' >助力详情</button>
+            </view>
         </view>
       </view>
-      <view class='btn'>
-      <button class='remind' bindtap='remind'>提醒发货</button>
-      </view>
-      
+     </view>
     </view>
-    <view class='order-lists'>
-      <view class="order-list">
-        <view class="order-num">
-        <view class='touxiang'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>fanyuxi官方店</text>
-        </view>
-        <view class='wait'>
-        买家已发货
-        </view>
-        </view>
-        <view class="order-con">
-          <image src="../../static/imgs/goods3.png"></image>
-          <view>
-            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-            <text class="size">颜色:白色,尺码:XL</text>
-            <text class="price">￥888</text>
-          </view>
-        </view>
-        <view class='order-fans'>
-         
-          <view class='sf'>
-          实付:￥888.00
-          </view>
-        </view>
-      </view>
-      <view class='btn'>
-            <button class='check'>查看物流</button>
-            <button class='confirm'>确认发货</button>
-          </view>
-      
-    </view>   
-      </view>
- </view>
-    </swiper-item>
-
-    <!-- 待付款 -->
-    <swiper-item>
-       <view class='order-conts'>
-        <view class="order-info">
-        <view class='order-lists'>
-          <view class="order-list">
-            <view class="order-num">
-            <view class='touxiang'>
-              <image src='../../static/imgs/touxiang.jpg'></image>
-              <text>fanyuxi官方店</text>
-            </view>
-            <view class='wait'>
-            待支付
-            </view>
-            </view>
-            <view class="order-con">
-              <image src="../../static/imgs/goods3.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <text class="size">颜色:白色,尺码:XL</text>
-                <text class="price">￥888</text>
-              </view>
-            </view>
-            <view class='order-fans'>
-              <view class='sf'>
-              实付:￥888.00
-              </view>
-            </view>
-          </view>
-           <view class='btn'>
-            <button class='canel'>取消订单</button>
-            <button class='pay'>去支付</button>
-          </view>
-        </view>
-        </view>
-        </view>
-        
-    
-    </swiper-item>
-
-    <!-- 待发货 -->
-    <swiper-item>
-       <view class='order-conts'>
-        <view class="order-info">
-        <view class='order-lists'>
-          <view class="order-list">
-            <view class="order-num">
-            <view class='touxiang'>
-              <image src='../../static/imgs/touxiang.jpg'></image>
-              <text>fanyuxi官方店</text>
-            </view>
-            <view class='wait'>
-            待支付
-            </view>
-            </view>
-            <view class="order-con">
-              <image src="../../static/imgs/goods3.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <text class="size">颜色:白色,尺码:XL</text>
-                <text class="price">￥888</text>
-              </view>
-            </view>
-            <view class='order-fans'>
-              <view class='sf'>
-              实付:￥888.00
-              </view>
-            </view>
-          </view>
-           <view class='btn'>
-          <button class='remind'>提醒发货</button>
-          </view>
-        </view>
-        </view>
-        </view>
-        
-    
-   
-    
-    </swiper-item>
-    <!-- 待收货 -->
-    <swiper-item>
-        <view class='order-conts'>
-        <view class="order-info">
-        <view class='order-lists'>
-          <view class="order-list">
-            <view class="order-num">
-            <view class='touxiang'>
-              <image src='../../static/imgs/touxiang.jpg'></image>
-              <text>fanyuxi官方店</text>
-            </view>
-            <view class='wait'>
-            待支付
-            </view>
-            </view>
-            <view class="order-con">
-              <image src="../../static/imgs/goods3.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <text class="size">颜色:白色,尺码:XL</text>
-                <text class="price">￥888</text>
-              </view>
-            </view>
-            <view class='order-fans'>
-              <view class='sf'>
-              实付:￥888.00
-              </view>
-            </view>
-          </view>
-           <view class='btn'>
-            <button class='check'>查看物流</button>
-            <button class='confirm'>确认发货</button>
-          </view>
-        </view>
-        </view>
-        </view>
-        
-    
-   
-
-    </swiper-item>
-
-    <!-- 待评价 -->
-    <swiper-item>
-    
-    <view class='order-conts'>
-        <view class="order-info">
-        <view class='order-lists'>
-          <view class="order-list">
-            <view class="order-num">
-            <view class='touxiang'>
-              <image src='../../static/imgs/touxiang.jpg'></image>
-              <text>fanyuxi官方店</text>
-            </view>
-            <view class='wait'>
-            待支付
-            </view>
-            </view>
-            <view class="order-con">
-              <image src="../../static/imgs/goods3.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <text class="size">颜色:白色,尺码:XL</text>
-                <text class="price">￥888</text>
-              </view>
-            </view>
-            <view class='order-fans'>
-              <view class='sf'>
-              实付:￥888.00
-              </view>
-            </view>
-          </view>
-           <view class='btn'>
-            <button class='evla'>查看评价</button>
-          </view>
-        </view>
-        </view>
-        </view>
-        </swiper-item>
-    
-
-</swiper>
+  </view>
 
 </view>
 
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+
+   <!-- 自定义模态框  取消订单-->
+ <dialog id="modal"
+            title="温馨提示"
+            cancelText="暂时放弃"
+            confirmText="残忍取消"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+    <view class='modal-body'>
+        <text>订单已生成,确定放弃付款吗?</text>
+    </view>
+</dialog>
+
+ <!-- 自定义模态框  确认收货-->
+  <dialog id="modals"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认收货"
+            bind:cancelEvent="cancel"  
+            bind:confirmEvent="confirm">
+    <view class='modal-body'>
+        <view>请收到商品检查无误后,再确认收货!</view>     
+    </view>
+</dialog> 
+  

@@ -1,0 +1,69 @@
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>促销专区</view> 
+  </my-component>
+</view>
+
+<scroll-view style='height:100vh' bindscrolltolower="bindDownLoad"  scroll-y="true" bindscroll="scrollTopFun">
+
+<!-- 导航栏 -->
+  <view class="topnav">
+<view class='sort-wrap ' bindtap='tabFun'>
+  <view class="sort-btn {{tabArr.curHdIndex=='0'? 'active' : ''}}" data-id="0">
+    综合
+  </view>
+  <view class="sort-btn {{tabArr.curHdIndex=='1'? 'active' : ''}}" data-id="1">
+    新品
+  </view>
+  <view class="sort-btn {{tabArr.curHdIndex=='2'? 'active' : ''}}" data-id="2">
+    销量
+  </view>
+  <view class="sort-btn {{tabArr.curHdIndex=='3'? 'active' : ''}}" data-id="3" bindtap='changechoose' data-index="{{dataindex}}">
+    价格
+    <image src="{{imageurl2}}"></image>
+  </view>
+   </view>
+  </view>
+
+
+ <view class='order-conts' style='padding-top:0!important;margin-top:240rpx;'>
+        <view class="order-info">
+        <block wx:for="{{listx}}" wx:key="{{index}}">
+        <view class='order-lists'  data-id="{{item.goods_id}}"  bindtap='detail'>
+          <view class="order-list">
+            <view class="order-con">
+              <image src="{{item.goods_image}}"></image>
+              <view>
+                <view class="name">{{item.title}}</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <view class='one'>
+                    <text class="yang">￥</text>
+                    <text class='nl'>{{item.price}}</text>
+                   </view>
+                   <!-- <text class='two'>￥789</text> -->
+                   <text class='ys'>{{item.sell_out}}</text>
+                  </view>
+                  <view class='leftes'>
+                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text> -->
+                    <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
+                   
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+        </view>
+        </block>
+        </view>
+        </view>
+ <view class='up-text'>{{up}}</view>
+
+</scroll-view>
+
+      
+

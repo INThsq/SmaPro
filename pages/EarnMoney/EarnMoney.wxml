@@ -1,0 +1,176 @@
+<!--pages/EarnMoney/EarnMoney.wxml-->
+<scroll-view style='height:100vh' scroll-y="true" bindscroll="scrollTopFun" wx:if="{{code == 200}}">
+
+<!-- 组件模板 -->
+<view class="{{top>100 ? ' wrappers' : 'wrapper'}}" data-top="{{top}}">
+  <!-- <view class=' back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/back.png'></image>
+  </view> -->
+  <view class="tetxs">
+    惠选购
+  </view>
+</view>
+
+
+<!-- 漂浮通知-->
+<!-- <view class='inform' animation='{{attentionAnim}}'>
+    <image src='http://oss.myzy.com.cn/wechat/images/touxiang.jpg'></image>
+    <text>{{gift[num].name}}</text>
+</view> -->
+
+<!-- 内容部分 -->
+<view class='container'>
+
+<!-- 头部 -->
+  <view class='head'>
+      <view class='info'>
+        <image src='{{getGifts.member_oauth.headimgurl}}'></image>
+      </view>
+  </view>
+  <view class='contant'>
+  <!-- 赚取礼金 -->
+  <view class='money'>
+      <view wx:if ="{{getGifts.receive_gifts_status == 0}}">
+      <text class='title'>{{getGifts.get_gifts_text}}</text>
+      <view>
+        <text class='y'>￥</text>
+        <text class='num'>{{getGifts.gift_money_total}}</text>
+      </view>
+      </view>
+      <view wx:if="{{getGifts.receive_gifts_status == 0 && getGifts.get_gifts.reward_money !== 0.00 && gets == 1}}" class='help-money'>
+      助力￥{{getGifts.get_gifts.reward_money}}
+      </view>
+       <view wx:if="{{getGifts.receive_gifts_status == 1}}">
+        <view class='money alreadry'>
+            <text class='late'>{{getGifts.get_gifts_text}}{{getGifts.gift_money_total}}</text>
+            <text class='ready'>（领取已经结束）</text>
+        </view>        
+      </view>
+  </view>
+ 
+  <!-- 礼物 -->
+  <view class='gift'>
+    <block wx:if = "{{getGifts.receive_gifts_status == 0}}">
+      <view class='gift-title'>好友赠礼</view>
+      </block>
+      <block wx:else>
+      <view class='gift-title gift-titles'>好友赠礼（已被领取）</view>
+      </block>
+      <view class='gift-detail'>
+      <view class='detail-left'>
+        <image src='{{getGifts.get_gifts.sku_thumb}}'></image>
+      </view>
+      <view class='detail-right'>
+          <view class="{{getGifts.receive_gifts_status == 0?'detail-title':'detail-title grey'}}" data-dd="{{getGifts.receive_gifts_status}}">
+         {{getGifts.get_gifts.title}}
+          </view>
+         
+          <text class='free'>免费领取</text>
+         
+          <text class='price'>原价￥{{getGifts.get_gifts.market_price}}</text>
+      </view>
+      </view>
+  </view>
+  <!-- 按钮 -->
+  <button class='play' wx:if="{{!content && getGifts.receive_gifts_status == 0}}" open-type="getUserInfo"  bindgetuserinfo="bindGetUserInfo">
+  {{button_text?button_text:getGifts.button_text}}
+  </button>
+ <button class='play' wx:if="{{content && getGifts.receive_gifts_status == 0}}" bindtap='receiveGifts' >
+  {{button_text?button_text:getGifts.button_text}}
+  </button>
+  <button  class='play greys' bindtap='receiveGifts'  wx:if="{{getGifts.receive_gifts_status == 1}}">
+  {{button_text?button_text:getGifts.button_text}}
+  </button>
+  <view class='get' bindtap='goStart'>{{getGifts.ad_button_text}}</view>
+
+  <!-- 提示 -->
+  <view class='alert' wx:if="{{data == 2}}">
+  温馨提示：点击我的→未领礼物→填写收货地址提货
+  </view>
+  <!-- 助力 -->
+  <view class='help'>
+      <view class='help-hr'>
+        <view></view>
+        <text>好友助理团</text>
+        <view></view>
+      </view>
+      <!-- 没有数据 -->
+      <view class='no-data' wx:if="{{obj.length == 0}}">
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_zhuli.png'></image>
+          <text>成为第一个为他助力的好友~</text>
+      </view>
+      <!-- 等于二个数据的时候 -->
+    <view class='three-datas' wx:if="{{obj.length > 0 && obj.length <= 3}}">
+      <block wx:for="{{obj}}">
+        <view class='data-info'>
+        <view class='info-left'>
+            <image src='{{item.headimgurl}}'></image>
+            <view class='left-conts'>
+            <text class='info-name'>{{item.nickname}}</text>
+            <text class='infos'>微信新注册用户</text>
+            </view>
+        </view>
+        <view class='info-right'>
+          <text class='right-state'>已经领取</text>
+          <text class='right-zl'>助力￥{{item.allot_money}}</text>
+        </view>
+        </view>
+        </block>
+    </view>
+ <!-- 等于三个数据的时候 -->
+    <view class='three-datas' wx:elif="{{getGifts.gift_praise.length >3}}">
+        <view class='infos hide' style='height:{{height}}rpx'>
+        <view class='data-info' wx:for="{{obj}}" wx:key="{{index}}">
+        <view class='info-left'>
+            <image src='{{item.headimgurl}}'></image>
+            <view class='left-conts'>
+            <text class='info-name'>{{item.nickname}}</text>
+            <text class='infos'>微信新注册用户</text>
+            </view>
+        </view>
+        <view class='info-right'>
+          <text class='right-state'>已经领取</text>
+          <text class='right-zl'>助力￥{{item.allot_money}}</text>
+        </view>
+        </view>
+        </view>
+        <!-- 箭头 -->
+    <view class='arrow' hidden='{{flag}}' bindtap="unfold">
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_xiala_jiantou.png'></image>
+    </view>
+    </view>
+    
+
+
+    
+  </view>
+  <!-- 活动规则 -->
+  <view class='activity'>
+  <view class='help-hr'>
+        <view></view>
+        <text>活动规则</text>
+        <view></view>
+      </view>
+  <!-- 内容 -->
+  <view class='activity-conts'>
+    <text>1.案件表情包缝补不欧泊U币方便欧倩不。</text>
+    <text>2.去我家拜佛七八欧泊朗读女。</text>
+    <text>3.是大V既往不咎博哦我播放我就弄完。</text>
+  </view>
+  </view>
+  
+  </view>
+</view>
+</scroll-view>
+
+   <!-- 吐司提示 -->
+    <import src="../../public/appToast/appToast.wxml"/>
+    <template is="toast" data="{{ ..._toast_ }}"/>
+
+
+<view wx:if="{{code !=200}}">
+   <view class="load show" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
+
+</view>

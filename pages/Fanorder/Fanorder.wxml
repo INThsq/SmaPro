@@ -7,7 +7,14 @@
 </view>
 
 <!-- 订单主体 -->
- <view class='order-conts'>
+
+<view class='container'>
+    <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+    <text>抱歉，暂无数据</text>
+</view>
+
+
+ <!-- <view class='order-conts'>
     <view class="order-info">
     <view class='order-lists'>
       <view class="order-list">
@@ -87,7 +94,7 @@
         
       </view>
  </view>
-     
+      -->
      
 
 

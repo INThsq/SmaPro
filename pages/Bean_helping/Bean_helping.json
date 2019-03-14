@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "提现中",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback"
+  }
+}

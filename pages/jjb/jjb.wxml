@@ -1,0 +1,87 @@
+<!--pages/jjb.wxml-->
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>久加宝</view> 
+  </my-component>
+</view>
+
+<!-- 内容部分 -->
+<view class='container'>
+  <!-- 视频 -->
+   <video id="myVideo"  src="{{data.video}}"  objectFit='cover'   controls  page-gesture = "true" enable-progress-gesture = true></video>
+   <!-- 促销特权 -->
+   <view class='sale'>
+   <!-- 标题信息 -->
+   <view class='sale-title'>
+      <image src='http://oss.myzy.com.cn/wechat/images/img_jj_10.png'></image>
+   </view>
+   <!-- 内容部分 -->
+        <scroll-view scroll-x="true" class='sale-cont'>
+              <view class='cont cont-one'>
+                  <view class='cont-text'>
+                    <view class='one'><view class='circle'></view>{{data.privilege[0][1]}}</view>
+                    <view class='two'><view class='circle'></view>{{data.privilege[0][2]}}</view>
+                  </view>
+              </view>
+
+              <view class='cont cont-two'>
+               <view class='cont-text'>
+                    <view class='one'><view class='circle'></view>{{data.privilege[1][1]}}</view>
+                    <view class='two'><view class='circle'></view>{{data.privilege[1][2]}}</view>
+                  </view>
+              </view>
+
+              <view class='cont cont-thr'>
+               <view class='cont-text'>
+                    <view class='one'><view class='circle'></view>{{data.privilege[2][1]}}</view>
+                    <view class='two'><view class='circle'></view>{{data.privilege[2][2]}}</view>
+                  </view>
+              </view>
+        </scroll-view>
+   </view>
+   <!-- 标题信息 -->
+   <view class='sale-title' style='margin-top:-18rpx!important;'>
+      <image style='margin:50rpx 0 40rpx!important;' src='http://oss.myzy.com.cn/wechat/images/img_jj_1.png'></image>
+   </view>
+    <view class='conts'>
+          <image class='conts-img' src='http://oss.myzy.com.cn/wechat/images/img_jj_2.png'></image>
+          <view class='texts'>
+          <view class='ones' style='position:relative;left:-4%'>
+              <text class='blcak'>购买商品</text>
+              <text class='blue'>获得特权</text>
+          </view>
+          <view class='ones'>
+                <text class='blcak'>免费赠送</text>
+                <text class='blue'>完成指标</text>
+          </view>
+          <view class='ones' style='position:relative;left:4%'>
+                <text class='blcak three'>核销指标</text>
+                <text class='blue red three'>获得佣金</text>
+          </view>
+</view>
+
+<!-- 勾选框 -->
+<view class='check' bindtap='choose'>
+    <image src="{{url}}" data-src='{{url}}'></image>
+    <text style='margin-left:3px;'>勾选即代表<text style='color:blue'>《久加宝促销权益》</text></text>
+</view>
+    </view>
+
+   <!-- 底部按钮 -->
+   <view class='btns'>
+    <view class='btn-left' bindtap='detail' data-id='{{data.goods_id}}'>商品详情</view>
+    <view class='btn-right bb'  bindtap='detail' data-id='{{data.goods_id}}'>立即购买 ￥{{data.price}}</view>
+   </view>
+
+   <view class='arrow'>
+      <text class="text">{{data.buy_tips}}</text>
+      <view class='triangle'></view>
+   </view>
+</view>
+
+  <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+ <template is="toasts" data="{{ ..._toast_ }}"/>
+

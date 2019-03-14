@@ -1,0 +1,2 @@
+/* pages/GoodShop/GoodShop.wxss */
+@import "../CareShop/CareShop.wxss";

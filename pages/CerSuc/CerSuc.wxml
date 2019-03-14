@@ -1,0 +1,22 @@
+<!--pages/CerSuc/CerSuc.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>实名认证</view> 
+  </my-component>
+</view>
+
+<!-- 内容 -->
+<view class='container'>
+    <view class='title'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_tishi.png'></image>
+     经检测，您的身份已通过阿里实名认证！ 无需再次认证
+    </view>
+    <view style='text-align:center'>
+    <image class='info' src='{{content.headimgurl}}'></image>
+    </view>
+    <view class='infos'>
+      <view class='one'>姓名:<text>{{content.realname}}</text></view>
+      <view class='two'>身份证:<text>{{content.id_card}}</text></view>
+    </view>
+</view>

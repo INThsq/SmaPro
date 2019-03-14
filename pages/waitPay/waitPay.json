@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor": "white",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "dialog": "../../public/Dialog/dialog"
+  }
+}

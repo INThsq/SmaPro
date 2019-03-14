@@ -1,11 +1,11 @@
 /* components/component-tag-name.wxss */
 .wrapper{
   width: 100%;
-  height:110rpx;
+  height:100rpx;
   font-size:36rpx;
   font-weight:bold;
-  padding-top:30rpx;
-  line-height: 110rpx;
+  padding-top:40rpx;
+  line-height: 90rpx;
   background:white;
   letter-spacing: 2rpx;
   font-family:SourceHanSansSC-Medium;
@@ -15,14 +15,27 @@
   justify-content:center;
   display: flex;
   top: 0;
-  z-index: 9999;
+  z-index: 900;
   }
-  .back{
+  /* .wrapper::after{
+     position: absolute; 
+  content: '';
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height:1px;
+  background-color: #f3f3f3;
+  -webkit-transform: scale(1, 0.5);
+  transform: scale(1, 0.5);
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+  }  */
+  .back,.backes{
   position: absolute;
   left:15px;
-  margin-top:8rpx;
+  margin-top:4rpx;
 }
-.back image{
-  width:40rpx;
-  height:28rpx;
+.back image,.backes image{
+  width:50rpx;
+  height:38rpx;
 }

@@ -1,0 +1,115 @@
+/* pages/waitPay/waitPay.wxss */
+@import"../EarnMoney/EarnMoney.wxss";
+@import"../Confirm/Confirm.wxss";
+page{
+  background: #f3f3f3!important;
+}
+.top{
+  height:300rpx;
+  padding-top:164rpx; 
+   background:url('http://oss.myzy.com.cn/wechat/images/img_dengdaifukuaidise.png')no-repeat center;
+ background-size: 100% 100%;
+ text-align: center;
+ color:white;
+ font-size: 29.17rpx;
+ box-sizing: border-box;
+}
+.modal-body text{
+}
+.container{
+  margin-top: 0!important;
+  z-index: -1;
+} 
+.top-time image{
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 20rpx;
+  vertical-align:middle;
+}
+.top-time{
+  margin-bottom: 10rpx;
+}
+.actual{
+  background: white;
+  text-align: right;
+  padding:24rpx 30rpx;
+  font-size:29.17rpx;
+  border-bottom: .5px solid #f3f3f3;
+}
+.actual text{
+  color:#FF0000;
+}
+.call{
+  padding:24rpx 0;
+  background: white;
+  text-align: center;
+  font-size: 33.3rpx;
+  margin-bottom: 16rpx;
+}
+.call image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+  vertical-align: middle;
+  margin-top: -4rpx;
+}
+.call-detail{
+  padding:40rpx  30rpx 130rpx;
+  background: white;
+  border-bottom: .5px solid #f3f3f3;
+}
+.call-detail text{
+  display: block;
+  font-size: 29rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+.thing{
+  background:white;
+  text-align: right;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 99;
+  padding: 28rpx 30rpx;
+}
+.thing::after{
+   position: absolute; 
+  content: '';
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #f3f3f3;
+  -webkit-transform: scale(1, 0.5);
+  transform: scale(1, 0.5);
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+}
+.thing view{
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  font-size: 33.3rpx;
+  color: #666;
+  line-height: 24px;
+}
+.thing .del{
+  border:1px solid #c3c3c3;
+  border-radius:4px;
+  margin-right: 26rpx;
+}
+.thing .pays{
+  background: #FF0000;
+  color: white;
+  border-radius:4px;
+}
+.thing view:nth-child(3){
+  margin-right: 26rpx;
+}
+.address-yes{
+  border-bottom: .5px solid #f3f3f3;
+}
+.yes-rights{
+  padding-left: 0!important;
+}

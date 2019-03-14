@@ -1,69 +1,129 @@
 // pages/OpenShop/OpenShop.js
+var util = require('../../utils/md5.js') 
+var utils = require('../../utils/util.js') 
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    province: '',
-    show: false,
     avatarUrl: 'http://oss.myzy.com.cn/wechat/images/icon_kd_zhanweitu.png',
     menuTapCurrent:0,
-    navData: [
-      {
-        text: '推荐',
-        typeId: '0'
-      },
-      {
-        text: '配饰',
-        typeId: '1'
-      },
-      {
-        text: '电格',
-        typeId: '2'
-
-      },
-      {
-        text: '电器',
-        typeId: '3'
-      },
-      {
-        text: '对对对',
-        typeId: '4'
-      },
-      {
-        text: '水果',
-        typeId: '5'
-      },
-      {
-        text: '啦啦',
-        typeId: '6'
-      },
-      {
-        text: '哈哈',
-        typeId: '7'
-      },
-
-    ],
+    shopname:'',
+    //店铺长度
+    shoplen:'',
+    // base64码
+    base64:'',  
+    actionSheetItems: ['拍照','打开相册'],
+    actionSheetHidden: true,
     currentTab: 0,
     // 经营类目
     currrntText:'请选择',
+    itemChange:'',
+    // 店铺类型
+    types:1,
+    res:'',
+    price:'',
+    menuTapCurrents:'',
+    pay_type:3,
+    isShow:false,
+    type:0,
+    choseQuestionBank:"点击选择",
+    show: false,
+    maskShow: false,
+    value: [0],
+    classify: '',
+    index: 1,
+    province: '点击选择'
   },
-  sureSelectAreaListener: function (e) {
-    var that = this;
-    that.setData({
-      show: false,
-      province: e.detail.currentTarget.dataset.province,
+  //选择器
+  choose() {
+    this.setData({
+      show: true,
+      maskShow:true
     })
   },
-  chooseAddress: function () {
+  //滑动选择事件
+  handleNYZAreaChange: function (e) {
+    var that = this;
+    var provinces = that.data.provinces;
+    var value = e.detail.value;
+    that.setData({
+      value: value,
+      province: provinces[value].name,
+      classify: provinces[value].classify_id
+    })
+  },
+  //确定事件
+  handleNYZAreaSelect: function (e) {
+    var myEventDetail = e; // detail对象，提供给事件监听函数
+    var myEventOption = {}; // 触发事件的选项
+    var provinces = this.data.provinces;
+    let value = this.data.value;
+    let province = myEventDetail.currentTarget.dataset.province;
+    let classify = myEventDetail.currentTarget.dataset.classify
+    if (classify) {
+      this.setData({
+        province: myEventDetail.currentTarget.dataset.province,
+        classify: myEventDetail.currentTarget.dataset.classify,
+        show: false
+      })
+    } else {
+      this.setData({
+        province: provinces[0].name,
+        classify: provinces[0].classify_id,
+        show: false
+      })
+    }
+
+  },
+  //取消事件
+  handleNYZAreaCancle: function (e) {
     var that = this;
     that.setData({
-      show: true
+      show: false
+    })
+  },
+
+
+  listenerButton: function () {
+    this.setData({
+      //取反
+      actionSheetHidden: !this.data.actionSheetHidden
+    });
+  },
+  bindPickerChange: function (e) {
+    var that=this
+    this.setData({
+     type: e.detail.value,
+     choseQuestionBank: that.data.array[e.detail.value]
+    })
+  
+   },
+  listenerActionSheet: function () {
+    this.setData({
+      actionSheetHidden: !this.data.actionSheetHidden
+    })
+  },
+  
+  //保存input中的值
+  shopname(e){
+    let shoplen = e.detail.value;
+    if(shoplen.length >=12){
+      wx.showToast({
+        title: '店铺输入不合法',
+        icon:'none',
+        duration:2000,
+        mask:false
+      })
+    }
+    this.setData({
+      shopname:shoplen,
+      shoplen:shoplen.length
     })
   },
   //选项卡效果
-
   switchNav(event) {
     var cur = event.currentTarget.dataset.current;
     var text = event.currentTarget.dataset.text;
@@ -76,27 +136,19 @@ Page({
         
       })
     }
-   
-
-  },
-  //在线付款后到商家中心
-  setted(){
-    wx.navigateTo({
-      url: '../Setted/Setted',
-    })
   },
   //关闭慕态框
   close:function(){
     this.hideModal();
   },
-  //选择类型
-  menuTap: function (e) {
+  menuTaps: function (e) {
     var current = e.currentTarget.dataset.current;//获取到绑定的数据
+    var pay_type = e.currentTarget.dataset.pay;
     //改变menuTapCurrent的值为当前选中的menu所绑定的数据
     this.setData({
-      menuTapCurrent: current
+      menuTapCurrents: current,
+      pay_type:pay_type
     });
-
 
   },
   change:function(){
@@ -147,58 +199,304 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-
-  
-  onshowActionSheet: function () {
-    console.log('000');
+  itemChange(e) {
+    var text = e.target.dataset.text;
     var that = this;
-    wx.showActionSheet({
-      itemList: ['拍照', '打开相册'],
-      success: function (res) {
-        console.log(res.tapIndex)
-        if (res.tapIndex == 0) {
-          wx.chooseImage({
-            count: 1, // 默认9
-            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-              var tempFilePaths = res.tempFilePaths
-              that.setData({
+    that.setData({
+      actionSheetHidden:true
+    })
+    if (text == '拍照') {
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: res=>{
+          //设置头像  本地路径
+            let tempFilePaths = res.tempFilePaths
+            that.setData({
                 avatarUrl: tempFilePaths
-              })  
-            }
+              })
+          //图片转码base64
+            wx.getFileSystemManager().readFile({
+              filePath: res.tempFilePaths[0], //选择图片返回的相对路径
+              encoding: 'base64', //编码格式
+              success: res => { //成功的回调
+                that.setData({
+                  base64:res.data
+                })
+              }
+            })
+          
+        }
+      })
+    } else {
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
+        success: res => {
+          //设置头像  本地路径
+          let tempFilePaths = res.tempFilePaths
+          that.setData({
+            avatarUrl: tempFilePaths
           })
-        } else{
-          wx.chooseImage({
-            count: 1, // 默认9
-            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-              // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-              var tempFilePaths = res.tempFilePaths
+          //图片转码base64
+          wx.getFileSystemManager().readFile({
+            filePath: res.tempFilePaths[0], //选择图片返回的相对路径
+            encoding: 'base64', //编码格式
+            success: res => { //成功的回调
               that.setData({
-                avatarUrl:tempFilePaths
+                base64: res.data
               })
             }
           })
-        }
-      },
-      fail: function (res) {
-        console.log(res.errMsg)
 
+        }
+      })
+    }
+  },
+//验证以及请求
+  topay(){
+    this.setData({
+      isShow:true
+    })
+    this.header(app.globalData.url+'storePayment')
+    var data = {
+      logo: 'data: image/png;base64,'+ this.data.base64,
+      name: this.data.shopname,
+      auth_type: 1,
+      classify_id: this.data.classify,
+      type: this.data.types,
+      pay_type: this.data.pay_type,
+      total_fee: this.data.price,
+      telephone: '17600784408'
+    }
+    wx.request({
+      url:app.globalData.url+'storePayment',
+      method: 'POST',
+      header: this.data.header,
+      data:data,
+      success: res => {
+        if(res.data.code == 200){
+          wx.setStorageSync('member_mall', true)
+          let pay_type = this.data.pay_type;
+          // 余额支付
+          if(pay_type == 1){
+            this.show(res.data.msg)
+            setTimeout(function() {
+              wx.switchTab({
+                url: '../Setted/Setted',
+              })
+            }, 1500)
+              
+              this.setData({
+                isShow: false
+              })
+          }else if(pay_type ==3){
+
+            // 微信支付
+            let payment = res.data.data.callback;
+            //调起微信支付
+            wx.requestPayment({
+              timeStamp: payment.timeStamp,
+              nonceStr: payment.nonceStr,
+              package: payment.package,
+              signType: payment.signType,
+              paySign: payment.paySign,
+              success(res) {
+                wx.setStorageSync('member_mall', true)
+                this.setData({
+                  isShow: false
+                })
+                if (res.errMsg == "requestPayment:ok") {
+                  
+                  setTimeout(function () {
+                    wx.switchTab({
+                      url: '../Setted/Setted',
+                    })
+                },1500)
+              }
+              }
+            })
+          }
+        }else{
+          this.show(res.data.msg);
+          wx.navigateTo({
+            url: '../Accredit/Accredit',
+          })
+        }
       }
     })
   },
+  
+ 
   //跳转
-  setted(){
-    wx.switchTab({
-      url: '../Setted/Setted',
-    })
+  setted(e){
+    var type = e.currentTarget.dataset.type;
+    if (this.data.avatarUrl == 'http://oss.myzy.com.cn/wechat/images/icon_kd_zhanweitu.png'){
+      this.show('请选择上传头像')
+    }
+    else if (this.data.shopname == '') {
+      this.show('店铺名称不能为空')
+      }
+      else if (this.data.shoplen >= 12) {
+        this.show( '店铺输入不合法')
+        }
+        else{
+      this.showModal();
+      if(type == 1){
+        this.setData({
+          price: this.data.res.data.set_store.store_type[1].price
+        })
+      }else{
+        this.setData({
+          price: this.data.res.data.set_store.store_type[0].price
+        })  
+      }
+      
+
+    }
+   
+  },
+  //选择类型
+  menuTap: function (e) {
+    var current = e.currentTarget.dataset.current;//获取到绑定的数据
+    var types = e.currentTarget.dataset.type;
+    //改变menuTapCurrent的值为当前选中的menu所绑定的数据
+    this.setData({
+      menuTapCurrent: current,
+      types:types
+    });
   },
   onLoad: function (options) {
-      
+    this.getJson();
+    new app.ToastPannel();
   },
+//获取页面数据
+  getJson() {
+    var that = this;
+    that.header(app.globalData.url+'setStore');
+    wx.request({
+      url:app.globalData.url+'setStore',
+      method: 'GET',
+      header:that.data.header,
+      success: res => { 
+        if(res.data.code == 200){
+          this.setData({
+            res:res.data,
+            provinces:res.data.data.set_store.classify
+          })
+        }else{
+          utils.error(res);
+        }
+      }
+    })
+  },
+  //开店
+  openShop(){
 
+  },
+  //显示对话框
+  showModal: function () {
+    // 显示遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      showModalStatus: true
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  //隐藏对话框
+  hideModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        showModalStatus: false
+      })
+    }.bind(this), 200)
+  },
+  //生成随机字符串
+  randomWord() {
+    var noncestr;
+    noncestr = '';
+    var noncestrLength = 8;
+    var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    for (var i = 0; i < noncestrLength; i++) {
+      var index = Math.floor(Math.random() * 36);
+      noncestr += random[index];
+    }
+    this.data.noncestr = noncestr.toLowerCase();
+  },
+   //生成header
+   header(url) {
+    var timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    this.randomWord();
+    var noncestr = this.data.noncestr;
+    var api_url = url;
+    var key = 'myzy3224326de100671291c7d1a6353ff6db';
+    var arr = [api_url, key, this.data.noncestr, timestamp];
+    var str = '';
+    for (let i in arr) {
+      str += arr[i];
+    }
+    //md5加密生成
+    var password = '';
+    password = util.hexMD5(str);
+    password = password.toUpperCase();
+    //发起请求
+    var content = wx.getStorageSync('content');
+    if (content) {
+      var uuid = content.data.uuid;
+      var token = content.data.token;
+      var expiry_time = content.data.expiry_time;
+      var logintype = content.data.login_type;
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+        "uuid": uuid,
+        "token": token,
+        "expirytime": expiry_time,
+        "logintype":logintype
+      }
+    } else {
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+      }
+    }
+
+
+
+    this.setData({
+      header: header
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -247,4 +545,5 @@ Page({
   onShareAppMessage: function () {
 
   }
+  
 })

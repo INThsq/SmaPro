@@ -1,0 +1,154 @@
+<!--pages/waitPay/waitPay.wxml-->
+<!-- 组件模板 -->
+<view class="wrapper" >
+   <view class=' back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+  </view> 
+  <view class="tetxs">
+    {{Waitpay.callback.order_queue.status}}
+  </view>
+</view>
+
+<view class='container'>
+  <!-- top -->
+  <view class='top' data-id='{{Waitpay.callback.order_queue.status}}'>
+   <block  wx:if="{{Waitpay.callback.order_queue.status == '待付款'}}">
+    <view class='top-time'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_fukuanzhuangtai_shizhong.png'></image>剩余{{hour}}小时{{minutes}}分钟
+    </view>
+    <view class='top-times'>逾期未付款，订单将会自动取消~</view></block>
+
+    <view wx:if="{{Waitpay.callback.order_queue.status == '已付款'}}">商家正在派货中，请耐心等待~</view>
+
+    <block  wx:if="{{Waitpay.callback.order_queue.status == '待收货'}}">
+    <view class='top-time'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_fukuanzhuangtai_shizhong.png'></image>还剩{{countDownDay}}天{{countDownHour}}小时{{countDownMinute}}分钟
+    </view>
+    <view class='top-times'>系统将自动确认收货，请及时查收哦~</view></block>
+
+
+    <block  wx:if="{{Waitpay.callback.order_queue.status == '待评价'}}">
+    <view class='top-time'>
+    待评价中！
+    </view>
+    <view class='top-times'>您的评价将是其他用户购选前的重要参考哦~
+    </view></block>
+
+
+    <view wx:if="{{Waitpay.callback.order_queue.status == '已完成'}}">感谢您的评价，欢迎再次购买~</view>
+    <view wx:if="{{Waitpay.callback.order_queue.status == '已失效'}}">订单已取消，欢迎再次购买！
+</view>
+
+  </view>
+  <!-- 物流 -->
+  <block wx:if="{{Waitpay.callback.order_status != 0}}">
+  <view class='address-yes' data-id='{{Waitpay.callback.order_num}}' bindtap='check' >
+      <view class='yes-left y1'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_xiaoche.png'></image>
+      </view>
+      <view class='yes-right' style='height:80rpx;'>
+        <text class='right-user' style='color:#50BA48;'>您的订单已导入，商家正在通知快递公司取件</text>
+        <text style='color:#999'>2018-01-6 12:23:40</text>
+       
+      </view>
+      <view class='yes-rights' style='line-height:20px'>
+      <text  class="right iconfont icon-arrow" style='font-size:10px;'></text>
+        
+      </view>
+  </view>
+  </block>
+
+  <!-- 物流 -->
+  <view class='address-yes'  >
+      <view class='yes-left'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_dizhi.png'></image>
+      </view>
+      <view class='yes-right'>
+       <text class='right-user'>收货人：{{Waitpay.callback.mall_logistics.realname}}   {{Waitpay.callback.mall_logistics.telephone}}</text>
+        <text>{{Waitpay.callback.mall_logistics.address}}</text>
+      </view>
+      
+  </view>
+  
+  <!-- 彩色条框 -->
+    <view class='b-bro'>
+    </view>
+  <!-- 商品信息 -->
+    <view class="order-list" bindtap='details'>
+        <view class="order-num">
+        <view class='touxiang'>
+          <image src='{{Waitpay.callback.member_mall.logo}}'></image>
+          <text>{{Waitpay.callback.member_mall.name}}</text>
+        </view>
+        </view>
+        <view class="order-con" data-id="{{Waitpay.callback.mall_goods_id}}"  bindtap='detail'>
+          <image src="{{Waitpay.callback.image}}"></image>
+          <view>
+            <view class="name">{{Waitpay.callback.title}}</view>
+            <text class="size">{{Waitpay.callback.sku_names}}</text>
+            <view class='one'>
+            <text class="yang">￥</text>
+            <text class='nl'>{{Waitpay.callback.price}} x {{Waitpay.callback.buy_num}}</text>
+          </view>
+          </view>
+        </view>
+    </view>  
+  <!-- 实付款 -->
+    <view class='actual'>
+        实付款:
+        <text class='yang'>￥</text>
+        <text style='font-size:34.3rpx;'>{{Waitpay.callback.total_price}}</text>
+        (免运费)
+    </view>
+  <!-- 拨打电话   -->
+  <view class='call' bindtap='call'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_dianhua1.png'></image>拨打电话
+  </view>
+  <!-- 订单详情 -->
+  <view class='call-detail'>
+    <block wx:if="{{Waitpay.callback.order_status == 0}}">
+        <text>订单编号：{{Waitpay.callback.order_num}}</text>
+        <text>支付方式：{{Waitpay.callback.pay_type}}</text>
+
+
+    </block>
+    <block wx:else>
+    <text>订单编号：{{Waitpay.callback.order_num}}</text>
+    <text>支付方式：{{Waitpay.callback.pay_type}}</text>
+    <text>下单时间：{{Waitpay.callback.create_time}}</text>
+    <text>发货时间：{{Waitpay.callback.logistics_info.time}}</text>
+    <text>运单编号：{{Waitpay.callback.order_num}}</text>
+    </block>
+
+  </view>
+  <!-- 按钮 -->
+  <view class='thing'>
+      <view class='del' wx:if="{{Waitpay.callback.order_status == 2||Waitpay.callback.order_status == 3}}">延长收货</view>
+      <view wx:if="{{Waitpay.callback.order_status == 0}}"  data-id='{{Waitpay.callback.order_num}}' bindtap="Canel" class='del'>取消订单</view>
+     <view wx:if="{{Waitpay.callback.order_status == 0}}" bindtap="toConfirm" data-id='{{Waitpay.callback.order_num}}'  class='pays'>去支付</view>
+     <view class='del' data-id='{{Waitpay.callback.order_num}}' bindtap='check' wx:if="{{Waitpay.callback.order_queue.status == '已付款' ||Waitpay.callback.order_status == 3}}">查看物流</view>
+
+      <view wx:if="{{Waitpay.callback.order_queue.status == '已付款'}}" class='pays'>提醒发货</view>
+      <view wx:if="{{Waitpay.callback.order_status == 3}}" class='pays'>确认收货</view>
+
+  </view>
+</view>
+
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+
+   <!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="暂时放弃"
+            confirmText="残忍取消"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <text>订单已生成,确定放弃付款吗?</text>
+    </view>
+
+</dialog>

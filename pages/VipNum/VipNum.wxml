@@ -1,0 +1,66 @@
+<!--pages/FenNum/FenNum.wxml-->
+<view>
+    <my-component>
+      <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+       <view>会员管理</view> 
+    </my-component>
+  </view>
+  
+  
+  <view class='container'>
+  <!-- 搜索栏 -->
+   <view class="search-box">
+    <navigator url="../index/index" class="search">
+    <text class="iconfont icon-search"></text>
+  请输入会员名
+    </navigator></view>
+  
+  <!-- 粉丝总数   -->
+  <view class='fanNum' style='background:url("http://oss.myzy.com.cn/wechat/images/img_fsrs_beijing.png") no-repeat center; background-size:cover;'>
+    <view class='top'>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_fensirenshu.png'></image>
+      <text>会员总数(人)</text>
+    </view>
+    <view class='bottom'>
+    {{userCount.user_count}}
+    </view>
+  </view>
+ 
+  
+  <view class='tab_cont'>
+      <view class='noW' wx:if ="{{userCount.strore_user_list.length == 0}}">
+          <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+          <text>抱歉，暂无数据</text>
+          </view>
+      <swiper-item  wx:else>
+      <view class='conts'>
+          <view class='num' wx:for="{{userCount.strore_user_list}}">
+              <view class='num-left'>
+                <image src='{{item.headimgurl}}'></image>
+                <view>
+                <text class='name'>{{item.nickname}}</text>
+                <text class='time'>{{item.create_time}}</text>
+                </view>
+              
+              </view>
+                <view class='bl'>
+            </view>
+              <view class='num-right' bindtap='Fanorder'>
+                <text class='xf'>消费:{{item.consume_total}}元</text>
+                <text class='money'>{{item.order_total}}个订单</text>
+              </view>
+          </view>
+         
+         
+      </view>
+      </swiper-item>
+    
+  
+  </view>
+  
+  
+  
+  
+  </view>
+  
+  

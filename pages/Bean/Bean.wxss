@@ -1,0 +1,53 @@
+/* pages/Bean/Bean.wxss */
+@import "../FenNum/FenNum.wxss";
+.container{
+    margin-top: 144rpx!important;
+    padding-bottom:0!important;
+}
+.bean-cont{
+    background: white;
+    padding: 0 30rpx;
+}
+.item{
+display: flex;
+justify-content: space-between;
+padding: 22rpx 0;
+position: relative;
+}
+.item .left text{
+    display: block;
+}
+.item .right{
+    display: flex;
+    align-items: center; 
+}
+.left-title{
+    font-size: 29.17rpx;
+    line-height: 40rpx;
+}
+.left-num{
+    font-size: 20px;
+    color: #F43736;
+    font-weight: bold;
+    line-height:56rpx;
+}
+.item image{
+    width:8px;
+    height:14px;
+    display:flex;
+    vertical-align: middle;
+    align-items: center;
+}
+.item::after{
+    position: absolute; 
+    content: '';
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: #f3f3f3;
+    -webkit-transform: scale(1, 0.5);
+    transform: scale(1, 0.5);
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+}

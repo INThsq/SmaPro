@@ -9,17 +9,20 @@
 .logo{
   display: block;
   text-align: center;
-  padding:40rpx 0 20rpx;
+  padding:30rpx 0 20rpx;
+}
+.ys{
+  color: #999!important;
 }
 .CareShop{
-  margin-top:130rpx;
+  margin-top:124rpx;
   background: white;
   border-top: .5px solid #f3f3f3;
   text-align: center;
+  margin-bottom: 16rpx;
 }
 .title,.small{
   text-align: center;
-  line-height:1.6;
 }
 .title text{
   font-size: 36rpx;
@@ -82,15 +85,29 @@
     width: 100%;
 }
 .sort-wrap{
-  height:78rpx;
+  height:90rpx;
   background-color:#fff;
+  position: relative;
+}
+.sort-wrap::after{
+   position: absolute; 
+  content: '';
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #f3f3f3;
+  -webkit-transform: scale(1, 0.5);
+  transform: scale(1, 0.5);
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
 }
 .sort-btn{
   width:25%;
   float:left;
   text-align: center;
-  height:78rpx;
-  line-height:78rpx;
+  height:90rpx;
+  line-height:90rpx;
   font-size:30rpx;
   color:#333;
 }
@@ -103,11 +120,12 @@
   color: #FF0000;
 }
 .order-info{
-  margin-top: 16rpx;
+  /* margin-top: 16rpx; */
 }
 page{
   background: #FAFAFA!important;
 }
 .order-conts{
   background: white!important;
+ 
 }

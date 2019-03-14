@@ -1,12 +1,38 @@
 /**app.wxss**/
-
+@import './public/appToast/appToast.wxss';
 page{
     color:#333;
     margin:0;
     background: #fafafa;
     font-family:"SourceHanSansSC";
 }
-
+.button-hover{
+  color:white;
+  background: #F43736;
+}
+/* pages/load/load.wxss */
+.bth_image2{
+    width: 64rpx;
+    height: 64rpx;
+    margin-right: 40rpx;
+    vertical-align: middle;
+}
+.load{
+    width:470rpx;
+    height: 144rpx;
+    background:rgba(53,53,53,.7);
+    border-radius: 6px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left:-235rpx;
+    margin-top: -77rpx;
+    padding: 40rpx; 
+    box-sizing: border-box;
+    color: #f3f3f3;
+    font-size: 33.3rpx;
+    z-index:3000;
+}
 /*global.css*/
 .mainBg{
     background: #b4282d;
@@ -133,3 +159,18 @@ page{
 .icon-shichangtuiguang-:before { content: "\e607"; }
 
 .icon-shichangtuiguang:before { content: "\e603"; }
+.noW image{
+width: 121px; 
+margin-top:70px;
+  height:119px;
+}
+  .noW{
+    background: white;
+    text-align: center
+  }
+.noW text{
+  display: block;
+  margin-top: 32rpx;
+  font-size: 33.3rpx;
+  color:#999;
+}

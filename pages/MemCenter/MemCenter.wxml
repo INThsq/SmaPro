@@ -1,0 +1,100 @@
+<!--pages/MemCenter/MemCenter.wxml-->
+   <view class="{{scrollTop > 88?'wrapper red':'wrapper'}}">
+      <view class='back' bindtap='back'>
+        <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+      </view>
+      <view class="tetxs">会员中心</view>
+    </view>
+
+<!-- 内容区域 -->
+  <view class='container'>
+    <view class='top'></view>
+    <!-- 滑动view -->
+    <view class='scroll'>
+    <view class='topTabSwiper'>
+    <block wx:for="{{list}}" wx:key="index" wx:for-index="index">
+      <view class='tab  {{currentData == index ? "tabBorer" : ""}}'  data-current = "{{index}}" bindtap='checkCurrent'></view>
+    </block>  
+  </view>
+  <swiper current="{{currentData}}" class='swiper' style="height:600px;" duration="300" bindchange="bindchange">
+    <swiper-item class="info">
+      <view class='swiper_con'>
+      <view class='con_top' style='margin-top:20rpx;'>
+        <image src='{{data.image}}'></image>
+        <text class='phone'>惠选购  开启美好生活！</text>
+      </view>
+      <view class='cont_bot' wx:if="{{data.is_current == 1}}">
+          <view class='bot_one'>已消费￥{{data.points}}元</view>
+          <view class='bot_two' style='font-weight:bold'>[再消费 <text>{{data.diff_points}}</text> 成为惠选购普卡]</view>
+      </view>
+      <view class='cont_bot' wx:if="{{data.is_current == 0 && data.diff_points >0}}">
+          <view class='bot_one'>专享惠选购{{data.alias_name}}</view>
+          <view class='bot_two'>[消费达 <text style='font-weight:bold'>{{data.min_points}}</text> 可拥有]</view>
+      </view>
+      <view class='cont_bot' wx:if="{{data.diff_points <0}}">
+          <view class='bot_one'>专享惠选购{{data.alias_name}}</view>
+          <view class='bot_two'>[恭喜您已拥有{{data.alias_name}}]</view>
+      </view>
+      </view>
+    </swiper-item> 
+    
+    <block wx:for="{{list}}" wx:key="{{index}}">
+    <swiper-item class="card">
+      <view class='swiper_con'>
+      <view class='con_top'>
+        <image src='{{item.image}}'></image>
+        <text class='phone'>{{item.number}}</text>
+      </view>
+      <view class='cont_bot' wx:if="{{item.is_current == 0}}">
+          <view class='bot_one'>专享惠选购{{item.alias_name}}</view>
+          <view class='bot_two'>[消费达 <text style='font-weight:bold'>{{item.min_points}}</text> 可拥有]</view>
+      </view>
+      <view class='cont_bot' wx:if="{{item.is_current == 1}}">
+          <view class='bot_one'>已累计贡献值 {{item.points}} 分</view>
+          <view class='bot_two'>[再消费 <text style='font-weight:bold'>{{item.diff_points}}</text> 成为惠选购{{list[index +1].alias_name}}]</view>
+      </view>
+      </view>
+    </swiper-item> 
+  </block>
+  </swiper>
+  </view>
+  <!-- 留白 -->
+  <view class='black'></view>
+  <!-- 内容 -->
+  <view class='bot_cont'>
+  <!-- 标题部分 -->
+      <view class='cont_title'>
+        <text class='big'>HI, {{name}}</text>
+        <text class='small'>·升级立享以下特权·</text>
+      </view>
+    <!-- 包邮 -->
+      <view class='baoyou' wx:if="{{callback.member_group_show == 1}}">
+       <image class='yel' src='http://oss.myzy.com.cn/wechat/images/icon_member_mianfeibaoyou.png'></image>
+        <view class='by_one'>送礼赚佣金 最高每单<text>10</text>元</view>
+        <view class='by_two'>轻松赚钱 
+        <image class='star' src='http://oss.myzy.com.cn/wechat/images/p1.png'></image> 月入过
+        <image class='wan' src='http://oss.myzy.com.cn/wechat/images/icon_member_wan.png'></image>
+        </view>
+        <text class='leavel'>会员权益大升级!</text>
+        <view class='bfb'>享<text>10%-40%</text>消费佣金 额外提成</view>
+      </view>
+   
+      <!-- 特权 -->
+      <block wx:for="{{callback.member_benefits}}" wx:key="{{index}}">
+      <view class='exalted'>
+        <view class='ex_top'>
+          <view class='left'>{{index+1}}</view>
+           <view class='right'>
+            <text class='right_tit'>{{item.title}}</text>
+            <text class='right_smal'>{{item.subtitle}}</text>
+            </view>
+        </view>
+        <view class='ex_bot'>
+        <image src='{{item.iamge}}'></image>
+        </view>
+      </view>
+      </block>
+      <button class='buy' bindtap='goIndex'>立即购物</button>
+      
+  </view>
+  </view>

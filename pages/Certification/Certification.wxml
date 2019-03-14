@@ -1,0 +1,50 @@
+<!--pages/Certification/Certification.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>实名认证</view> 
+  </my-component>
+</view>
+
+
+<!-- 内容部分 -->
+<view class='container'>
+  <view class='title'>拍照上传您的身份证</view>
+  <!-- 上传照片 -->
+  <view class='photo' data-id='1' style='margin-bottom:88rpx;'  catchtap='listenerButton'>
+  <image class='jj' src='http://oss.myzy.com.cn/wechat/images/imag_shenfenzheng_bg.png'></image>
+      <image class="pp"  src='{{avatarUrl1}}'></image>
+  </view>
+  <!-- 反面 -->
+  <view class='photo' data-id='2' catchtap='listenerButton'>
+  <image class='jj' src='http://oss.myzy.com.cn/wechat/images/imag_shenfenzheng_bg.png'></image>
+      <image class="pp" src='{{avatarUrl2}}'></image>
+  </view>
+  <!-- 按钮 -->
+  <button class='bind' bindtap='Sure'>确定</button>
+
+  <view class='tool'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_anquan.png'></image>
+信息已加密，仅用于银行验证
+</view>
+</view>   
+
+<!-- 拍照 -->
+<!--默认action-sheet为隐藏，由button触发-->
+<action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
+
+    <block wx:for-items="{{actionSheetItems}}" wx:key="{{key}}" > 
+        <action-sheet-item  data-index="{{index}}" data-text="{{item}}" bindtap="itemChange">{{item}}</action-sheet-item>
+    </block>
+    <!--自动隐藏action-sheet-->
+    <action-sheet-cancel>取消</action-sheet-cancel>
+</action-sheet>
+
+<!-- loading -->
+<view class="load" hidden='{{hide}}'>
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
+   <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+  

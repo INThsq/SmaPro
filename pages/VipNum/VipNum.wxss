@@ -1,0 +1,2 @@
+/* pages/VipNum/VipNum.wxss */
+@import "../FenNum/FenNum.wxss"

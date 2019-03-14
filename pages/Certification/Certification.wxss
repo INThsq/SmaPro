@@ -1,0 +1,103 @@
+/* pages/Certification/Certification.wxss */
+page{
+  background: white;
+}
+.container{
+  margin-top: 144rpx;
+  text-align: center;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.container .title{
+  font-size:33.3rpx;
+  color: #FF1700;
+  padding: 48rpx 0 82rpx;
+
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+
+}
+.load{
+  z-index: 999;
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
+.pp{
+  width:416rpx;
+  height: 250rpx;
+  position: absolute;
+  top:22rpx;
+  left: 50%;
+  margin-left:-208rpx;
+}
+.jj{
+  width:460rpx;
+  height: 294rpx;
+}
+.photo{
+  position: relative;
+}
+button::after{
+  border: none;
+  outline:none;
+}
+
+ button{
+  height: 42px;
+  line-height: 42px;
+  color: white;
+  background: #FF4949;
+  margin-top:88rpx;
+}
+.tool image{
+  width: 20rpx;
+  height: 24rpx;
+  margin-right: 10rpx;
+}
+.tool{
+  font-size: 25rpx;
+  color: #999;
+  text-align: center;
+  position: absolute;
+  bottom:32rpx;
+  width: 100%;
+}
+action-sheet-item{
+  font-size: 33.3rpx;
+  color: #333;
+}
+
+.yjs{
+  color: #999!important;
+}
+action-sheet-cancel{
+  font-size: 33.3rpx;
+  color: #8D8D8D;
+}
+action-sheet{
+  background:#fafafa;
+}

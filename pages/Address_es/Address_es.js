@@ -1,5 +1,8 @@
 // pages/Address_es/Address_es.js
-var app = getApp()
+var app = getApp();
+var util = require('../../utils/md5.js');
+var utils = require('../../utils/util.js'); 
+
 Page({
 
   /**
@@ -8,20 +11,17 @@ Page({
   data: {
     //页面类型
     pageType: 1,
+    noncestr: '',
     //表单信息  为下单页面测试
     addressDetails: {
-      sa_area: '',
-      sa_name: '',
-      sa_tel: '',
-      sa_addr_true: 1,
-      sa_area_xx: '',
+      realname: '',
+      mobile: '',
+      is_default: 0,
+      address: '',
     },
-    currentTab1:0,
-    currentTab2:0,
-    currentTab3:0,
     onFocus: false,    //textarea焦点是否选中
     isShowText: false, //控制显示 textarea 还是 text
-    remark: '', 
+    remark: '',
     // 选择地区
     // 选择地区
     choose: {
@@ -30,31 +30,16 @@ Page({
       qu: ''
     },
     chooses: '',
-    defaultsheng: [
-      {
-        "item_code": "110000",
-        "item_name": "四川省",
-      },
-      {
-        "item_code": "110000",
-        "item_name": "北京省",
-      }
-    ],
+    defaultsheng: '',
     chooseType: 1,
     defaultCity: [],
     defaultQu: [],
-    cityJson: [
-      { "item_code": "230000", "item_name": "黑龙江省" },
-      { "item_code": "310000", "item_name": "上海市" },
-      { "item_code": "320000", "item_name": "江苏省" },
-      { "item_code": "330000", "item_name": "浙江省" },
-      { "item_code": "340000", "item_name": "安徽省" },
-      { "item_code": "350000", "item_name": "福建省" },
-      { "item_code": "360000", "item_name": "江西省" }
-    ],
+    cityJson: '',
     hiddens: false,
     hiddent: true,
-    hiddenth: true
+    hiddenth: true,
+    id: '',
+    datas: ''
 
   },
   choosearea: function () {
@@ -66,10 +51,10 @@ Page({
   },
   close: function () {
     this.hideModal();
-this.setData({
-  isShowText: false,
-  onFacus: true
-})
+    this.setData({
+      isShowText: false,
+      onFacus: true
+    })
   },
   onShowTextare() {       //显示textare
     this.setData({
@@ -86,62 +71,78 @@ this.setData({
   onRemarkInput(event) {               //保存输入框填写内容
     var value = event.detail.value;
     this.setData({
-      "addressDetails.sa_area_xx": value,
+      "addressDetails.address": value,
     });
   },
   //选择地区
   handleTap: function (e) {
+
     var text = e.target.dataset.text;
     var index = e.target.dataset.index;
     var type = e.target.dataset.type;
+    var id = e.target.dataset.ids;
     var that = this;
     var data = {};
+    this.setData({
+      id: id,
+    })
+
     if (type == 1) {
+
+      if (text != that.data.choose.sheng) {
+        that.setData({
+          "choose.shi": false,
+          "choose.qu": false,
+          "sheng_id": type,
+        })
+      }
       that.setData({
         defaultCity: [],
         "choose.sheng": false,
         hiddent: false,
         hiddenth: true,
         hiddens: true,
-
+        chooseType: 2,
       })
+      this.getTwoArea();
       data = {
         defaultCity: that.data.cityJson,
         "choose.sheng": text,
-        chooses: text,
-        currentTab1:index
+        chooses: text
       }
+
     }
     if (type == 2) {
+      if (text != that.data.choose.shi) {
+        that.setData({
+          "choose.qu": false,
+        })
+      }
       that.setData({
+
         defaultQu: [],
         "choose.shi": false,
-        
         hiddens: true,
         hiddent: true,
         hiddenth: false
-
       })
       data = {
-        defaultQu: [
-          { "item_code": "110000", "item_name": "昌平区" },
-          { "item_code": "120000", "item_name": "丰台区" },
-        ],
+
         "choose.shi": text,
         chooses: text,
-        chooseType: 2,
-        currentTab2: index
+        chooseType: 3
       }
+      this.getThreeArea();
+
+
     }
     if (type == 3) {
       data = {
         "choose.qu": text,
         chooses: text,
-        chooseType: 3,
         hiddens: true,
         hiddent: true,
-        hiddenth: false,
-        currentTab3: index
+        hiddenth: false
 
       }
     }
@@ -212,6 +213,10 @@ this.setData({
       timingFunction: "linear",
       delay: 0
     })
+    this.setData({
+      isShowText: false,
+      onFacus: true
+    })
     this.animation = animation
     animation.translateY(200).step()
     this.setData({
@@ -229,13 +234,13 @@ this.setData({
   //设置默认地址
   checkboxChange(e) {
     console.log(e.detail.value)
-    if (e.detail.value) {
+    if (!e.detail.value) {
       this.setData({
-        'addressDetails.sa_addr_true': 0
+        'addressDetails.is_default': 0
       })
     } else {
       this.setData({
-        'addressDetails.sa_addr_true': 1
+        'addressDetails.is_default': 1
       })
     }
 
@@ -250,32 +255,139 @@ this.setData({
     })
 
   },
+  //获取地区地址
+  getArea() {
+    this.header(app.globalData.url+'getRegion');
+    wx.request({
+      url: app.globalData.url+'getRegion',
+      method: 'GET',
+      header: this.data.header,
+      success: res => {
+        this.setData({
+          defaultsheng: res.data.data.region.area_list
+        })
+      }
+    })
+  },
+  //获取二级地址
+  getTwoArea() {
+    this.header(app.globalData.url+'getRegion');
+    wx.request({
+      url:app.globalData.url+'getRegion',
+      method: 'get',
+      header: this.data.header,
+      data: {
+        parent_id: this.data.id
+      },
+      success: res => {
+        this.setData({
+          defaultCity: res.data.data.region.area_list
+        })
+      }
+    })
+  },
+  //获取三级地址
+  getThreeArea() {
+    this.header(app.globalData.url+'getRegion');
+    wx.request({
+      url: app.globalData.url+'getRegion',
+      method: 'get',
+      header: this.data.header,
+      data: {
+        parent_id: this.data.id
+      },
+      success: res => {
+        this.setData({
+          defaultQu: res.data.data.region.area_list
+        })
+      }
+    })
+  },
+
+  ///////////////////////////
+
+  //获取二级地址
+  getTwoAreaEdit(pids) {
+    // debugger;
+    this.header(app.globalData.url+'getRegion');
+    wx.request({
+      url:app.globalData.url+'getRegion',
+      method: 'get',
+      header: this.data.header,
+      data: {
+        parent_id: pids
+      },
+      success: res => {
+        // debugger;
+        this.setData({
+          defaultCity: res.data.data.region.area_list
+        })
+      }
+    })
+  },
+  //获取三级地址
+  getThreeAreaEdit(pids) {
+    this.header(app.globalData.url+'getRegion');
+    wx.request({
+      url:app.globalData.url+'getRegion',
+      method: 'get',
+      header: this.data.header,
+      data: {
+        parent_id: pids
+      },
+      success: res => {
+        this.setData({
+          defaultQu: res.data.data.region.area_list
+        })
+      }
+    })
+  },
+
+  ///////////////////////////
   //提交信息
   save: function (e) {
-    console.log(e);
     var mobile = /^[1][3,4,5,7,8][0-9]{9}$/;
-    var isMobile = mobile.exec(this.data.addressDetails.sa_tel);
+    var isMobile = mobile.exec(this.data.addressDetails.mobile);
     if (!isMobile) {
-      wx.showToast({
-        title: '手机号格式有误！',
-        icon: 'none',
-        duration: 10000
-      })
+     
+      this.shows('手机号格式有误！')
 
     } else {
-      console.log('1111');
+      let region_path_name = this.data.choose.sheng.short_name + ',' + this.data.choose.shi.short_name + ',' + this.data.choose.qu.short_name;
+      let region_path_id = this.data.choose.sheng.id + ',' + this.data.choose.shi.id + ',' + this.data.choose.qu.id
       let datas = {
-        choose: this.data.choose,
-        sa_name: this.data.addressDetails.sa_name,
-        sa_tel: this.data.addressDetails.sa_tel,
-        sa_addr_true: this.data.addressDetails.sa_addr_true,
-        sa_area_xx: this.data.addressDetails.sa_area_xx
+        // choose: this.data.choose,
+        realname: this.data.addressDetails.realname,
+        mobile: this.data.addressDetails.mobile,
+        is_default: this.data.addressDetails.is_default,
+        address: this.data.addressDetails.address,
+        region_path_id: region_path_id,
+        region_path_name: region_path_name
       }
-      app.datas = datas;
-      var a = getApp().datas;
-      wx.navigateTo({
-        url: '../Address/Address',
+      this.header(app.globalData.url+'createAddress');
+      wx.request({
+        url: app.globalData.url+'createAddress',
+        method: 'POST',
+        header: this.data.header,
+        data: datas,
+        success: res => {
+          if (res.data.code == 200) {
+            this.shows(res.data.msg)
+            wx.navigateTo({
+              url: '../Address/Address',
+            })
+          }else{
+            utils.error(res);
+          }
+        }
       })
+
+
+      // app.datas = datas;
+      // var a = getApp().datas;
+      // wx.navigateTo({
+      //   url: '../Address/Address',
+      // })
     }
     // var datas = getApp().datas;
     // console.log(datas);
@@ -284,25 +396,162 @@ this.setData({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    new app.ToastPannels();
+    //获取一级地区
+    this.getArea();
     var datas = getApp().datas;
-    
+    var region_path_name_str = datas.region_path_name;
+    var region_path_name_arr = new Array();
+    region_path_name_arr = region_path_name_str.split(',');
+
+    var region_path_id_str = datas.region_path_id;
+    var region_path_id_arr = new Array();
+    region_path_id_arr = region_path_id_str.split(',');
+
     this.setData({
       pageType: app.globalData.addressStart,
+      // choose: datas.choose
       addressDetails: datas,
-      choose: datas.choose
-      
-    })
-  
-   
-  },
+      choose: {
+        sheng: {
+          short_name: region_path_name_arr[0],
+          id: region_path_id_arr[0]
+        },
+        shi: {
+          short_name: region_path_name_arr[1],
+          id: region_path_id_arr[1]
+        },
+        qu: {
+          short_name: region_path_name_arr[2],
+          id: region_path_id_arr[2]
+        },
+      }
+    });
+    if(this.data.pageType == 1){
+      this.setData({
+        datas:''
+      })
+    }
+    this.getTwoAreaEdit(region_path_id_arr[0]);
 
+    this.getThreeAreaEdit(region_path_id_arr[1]);
+
+
+  },
+  //编辑信息
+  sure: function (e) {
+    let member_address_id = this.data.addressDetails.member_address_id;
+    // debugger;
+    if (this.data.chooses.id == undefined) {
+      console.log('222');
+      var region_path_id = this.data.addressDetails.region_path_id;
+      var region_path_name = this.data.addressDetails.region_path_name
+    } else {
+      var region_path_name = this.data.choose.sheng.short_name + ',' + this.data.choose.shi.short_name + ',' + this.data.choose.qu.short_name;
+      var region_path_id = this.data.choose.sheng.id + ',' + this.data.choose.shi.id + ',' + this.data.choose.qu.id
+    }
+    let datas = {
+      id: member_address_id,
+      realname: this.data.addressDetails.realname,
+      mobile: this.data.addressDetails.mobile,
+      is_default: this.data.addressDetails.is_default,
+      address: this.data.addressDetails.address,
+      region_path_id: region_path_id,
+      region_path_name: region_path_name
+    }
+    this.header(app.globalData.url+'updateAddress');
+    wx.request({
+      url: app.globalData.url+'updateAddress',
+      method: 'POST',
+      header: this.data.header,
+      data: datas,
+      success: res => {
+        if (res.data.code == 200) {
+          this.shows(res.data.msg)
+          
+          wx.navigateTo({
+            url: '../Address/Address',
+          })
+
+        }else{
+          utils.error(res);
+        }
+      }
+    })
+
+
+    // app.datas = datas;
+    // var a = getApp().datas;
+    // wx.navigateTo({
+    //   url: '../Address/Address',
+    // })
+    // var datas = getApp().datas;
+    // console.log(datas);
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
+  //生成随机字符串
+  randomWord() {
+    var noncestr;
+    noncestr = '';
+    var noncestrLength = 8;
+    var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    for (var i = 0; i < noncestrLength; i++) {
+      var index = Math.floor(Math.random() * 36);
+      noncestr += random[index];
+    }
+    this.data.noncestr = noncestr.toLowerCase();
+  },
+ //生成header
+ header(url) {
+  var timestamp = Date.parse(new Date());
+  timestamp = timestamp / 1000;
+  this.randomWord();
+  var noncestr = this.data.noncestr;
+  var api_url = url;
+  var key = 'myzy3224326de100671291c7d1a6353ff6db';
+  var arr = [api_url, key, this.data.noncestr, timestamp];
+  var str = '';
+  for (let i in arr) {
+    str += arr[i];
+  }
+  //md5加密生成
+  var password = '';
+  password = util.hexMD5(str);
+  password = password.toUpperCase();
+  //发起请求
+  var content = wx.getStorageSync('content');
+  if (content) {
+    var uuid = content.data.uuid;
+    var token = content.data.token;
+    var expiry_time = content.data.expiry_time;
+    var logintype = content.data.login_type;
+    var header = {
+      "sign": password,
+      "timestamp": timestamp,
+      "noncestr": noncestr,
+      "uuid": uuid,
+      "token": token,
+      "expirytime": expiry_time,
+      "logintype":logintype
+    }
+  } else {
+    var header = {
+      "sign": password,
+      "timestamp": timestamp,
+      "noncestr": noncestr,
+    }
+  }
 
+
+
+  this.setData({
+    header: header
+  })
+},
   /**
    * 生命周期函数--监听页面显示
    */

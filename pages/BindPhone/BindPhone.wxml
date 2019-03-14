@@ -1,0 +1,62 @@
+<!--pages/BindPhone/BindPhone.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>个人信息</view> 
+  </my-component>
+</view>
+
+<!-- 内容区域 -->
+<view class='container'>
+    <!-- bind -->
+    <view class='bind' hidden='{{hides}}'>
+        <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class='err'>点击绑定手机号 </button>
+        <text class='grey'>账号关联之后，用户可使用手机号码快速登录。</text>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_gerenxinxi_shanchu.png'></image>
+    </view>
+    <!-- info -->
+    <view class='info' bindtap='toInfo'>
+    <view class='left'>
+    <image src='{{imgurl}}'></image>  
+        {{nickname}}
+    </view>
+    <view class='right iconfont icon-arrow' > </view>
+    </view>
+    <!-- 列表 -->
+    <view class='list'>
+      <view class='list-s'>
+        <text class='lefts'>账户与安全</text>
+        <text class='rights iconfont icon-arrow'></text>
+      </view>
+      <view class='list-s' bindtap='Certification'>
+        <text class='lefts'>实名认证</text>
+        <view>{{card_info}}
+        <text class='rights iconfont icon-arrow'></text>
+        
+        </view>
+      </view>
+    </view>
+</view>
+
+<view class='bottom'>
+<button class='btn' catchtap='_onShowModal'>退出登录</button>
+
+</view>
+
+
+<!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>您确定退出此账户？</view>     
+    </view>
+
+</dialog>
+
+  

@@ -1,0 +1,8 @@
+{
+  "disableScroll": true,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback",
+    "painter": "/components/painter/painter"
+  }
+}

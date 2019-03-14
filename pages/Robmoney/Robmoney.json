@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "入驻",
+  "navigationBarTitleText": "天天抢钱",
+  "navigationStyle": "custom",
   "usingComponents": {
     "my-component": "../../public/compback/compback"
   }

@@ -1,0 +1,44 @@
+<!--pages/ShopMan/ShopMan.wxml-->
+<view bindtap='click'>
+  <my-component>
+     <view>商品管理</view> 
+  </my-component>
+</view>
+
+<view class='container'>
+<!-- 搜索栏 -->
+ <view class="search-box">
+  <navigator url="../index/index" class="search">
+  <text class="iconfont icon-search"></text>
+  请输入商品名称
+  </navigator></view>
+  </view>
+
+  <!-- 选项卡 -->
+<view class='tab'>
+<view class="swiper-tab">
+    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-type="1" data-current="0" bindtap="clickTab">
+      <text class='numes' data-current="0">{{fansTotal.today_fans.fans_total}}</text>
+      <text  data-current="0" style="font-size:29.17rpx!important">出售中</text>
+    </view>
+   
+    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-type="2" data-current="1" bindtap="clickTab">
+      <text class='numes' data-current="1">{{fansTotal.yesterday_fans.fans_total}}</text>
+      <text  data-current="1" style="font-size:29.17rpx!important">已下架</text>
+    </view>
+   
+</view>
+</view>
+
+<view class='tab_cont'  current="{{currentTab}}">
+    <view class='conts'>
+        <view class='noW' >
+            <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+            <text>抱歉，暂无数据</text>
+            </view>
+    </view>
+ 
+
+</view>
+
+

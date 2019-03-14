@@ -11,6 +11,41 @@
   font-size: 29.17rpx;
 
 }
+.show{
+  display: block!important;
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+}
+.load{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display: none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
 .adress image{
   width: 12px;
   height: 12px;
@@ -62,8 +97,8 @@ vertical-align: middle;
   margin: 10rpx 0;
 }
 .order-num image{
-  width: 48rpx;
-  height: 48rpx;
+  width: 50rpx;
+  height: 50rpx;
   vertical-align: middle;
   border-radius:4px;
 }
@@ -87,10 +122,10 @@ vertical-align: middle;
 
 .order-list .order-num{
   justify-content: space-between;
-  font-size: 28rpx;
+  font-size: 29.17rpx;
   color: #333;
   background: white;
-  padding:15rpx 40rpx;
+  padding:18rpx 40rpx;
 }
 .order-list .order-num .wait{
   color: #FF2742;
@@ -419,7 +454,7 @@ width:40rpx;
 
 }
 .way-pay{
-  padding: 32rpx 0;
+  padding-top:50rpx;
   box-sizing: border-box;
   text-align: center;
 }
@@ -449,20 +484,24 @@ button::after{
 
 .address-yes{
   display: flex;
-  padding:16rpx 30rpx 24rpx;
+  padding:12rpx 30rpx;
   background: white;
   box-sizing: border-box;
-  height: 88px;
 }
 .yes-left{
-  line-height:70px;
-
+  /* line-height:70px; */
+  margin: auto auto;
 }
 .address-yes image{
-  width: 16px;
-  height: 21px;
+  width:32rpx;
+  height:42rpx;
   margin-right: 20rpx;
   display: inline-block;
+}
+.yes-right{
+  width:90%;
+  padding: 20rpx 0;
+  margin-left: 20rpx;
 }
 .yes-right text{
   display: block;
@@ -474,11 +513,18 @@ button::after{
   margin-bottom:10rpx;
 }
 .yes-rights{
-  line-height:70px;
+  /* line-height:70px; */
   padding-left: 42rpx;
+  display: table;
+  min-height:56px;
   
 }
 .yes-rights text{
-  display: inline-block;
+  display:table-cell;
+  vertical-align: middle;
   color: #999;
+}
+.y1 image{
+  width:40rpx;
+  height:30rpx;
 }

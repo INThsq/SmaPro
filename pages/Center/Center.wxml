@@ -1,0 +1,62 @@
+<!--pages/Center/Center.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>商家分佣中心</view> 
+  </my-component>
+</view>
+
+
+<view class='container'>
+  <view class='top'>
+      <text class='top-O'>当前分佣累计收益(元)</text>
+      <text class='top-T'>0.00</text>
+  </view>
+  <!-- 受益 -->
+  <view class='get'>
+      <view class='get-left'>
+        <text class='get-O'>昨日收益(元)</text>
+        <text class='get-T'>0.00</text>
+      </view>
+
+       <view class='get-right'>
+        <text class='get-O'>昨日新增客户(人)</text>
+        <text class='get-T'>0.00</text>
+      </view>
+  </view>
+</view>
+
+ <view class="order" bindtap='gettab' id='我的订单' >
+        <view class="myOrder">可提现佣金0.00元</view>
+        <view class="icon">
+            <text class='all' >立即提现</text>
+            <text class="iconfont icon-arrow"></text>
+        </view> 
+    </view>
+
+
+    <view class='conts'>
+      <view class='cont-list'>
+        <text class='num'>0</text>
+        <text class='wenzi'>直接粉丝(总)</text>
+      </view>
+
+      <view class='cont-list'>
+        <text class='num'>0</text>
+        <text class='wenzi'>团队粉丝(总)</text>
+      </view>
+
+       <view class='cont-list'>
+        <text class='num'>0</text>
+        <text class='wenzi'>推广订单</text>
+      </view>
+    </view>
+
+
+
+    <view class="order">
+        <view class="myOrder">常见问题</view>
+        <view class="icon">
+            <text class="iconfont icon-arrow"></text>
+        </view> 
+    </view>

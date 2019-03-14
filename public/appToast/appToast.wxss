@@ -1,0 +1,33 @@
+.toast_content_box {  
+  display: flex;  
+  width: 100%;  
+  height: 100%;  
+  justify-content: center;  
+  align-items: center;  
+  position: fixed;  
+  z-index: 99999;
+ 
+}  
+.toast_content {  
+  border-radius:4px;  
+  background: rgba(53,53,53,1);  
+  padding:14rpx 28rpx; 
+  position: fixed; 
+  bottom:36rpx;
+  z-index: 99999;
+}  
+.toast_contents{
+  border-radius:4px;  
+  background: rgba(53,53,53,1);  
+  padding:14rpx 28rpx; 
+  position: fixed; 
+  bottom:130rpx;
+  z-index: 99999;
+}
+.toast_content_text {  
+  height: 100%;  
+  width: 100%;  
+  color: #fff;  
+  font-size:29.17rpx;  
+  text-align: center;  
+} 

@@ -7,72 +7,65 @@
 </view>
 
 
+
 <view>
 <view class='tab-bar'  hidden="{{!hiddenName}}">
 <!-- tab导航栏 -->
-    <!-- scroll-left属性可以控制滚动条位置 -->
     <!-- scroll-with-animation滚动添加动画过渡 -->
-    <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
+    <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}rpx" scroll-with-animation="{{true}}">
         <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
-
-        <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" bindtap="switchNav">{{navItem.text}}</view>
-        </block>        
+        <view class="nav-item {{currentTab == idx ?'active':''}}"  data-current="{{idx}}" data-id='{{navItem.id}}'    bindtap="switchNav">{{navItem.name}}</view>
+        </block>    
     </scroll-view>
+    <view class='menu' catchtap='shows' bindtap='shows'>
+    <image class='yinyin' src='http://oss.myzy.com.cn/wechat/images/img_yinying.png'></image>
+    <image class='ups' src='http://oss.myzy.com.cn/wechat/images/icon_shouye_xialajiantous.png'></image>
+    </view> 
 
-    <view class='menu' catchtap='show'>
-    <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye2.png'></image>
-    </view>
     <!-- 页面内容 -->
 </view>
-    
-
- 
     
 </view>
 
 <view class='cont'  hidden="{{hiddenName}}">
  <view class='tab-conts'>
-
   <view class='tabbars' catchtap='hide'>
   <view>全部分类</view>
   <view>
-  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye3.png'></image>
+  <image style='width:16px;height:14px;' src='http://oss.myzy.com.cn/wechat/images/icon_shouye_shangla.png'></image>
   </view>
   </view>
-
   <!-- 导航栏 -->
   <view class='top_nav'>
-  <view class="nav-name {{item.typeId == currentId ? 'nav-hover':''}}" wx:for="{{navData}}" wx:key="id" id='{{item.typeId}}' catchtap='handleTap'>
-    {{item.text}}
+  <view class="nav-name {{index == currentId ? 'nav-hover':''}}" wx:for="{{navData}}" wx:key="id" id='{{index}}' data-ids="{{item.id}}" catchtap='handleTap'>
+    {{item.name}}
   </view>
 </view>
-
-
  </view>  
 </view>
 <!-- 搜索栏 -->
 
- <view class="search-box">
+ <view class="search-box" bindtap='search'>
   <navigator url="../TypeIndex/TypeIndex?id=2" class="search">
   <text class="iconfont icon-search"></text>
-   请搜索你最喜爱的产品
+   <text style='margin-left:8rpx;font-size:29.17rpx;'>{{wxIndex.search_term}}</text>
   </navigator></view>
 
 
 <view class='container' hidden='{{hides}}'>
  <!--搜索-->
-<scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style='height:{{scrollHeight}}px' bindscrolltolower="bindDownLoad" bindscrolltoupper="topLoad"  bindscroll="scroll">
+<scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style='height:{{scrollHeight}}px' bindscrolltolower="bindDownLoad" bindscrolltoupper="topLoad"  bindscroll="scroll" >
 <!-- 轮播图 -->
 <view class='swipercontent'>
   <swiper class='swiper' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
-    <block wx:for="{{imgUrls}}" wx:key="unique">
-      <swiper-item>
-        <image src="{{item}}" class="slide-image" width="355" height="150"/>
+    <block wx:for="{{wxIndex.banner}}" wx:key="unique">
+      <swiper-item  bindtap='navCour' data-id="{{item.jump_type}}" data-name="{{item.unique_name}}" data-type='{{item.jump}}'>
+        <image src="{{item.image}}" class="slide-image" width="355" height="150"/>
       </swiper-item>
     </block>
   </swiper>
   <view class="dotes">
-    <block wx:for="{{imgUrls}}" wx:key="unique">
+    <block wx:for="{{wxIndex.banner}}" wx:key="unique">
       <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
     </block>
   </view>
@@ -85,82 +78,38 @@
       <swiper-item>
         <view class='tab_conts' style='width:100%;height:100%;background:#fff'>
              <view class='courtesy_cont One'>
-              <view class='sy' bindtap='navCour'>
+             <block  wx:for="{{wxIndex.application}}"
+              wx:key="{{index}}" wx:if="{{index<5}}">
+              <view class='sy'  bindtap='navCour' data-id="{{item.jump_type}}" data-name="{{item.unique_name}}" data-type='{{item.jump}}'>
                   <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye5.png'></image>
+                  <image src='{{item.image}}'></image>
                   <view class='sy_title'>
-                  新人专享
+                  {{item.name}}
                   </view>
                   </navigator>
               </view>
-              <view class='sy' bindtap='Ronmoney'>
-                  <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye6.png'></image>
-                  <view class='sy_title'>
-                  天天抢钱
-                  </view>
-                  </navigator>
-              </view>
-              <view class='sy' bindtap='navCour'>
-                  <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye7.png'></image>
-                  <view class='sy_title'>
-                  9.9元起
-                  </view>
-                  </navigator>
-              </view>
-              <view class='sy' bindtap='navCour'>
-                  <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye8.png'></image>
-                  <view class='sy_title'>
-                  1分赢福利
-                  </view>
-                  </navigator>
-              </view>
-              <view class='sy' bindtap='navCour'>
-                  <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye9.png'></image>
-                  <view class='sy_title'>
-                  推荐有礼
-                  </view>
-                  </navigator>
-              </view>
+            </block>
             </view>
-
-
         </view>
       </swiper-item>
       <swiper-item>
-      <view class='tab_conts' style='width:100%;height:100%;background:white'>
+        <view class='tab_conts' style='width:100%;height:100%;background:#fff'>
       <view class='courtesy_cont One'>
-              <view class='sy' bindtap='navCour'>
+             <block  wx:for="{{wxIndex.application}}"
+              wx:key="{{index}}" wx:if="{{index>=5&&index<11}}">
+              <view class='sy'  bindtap='navCour' data-id="{{item.jump_type}}" data-name="{{item.unique_name}}" data-type='{{item.jump}}'>
                   <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye9.png'></image>
+                  <image src='{{item.image}}'></image>
                   <view class='sy_title'>
-                  收益报表
+                  {{item.name}}
                   </view>
                   </navigator>
               </view>
-              <view class='sy' bindtap='navCour'>
-                  <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye7.png'></image>
-                  <view class='sy_title'>
-                  收益报表
-                  </view>
-                  </navigator>
-              </view>
-              <view class='sy' bindtap='navCour'>
-                  <navigator  hover-class="none">
-                  <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye8.png'></image>
-                  <view class='sy_title'>
-                  收益报表
-                  </view>
-                  </navigator>
-              </view>
-              
+            </block>
             </view>
-        </view>
+      </view>
       </swiper-item>
+  
   </swiper>
   <view class="dots">
     <block wx:for="{{imgUrlss}}" wx:key="unique">
@@ -174,10 +123,9 @@
 <view class='up-left'>
   <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye10.png'></image>
   <image class='gg' src='http://oss.myzy.com.cn/wechat/images/icon_xcx_shouye11.png'></image>
-  
 </view>
-<swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="3000">
-  <block wx:for="{{msgList}}" wx:key="{{index}}">
+<swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="4000">
+  <block wx:for="{{wxIndex.notice_list}}" wx:key="{{index}}">
     <navigator url="" open-type="navigate">
       <swiper-item>
         <view class="swiper_item">{{item.title}}</view>
@@ -191,23 +139,96 @@
 </view>
 
 <!-- 商品列表 -->
-   <view class='order-conts'>
+   <!-- <view class='order-conts'>
         <view class="order-info">
-        <view class='order-lists'>
-          <view class="order-list" bindtap='detail'>
-            
+        <block wx:for="{{listx}}" wx:key="{{index}}">
+        <view class='order-lists'  data-id="{{item.goods_id}}"  bindtap='detail'>
+          <view class="order-list">
             <view class="order-con">
-              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
+              <image src="{{item.goods_image}}"></image>
               <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+                <view class="name">{{item.title}}</view>
                 <view class='spec'>
                   <view class='lefts'>
                    <view class='one'>
                     <text class="yang">￥</text>
-                    <text class='nl'>789</text>
+                    <text class='nl'>{{item.price}}</text>
+                   </view> -->
+                   <!-- <text class='two'>￥789</text> -->
+                   <!-- <text class='ys'>{{item.sell_out}}</text>
+                  </view>
+                  <view class='leftes'> -->
+                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+                   <text class='yj'>佣金￥789</text> -->
+                    <!-- <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
+                  </view>
+                </view>
+              </view>
+            </view>
+            
+          </view>
+        </view>
+        </block>
+        </view>
+        </view> -->
+
+            <view class='conts' >
+                <block wx:for="{{listx}}" wx:key="{{index}}">
+                  <view class='conts-list' data-id="{{item.goods_id}}"  bindtap='detail'>
+                    <image class='active'  src='{{item.goods_image}}'></image>
+                    <view class='conts-title'>{{item.title}}</view>
+                    <view class='conts-sale'>
+                      <text class='two'>￥{{item.price}}</text> 
+                      <text class='yss' style="position:inherit!important">{{item.sell_out}}</text>
+                    </view>
+                    <view class="{{item.activity_money !== '0.00'?'zhuan':'zhuans'}}">
+                    <block  wx:if="{{item.activity_money !== '0.00'}}">
+                    赚￥{{item.activity_money}}
+
+                    </block>
+                    </view>
+                  </view>
+              </block>
+              <!-- 下拉加载提示 -->
+
+            </view>
+              <view class='up-text'>{{up}}</view>
+        
+</scroll-view>
+
+</view>
+
+<!-- 推荐之外的显示 -->
+<view class='containers' style='margin-top:154rpx!important' hidden='{{tjhide}}'> 
+<!-- 二级分类 -->
+  <block wx:if="{{childNav!==''}}">
+    <view class='second-class' >
+    <block wx:for="{{childNav}}">
+      <view class='class' data-texts="{{item.name}}" bindtap='IndexSecond' data-id='{{item.id}}'>
+      <image src='{{item.image}}'></image>
+      <text>{{item.name}}</text>
+      </view>
+      </block>
+    </view>
+  </block>
+    <!-- 商品列表 -->
+   <view class='order-conts'>
+        <view class="order-info">
+        <block  wx:for="{{listx}}" wx:key="{{index}}">
+        <view class='order-lists'  data-id="{{item.goods_id}}"  bindtap='detail'>
+          <view class="order-list">
+            <view class="order-con">
+              <image src="{{item.goods_image}}"></image>
+              <view>
+                <view class="name">{{item.title}}</view>
+                <view class='spec'>
+                  <view class='lefts'>
+                   <view class='one'>
+                    <text class="yang">￥</text>
+                    <text class='nl'>{{item.price}}</text>
                    </view>
-                   <text class='two'>￥789</text>
-                   <text class='ys'>已售6789件</text>
+                   <!-- <text class='two'>￥789</text> -->
+                   <text class='ys'>{{item.sell_out}}</text>
                   </view>
                   <view class='leftes'>
                     <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
@@ -220,168 +241,133 @@
             </view>
             
           </view>
-           <view class="order-list">
-            
-            <view class="order-con">
-              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <view class='spec'>
-                  <view class='lefts'>
-                   <view class='one'>
-                    <text class="yang">￥</text>
-                    <text class='nl'>789</text>
-                   </view>
-                   <text class='two'>￥789</text>
-                   <text class='ys'>已售6789件</text>
-                  </view>
-                  <view class='leftes'>
-                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
-                   <text class='yj'>佣金￥789</text> -->
-                     <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
-                  </view>
-                </view>
-              </view>
-            </view>
-            
-          </view>
-         
         </view>
+        </block>
         </view>
-        </view>
-        <loading hidden="{{hidden}}" bindchange="loadingChange">  
-        {{load}}  
-        </loading>  
+    </view>
+  <view class='up-text' style='background:white;margin-top:30rpx;'>暂时没有更多内容了~</view>
+
+    </view>
 
 
-
-</scroll-view>
+<!-- 下拉加载 -->
  <view class="body-view">
         <loading hidden="{{hidden}}" bindchange="loadingChange">
-           加载中...
+          {{load}}
          </loading>
      </view>
-</view>
 
-<!-- 推荐之外的显示 -->
-<view class='containers' hidden='{{tjhide}}'> 
-<!-- 二级分类 -->
-    <view class='second-class'>
-      <view class='class' data-texts="卫衣" bindtap='IndexSecond'>
-      <image src='http://oss.myzy.com.cn/wechat/images/tp2.png'></image>
-      <text>卫衣</text>
-      </view>
-      <view class='class' data-texts="运动裤子" bindtap='IndexSecond'>
-      <image src='http://oss.myzy.com.cn/wechat/images/tp2.png'></image>
-      <text>运动裤子</text>
-      </view>
-      <view class='class'>
-      <image src='http://oss.myzy.com.cn/wechat/images/tp2.png'></image>
-      <text>卫衣</text>
-      </view>
-      <view class='class'>
-      <image src='http://oss.myzy.com.cn/wechat/images/tp2.png'></image>
-      <text>卫衣</text>
-      </view>
-      <view class='class'>
-      <image src='http://oss.myzy.com.cn/wechat/images/tp2.png'></image>
-      <text>卫衣</text>
-      </view>
-      <view class='class'>
-      <image src='http://oss.myzy.com.cn/wechat/images/tp2.png'></image>
-      <text>卫衣</text>
-      </view>
+
+<!-- 模态框  助力列表-->
+<view class='packet' hidden='{{packet}}'>
+  <view class='packet-cont'>
+    <text class='packet-title'>{{share.share_result.reminder}}</text>
+    <image class='packet-head' src='{{share.member_oauth.headimgurl}}'></image>
+    <view class='packet-draw'>
+    <text class='draw-one'>提现</text>
+    <text class='draw-two'>￥</text>
+    <text class='draw-th'>{{share.share_queue.activity_money}}</text>
     </view>
+    <!-- 进度条 -->
+    <view class='tx_top_progress_box'>
+      <progress class='tx_top_progress' percent="{{progress}}" border-radius='30' stroke-width="5" backgroundColor="#C6C6C6" activeColor="{{share.is_praise == 1?'#C6C6C6':'#DF653C'}}"></progress>
+      <view class="{{share.is_praise == 1?'tx_top_progress_money zuli-grey':'tx_top_progress_money'}}" style='left:{{left}}rpx;'>￥<text class='tx_top_progress_money_money'>{{share.share_queue.balance}}</text></view>
+      <view class='clear'></view>
+    </view>
+    <!-- 助力按钮 -->
+    <button wx:if="{{share.is_praise == 0 && content ==''}}" class='zuli' open-type="getUserInfo" bindtap="clickFalg" bindgetuserinfo="bindGetUserInfo">
+      {{share.praise_button}}
+    </button>
+<button wx:elif="{{share.is_praise == 0 && content !==''}}" class='zuli ss' bindtap="clickFalg" >
+      {{share.praise_button}}
+    </button>
+     <button wx:if="{{share.is_praise == 1}}" class='zuli zuli-grey' bindtap='clickFalg'>
+      {{share.praise_button}}
+    </button>
+    <!-- 助力列表 -->
+    <!-- <scroll-view  scroll-y="true" catchtouchmove="move"> -->
+    <view class='zuli-list'>
+      <view class='no-data'>
+          <text class='zuli-title'>好友助力团</text>
+           <scroll-view class='scrolls' scroll-y="true" catchtouchmove="move">
+
+          <block wx:if="{{share.share_praise.length == 0}}">
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_zhuli.png'></image>
+          <text class='zuli-titles'>成为第一个为他助力的好友~</text>
+          </block>
+          <block wx:else>
+          <block wx:for="{{share.share_praise}}" wx:key="{{index}}">
+          <view class='zuli-list' wx:if="{{item.lucky_dog == '1'}}">
+            <view class='infos max'>
+              <view class='infos-left'>
+              <view class='txs'>
+               <image class='tx' src='{{item.headimgurl}}'></image>
+              </view>
+                <!-- <image class='huangguan' src='http://oss.myzy.com.cn/wechat/images/huangguana.png'></image> -->
+              <text class='name'>{{item.nickname}}</text>
+              </view>
+             
+              <view class='mon'>最高助力<text style="font-size:29.17rpx">￥{{item.allot_money}}</text></view>
+            </view>
+
+            <view class='infos' wx:if="{{item.lucky_dog != '1'}}">
+              <view class='infos-left'>
+               <image class="tx" src='{{item.headimgurl}}'></image>
+              <text class='name'>{{item.nickname}}</text>
+              </view>
+             
+              <text class='mon'>{{item.remark}}￥{{item.allot_money}}</text>
+            </view>
+          </view>
+          </block>
+          </block>
+
+  </scroll-view>
+
+
+      </view>   
+      </view>
   
-    <!-- 商品列表 -->
-   <view class='order-conts'>
-        <view class="order-info">
-        <view class='order-lists'>
-          <view class="order-list" bindtap='detail'>
-            
-            <view class="order-con">
-              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <view class='spec'>
-                  <view class='lefts'>
-                   <view class='one'>
-                    <text class="yang">￥</text>
-                    <text class='nl'>789</text>
-                   </view>
-                   <text class='two'>￥789</text>
-                   <text class='ys'>已售6789件</text>
-                  </view>
-                  <view class='leftes'>
-                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
-                   <text class='yj'>佣金￥789</text> -->
-                   <image style='width:20px!important;height:4px!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
-                  </view>
-                </view>
-              </view>
-            </view>
-            
+  
+  <!-- 关闭按钮 -->
+  <view class='close' bindtap='ClosePacket'>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_zhuliyemian_shanchu.png'></image>
+  </view>
+  </view>
+  </view>
+
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+ <template is="toast" data="{{ ..._toast_ }}"/>
+ 
+
+
+
+  <!-- 领取红包-->
+  <view class='packet packets' hidden='{{redpacket}}'>
+      <view class='red'>
+      <view class='red-title'>
+         <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_tanchuang1.png' bindtap='redClose' class='redClose'></image>
+      </view>
+      <view class='red-cont'>
+        <image src='http://oss.myzy.com.cn/wechat/images/img_zhulilinghuobaos.png'></image>
+        <view class='red-get'>
+          <image class='red-head' src='{{red.headimgurl}}'></image>
+          <view class='red-one'>谢谢你帮我助力了
+            <text class='red-ones'>￥{{red.allot_money}}</text>
           </view>
-           <view class="order-list">
-            
-            <view class="order-con">
-              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <view class='spec'>
-                  <view class='lefts'>
-                   <view class='one'>
-                    <text class="yang">￥</text>
-                    <text class='nl'>789</text>
-                   </view>
-                   <text class='two'>￥789</text>
-                   <text class='ys'>已售6789件</text>
-                  </view>
-                  <view class='leftes'>
-                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
-                   <text class='yj'>佣金￥789</text> -->
-                   <image style='width:40rpx!important;height:8.333rpx!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
-                  </view>
-                </view>
-              </view>
-            </view>
-            
+          <text class='red-two'>这是一点小心意，不要客气哦~</text>
+          <view class='red-money'>
+            <text class='money-one'>￥</text>
+            <text class='money-two'>8.00</text>
           </view>
-          <view class="order-list">
-            
-            <view class="order-con">
-              <image src="http://oss.myzy.com.cn/wechat/images/tupian.png"></image>
-              <view>
-                <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-                <view class='spec'>
-                  <view class='lefts'>
-                   <view class='one'>
-                    <text class="yang">￥</text>
-                    <text class='nl'>789</text>
-                   </view>
-                   <text class='two'>￥789</text>
-                   <text class='ys'>已售6789件</text>
-                  </view>
-                  <view class='leftes'>
-                    <!-- <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
-                   <text class='yj'>佣金￥789</text> -->
-                   <image style='width:40rpx!important;height:8.333rpx!important;margin-top:114rpx!important' src='http://oss.myzy.com.cn/wechat/images/icon_sy_3gedian.png'></image>
-                  </view>
-                </view>
-              </view>
-            </view>
-            
-          </view>
+          <view class='red-getbtn' bindtap='redClose'>立即领取</view>
         </view>
-        </view>
-        
-</view>
-</view>
+      </view>
 
-
-
-
-
+      </view>
+  </view>
 
    
+
 

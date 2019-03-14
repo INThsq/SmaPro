@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "添加收货地址",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback",
+    "dialog": "../../public/Dialog/dialog"
+  },
+  "navigationStyle": "custom"
+}

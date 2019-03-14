@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "支付成功",
+  "navigationStyle": "custom",
+  
   "usingComponents": {
     "my-component": "../../public/components/component-tag-name"
   }

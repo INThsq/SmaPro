@@ -1,72 +1,127 @@
 <!--pages/Share/Share.wxml-->
-<!--pages/Confirm/Confirm.wxml-->
- <view>
-  <my-component>
-     <view>提现</view> 
-  </my-component>
+ <view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">分享加速</view>
 </view>
 
+
+<view style='position: fixed;top:999999999999999999999rpx;"' bindtap='choseimg'>
+  <painter  customStyle='margin-left:40rpx' palette="{{template}}" bind:imgOK="onImgOK" />
+  
+</view>
+
+
+<!-- <image src='{{filePath}}'></image> -->
 <!-- 内容区域 -->
 
 <view class='container'>
 
   <view class='tx_top'>
-    <view class='tx_top_title'>已存入账户,请尽快提现</view>
-    <view class='tx_top_time'>提现在<text class='tx_top_time_color'>{{dtime}}</text>后过期</view>
-    <view class='tx_top_money'>最多提现<text class='tx_top_time_color'>￥</text><text class='tx_top_time_color tx_top_money_money'>{{info.maxPrice}}</text></view>
+    <view class='tx_top_title'>{{detail.share_queue_text}}</view>
+    <view class='time' wx:if="{{detail.share_queue_status == 1 || detail.share_queue_status == 2}}">	
+      <text class='bloxj'>{{hour}}</text> :
+      <text class='bloxj'>{{minutes}}</text> :
+      <text class='bloxj'>{{seconds}}</text> :
+      <text class='bloxj lasts'>{{mill}}</text>
+
+
+    </view>
+    <view class='tx_top_money'>最多提现<text class='tx_top_time_color'>￥</text><text class='tx_top_time_color tx_top_money_money'>{{detail.share_queue.activity_money}}</text></view>
 
     <view class='tx_top_progress_box'>
-      <progress class='tx_top_progress' percent="{{info.percent}}" border-radius='30' stroke-width="5" backgroundColor="#FFECD9" activeColor="#FF843A"></progress>
-      <view class="tx_top_progress_money" style='left:{{left}}rpx;'>￥<text class='tx_top_progress_money_money'>{{info.price}}</text></view>
+      <progress class='tx_top_progress' percent="{{progress}}" border-radius='30' stroke-width="5" backgroundColor="{{detail.share_queue_status == 4?'#c3c3c3':'#FFECD9'}}" activeColor="{{detail.share_queue_status == 4?'#c3c3c3':'#FF843A'}}"></progress>
+      <view class="{{detail.share_queue_status == 4?'tx_top_progress_money grey':'tx_top_progress_money'}}" style='left:{{left}}rpx;'>￥<text class='tx_top_progress_money_money '>{{detail.share_queue.balance}}</text></view>
       <view class='clear'></view>
     </view>
 
-    <button class='tx_top_button' bindtap='fxclick'>
-      <image class='tx_top_button_img' src='http://oss.myzy.com.cn/wechat/images/wechat.png'></image>
-      <text class='tx_top_button_txt'>立即分享</text>
-    </button>
+    <button class='tx_top_button' wx:if="{{detail.share_queue_status != 4}}"  open-type='share' data-name="shareBtn">
+      <image wx:if="{{detail.share_queue_status == 1||detail.share_queue_status == 2}}" class='tx_top_button_img' src='http://oss.myzy.com.cn/wechat/images/wechat.png'></image>
+      <text class='tx_top_button_txt'>{{detail.button_text}}{{detail.share_button}}</text>
+    </button> 
 
-    <view class='tx_top_bottomLine1'>提现金额可在下次购物时直接使用</view>
+      <button class='tx_top_button' wx:else  bindtap='goShop'>
+      <image wx:if="{{detail.share_queue_status == 1||detail.share_queue_status == 2}}" class='tx_top_button_img' src='http://oss.myzy.com.cn/wechat/images/wechat.png'></image>
+      <text class='tx_top_button_txt'>{{detail.button_text}}{{detail.share_button}}</text>
+    </button> 
 
-    <view class='tx_top_bottomLine2'><text decode='true'>邀请3~4名您用户下单即可完成提现&nbsp;<text class='tx_top_bottomLine2_txt'>了解更多</text></text></view>
+    <view class='tx_top_bottomLine1'>{{detail.reminder}}</view>
+
+    <view class='tx_top_bottomLine2'><text decode='true'>{{detail.explain}}&nbsp;<text class='tx_top_bottomLine2_txt'>了解更多</text></text></view>
 
   </view>
   <view class='boxs'></view>
   <view class='tx_list_box'>
+    <view class='tx_list_box_title' wx:if="{{detail.share_praise.length == 0}}">{{info.ctitle}}</view>
+    <view class='tx_list_box_title' wx:else >好友助力团</view>
+    <!-- 滚动 -->
+   </view>
 
-    <view class='tx_list_box_title' hidden="{{clickType}}">{{info.title}}</view>
-    <view class='tx_list_box_title' hidden="{{!clickType}}">{{info.ctitle}}</view>
-  <scroll-view scroll-y style='height:220px;'>
-    
-    <view class='tx_list_box_list' wx:if='{{!clickType}}'>
-      <view class='tx_list_box_list_tx'>
-        <image class='tx_list_box_list_tx_back' src='http://oss.myzy.com.cn/wechat/images/icon_tx_huangguan.png'></image>
-        <image class='tx_list_box_list_tx_tx' src='{{max.imgSrc}}'></image>
-      </view>
-
-      <view class='tx_list_box_list_title'>{{max.name}}</view>
-      <view class='tx_list_box_list_right' style='font-weight:bold;'>最高战力￥{{max.price}}</view>
-      <view class='clear'></view>
-    </view>
-
-    <view class='tx_list_box_list' wx:for="{{list}}" wx:key="{{index}}">
-      <view class='tx_list_box_list_tx'>
-        <image class='tx_list_box_list_tx_tx' src='{{item.imgSrc}}'></image>
-      </view>
-
-      <view class='tx_list_box_list_title'>{{item.name}}</view>
-      <view class='tx_list_box_list_right'>
-      <text wx:if="{{!clickType}}" class='tx_list_box_list_right_color'>助力</text>
-      <text wx:if="{{clickType}}" class='tx_list_box_list_right_color'>{{item.time}}分钟前,提现了</text>￥{{item.price}}</view>
-      <view class='clear'></view>
-      
-    </view>
-  </scroll-view>
-    
-  </view>
+   <view style='position:relative'  wx:if="{{detail.share_praise.length > 3 ||detail.share_cash.length > 3}}">
+    <cover-view class="controls"></cover-view>
+    <swiper class='presented-list' 
+      vertical="true" 
+      intervals="1000"
+      current="{{control.current}}"
+      next-margin="300rpx"
+      circular="true">
+      <!-- 
+        presented-list的高度 = swiper-item高度 *（ 需要显示的个数 + 1 ）
+        next-margin大小 = swiper-item高度 * 需要显示的个数
+      -->
+      <view class='list' id='list' >
+        <block wx:for="{{detail.share_cash||detail.share_praise}}" wx:key="index">
+          <swiper-item class='lists' style="height:94rpx!important">
+               <view class='list-left'>
+                <image src='{{item.headimgurl}}'></image>
+                <text>{{item.nickname}}</text>
+              </view>
+              <view class='tx_list_box_list_right'>
   
+      <text wx:if="{{clickType}}" class='tx_list_box_list_right_color'>{{item.share_cash_time}}</text>￥{{item.share_cash_money}}</view>
+    
+          </swiper-item>
+        </block>
+        <view>
+        </view>
+      </view>
+    </swiper>
+  </view>
+
+
+
+
+  
+        <block wx:if="{{detail.share_praise.length == 0 ||detail.share_cash.length == 0}}" wx:for="{{detail.share_praise || detail.share_cash}}" wx:key="index">
+            <view class='lists' style="height:94rpx!important">
+                 <view class='list-left'>
+                  <image src='{{item.headimgurl}}'></image>
+                  <text>{{item.nickname}}</text>
+                </view>
+                <view class='tx_list_box_list_right' style="text-align:right!important">
+    
+        <text wx:if="{{clickType}}" class='tx_list_box_list_right_color'>{{item.remark}}</text>￥{{item.allot_money}}</view>
+                </view>
+                </block>
+
+
+
+
+
+
+
+
+
+
+
 
 </view>
+
+
+
+
+
 
 
 
@@ -92,3 +147,19 @@
 
 </view>
  
+
+ 
+   <!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="确定放弃助力体现机会?"
+            cancelText="暂时放弃"
+            confirmText="再考虑一下"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>您可以在个人中心待助力列表中继续邀请好友助力体现</view>     
+    </view>
+
+</dialog>

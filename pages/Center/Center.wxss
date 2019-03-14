@@ -1,0 +1,106 @@
+/* pages/Center/Center.wxss */
+
+.container{
+  margin-top: 140rpx;
+}
+ .myOrder,.myCour{
+      flex:1;
+      font-size:30rpx;
+      font-family:SourceHanSansSC-Regular;
+      font-weight:500;
+      color:rgba(51,51,51,1);
+      line-height:80rpx;
+
+  }
+  .order .icon{
+      flex:1;
+      text-align:right;
+      line-height:80rpx;
+  }
+.icon .all{
+  font-size:25rpx;
+  color:#999;
+  margin-right: 18rpx;
+}
+.order{
+  display: flex;
+  padding:  0 30rpx;
+  background: white;
+  box-sizing: border-box;
+}
+.navCont view{
+  font-size:25rpx;
+}
+.order .icon .iconfont{
+  color: #999;
+  font-size:24rpx;
+}
+.top{
+  background: white;
+  display: block;
+  text-align: center;
+  padding-top: 28rpx;
+  padding-bottom: 52rpx;
+}
+.top text{
+  display:block;
+}
+.top-O{
+  color: #999;
+  font-size: 29.17rpx;
+  margin-bottom: 10rpx;
+}
+.get{
+  background: white;
+  display: flex;
+  padding-bottom: 34rpx;
+  box-sizing: border-box;
+  border-bottom:1px solid rgba(243,243,243,1);
+}
+.get view{
+  flex: 1;
+}
+.get-O{
+  font-size: 29.17rpx;
+  color: #999;
+}
+.get-T{
+  font-size: 40rpx;
+  color: #333;
+  margin-top:20rpx;
+}
+.get text{
+  display: block;
+  text-align: center;
+}
+.top-T{
+  font-size: 64rpx;
+  color: #333;
+}
+.get-left{
+  border-right: 1px solid rgba(243,243,243,1);
+}
+.conts{
+  display: flex;
+  margin: 16rpx 0;
+  background: white;
+  padding: 38rpx 0;
+  box-sizing: border-box;
+}
+.num{
+  color: #F43736;
+  font-size: 48rpx;
+  margin-bottom: 10rpx;
+}
+.wenzi{
+  color: #999;
+  font-size: 29.17rpx;
+}
+.conts .cont-list{
+  display: block;
+  width: 33.3%;
+  text-align: center;
+}
+.conts .cont-list text{
+  display: block;
+}

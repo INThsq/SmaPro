@@ -1,0 +1,22 @@
+<!--pages/Bean_help/Bean_help.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>已助力提现</view> 
+  </my-component>
+</view>
+
+<!-- 内容 -->
+<view class='container'>
+<view class='items'>
+      <view class='item'>
+        <text class='iteml'>邀请助力8428375622468...</text>
+        <text class='itemr'>+2.03</text>
+      </view>
+      <view class='item'>
+        <text class='itemls'>注册时间:2018-10-26 19:04</text>
+        <text class='itemrs'>2.20</text>
+      </view>
+</view>
+
+</view>

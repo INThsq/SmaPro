@@ -1,0 +1,9 @@
+/* pages/Sale/Sale.wxss */
+@import '../CareShop/CareShop.wxss';
+.topnav {
+ top: 138rpx!important;
+  }
+.order-conts{
+  background: white!important;
+  padding-top:190rpx!important;
+}

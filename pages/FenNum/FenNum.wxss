@@ -1,10 +1,13 @@
 /* pages/FenNum/FenNum.wxss */
 @import "../index/index.wxss";
 .container{
-  margin-top:244rpx;
+  margin-top:140rpx!important;
+}
+page{
+  background:white;
 }
 .fanNum{
-  height:250rpx;
+  height:248rpx;
   font-size:34rpx;
   color: white;
   padding: 60rpx 0;
@@ -30,7 +33,6 @@ display: block;
 }
 .tab{
   padding:20rpx 0 0!important;
-  margin-bottom: 24rpx;
 }
 .swiper-tab{
   border-radius: 0!important;
@@ -54,9 +56,9 @@ display: block;
   color: #333;
   line-height:50rpx;
 }
-page{
+/* page{
   background: #FAFAFA;
-}
+} */
 .swiper-tab-item:last-child{
   width: 40%!important;
 }
@@ -66,9 +68,9 @@ page{
 }
 .active text{
   color: #FF0000!important;
-
+  font-weight: bold;
 }
-.nums{
+.numes{
   font-size: 32rpx!important;
   color: #333;
 }
@@ -78,6 +80,7 @@ page{
 }
 .num{
   padding: 30rpx;
+  background: white;
   box-sizing: border-box;
 }
 .num text{
@@ -98,6 +101,8 @@ page{
 }
 .money{
   text-align: right!important;
+  padding-top:0!important;
+  font-weight: inherit!important;
 }
 .num-left .name{
   font-size: 26rpx;color: #333;
@@ -122,4 +127,6 @@ page{
 }
 .search-box{
   padding:20rpx!important;
+  z-index:6!important;
+  top: 0!important;
 }

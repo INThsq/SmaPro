@@ -1,0 +1,107 @@
+<!--pages/Search/Search.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>搜索</view> 
+  </my-component>
+</view>
+
+
+<!-- 内容部分 -->
+<view class='container'>
+<view class='conter'>
+<!-- 搜索框 -->
+<view class='search'>
+<form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
+      <input confirm-type="search" placeholder-class='placeholder' placeholder='请输入关键字'  type="search" value="{{searchValue}}" class='topInput' name='input' bindinput='keyword' focus='true' bindconfirm="searchSubmitFn"/>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_1.png' class='searches'></image>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_2.png' class='del' bindtap='del' hidden="{{del}}"></image>
+      
+    </form>
+
+</view>
+
+
+   <!-- 历史记录 -->
+    <view class='historyContent' hidden='{{One}}'>
+    <!-- 历史搜索 -->
+    <view hidden="{{histroy}}">
+    <view class='titles'>
+      <view class='title-left'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_4.png'></image>
+        <text>历史记录</text>
+      </view>
+      <view class='title-right' bindtap='historyDelFn'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_3.png'></image>
+      </view>
+    </view>
+    <view class='htrItemContent'>
+      <block wx:for="{{searchRecord}}" wx:key='{{item}}'>
+        <view class='htrItem' bindtap='Assign' data-text='{{item}}'>{{item}}</view>
+      </block> 
+      <!-- <view class='noHistoryItem' wx:if="{{searchRecord.length==0}}">你还没有搜索记录</view> -->
+    </view>
+    </view>
+    <!-- 全站搜索 -->
+    <view class='titles'>
+      <view class='title-left'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_5.png'></image>
+        <text>全站搜索</text>
+      </view>
+      </view>
+      <view class='htrItemContent'>
+            <block wx:for="{{all}}" wx:key='{{item}}'>
+              <view class='htrItem'>{{item}}</view>
+            </block> 
+          </view>
+
+
+  </view>
+
+  <!-- 商品列表 -->
+  <view  hidden='{{conts}}'>
+       <view class="topnav">
+        <view class='sort-wrap ' bindtap='tabFun'>
+          <view class="sort-btn {{tabArr.curHdIndex=='0'? 'active' : ''}}" data-id="0">
+            综合
+          </view>
+          <view class="sort-btn {{tabArr.curHdIndex=='1'? 'active' : ''}}" data-id="1">
+            新品
+          </view>
+          <view class="sort-btn {{tabArr.curHdIndex=='2'? 'active' : ''}}" data-id="2">
+            销量
+          </view>
+          <view class="sort-btn {{tabArr.curHdIndex=='3'? 'active' : ''}}" data-id="3" bindtap='changechoose' data-index="{{dataindex}}">
+            价格
+            <image src="{{imageurl2}}"></image>
+          </view>
+          </view>
+
+        </view>
+        <view class='conts' style='height:auto!important;position:inherit!important;padding-top:166rpx!important'>
+                        <block wx:for="{{listx}}" wx:key="{{index}}">
+                          <view class='conts-list' data-id="{{item.goods_id}}"  bindtap='detail'>
+                            <image class='active'  src='{{item.goods_image}}'></image>
+                            <view class='conts-title'>{{item.title}}</view>
+                            <view class='conts-sale'>
+                              <text class='two'>￥{{item.price}}</text> 
+                              <text class='yss' style="position:inherit!important">{{item.sell_out}}</text>
+                            </view>
+                            <view class="{{item.activity_money !== '0.00'?'zhuan':'zhuans'}}">
+                            <block  wx:if="{{item.activity_money !== '0.00'}}">
+                            赚￥{{item.activity_money}}
+
+                            </block>
+                            </view>
+                          </view>
+                      </block>
+                    </view>
+  </view>
+
+</view>
+
+</view>
+
+ <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>

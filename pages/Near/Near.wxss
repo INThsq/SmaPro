@@ -1,0 +1,125 @@
+/* pages/Near/Near.wxss */
+.search{
+  height: 30px!important;
+  position: fixed;
+  top:141rpx!important;
+  border-radius:0!important;
+  z-index: 123;
+  padding-bottom: 8rpx;
+  background: white;
+  width: 100%;
+
+}
+.zt-One{
+  display: flex;
+  justify-content:space-between;
+  font-size: 29.17rpx;
+  line-height: 42rpx;
+  margin-bottom: 12rpx;
+}
+.T-O{
+  font-size: 25rpx;
+  color: #666;
+  line-height: 18px;
+  margin-bottom: 8rpx;
+}
+.T-W{
+    color: #666;
+    font-size: 25rpx;
+}
+.zt-Two{
+  display: flex;
+  justify-content: space-between;
+}
+.left-T{
+  display: flex;
+  flex-direction: column;
+  width: 480rpx;
+}
+.right-T{
+  display: flex;
+  align-items: center;
+}
+.zt-One .left{
+  font-weight:bold;
+}
+.zt-One .right{
+  color:#50BA48;
+}
+.body{
+  margin-top:194rpx;
+}
+.search input{
+  background: #F6F6F6;
+  border-radius:100px!important;
+  height:20px!important; 
+  padding:5px 0 5px 68rpx!important;
+  min-height:20px;
+  display: flex;
+  align-items: center;
+  font-size:29.17rpx;
+  z-index: 9;
+}
+.search{
+  display: flex;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  background: white;
+  align-items: center;
+}
+.arrow{
+  margin: 0 28rpx 0 12rpx;
+  width: 0;
+height: 0;
+border-width:4px;
+border-style: solid;
+display: flex;
+border-color: #333 transparent transparent transparent;
+}
+.placeholder{
+  position: absolute;
+  top:2rpx;
+  color: #999;
+}
+.search .left{
+  color: #333;
+  font-size: 33.3rpx;
+  display: flex;
+  align-items:baseline;
+}
+.del{
+ width:30rpx!important;
+  height: 30rpx!important;
+  position: absolute!important;
+  right:54rpx!important;
+  top:16rpx!important;
+  z-index: 999!important
+}
+.container{
+  margin-top: 142rpx;
+}
+.searches{
+  width:30rpx;
+  height: 30rpx;
+  position: absolute;
+  left:166rpx;
+  top:16rpx;
+}
+
+.searchForm{
+  clear:both;
+  width: 82%;
+}
+.near-cont{
+  padding-top:30px;
+  background: white;
+}
+.items{
+  padding:28rpx  28rpx  28rpx 32rpx;
+  box-sizing: border-box;
+  border-bottom:.5px solid rgba(243,243,243,1);
+}
+.items image{
+  width: 44rpx;
+  height: 42rpx;
+}

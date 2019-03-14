@@ -8,19 +8,19 @@
 <!-- 内容区域 -->
 <view class='container'>
 <!-- 地址提示 -->
-<view class='tool' wx:if="{{addressDetails.sa_addr_true==0}}">
+<view class='tool' wx:if="{{detail.logistics.is_warning==true}}">
   <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_tishi.png'></image>
-  该地区因物流问题不能发货
+  {{detail.logistics.warning_tip}}
 </view>
 
   <!-- 有默认地址 -->
-  <view class='address-yes' wx:if="{{datas.sa_name}}" bindtap='addAdress'>
+  <view class='address-yes' wx:if="{{detail.address!==null}}" bindtap='addAdress'>
       <view class='yes-left'>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_dizhi.png'></image>
       </view>
       <view class='yes-right'>
-        <text class='right-user'>收货人：{{datas.sa_name}}   {{datas.sa_tel}}</text>
-        <text>{{datas.choose.sheng.item_name}}{{datas.choose.shi.item_name}}{{datas.choose.qu.item_name}}{{datas.sa_area_xx}}</text>
+        <text class='right-user'>收货人：{{detail.address.realname}}   {{detail.address.mobile}}</text>
+        <text>{{detail.address.address}}</text>
       </view>
       <view class='yes-rights'>
       <text  class="right iconfont icon-arrow"></text>
@@ -42,20 +42,24 @@
     <view class="order-list" bindtap='details'>
         <view class="order-num">
         <view class='touxiang'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>fanyuxi官方店</text>
+          <image src='{{detail.mall_goods.logo}}'></image>
+          <text>{{detail.mall_goods.name}}</text>
         </view>
         </view>
         <view class="order-con">
-          <image src="{{shopInfo.shop_img}}"></image>
+          <image src="{{detail.mall_goods.sku_thumb}}"></image>
           <view>
-            <view class="name">{{shopInfo.shop_name}}</view>
-            <text class="size">颜色:{{shopInfo.shop_color}},尺码:{{shopInfo.shop_size}}</text>
+            <view class="name">{{detail.mall_goods.title}}</view>
+            <!-- <text class="size">颜色:{{shopInfo.shop_color}},尺码:{{shopInfo.shop_size}}</text> -->
             <view class='one'>
             <text class="yang">￥</text>
-            <text class='nl'>599.00</text>
-          <text class='two'>已售480件</text>
-            
+            <text class='nl'>{{detail.mall_goods.market_price}}</text>
+            <block wx:if="{{detail.mall_goods.market_price == detail.mall_goods.sale_price}}">
+         
+          </block>
+          <block wx:else>
+ <text class='two' style='text-decoration:line-through'>￥{{detail.mall_goods.sale_price}}</text>
+            </block>
           </view>
           </view>
         </view>
@@ -88,22 +92,22 @@
   </view>
 
   <!-- 本单抵现 -->
-  <view class='withdraw'>
+  <view class='withdraw' wx:if="{{detail.is_discount_hide==1}}">
   <view class='with-l'>
     <view class='with-l-o'>
     <text class='ben'>本单抵现 </text>
     <block wx:if="{{addressDetails.sa_addr_true==1}}">
-    <text class='bens'> -￥10.00</text>
+    <text class='bens'> -￥{{detail.discount_money}}</text>
     </block>
 
     <block wx:else>
     <view class='ones'>
-            <text class='nl'>-￥599.00</text>
+            <text class='nl'>-￥{{detail.discount_money}}</text>
     </view>
     </block>
    </view>
     <view class='with-l-t'>
-    <view>剩余￥1.66,可下次抵扣  抵现规则 
+    <view>剩余￥{{residue}},可下次抵扣  抵现规则 
     <image src='http://oss.myzy.com.cn/wechat/images/icon_tishi_wenhao.png'></image>
     </view>
   </view>
@@ -119,8 +123,8 @@
 <!-- 优惠条例 -->
 <block wx:if="{{addressDetails.sa_addr_true==0}}">
   <view class='discounts'>
-    <text>已经优惠￥440.00</text>
-    <text>11.10-11.15 付款成功赚钱翻倍</text>
+    <text>已经优惠￥{{detail.discount_money}}</text>
+    <!-- <text>11.10-11.15 付款成功赚钱翻倍</text> -->
   </view>
 
 </block>
@@ -132,7 +136,7 @@
       <text class='m'>￥</text>
       <text>{{totalPrice}}</text>
     </view>
-    <block wx:if="{{addressDetails.sa_addr_true==1}}">
+    <block wx:if="{{detail.discount_money == '0.00'}}">
     <view class='submit' bindtap='submits'>
     提交订单
     </view>
@@ -141,7 +145,7 @@
     <block wx:else>
     <view class='submits' bindtap='submits'>
       <text>提交订单</text>
-      <text>赚￥8.00 ×2</text>
+      <text >赚￥{{detail.mall_goods.activity_money}}</text>
     </view>
     </block>
 
@@ -164,7 +168,7 @@
   </view>
  
  <view class='way-cont'>
-        <view class='way-list'  bindtap='menuTap' data-current="0">
+        <view class='way-list'  bindtap='menuTap' data-type="3" data-current="0">
             <view class='way-left'>
              <block wx:if="{{menuTapCurrent== 0}}">
               <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
@@ -182,7 +186,7 @@
               <text class='small'>推荐已安装微信用户使用</text>
             </view>
         </view>
-        <view class='way-list'  bindtap='menuTap' data-current="1">
+        <view class='way-list'  bindtap='menuTap' data-type="1" data-current="1">
             <view class='way-left'>
             <block wx:if="{{menuTapCurrent== 1}}">
               <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
@@ -197,13 +201,13 @@
             </view>
             <block wx:if="{{nedPay !== 0}}">
             <view class='way-text'>
-              <text>余额支付 (剩余:￥8819.00）</text>
+              <text>余额支付 (剩余:￥{{detail.balance}}）</text>
               <text class='small'>账户余额支付</text>
             </view>
             </block>
             <block wx:else>
             <view class='way-text way-texts'>
-              <text>余额支付 (剩余:￥8819.00）</text>
+              <text>余额支付 (剩余:￥{{detail.balance}}）</text>
               <text class='small'>账户余额支付</text>
             </view>
 
@@ -220,9 +224,19 @@
 
   <!-- 支付按钮 -->
   <view class='pay'>
-  <button class='pay-btn' bindtap='topay'>立即支付</button>
+  <button class='pay-btn' wx:if="{{types == 1}}" bindtap='topays'>立即支付</button>
+ <button class='pay-btn' wx:else bindtap='topay'>立即支付</button>
   </view>
 
   </view>
   </view>
 
+   
+  <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+
+   <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>

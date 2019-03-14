@@ -1,0 +1,101 @@
+<!-- 引用组件的页面模版 -->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>未领礼物</view> 
+  </my-component>
+</view>
+
+
+<!-- 订单主体 -->
+    <view class="order-info" style='margin-top:154rpx;'>
+    <view class='order-lists'>
+      <view class="order-list">
+        <view class="order-num">
+        <view class='touxiang'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>fanyuxi官方店</text>
+        </view>
+        <view class='wait'>
+        礼品
+        </view>
+        </view>
+        <view class="order-con">
+          <image src="../../static/imgs/goods3.png"></image>
+          <view>
+            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+            <text class="size">颜色:白色,尺码:XL</text>
+            <text class="price">￥888</text>
+          </view>
+        </view>
+        <view class='order-fans'>
+          <view  class='names'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>
+          INT(直属粉丝邀请)
+          </text>
+          </view>
+          <view class='sf'>
+            免费领取
+            <text class='out'>(免运费)</text>
+          </view>
+        </view>
+      </view>
+         <view class='btn'>
+            <button class='canel'>礼物变现</button>
+            <button class='pay'>填写收货地址</button>
+          </view>
+    </view>
+
+
+    <view class='order-lists'>
+      <view class="order-list">
+        <view class="order-num">
+        <view class='touxiang'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>fanyuxi官方店</text>
+        </view>
+        <view class='wait'>
+        礼品
+        </view>
+        </view>
+        <view class="order-con">
+          <image src="../../static/imgs/goods3.png"></image>
+          <view>
+            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+            <text class="size">颜色:白色,尺码:XL</text>
+            <text class="price">￥888</text>
+          </view>
+        </view>
+        <view class='order-fans'>
+          <view  class='names'>
+          <image src='../../static/imgs/touxiang.jpg'></image>
+          <text>
+          INT(直属粉丝)
+          </text>
+          </view>
+          <view class='sf'>
+            免费领取
+            <text class='out'>(免运费)</text>
+          </view>
+        </view>
+      </view>
+      <view class='btn'>
+            <button class='canel'>礼物变现</button>
+            <button class='pay'>填写收货地址</button>
+          </view>
+      </view>
+      </view>
+     
+
+  <button class='btn recharge' bindtap='deposit'>提现</button>
+
+  <button class='btn recharge' bindtap='deposit'>提现</button>
+
+<button class='btn recharge' bindtap='deposit'>提现</button>
+
+
+
+
+
+

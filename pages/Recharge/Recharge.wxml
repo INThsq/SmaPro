@@ -12,14 +12,14 @@
  <view class="Deposit-money">
     <view class='Deposit-mon'>
         <text class='tx-jine'>充值金额</text>
-        <view>
+        <view style='margin-top:-20rpx;'>
         <view class='pa'>
         ￥
         </view>
-         <input type='digit' name='name' placeholder="0" class='regCon-txt'  value='{{money}}'                  bindinput='money' />
+         <input type='digit' name='name' placeholder="0" class='regCon-txt'  value='{{money}}' bindinput='money' style='padding-bottom:{{padTop}}rpx' />
         </view>
         
-        <view class='all' wx:if="{{money > 5}}">
+        <view class='all' wx:if="{{money > 1000}}">
         <text class='abouts'>单笔金额最多可充值10000.00元</text>
         <text class='toasts'>温馨提示：充值后可使用余额进行交易支付</text>
         
@@ -34,7 +34,7 @@
         </view>
     </view>
 
-    <block  wx:if="{{money > 5}}">
+    <block  wx:if="{{money > 1000}}">
     <button class='btns' bindtap='toDespositfalse'>充值</button>    
     </block>
     <block  wx:elif="{{money == 0 || money == null}}">
@@ -62,3 +62,12 @@
     </view>
 
 </dialog>
+
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+
+  <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2" src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>

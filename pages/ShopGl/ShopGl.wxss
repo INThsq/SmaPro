@@ -1,0 +1,178 @@
+/* pages/ShopGl/ShopGl.wxss */
+.container{
+  margin-top: 144rpx;
+
+}
+.top{
+  display: flex;
+  padding-top: 38rpx;
+  justify-content: center;
+
+}
+.tops{
+  background: white;
+  text-align: center;
+  margin-bottom: 16rpx;
+}
+.top view{
+  position: relative;
+}
+.top .logo_O{
+  width: 134rpx;
+  height: 134rpx;
+  border-radius:50%;
+} 
+.top .logo_T{
+  width: 36rpx;
+  height: 36rpx;
+  position: absolute;
+  bottom:30rpx;
+  right: 0;
+}
+.title{
+  color: #333;
+  font-size: 33.3rpx;
+  font-weight: bold;
+  padding: 22rpx 0 18rpx;
+  display: inline-block;
+}
+.ms{
+  padding-left:84rpx;
+  color: #666;
+  font-size: 25rpx; 
+  padding-bottom: 32rpx;
+  overflow: hidden;
+  display: block;
+}
+.ms image{
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  left:640rpx;
+  margin-top: 10rpx;
+}
+.ss{
+  position: relative;
+
+  display: inline-block;
+  line-height: 36rpx;
+  width:263px;
+ overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+float: left;
+
+}
+.sh{
+  padding: 0 40rpx;
+  box-sizing: border-box;
+  font-size: 29.17rpx;
+  color: #4880C7;
+  padding-bottom: 34rpx;
+}
+.sh text{
+  display: inline-block;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background:rgba(241,249,255,1);
+
+}
+.bot{
+  background: white;
+  padding: 28rpx 0;
+  box-sizing:border-box;
+}
+.bot .item{
+  width: 33.3%;
+  display: inline-block;
+  text-align: center;
+}
+.item text{
+  display: inline-block;
+  width: 100%;
+}
+.i_o{
+  font-size: 29.17rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+.i_t{
+  font-size: 29.17rpx;
+  color: #333;
+}
+action-sheet-item{
+  font-size: 33.3rpx;
+  color: #333;
+}
+
+.yjs{
+  color: #999!important;
+}
+action-sheet-cancel{
+  font-size: 33.3rpx;
+  color: #8D8D8D;
+}
+action-sheet{
+  background:#fafafa;
+}
+/* //弹出框 */
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.6;
+  overflow: hidden;
+  z-index: 1000;
+}
+.commodity_attr_box {
+  box-sizing: border-box;
+  height:345px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  font-size: 33.3rpx;
+  color: #333;
+}
+.com_title{
+  line-height: 96rpx;
+  height: 96rpx;
+  border:1px solid rgba(243,243,243,1);
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  font-size: 33.3rpx;
+  color: #333;
+  overflow: hidden;
+}
+.com_title text{
+  display: inline-block;
+  width: 33.3%;
+}
+.center{
+  text-align: center!important;
+}
+.right{
+  text-align: right!important;
+  color: #F43736;
+}
+textarea{
+  padding:20rpx 50rpx 0 30rpx;
+  box-sizing: border-box;
+  display: inline-block!important;
+  width:100%!important;
+}
+.tool{
+color: #999;
+font-size: 29.17rpx;
+position: absolute;
+bottom: 50rpx;
+text-align: right;
+display: inline-block;
+right: 30rpx;
+}

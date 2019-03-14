@@ -1,0 +1,75 @@
+<view>
+  <my-component>
+     <view>店铺管理</view> 
+  </my-component>
+</view>
+
+
+<view class='container'>
+  <view class='tops'>
+  <view class='top'>
+  <view class='logo' catchtap='listenerButton'>
+    <view>
+    <image src='{{avatarUrl?avatarUrl:getStoreDetails.logo}}' class='logo_O'></image>
+    </view>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_shangpinguanli_paizhao.png' class='logo_T'></image>
+  </view>
+
+  </view>
+  <text class='title'>{{getStoreDetails.name}}</text>
+  <view class='ms'  bindtap='RZ'>
+    <text class='ss'>{{cont?cont:getStoreDetails.detection}}</text>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_shangpinguanli_bianji.png'></image>
+  </view> 
+  <view class='sh'>
+  <text>店铺认证审核中,大约需要3个工作日</text></view>
+  </view>
+
+
+  <view class='bot'>
+    <view class='item'>
+      <text class='i_o'>认证类型</text>
+      <text class='i_t'>{{getStoreDetails.auth_type}}店铺</text>
+    </view>
+
+  <view class='item'>
+      <text class='i_o'>店铺类型</text>
+      <text class='i_t'>{{getStoreDetails.type}}</text>
+    </view>
+    <view class='item'>
+      <text class='i_o'>主营类目</text>
+      <text class='i_t'>{{getStoreDetails.classify_name}}</text>
+    </view>
+  </view>
+</view>
+
+
+<!-- 拍照 -->
+<!--默认action-sheet为隐藏，由button触发-->
+<action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
+
+    <block wx:for-items="{{actionSheetItems}}" wx:key="{{key}}" > 
+        <action-sheet-item  data-index="{{index}}" data-text="{{item}}" bindtap="itemChange">{{item}}</action-sheet-item>
+    </block>
+    <!--自动隐藏action-sheet-->
+    <action-sheet-cancel>取消</action-sheet-cancel>
+</action-sheet>
+
+<!-- 慕态框 -->
+   <view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+    <!--弹出框  -->
+    <view animation="{{animationData}}"  class="commodity_attr_box" wx:if="{{showModalStatus}}">
+      <view class='com_title'>
+        <text class='left' bindtap='Close'>关闭</text>
+        <text class='center'>店铺描述</text>
+        <text class='right' bindtap='Save'>保存</text>
+      </view>
+      <textarea  bindinput="bindTextAreaBlur" value="{{details}}" class="detailText" maxlength="300"
+    placeholder="{{getStoreDetails.detection}}">
+</textarea>
+<view class='tool'>最多可输入300字</view>
+    </view>
+    
+ <!-- toast -->
+ <import src="../../public/appToast/appToast.wxml"/>
+ <template is="toast" data="{{ ..._toast_ }}"/>

@@ -1,0 +1,2 @@
+/* pages/Not/Not.wxss */
+@import "../Address/Address.wxss";

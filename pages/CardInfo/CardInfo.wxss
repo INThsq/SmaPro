@@ -1,0 +1,126 @@
+/* pages/CardInfo/CardInfo.wxss */
+.container{
+  margin-top: 144rpx;
+}
+.container .info{
+  font-size:29.17rpx;
+  color: #666;
+  line-height: 96rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.place-holder{
+  font-size: 33.3rpx;
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+}
+.load{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display: none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+.show{
+  display: block!important;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
+.item{
+  background: white;
+  padding:  0 30rpx;
+  box-sizing: border-box;
+  display: flex;
+   align-items: center; /*垂直居中*/
+  border-bottom:1px solid #FAFBFD;
+
+}
+button::after{
+  border: none;
+  outline:none;
+}
+.button{
+  padding:  0 30rpx;
+  box-sizing: border-box;
+}
+button{
+  height: 42px;
+  line-height: 42px;
+  color: white;
+  background: #FF4949;
+  font-size: 33.3rpx;
+}
+.title{
+  font-size: 25rpx;
+  color: #666;
+  padding: 0 30rpx;
+  line-height: 50rpx;
+  margin:22rpx 0;
+  display: flex;
+}
+.none{
+  border-bottom:none!important;
+
+}
+.item view,.item input{
+  display: flex;
+  line-height:96rpx;
+  height: 96rpx;
+   font-size:33.3rpx;
+}
+.enroll-item input{
+  width: 100%!important;
+  display: inline-block!important;
+}
+.item-title{
+  color: #333;
+  margin-right: 30rpx;
+}
+
+.item image{
+  width: 64rpx;
+  height: 64rpx;
+  border-radius:50%;
+  margin-right:30rpx;
+}
+.item .item-cont{
+  color: #666;
+}
+.enroll-item{
+  display: block!important;
+
+}
+.tool image{
+  width: 20rpx;
+  height: 24rpx;
+  margin-right: 10rpx;
+}
+.tool{
+  font-size: 25rpx;
+  color: #999;
+  text-align: center;
+  position: absolute;
+  bottom:32rpx;
+  width: 100%;
+}

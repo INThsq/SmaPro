@@ -1,0 +1,67 @@
+/* pages/BankCard/BankCard.wxss */
+.container{
+  margin-top: 144rpx;
+}
+.noCard{
+  padding:126rpx 30rpx 0 30rpx;
+  display:inline-block;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.noCard image{
+  width: 260rpx;
+  height:180rpx;
+  display: inline-block;
+}
+button::after{
+  border: none;
+  outline:none;
+}
+.noCard text{
+  display:block;
+  color: #666;
+  font-size: 33.3rpx;
+  margin:68rpx 0 54rpx;
+}
+.bind{
+  height: 42px;
+  line-height: 42px;
+  color: white;
+  background: #FF4949;
+}
+.cards{
+  padding:32rpx 30rpx 0 30rpx;
+  box-sizing: border-box;
+}
+.cards .list_img{
+  height:114px;
+  width: 100%;
+}
+.list{
+  position: relative;
+  margin-bottom: 20rpx;
+}
+.list_cont{
+  position: absolute;
+  top: 0;
+  display: flex;
+}
+.list_cont image{
+  width: 72rpx;
+  height: 72rpx;
+  margin: 44rpx 18rpx 0 38rpx;
+
+}
+.list_right text{
+display: block;
+color: white;
+}
+.list_one{
+  font-size: 33.3rpx;
+  margin-top: 36rpx;
+}
+.list_Two{
+  font-size: 25rpx;
+  margin-bottom: 38rpx;
+}

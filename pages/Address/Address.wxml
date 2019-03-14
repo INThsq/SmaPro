@@ -11,7 +11,7 @@
 
 <!-- 内容 -->
 <!-- 没有信息显示 -->
-<view class='container' wx:if="{{datas == null}}">
+<view class='container' wx:if="{{datas == null|| datas.length<1}}">
     <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
     <text>抱歉，暂无数据</text>
     <view class='btns'>
@@ -22,30 +22,31 @@
 
 <!-- 有信息 -->
 <view class='containers' wx:else>
-<block >
-  <view class='items' bindtap='chooseAdress'>
-  <view class='top'>
-      <text class='name'  decode="{{true}}">{{datas.sa_name}}&nbsp;&nbsp;&nbsp;{{datas.sa_tel}}</text>
-      <text class='adress'>{{datas.choose.sheng.item_name}}{{datas.choose.shi.item_name}}{{datas.choose.qu.item_name}}{{datas.sa_area_xx}}</text>
+<block  wx:for="{{datas}}" wx:key="index">
+<!-- bindtap='chooseAdress' -->
+  <view class='items' >
+  <view class='top' bindtap='chooseAdress' data-index='{{index}}'  data-member="{{item.member_address_id}}">
+      <text class='name'  decode="{{true}}">{{item.realname}}&nbsp;{{item.mobile}}</text>
+      <text class='adress'  decode="{{true}}">{{item.region_path_name}} &nbsp;{{item.address}}</text>
   </view>
   <view class='bottom'>
      <!-- <icon wx:if="{{item.sa_addr_true==0}}" type="success" color="#b2282e" data-index="{{index}}"  class="cart-pro-select"  bindtap="selectList"/>
           <icon wx:else type="circle" class="cart-pro-select" data-index="{{index}}" bindtap="selectList"/>
   </view> -->
-  <view class='circle'>
-  <block  wx:if="{{datas.sa_addr_true==0}}">
-      <view class='circlel' data-index="{{0}}"  bindtap="selectList"></view>设为默认地址
+  <view class='circle' data-member="{{item.member_address_id}}" data-index="{{index}}"  bindtap="selectList">
+  <block  wx:if="{{item.is_default==0}}">
+      <view class='circles' data-index="{{0}}"  ></view>设为默认地址
   
   </block>
   <block wx:else>
-      <view    class='circles' data-index="{{1}}"  bindtap="selectList"></view>设为默认地址
+      <view class='circlel' data-index="{{1}}" ></view>设为默认地址
   </block>    
   </view>
-  <view class='edit' bindtap='edit'> 
+  <view class='edit' bindtap='edit' data-member="{{item.member_address_id}}" data-index="{{index}}"> 
   <image src='http://oss.myzy.com.cn/wechat/images/icon_tianxiedizhi_bianji.png'></image>
     编辑 
   </view>
-  <view class='del' bindtap='del'>
+  <view class='del' bindtap='del' data-member="{{item.member_address_id}}" data-index="{{index}}">
   <image src='http://oss.myzy.com.cn/wechat/images/icon_tianxiedizhi_shanchu.png'></image>
   
   删除
@@ -57,7 +58,7 @@
 
 <!-- 新增按钮 -->
 <view class='adds'>
-<button class='add'  bindtap='addAdr'>
+<button class='add'  bindtap='addAdress'>
   <image src='http://oss.myzy.com.cn/wechat/images/icon_shouhuodizhi_jiahao.png'></image>
 新建收货地址</button>
 </view>
@@ -81,3 +82,6 @@
     
 </dialog>
 
+ <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+  

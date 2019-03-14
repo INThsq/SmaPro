@@ -1,0 +1,97 @@
+<!--pages/Recom/Recom.wxml-->
+
+<!--pages/Explain/Explain.wxml-->
+<view>
+  <my-component>
+     <view>分销推广说明</view> 
+  </my-component>
+</view> 
+
+
+<view class='container'>
+  <view class='top'>
+  <image src='http://oss.myzy.com.cn/wechat/images/img_fenxiang1.png'></image>
+  <view class='top-title' bindtap='Sq'>立即推荐</view>
+  <text>我的邀请：JDBBBP</text>
+  </view>
+  <view class='zou'>
+<swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="2000">
+  <block wx:for="{{msgList}}">
+   <navigator url="/pages/index/index?title={{item.url}}" open-type="navigate">
+    <swiper-item>
+     <view class="swiper_item">{{item.title}}</view>
+    </swiper-item>
+   </navigator>
+  </block>
+ </swiper>
+ </view>
+
+<!-- 列表 -->
+<view class='entry'>
+  <view class='entrys'>
+  <view class='en-list'>
+  <text class='num'>0</text>
+  <text class='wenxzi'>直接粉丝</text>
+  </view>
+  <view class='bank'></view>
+  <view class='en-list'>
+  <text class='num'>0</text>
+  <text class='wenxzi'>团队粉丝</text>
+  </view>
+  <view class='bank'></view>
+
+  <view class='en-list'>
+  <text class='num'>0</text>
+  <text class='wenxzi'>佣金奖励(元)</text>
+  </view>
+  </view>
+</view>
+
+
+  <view class='cont'>
+  <view class='conts'>
+        <view class='conts-tit'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_fenxiao3.png'></image>
+        </view>
+        <view class='conts-tits'>
+        当前奖励区间
+        </view>
+        <view class='lists'>
+            <view class='list-left'>
+              <text class='list-o'>120元/位</text>
+              <text class='list-t'>直推粉丝</text>
+              <text class='list-h'>邀请第1-27位</text>
+            </view>
+        </view>
+
+        <view class='listes'>
+            <view class='list-left'>
+              <text class='list-o'>120元/位</text>
+              <text class='list-t'>团队粉丝</text>
+              <text class='list-h'>>=第28位</text>
+            </view>
+        </view>
+  </view>
+  
+
+
+  <view class='article'>
+  <view class='conts-tit'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_fenxiao6.png'></image>
+        </view>
+  </view>
+  <view class='conts-art'>
+    <text>1. 邀请您的家人、朋友、同学、同事成功率更高</text>
+    <text>2. 邀请时对好友：”下载后加入促销圈赢促销仅，提 现秒到账”，成功率更高</text>
+    <text>3. 把您提现到账的截图晒给你的好友，陈宫率更高</text>
+    <text>4. 除了您直接推粉丝，前27位每人购买一次可获得促金120元以外，你还可以从第28位以后非直推粉丝购买也可以获得促销金120元（详见活动则）</text>
+    <text>5. 好友必须通过邀请注册购买方可获得促销金，以保证您能正常受到奖励</text>
+  </view>
+  </view>
+</view>
+
+
+<view class='footer'>
+  <view class='footer-left'>我要推荐</view>
+  <view class='footer-right'>进入促销商品详情</view>
+</view>

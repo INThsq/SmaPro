@@ -113,9 +113,9 @@
         </view>
     </view>
     </swiper-item>
-    <swiper-item><view>2</view></swiper-item>
-    <swiper-item><view>3</view></swiper-item>
-    <swiper-item><view>4</view></swiper-item>
+    <swiper-item><view></view></swiper-item>
+    <swiper-item><view></view></swiper-item>
+    <swiper-item><view></view></swiper-item>
     
 </swiper>
 

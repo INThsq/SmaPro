@@ -1,6 +1,10 @@
 {
-  "navigationBarTitleText": "商品详情",
+   "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor": "white",
+  "navigationBarTextStyle": "white",
   "usingComponents": {
-    "my-component": "../../public/compback/compback"
+    "my-component": "../../public/compback/compback",
+    "dialog": "../../public/Dialog/dialog"
   }
 }

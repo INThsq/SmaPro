@@ -1,0 +1,98 @@
+/* pages/WhitCash/WhitCash.wxss */
+@import '../../public/compback/compback.wxss';
+
+page{
+  height: 100vh;
+}
+.wrapper{
+  background: transparent!important;
+}
+.tops{
+  background:linear-gradient(270deg,rgba(251,104,104,1) 0%,rgba(252,55,55,1) 100%);
+  color: white;
+}
+.order{
+  margin-top: 0!important;
+}
+.tetxs{
+  color: white;
+}
+.top-Two{
+  display: flex;
+  justify-content:space-between;
+}
+.tops{
+  padding: 164rpx 0 50rpx;
+  box-sizing: border-box;
+}
+.top-One{
+  font-size: 29.17rpx;
+  line-height: 20px;
+  margin-bottom: 2rpx;
+  padding:0 30rpx;
+  box-sizing: border-box;
+}
+.top-Two{
+  padding:0 44rpx 0 22rpx;
+  box-sizing: border-box;
+  line-height: 47px;
+  display: flex;
+  align-items: center;
+}
+.iconfont{
+  font-size: 26rpx!important;
+}
+.last{
+  margin-top: 18rpx;
+}
+.mony{
+  font-size: 65.17rpx;  
+}
+.top-Two .btn{
+  width: 108rpx;
+  height:48rpx;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 29.17rpx;
+  border-radius:100px;
+  border:1px solid rgba(255,255,255,1);
+}
+.order,.courtesy_title{
+      display:flex;
+      align-items: center;
+      background: white;
+      height:100rpx;
+      padding:0 30rpx;
+      box-sizing: border-box;
+      line-height:100rpx;
+      border-bottom:.5px solid #fafafa;
+  }
+  .myOrder{
+      flex:1;
+      font-size:33.3rpx;
+      font-family:SourceHanSansSC-Regular;
+      color:#333;
+  }
+  .order .icon{
+      flex:1;
+      text-align:right;
+      line-height:80rpx;
+      align-items: center;
+  }
+.icon .all{
+  font-size:26rpx;
+  color:#999;
+  margin-right: 18rpx;
+}
+.text text{
+
+  font-size: 25rpx;
+  color: #999;
+  line-height: 18px;
+}
+.text{
+  padding-left: 30rpx;
+  margin-top: 30rpx;
+  box-sizing: border-box;
+}

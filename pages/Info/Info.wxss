@@ -1,0 +1,80 @@
+/* pages/Info/Info.wxss */
+.container{
+  margin-top: 140rpx;
+}
+.info{
+  display: flex;
+  justify-content: space-between;
+  padding:20rpx 30rpx;
+  background: white;
+  margin-bottom: 20rpx;
+}
+.info image{
+width: 88rpx;
+height: 88rpx;
+border-radius: 50%;
+vertical-align: middle;
+}
+.left{
+  font-size: 33.3rpx;
+  color: #333;
+  height: auto;
+  line-height:58rpx;
+}
+.nick{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f3f3f3;
+  height:58rpx;
+  padding: 20rpx 0;
+}
+.cont{
+    padding:0 30rpx;
+    box-sizing: border-box;
+    background: white;
+    margin-bottom: 20rpx;
+}
+.nick view{
+  display: flex;
+  line-height:58rpx;
+}
+.rights{
+  color: #666;
+  font-size: 33.3rpx;
+  line-height:58rpx;
+}
+.sex{
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  height:58rpx;
+
+}
+.code{
+  background: white;
+   display: flex;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  height:58rpx;
+}
+.syn{
+  position:fixed;
+  width: 100%;
+  bottom: 112rpx;
+  text-align: center;
+  color: #666;
+  font-size: 33.3rpx;
+  
+}
+.syn image{
+  margin-right: 12rpx;
+
+}
+.code .right image{
+  width: 30rpx!important;
+  height: 30rpx!important;
+}
+.syn image{
+  width: 30rpx;
+  height: 30rpx;
+}

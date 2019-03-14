@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor": "white",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback"
+  }
+}

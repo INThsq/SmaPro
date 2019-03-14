@@ -1,0 +1,91 @@
+/* pages/getCode/getCode.wxss */
+@import"../EarnMoney/EarnMoney.wxss";
+.code{
+  position: relative;
+  top: -260rpx;
+  z-index:30;
+}
+.code-top{
+  padding:0 32rpx;
+  height:32rpx;
+}
+.code-top image{
+  height: 32rpx;
+  width: 100%;
+}
+.head{
+  height: 474rpx;
+ background:url('http://oss.myzy.com.cn/wechat/images/img_erweimabeijing.png')no-repeat center;
+ background-size: 100% 100%;
+}
+.code-bot{
+  padding:0 64rpx;
+margin-top: -8rpx;
+z-index: 33;
+position: relative;
+}
+.code-bot-cont{
+background:url('http://oss.myzy.com.cn/wechat/images/img_erweimabaida.png')no-repeat center;
+ background-size: 100% 100%; 
+height: 800rpx;
+}
+.code-info{
+  padding: 44rpx 0 44rpx 48rpx;
+  display: flex;
+}
+.code-info text{
+  display: block;
+  font-size: 25rpx;
+  line-height: 18px;
+}
+.code-info text:first-child{
+  color: #333;
+}
+.code-info text:last-child{
+  color: #999;
+}
+.code-info image{
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  vertical-align: middle;
+}
+.get-code image{
+  width: 360rpx;
+  height: 360rpx;
+  display: flex;
+}
+.get-code{
+  display:flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 60rpx;
+}
+button::after{
+  border:none;
+}
+button{
+   background: #F43736;
+   color: white;
+   font-size: 33.3rpx;
+}
+.btns{
+  position: absolute;
+  bottom: 146rpx;
+  padding: 0 64rpx;
+  width: 100%;
+  box-sizing: border-box;
+ 
+}
+.tip text{
+  display: block;
+  font-size: 25rpx;
+  color: #333;
+  margin-bottom: 12rpx;
+  line-height:18px;
+}
+.tip{
+  padding:70rpx 52rpx;
+  box-sizing: border-box;
+}

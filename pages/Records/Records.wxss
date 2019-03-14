@@ -1,0 +1,45 @@
+/* pages/Records/Records.wxss */
+@import "../Bean_helps/Bean_helps.wxss";
+@import "../Address/Address.wxss";
+
+.ims image{
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+}
+.imts{
+  display:flex;
+  flex-direction: row;
+  position: relative;
+}
+.imts::after{
+    position: absolute; 
+    content: '';
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: #f3f3f3;
+    -webkit-transform: scale(1, 0.5);
+    transform: scale(1, 0.5);
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+}
+.iteml{
+  font-size: 29.17rpx!important;
+}
+.itemr,.itemrs{
+  font-size: 25rpx!important;
+  color: #333;
+}
+.itemrs{
+  color: #F43736!important;
+}
+.ims{
+  display: flex;
+  align-items: center;
+  margin-right: 20rpx;
+}
+.container .items {
+width: 100%!important;
+}

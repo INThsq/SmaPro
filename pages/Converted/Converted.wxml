@@ -1,0 +1,113 @@
+<!--pages/Converted/Converted.wxml-->
+<view>
+  <my-component>
+     <view>立即兑换</view> 
+  </my-component>
+</view> 
+
+
+<!-- 内容区域 -->
+<view class='container'>
+<!-- 地址提示 -->
+<view class='tool' wx:if="{{detail.logistics.is_warning==true}}">
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_tishi.png'></image>
+  {{detail.logistics.warning_tip}}
+</view>
+
+  <!-- 有默认地址 -->
+  <view class='address-yes' wx:if="{{detail.address!==null}}" bindtap='addAdress'>
+      <view class='yes-left'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_dizhi.png'></image>
+      </view>
+      <view class='yes-right'>
+        <text class='right-user'>收货人：{{detail.address.realname}}   {{detail.address.mobile}}</text>
+        <text>{{detail.address.address}}</text>
+      </view>
+      <view class='yes-rights'>
+      <text  class="right iconfont icon-arrow"></text>
+        
+      </view>
+  </view>
+
+  <!-- 无默认地址 -->
+  <view wx:else class='adress' bindtap='addAdress'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_querendingdan_tianjia.png'></image>
+    
+     添加收货地址
+  </view>
+
+  <!-- 彩色条框 -->
+    <view class='b-bro'>
+    </view>
+
+  <!-- 商品 -->
+  <view class='list'>
+            <view class='list_left'>
+              <image src='http://oss.myzy.com.cn/wechat/images/img1.png'></image>
+            </view>
+            <view class='list_right'>
+                <text> 麦芙迪男士面膜美白补水控油控都保湿去黑头 ...</text>
+                <view class='right_bot'>
+                  <image src='http://oss.myzy.com.cn/wechat/images/icon_doudou.png'></image>
+                  <view class='doudou'>99<text>惠选豆</text></view>
+                </view>
+            </view>
+        </view>
+
+  <!-- 购买数量 -->
+  <view class='shul'>
+  <view class='shuls'>
+  <view class='left'>购买数量:</view>
+    <view class="stepper">
+    <!-- 减号 -->
+    <text class="{{minusStatus}} nos" bindtap="bindMinus">
+      <text class='iconfont icon-jianhaob'></text>
+    </text>
+    <!-- 数值 -->
+    <input type="number" bindchange="bindManual" value="{{num}}" />
+    <!-- 加号 -->
+    
+    <text class="normal no" bindtap="bindPlus">
+      <text class='iconfont icon-jiahaob'></text>
+      
+    </text>
+    </view>
+  </view>
+ 
+  </view>
+
+ <!-- 运费 -->
+  <view class='freight'>
+    <text>运费</text>
+    <text>免费包邮</text>
+  </view>
+   <view class='Explain'>
+        <view class='Exp_title'>兑换记录</view>
+        <view class='bank'></view>
+        <view class='Exp_conts'>
+          <text>1.金币直接兑换商品，所兑换商品数量有限，先兑先得，兑完即止</text>
+          <text>2.通过本活动金币兑换的商品以兑换码形式发放</text>
+          <text>3.获得兑换码后，打开惠选购APP，点击商品兑换待领取，点击加入购物车即可</text>
+          <text>4.此款商品每人先兑换1个</text>
+        </view>
+    </view>
+
+  </view>
+
+<!-- 付款按钮 -->
+  <view class='payfor'>
+    <view class='left'>
+      总计:
+      <text style='color:#F43736'>{{total}}惠选豆</text>
+    </view>
+    <view class='submit' bindtap='submits'>
+    立即兑换
+    </view>
+
+   
+
+  </view>
+
+
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>

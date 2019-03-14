@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "未领礼物",
-  "usingComponents": {
-    "my-component": "../../public/compback/compback"
-  }
-}

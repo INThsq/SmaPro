@@ -1,0 +1,46 @@
+/* pages/Recom/Recom.wxss */
+@import "../Explain/Explain.wxss";
+.entrys{
+  display: block;
+  clear: both;
+  overflow: hidden;
+  background: rgba(255,248,244,1);
+  height: 170rpx;
+  border-radius:10px;
+  padding: 40rpx 0;
+  box-sizing: border-box;
+  margin-bottom: 40rpx;
+}
+.wenxzi{
+  color: #9D4C00;
+  font-size: 29.17rpx;
+  margin-top: 16rpx;
+}
+.entry{
+  width: 100%;
+ padding:0 30rpx;
+  box-sizing: border-box;
+}
+.num{
+  font-size:40rpx;
+  color:#FA5226;
+}
+
+.en-list{
+  display: block;
+  float: left;
+  width:32.8%;
+  text-align: center;
+  
+}
+.en-list text{
+  display: block;
+}
+.bank{
+  display: block;
+  width:2px;
+height:13px;
+background: #FFCC9B;
+float: left;
+margin-top: 30rpx;
+}

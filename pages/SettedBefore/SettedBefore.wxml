@@ -1,4 +1,5 @@
 <!--pages/SettedBefore/SettedBefore.wxml-->
+
 <!-- 引用组件的页面模版 -->
 <view>
   <my-component>

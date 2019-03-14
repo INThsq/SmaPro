@@ -1,0 +1,42 @@
+<!--pages/FreeConvert/FreeConvert.wxml-->
+<view>
+  <my-component>
+     <view>免费兑换</view> 
+  </my-component>
+</view> 
+
+<!-- 内容区域 -->
+<view class='container'>
+  <view class='top'>
+      <view class='top_bean'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_dabaidou.png'></image>
+        <text>7373.00</text>
+        <image class='jiantou'  
+        bindtap="Exchange" src='http://oss.myzy.com.cn/wechat/images/icon_huixuandoujiantou.png'></image>
+      </view>
+
+      <view class='top_change'>
+        <text class='top_left'>当前惠选豆</text>
+        <text class='top_right' bindtap='Records'>兑换记录</text>
+      </view>
+  </view>
+
+    <view class='title'>
+        <image src='http://oss.myzy.com.cn/wechat/images/img_duihuanshangpin.png'></image>
+    </view>
+
+    <view class='conts'>
+        <view class='list' bindtap='Get'>
+            <view class='list_left'>
+              <image src='http://oss.myzy.com.cn/wechat/images/img1.png'></image>
+            </view>
+            <view class='list_right'>
+                <text> 麦芙迪男士面膜美白补水控油控都保湿去黑头 ...</text>
+                <view class='right_bot'>
+                  <image src='http://oss.myzy.com.cn/wechat/images/icon_doudou.png'></image>
+                  <view class='doudou'>99<text>惠选豆</text></view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

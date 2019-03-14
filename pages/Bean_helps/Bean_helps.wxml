@@ -1,0 +1,92 @@
+<!--pages/Bean_helping/Bean_helping.wxml-->
+<view>
+        <my-component>
+          <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+           <view wx:if="{{status == 0}}">待提现</view> 
+           <view wx:if="{{status == 1}}">提现中</view> 
+           <view wx:if="{{status == 2}}">已助力提现</view> 
+        </my-component>
+      </view>
+      
+    
+      <!-- 内容 待提现-->
+       <block wx:if="{{status == 0}}" >
+      <view class='container' style='padding:32rpx 0!important;text-align:center!important;'>
+      
+        <text class='one'>无待提现的红包</text>
+        <text class='two'>帮助好友助力即可得到待提现红包</text>
+      </view>
+      <view class='over'>
+      <view class='title'>
+      已申请提现
+      </view>
+      <view class='items'>
+            <view class='item'>
+              <text class='iteml'>邀请助力8428375622468...</text>
+              <text class='itemr'>+2.03</text>
+            </view>
+            <view class='item'>
+              <text class='itemls'>2018-10-26 19:04</text>
+              <text class='itemrs'>2.20</text>
+            </view>
+      </view>
+      </view>
+      </block>
+      
+      
+      
+      
+
+      <!-- 内容  已助力提现 -->
+      <block wx:if="{{status == 2}}" >
+        <view class='container'>
+        
+        <view class='items' wx:for="{{bill_list}}">
+              <view class='item'>
+                <text class='iteml' style='text-center:left!imporatnt'>{{item.remark}}</text>
+                <text class='itemr'>{{item.turnover}}</text>
+              </view>
+              <view class='item'>
+                <text class='itemls' style='font-size:25rpx!important;font-weight:400!important'>注册时间:{{item.create_time}}</text>
+                <text class='itemrs'>{{item.virtual_proof}}</text>
+              </view>
+        </view>
+        </view>
+</block>
+
+    <!-- 内容  提现中 -->
+    <block  wx:if="{{status == 1}}">
+        <view class='container3 container'>
+        <view class='pa' wx:if="{{list[0]==''}}" style='padding:32rpx 0!important;text-align:center!important; '>
+         <text class='one'>无待提现的红包</text>
+        <text class='two'>帮助好友助力即可得到待提现红包</text>
+        </view>
+       
+  <!-- <view class='items'>
+        <view class='item'>
+          <text class='iteml'>邀请助力8428375622468...</text>
+          <text class='itemr'>+2.03</text>
+        </view>
+        <view class='item'>
+          <text class='itemls'>注册时间:2018-10-26 19:04</text>
+          <text class='itemrs'>2.20</text>
+        </view>
+  </view>-->
+  </view> 
+<view class='over'>
+<view class='title'>已结束提现</view>
+<view class='items' wx:for="{{list[1]}}">
+      <view class='item'>
+        <text class='iteml'>{{item.remark}}</text>
+        <text class='itemr'>{{item.activity_money}}</text>
+      </view>
+      <view class='item'>
+        <text class='itemls'>{{item.create_time}}</text>
+        <text class='itemrs'>{{item.balance}}</text>
+      </view>
+</view>
+</view>
+<view class='btns'>
+  <button class='share'>分享好友助力</button>
+</view>
+</block>

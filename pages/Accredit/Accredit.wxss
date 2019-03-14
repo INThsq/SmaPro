@@ -2,6 +2,8 @@
 .acc_conts{
   margin-top:140rpx;
   padding: 30rpx;
+  text-align: center;
+  height:680rpx;
 }
 button{
   height: 40px;
@@ -27,32 +29,81 @@ page{
 button::after{
   border: none;
 }
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+}
+.load{
+  z-index: 999;
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+}
 .acc_header{
-  display: flex;
-  justify-content: center;
-   align-items: center;
+  display:inline-block;
+  text-align: center;
+   width: 71px;
+  height: 71px;
+  margin: 98rpx 0 30rpx;
+  border-radius: 50%;
+  overflow: hidden;
 }
  text{
   display: inline-block;
   width: 100%;
   text-align: center;
-
 }
 .name{
   font-size: 33.3rpx;
   color: #333;
   font-weight: bold;
   margin-bottom: 20rpx;
+  display: block;
+  height:42rpx;
 }
 .state{
   font-size: 29.17rpx;
   color: #666;
   margin-bottom: 80rpx;
 }
-image{
+.acc_header image{
   display: flex;
-  width: 71px;
-  height: 71px;
-  margin: 98rpx 0 30rpx;
+  
+}
+.refer{
+  display: flex;
+  margin: 54rpx 0;
+
+}
+.refer image{
+ display: block;
+ width: 90rpx;
+ height: 90rpx;
   border-radius: 50%;
+  margin-right: 22rpx;
+}
+.refer .name{
+  color: #333;
+  font-size: 29.17rpx;
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: 0!important;
+  height: 40rpx;
+}
+.refer .num{
+  font-size: 25rpx;
+  color: #999;
+  text-align: left;
 }

@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarBackgroundColor": "white",
+  "navigationBarTextStyle": "white",
+  "disableScroll": true,
+  "usingComponents": {
+      "my-component": "../../public/compback/compback",
+      "dialog": "../../public/Dialog/dialog",
+      "painter": "/components/painter/painter"
+  }
+}

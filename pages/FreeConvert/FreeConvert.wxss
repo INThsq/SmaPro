@@ -1,0 +1,113 @@
+/* pages/FreeConvert/FreeConvert.wxss */
+.top{
+  height:220rpx;
+  background:linear-gradient(90deg,rgba(255,57,56,1) 0%,rgba(255,77,110,1) 100%);
+  margin-top: 144rpx;
+  padding:42rpx 46rpx;
+  box-sizing: border-box;
+  color: white;
+}
+.top_bean{
+  display: flex;
+  flex-direction: row;
+  align-items: center; /*垂直居中*/
+}
+.top_bean image{
+  width:44rpx;
+  height:44rpx;
+  margin-right: 4rpx;
+}
+.top_bean image+text{
+  font-size: 56rpx;
+}
+.top_bean .jiantou{
+  width:26rpx;
+  height: 30rpx;
+  vertical-align: middle;
+  margin-left: 16rpx;
+}
+.top_change{
+  display: flex;
+  justify-content: space-between;
+}
+.top_change text{
+  display: flex;
+}
+.top_change text:first-child{
+  font-size: 29.17rpx;
+  align-items:flex-end;
+}
+.top_change text:last-child{
+  font-size: 25rpx;
+  display:flex;
+  width:136rpx;
+  height: 46rpx;
+  align-items: center; 
+  justify-content: center; 
+  border-radius: 100rpx;
+  border:1px solid rgba(255,255,255,1);
+}
+.title{
+  display: flex;
+  justify-content: center; 
+  padding: 34rpx 0;
+  border-bottom:.5px solid rgba(243,243,243,1);
+}
+Page{
+  background: white;
+}
+.title image{
+  display: flex;
+  width: 220rpx;
+  height: 32rpx;
+  box-sizing: border-box;
+}
+.list_left image{
+    width: 230rpx;
+    height: 230rpx;
+    margin-right: 24rpx;
+}
+.list{
+  padding: 24rpx 36rpx  24rpx 24rpx;
+  display: flex;
+  border-bottom:.5px solid rgba(243,243,243,1);
+
+}
+.list_right{
+  font-size: 29.17rpx;
+  position: relative;
+}
+.list_left{
+  display: flex;
+}
+.list_right text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical; 
+  -webkit-line-clamp:2; 
+}
+.right_bot image{
+  width: 30rpx!important;
+  height:30rpx!important;
+  display: flex;
+  margin-right: 16rpx;
+} 
+.right_bot{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.doudou{
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36rpx;
+  color: #F43736;
+  font-weight:bold;
+}
+.doudou text{
+  font-size: 32rpx!important;
+  align-items: flex-end;
+}

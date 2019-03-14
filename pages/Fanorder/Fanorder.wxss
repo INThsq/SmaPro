@@ -1,4 +1,5 @@
 /* pages/Fanorder/Fanorder.wxss */
+@import "../Address/Address.wxss";
 
 .order-list{
   background: #fafafa;
@@ -28,6 +29,7 @@
 }
 .order-list .order-num .wait{
   color: #FF2742;
+  font-size: 29.17rpx;
 }
 .order-list .order-con{
   padding: 30rpx 40rpx 0;
@@ -70,6 +72,7 @@ color: #333;
   line-height: 20rpx;
   color: #666;
   margin-left: 20rpx;
+  font-size: 25rpx;
 }
 .order-fans .sf{
   line-height:60rpx;

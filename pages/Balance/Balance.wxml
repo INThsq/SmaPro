@@ -1,6 +1,6 @@
 <!--pages/Balance/Balance.wxml-->
 <!-- 引用组件的页面模版 -->
-<view>
+<view bindtap='Back'>
   <my-component>
     <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
      <view>余额</view> 
@@ -11,7 +11,25 @@
 <view class='bal-conts'>  
   <text class='title'>总资产(元)</text>
   <text class='money'>{{balance}}</text>
-  <button class='btn deposit' bindtap='deposit'>提现</button>
-  <button class='btn recharge' bindtap='recharge'>充值</button>
+  <button class='btn deposit ' bindtap='recharge'>充值</button>
+  <button class='btn recharge' bindtap='deposit' style="margin-bottom:10px;">提现</button>
+  <button class='btn recharge' bindtap='bankCard'>银行卡</button>
+
   <text class='ques'>常见问题</text>
 </view>
+
+<view class='detail' bindtap='toBill'>
+  <view class='left'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_zhangdan.png'></image>
+  
+  账户明细
+  </view>
+  <view class='rights iconfont icon-arrow'></view>
+</view>
+
+
+
+
+   <!-- toast -->
+   <import src="../../public/appToasts/appToasts.wxml"/>
+   <template is="toasts" data="{{ ..._toast_ }}"/>

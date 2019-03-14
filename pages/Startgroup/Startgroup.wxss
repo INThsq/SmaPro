@@ -1,0 +1,212 @@
+/* pages/Startgroup/Startgroup.wxss */
+page{
+  overflow:hidden;
+}
+.container{
+  height:101vh;
+  background:url('http://oss.myzy.com.cn/wechat/images/img_cuxiao1.png')no-repeat center;
+  background-size: 100% 100%;
+  position: relative;
+  top: -16rpx;
+}
+.red{
+    background:#FF4D44;
+  }
+  .show{
+  display: block!important;
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+}
+.load{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display: none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
+.wrapper{
+  padding-top: 40rpx; 
+  width: 100%;
+  height:100rpx;
+  font-size:36rpx;
+  font-weight:bold;
+  line-height: 90rpx;
+  background:transparent;
+  letter-spacing: 2rpx;
+  font-family:SourceHanSansSC-Medium;
+  color:#fff;
+  position: fixed;
+  text-align: center;
+  justify-content:center;
+  display: flex;
+  top: 0;
+  z-index: 9;
+  }
+  .back{
+  position: absolute;
+  left:15px;
+  margin-top:4rpx;
+}
+.back image{
+  width:48rpx;
+  height:36rpx;
+}
+.title{
+  width:116rpx;
+height:56rpx;
+background:linear-gradient(270deg,rgba(255,33,77,1) 0%,rgba(255,36,36,1) 100%);
+border-radius:0px 100px 100px 0px;
+opacity:0.8;
+color:white;
+font-size:29.17rpx;
+text-align: center;
+line-height: 56rpx;
+position: absolute;
+top: 130rpx;
+left: 0;
+font-weight: bold;
+letter-spacing: .5px;
+}
+.info .info-top image{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+.conts{
+  width: 600rpx;
+  height: 800rpx;
+  position: relative;
+  top:466rpx;
+  left: 76rpx;
+}
+.info{
+  margin-top:10rpx;
+  color: white;
+  font-size: 25rpx;
+  padding-left:30rpx;
+}
+.info-top{
+  margin-bottom:10rpx;
+
+}
+.info-title{
+  width:400rpx;
+  font-size: 25rpx;
+  display: inline-block;
+  line-height: 40rpx;
+  }
+.shi,.xu{
+  width: 66rpx;
+  height: 66rpx;
+  border:2rpx solid #FF7B7B;
+  border-radius: 50%;
+  margin-left:24rpx;
+  margin-bottom: 12rpx;
+}
+.xu{
+  width: 62rpx!important;
+  height: 62rpx!important;
+  border: 0!important;
+}
+
+.info-left{
+  position: relative;
+  display: inline-block;
+  top:-40rpx;
+
+}
+.info-main{
+  margin-top:70rpx;
+  position: relative;
+  left: -10rpx;
+  box-sizing: border-box;
+  padding-left:70rpx;
+}
+.info-right{
+  width:430rpx;
+  display: inline-block;
+}
+.info-right image{
+  width:58rpx;
+  height:58rpx;
+}
+.info-left .small{
+  width: 68rpx;
+line-height:30rpx;
+display: inline-block;
+background:rgba(255,87,87,1);
+border-radius:2px;
+color: white;
+font-size: 10px;
+text-align: center;
+letter-spacing: .5px;
+position: absolute;
+bottom:20rpx;
+left:24rpx;
+}
+button::after{
+  border:0;
+}
+.yq text,.end text{
+  color: #EE1E2A;
+}
+.yq{
+  margin-bottom: 8rpx;
+  margin-top: 2rpx;
+}
+.yq,.end{
+  font-size: 29.17rpx;
+  text-align: center;
+}
+.ss{
+  text-align: center;
+}
+.now{
+  display: inline-block;
+  width:494rpx;
+  height: 42px;
+  font-size: 18px;
+  color: #AF5400;
+  font-weight: bold;
+  letter-spacing: .5px;
+  background:url('http://oss.myzy.com.cn/wechat/images/icon_cuxiao_kaituan1.png')no-repeat center;
+  background-size: 100% 100%;
+  text-align: center;
+  line-height:42px;
+  margin: 24rpx 0 16rpx;
+}
+.menow{
+  display: inline-block;
+  width:490rpx;
+  height: 40px;
+  line-height:41px;
+  border:1px solid #DA852B;
+  font-size: 16px;
+  color: #DA852B;
+  border-radius: 100px; 
+}

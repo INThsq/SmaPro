@@ -4,5 +4,6 @@
   "navigationBarTitleText": "关于我们",
   "usingComponents": {
   "my-component": "../../public/compback/compback"
-  }
+  },
+  "navigationStyle": "custom"
 }

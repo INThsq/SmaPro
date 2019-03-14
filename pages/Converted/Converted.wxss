@@ -1,0 +1,105 @@
+/* pages/Converted/Converted.wxss */
+@import "../Confirm/Confirm.wxss";
+.list_left image{
+    width:180rpx;
+    height:180rpx;
+    margin-right: 24rpx;
+}
+.list{
+  padding:36rpx 30rpx  20rpx 30rpx;
+  display: flex;
+  background: #F4F4F4;
+}
+.list_right{
+  font-size: 29.17rpx;
+  position: relative;
+}
+.list_left{
+  display: flex;
+}
+.list_right text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical; 
+  -webkit-line-clamp:2; 
+}
+.right_bot image{
+  width: 30rpx!important;
+  height:30rpx!important;
+  display: flex;
+  margin-right: 16rpx;
+} 
+.right_bot{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.doudou{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  font-size:28rpx;
+  color: #F43736;
+}
+.doudou text{
+  font-size:24rpx!important;
+  align-items: flex-end;
+}
+input{
+  width:92rpx!important;
+}
+.shuls{
+  padding: 20rpx 30rpx 20rpx 28rpx!important;
+}
+.Explain{
+  padding:36rpx 30rpx 0 30rpx;
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+}
+.Exp_conts{
+  text-align: left!important;
+}
+.Exp_conts text{
+  display: block;
+  font-size: 29.17rpx;
+  color: #999;
+  line-height:1.6;
+  margin-bottom: 6rpx;
+}
+.bank{
+  display: inline-block;
+  width: 300rpx;
+  height:1px;
+  background: #979797;
+  z-index:9;
+  position: absolute;
+  top:62rpx;
+  left: 50%;
+  z-index: -1;
+  margin-left: -150rpx;
+
+}
+.Exp_title{
+  display: inline-block;
+  position: relative;
+  font-size: 33.3rpx;
+  color: #666;
+  margin-bottom: 22rpx;
+  text-align: center; 
+background: #fafafa;  
+padding: 0 10rpx;
+}
+.freight{
+  margin-top:0px!important;
+  padding:24rpx 30rpx 34rpx!important;
+}
+.stepper{
+  width: 110px!important;
+}
+.shul{
+  border-bottom: .5px solid #F3F3F3;
+
+}

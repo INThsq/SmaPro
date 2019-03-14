@@ -1,0 +1,85 @@
+<!--pages/Startgroup/Startgroup.wxml-->
+    <view class="{{scrollTop > 88?'wrapper red':'wrapper'}}">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+  </view>
+  <view class="tetxs">免费赠送</view>
+</view>
+
+    <!-- 背景 -->
+    <view class='container'>
+      <view class='title'>规则</view>
+      <!-- 信息 -->
+      <view class='conts'>
+        <view class='info'>
+                <view class='info-top'>
+                  <image src='{{giftGiving.member_oauth.headimgurl}}'></image>
+                  <text>{{giftGiving.member_oauth.nickname}}</text>
+                </view>
+                <view class='info-cont'>
+                <text class='info-title'>{{giftGiving.explain}}</text>
+                </view>
+        </view>
+      <!-- 主体-->
+      <view class='info-main'>
+        <view class='info-left'>
+          <image class='shi' src='{{giftGiving.member_oauth.headimgurl}}'></image>
+          <text class='small'>团长</text>
+        </view>
+        <!-- 右边信息 -->
+        <view class='info-right'>
+        <block  wx:for="{{gift_praise}}" wx:key="{{index}}">
+           <image  class="xu" src='{{item.headimgurl}}'></image></block>
+           <!-- <image class="shi" src='http://oss.myzy.com.cn/wechat/images/touxiang.jpg'></image> -->         
+           <image wx:for="{{addNum}}" class="xu" src='{{addImg}}'></image>
+           <image wx:for="{{lockNum}}" class="xu" src='{{lockImg}}'></image>
+
+        </view>
+
+      </view>
+      <!-- 邀请 -->
+      <view class='yq'>
+      已邀请<text class='num'>{{giftGiving.gift_total}}</text>人,已可获得 <text class='money'>￥{{giftGiving.gift_money_total}}</text> 佣金(可提现)
+      </view>
+      <view class='end' wx:if="{{share_gift.gift_queue_id}}">
+        距离结束:   <text class='time'>{{dtime}}</text>
+      </view>
+      <!-- 立即开团 -->
+      <view class='ss'>
+      <button data-state="{{giftGiving.share_gift_status}}" wx:if="{{giftGiving.share_gift_status == 0}}" open-type='share' data-name="shareBtn" class='now' bindtap='State' >立即开团</button>
+       <!--   -->
+    <button wx:else data-state="{{giftGiving.share_gift_status}}"   bindtap='State' class='now' >立即开团</button>
+      <view class='menow' >我也要开团，助力升级分享</view>
+      </view>
+      </view>
+    </view>
+    
+    <view  bindtap='choseimg' bindtap='choseimg' style='position: fixed;top:999999999999999999999rpx;"'>
+      <painter  customStyle='margin-left:40rpx' palette="{{template}}" bind:imgOK="onImgOK" />
+    </view>
+
+    <!-- 吐司提示 -->
+    <import src="../../public/appToast/appToast.wxml"/>
+    <template is="toast" data="{{ ..._toast_ }}"/>
+  
+    <!-- 自定义模态框 -->
+    <dialog id="modal"
+              title="温馨提示"
+              cancelText="考虑一下"
+              confirmText="立即开团"
+              bind:cancelEvent="_cancelEvent"  
+              bind:confirmEvent="_confirmEventFirst" 
+              >
+
+      <view class='modal-body'>
+          <view>本轮分享已完成,是否发起新的开团</view>     
+      </view>
+
+  </dialog>
+
+<!-- 加载中 -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
+
+

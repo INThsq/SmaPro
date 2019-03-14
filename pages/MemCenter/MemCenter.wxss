@@ -1,0 +1,149 @@
+/* pages/MemCenter/MemCenter.wxss */
+.wrapper{
+  padding-top: 40rpx; 
+  width: 100%;
+  height:100rpx;
+  font-size:36rpx;
+  font-weight:bold;
+  line-height: 90rpx;
+  background:transparent;
+  letter-spacing: 2rpx;
+  font-family:SourceHanSansSC-Medium;
+  color:#fff;
+  position: fixed;
+  text-align: center;
+  justify-content:center;
+  display: flex;
+  top: 0;
+  z-index: 9;
+  }
+  
+  .red{
+    color:#FF4D44;
+  }
+  .back{
+  position: absolute;
+  left:15px;
+  margin-top:4rpx;
+}
+.back image{
+  width:48rpx;
+  height:36rpx;
+}
+.top{
+  height:410rpx;
+  background:url(http://oss.myzy.com.cn/wechat/images/icon_huiyuan_header_bg.png)no-repeat center;
+  background-size:100% 100%;
+}
+.tab{float: left; width:50vh;text-align: center;padding: 10rpx 0; }
+.topTabSwiper{width:999999999999%;overflow: hidden; zoom: 1;display: none;}
+.topTabSwiper:after{content: ""; clear: both;display: block;}
+.tabBorer{border-bottom: 1px solid #f00; color: #f00;}
+.swiper{width: 100%;position: relative;top:-260rpx;}
+.swiper_con{text-align: center; width: 100%; height:488rpx;}
+.scroll{height:250rpx;}
+page{
+  background: white;
+}
+.swiper_con image{width:590rpx;height:350rpx;}
+.con_top text{color:#C7C7C7;font-size:36rpx;font-weight:bold;position: absolute;bottom:60rpx;left:150rpx;z-index: 99;}
+.con_top{position: relative;}
+.bot_one{font-size: 25rpx;color: #666;margin-bottom: 20rpx;}
+.bot_two{font-size:29.17rpx;color: #333;}
+.bot_two text{color:#FF4949!important;}
+.red{
+background:#FF4949!important;color: white!important;
+}
+.black{height: 16rpx;background:#F3F3F3;}
+button::after{border:none;outline: none;}
+.bot_cont{padding:30rpx;box-sizing: border-box;text-align: center;}
+button{line-height:42px;background:#FF4949;color: white;font-size:36rpx;}
+.cont_title text{display: block;text-align: center;}
+.big{font-size: 36rpx;color: #181818;margin-bottom: 15rpx;}
+.small{font-size: 25rpx;color:#999999;margin-bottom: 62rpx;}
+.baoyou{text-align: center;width: 560rpx;border: 1px solid #333;display: inline-block;padding: 26rpx 0 46rpx;position: relative;margin-bottom: 75rpx;}
+.by_two .star{width: 22rpx;height: 22rpx;position: relative;top: -8rpx;}
+.by_two{margin-top: 26rpx;font-size: 44rpx;font-weight:bold;}
+.wan{width:52rpx;height: 57rpx;position: relative;top:6rpx;left:-8rpx;}
+.by_one{font-size: 30rpx;color: #333;font-weight:bold;}
+.by_one text{color:#FF4949!important;}
+.yel{
+  width: 170rpx;
+  height: 130rpx;
+  position: absolute;
+  top:-46rpx;
+  left:-46rpx;
+}
+.leavel{
+  color: #000;
+  font-size: 30rpx;
+  position: absolute;
+  top:-20rpx;
+  right:20rpx;
+  background: white;
+  padding: 0 16rpx;
+}
+.bfb{
+  color: #333;
+  font-size: 28rpx;
+  position: absolute;
+  bottom:-20rpx;
+  left:15%;
+   background: white;
+  padding: 0 16rpx;
+}
+.ex_top{
+  width:578rpx;
+  display: inline-block;
+  position: relative;
+  left:-15rpx;
+  margin-bottom: 24rpx;
+}
+.right_tit{
+  font-size: 32rpx;
+  color: #333;
+  font-weight:bold;
+  display: block;
+}
+.right{
+  text-align: left!important;
+}
+.left{
+  color: #FF4949;
+  font-size:80rpx;
+  float: left;
+  margin-right:24rpx;
+  position: relative;
+  top: -16rpx;
+  transform:skewX(-8deg);
+}
+.right_smal{
+  font-size: 24rpx;
+  color: #666;
+}
+.ex_bot image{
+  width:450rpx;
+  height: 232rpx;
+}
+.exalted{
+  margin-bottom: 54rpx;
+}
+.info image{
+  width:140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+}
+.info{
+  height: 350rpx;
+  text-align: center;
+}
+.info .phone{
+  position:inherit!important;
+  display: inline-block;
+  width: 100%;
+  left: 0!important;
+  bottom: 0!important;
+  font-size: 28rpx!important;
+  color: #fff!important;
+  margin-bottom: 150rpx;
+}

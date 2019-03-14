@@ -1,5 +1,6 @@
 <!--pages/Robmoney/Robmoney.wxml-->
 <view>
+
   <my-component>
     <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
      <view>天天抢钱</view> 
@@ -8,88 +9,111 @@
 
 <!-- 内容 -->
 <view class='container'>
+<view class="banner">
+    <image src='http://oss.myzy.com.cn/wechat/images/banner_fxsp_.png'></image>
+</view>
+
     <view class='rob-top'>
-        <text class='top-title'>免费领取好礼</text>
-        <!-- 规则 -->
-        <view class='top-rules'>
-        规则
+        <view class='top-title'>
+        如何免费赠送挣佣金
+        <!-- <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_guizes.png'></image> -->
         </view>
+        <view class='guize'>活动规则</view>
         <!-- 内容 -->
         <view class='top-conts'>
             <view class='item'>
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_liwu.png'></image>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_liwus.png'></image>
             </view>
             <view class='item'>
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_haoyou.png'></image>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_haoyous.png'></image>
             </view>
             <view class='item'>
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_shouhuo.png'></image>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_shouhuos.png'></image>
             </view>
         </view>
         <view class='cont-text'>
-        <text>分享心意商品</text>
-        <text>好友免费领取(包邮)</text>
-        <text>签收佣金到账</text>
+        <view class='item_o'>
+        <text class='item_b'>升级开团</text>
+        <text class='item_s'>分享心意商品</text>
+        </view>
+        <view class='item_t'>
+       <text class='item_b'>邀请好友领取</text>
+        <text class='item_s'>免费赠送包邮</text>
+        </view>
+        <view class='item_th'>
+       <text class='item_b'>好友免费领取</text>
+        <text class='item_s'>佣金立即到账，可提现</text>
+        </view>
         </view>
     </view>
     <!-- 全部商品 -->
-  <view class='all'>
+  <view class='all' bindtap='listenerButton'>
   <image src='http://oss.myzy.com.cn/wechat/images/icon_sjzx_qb.png'></image>
-  <text>全部商品</text>
+  <text>{{itemChange}}</text>
+  <block wx:if="{{itemChange !== actionSheetItems[0].name}}">
+  <image class='right' src='http://oss.myzy.com.cn/wechat/images/icon_quanbushangpin_xiangshang.png'></image>
+  </block>
+  <block wx:else>
   <image class='right' src='http://oss.myzy.com.cn/wechat/images/icon_quanbushangpin_xiangxia.png'></image>
+  </block>
 </view>
 <!-- 列表 -->
 <view class='list-conts'>
-      <view class='list'>
+  <!-- 已售完状态 -->
+  <block wx:for="{{listData}}" wx:key="{{index}}">
+  <view class='list' data-id="{{item.goods_id}}" bindtap='navCont' data-type="{{index}}">
       <view class='list-left'>
-        <image class='pr' src='http://oss.myzy.com.cn/wechat/images/tupian.png'></image>
-        <image class='pa' src='http://oss.myzy.com.cn/wechat/images/img_hekahuiyuan.png'></image>
+        <image  class='pr prs' src='{{item.goods_image}}'></image>
+        <image wx:if="{{item.is_unlock == 0}}" class='pa' src='{{item.corner_icon}}'>
+        </image>
       </view>
-      <view class='list-right'>
-      <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-      <view class='list-bottom'>
-        <view class='bottom-left'>
-          <text class='free'>免费赠送</text>
-          <text class='price'>￥8.00</text>
-          <text class='pur'>限购8976件</text>
-          <view class='pro'>
-    <progress class='tx_top_progress' percent="30" border-radius='4px' stroke-width="5" backgroundColor="#F3F3F3" activeColor="#F43736" active></progress>
-           <view class='ll'>已抢39%</view>
-          </view>
-        </view>
-        <view class='bottom-right'>
-            <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
-            <text class='yj'>赚￥100.99</text>
-        </view>
-      </view>
-      </view>
-      
-    </view>
+        <image wx:if="{{item.sell_out_ratio == 1}}" src='http://oss.myzy.com.cn/wechat/images/icon-ysw2.png' class='sale'></image>
 
-    <view class='list'>
-      <view class='list-left'>
-        <image class='pr' src='http://oss.myzy.com.cn/wechat/images/tupian.png'></image>
-        <image class='pa' src='http://oss.myzy.com.cn/wechat/images/img_hekahuiyuan.png'></image>
-      </view>
       <view class='list-right'>
-      <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
+      <view class="{{item.sell_out_ratio==1?'grey':'name'}}" >{{item.title}}</view>
       <view class='list-bottom'>
         <view class='bottom-left'>
-          <text class='free'>免费赠送</text>
-          <text class='price'>￥8.00</text>
-          <text class='pur'>限购8976件</text>
-          <view class='pro'>
-    <progress class='tx_top_progress' percent="30" border-radius='4' stroke-width="5" backgroundColor="#F3F3F3" activeColor="#F43736" active></progress>
-           <view class='ll'>已抢39%</view>
+            <!-- frees -->
+          <text class="{{item.sell_out_ratio==1?'grey':'name'}}">{{item.sell_out_tips}}</text>
+          <text class='price prices'>￥{{item.price}}</text>
+            <text class="{{item.sell_out_ratio==1?'grey':'pur'}}">{{item.sell_out}}</text>
+            <view class='pro' wx:if="{{item.sell_out_ratio !== 1}}">
+             <progress class='tx_top_progress' percent="{{item.sell_out_ratio * 100}}" border-radius='4px' stroke-width="5" backgroundColor="#F3F3F3" activeColor="#F43736" active></progress>
+           <view class='ll'>已抢{{item.sell_out_ratio * 100}}%</view>
+          </view>
+          <view class='next' wx:if="{{item.sell_out_ratio == 1}}">
+            <text class="{{item.sell_out_ratio==1?'wz greys':'wz'}}">距离下场:</text>
+            <text class='hours'>{{item.hh}}</text> :
+            <text class='min'>{{item.mm}}</text> :
+            <text class='second'>{{item.ss}}</text> :
+            <text class='second'>{{item.ms}}</text> 
+
           </view>
         </view>
         <view class='bottom-right'>
-            <image src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
-            <text class='yj'>赚￥100.99</text>
+            <image  wx:if="{{item.sell_out_ratio == 1}}" src='http://oss.myzy.com.cn/wechat/images/icon-ysw1.png'></image>
+            <image wx:else src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+            <text class="{{item.sell_out_ratio == 1?'yjs':'yj'}}">赚￥{{item.reward_money}}</text>
         </view>
       </view>
       </view>
-      
-    </view>
+</view>
+</block>
 </view>
 </view>
+
+
+
+
+<!--默认action-sheet为隐藏，由button触发-->
+<action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
+    <block wx:for-items="{{actionSheetItems}}" wx:key="{{key}}" > 
+        <action-sheet-item  data-index="{{index}}" data-id="{{item.member_group_id}}"  data-total="{{item.goods_group_total}}" data-text="{{item.name}}" bindtap="itemChange">{{item.name}}({{item.goods_group_total}})</action-sheet-item>
+    </block>
+    <!--自动隐藏action-sheet-->
+    <action-sheet-cancel>取消</action-sheet-cancel>
+</action-sheet>
+
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>

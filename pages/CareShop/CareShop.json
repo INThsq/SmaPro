@@ -1,6 +1,7 @@
 {
-  "navigationBarTitleText": "惠小店",
+  "navigationStyle": "custom",
+  "disableScroll": true,
   "usingComponents": {
-        "my-component": "../../public/components/component-tag-name"
+    "my-component": "../../public/components/component-tag-name"
   }
 }

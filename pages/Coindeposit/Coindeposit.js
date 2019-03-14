@@ -1,5 +1,7 @@
 // pages/Coindeposit/Coindeposit.js
 var app = getApp();
+var util = require('../../utils/md5.js');
+var utils = require('../../utils/util.js'); 
 Page({
 
   /**
@@ -27,7 +29,8 @@ Page({
   onReady: function () {
 
   },
-
+//处理结果
+  
   /**
    * 生命周期函数--监听页面显示
    */
@@ -62,11 +65,5 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  
 })

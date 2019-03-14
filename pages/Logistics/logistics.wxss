@@ -1,0 +1,216 @@
+/* pages/Logistics/logistics.wxss */
+.container{
+  margin-top: 140rpx;
+}
+.spans{
+  position: relative;
+  background: #fafafa;
+}
+.spans::after{
+  position: absolute; 
+  content: '';
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #f3f3f3;
+  -webkit-transform: scale(1, 0.5);
+  transform: scale(1, 0.5);
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+}
+
+.logistics-top:after { 
+  position: absolute; 
+  content: ''; 
+  width: 100%; 
+  left: 0; 
+  bottom: 0; 
+  height: 1px; 
+  background-color: #f3f3f3; 
+  -webkit-transform: scale(1,0.5); 
+  transform: scale(1,0.5); 
+  -webkit-transform-origin: center bottom; 
+  transform-origin: center bottom 
+}
+
+/* 商品 */
+.logistics-top{
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  background: white;
+  display: flex;
+  position: fixed;
+  top: 139rpx;
+  z-index: 998;
+  width: 100%;
+  border-top:.5px solid #f3f3f3;
+}
+.black{
+  height: 16rpx;
+  background:#fafafa;
+  padding-top:154rpx;
+  
+}
+.top-left{
+  width:126rpx;
+  height:126rpx;
+  box-shadow:0px 0px 1px 0px rgba(255,255,255,0.5);
+  border-radius:4px;
+  border:1px solid rgba(241,241,241,1);
+  position: relative;
+  margin-right: 30rpx;
+}
+.top-left .num{
+  position: absolute;
+  font-size: 9px;
+  color: white;
+  width:122rpx;
+height:34rpx;
+text-align: center;
+line-height: 34rpx;
+background:rgba(0,0,0,1);
+border-radius:0px 0px 4px 4px;
+opacity:0.6;
+bottom: 0;
+left: 0;
+}
+.top-left image{
+  width: 124rpx;
+  height:124rpx;
+  border-radius:4px;
+
+}
+
+.button{
+  width:68rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+  text-align: center;
+  font-size: 25rpx;
+  color:#666;
+  padding: 0 10rpx;
+  background: white;
+  border-radius:2px;
+border:1px solid rgba(195,195,195,1);
+}
+.company,.top-right .num,.top-right .tel,.order-num,.order-time{
+  color: #999999;
+  font-size: 29.17rpx;
+  line-height: 40rpx;
+  margin-bottom: 2rpx;
+}
+.company text{
+  color: #EE1E2A;
+  margin-left:10rpx;
+}
+.top-right .num text:first-child{
+  color: #535353;
+  margin-left:10rpx;
+  margin-right: 20rpx;
+}
+.top-right .tel text,.order-time text,.order-num text{
+   color: #535353;
+  margin-left:10rpx;
+}
+page{
+  background: white;
+}
+/* 物流内容 */
+.logistics-conts{
+  background: white;
+  padding-bottom: 160rpx;
+}
+.cian{
+  height: 16rpx;
+  background: #f3f3f3;
+}
+.item .col2{
+  padding:30rpx 16rpx 0 54rpx; 
+  color:#999;
+  font-size: 29.17rpx;
+  position: relative;
+  width:100%;
+}
+.col2 image{
+  width: 42rpx;
+  height: 42rpx;
+  position: absolute;
+  top:15%;
+  left: 0;
+  z-index:8;
+  margin-left: -10px;
+}
+.item .col2 .col2-conts{
+  padding-bottom: 20rpx;
+  border-bottom:1px solid #f3f3f3;
+  font-size: 29.17rpx;
+}
+.item,.col{
+  display: flex;
+}
+.middle .col2-conts{
+  margin-top: -7%;
+  box-sizing: border-box;
+}
+.item .time{
+  font-size: 25rpx;
+}
+
+.circle{
+  width:16rpx;
+  height: 16rpx;
+  background: #D8D8D8;
+  border-radius:50%;
+  position: absolute;
+  top:30%;
+  left:0;
+  margin-left: -6rpx;
+}
+.item .col1{
+  width:70rpx;
+  display: block;
+}
+.item .col2::after{
+  display: block;
+  content: '';
+  width:1px;
+  position: absolute;
+  height: 100%;
+  bottom: 0;
+  left:0;
+  background: #D8D8D8;
+}
+.conts{
+  margin-bottom:10rpx;
+}
+.top .col2 text{
+  color: #FD6740!important;
+  line-height: 1.4;
+  display: flex;
+}
+.top .col2 .time{
+  font-size:25rpx;
+}
+.top .col2::after{
+  height:70%!important;
+}
+.bottom{
+  margin-top: -10rpx;
+}
+.bottom image{
+  top:17%!important;
+}
+.bottom .col2::after,.item:last-child .col2::after{
+  height:23%!important;
+  top:-10rpx;
+}
+.item:last-child .col2 .circle{
+  top: 15%!important;
+}
+.order-num{
+  margin-top: 20rpx;
+}
+.bottom .col2{
+  padding-top: 0!important;
+}

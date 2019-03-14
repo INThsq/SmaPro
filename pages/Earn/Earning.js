@@ -1,27 +1,27 @@
+var util = require('../../utils/md5.js');
+var utils = require('../../utils/util.js');
+
 var app = getApp()
 // pages/Earn/Ear.js
 Page({
 
     data: {
-      currentTab: 0
+      currentTab: 0,
+      callback:'',
+      header:''
     },
   /**
    * 页面的初始数据
    */
 
 
-  //提现
-  withdraw: function () {
-    console.log('提现');
-  },
-
-  
 
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+   this.getDraw('1');
 
   },
 
@@ -36,13 +36,14 @@ Page({
 
   //点击切换
   clickTab: function (e) {
-    var that = this;
+    var id = e.target.dataset.id;
     if (this.data.currentTab === e.target.dataset.current) {
       return false;
     } else {
-      that.setData({
+      this.setData({
         currentTab: e.target.dataset.current
       })
+      this.getDraw(id);
     }
   },
   /**
@@ -58,7 +59,93 @@ Page({
   onShow: function () {
 
   },
+  //提现
+  withdraw: function () {
+    wx.navigateTo({
+      url: '../Deposit/Deposit',
+    })
+  },
+  //获取数据
+  getDraw(day) {
+    this.header(app.globalData.url + 'benefits');
+    wx.request({
+      url: app.globalData.url + 'benefits',
+      method: 'GET',
+      header: this.data.header,
+      data:{
+        day:day
+      },
+      success: res => {
+        if (res.data.code == 200) {
+          this.setData({
+            callback: res.data.data.callback
+          })
+        }else{
+          utils.error(res);
+        }
+      }
+    })
+  },
+  //生成随机字符串
+  randomWord() {
+    var noncestr;
+    noncestr = '';
+    var noncestrLength = 8;
+    var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    for (var i = 0; i < noncestrLength; i++) {
+      var index = Math.floor(Math.random() * 36);
+      noncestr += random[index];
+    }
+    this.data.noncestr = noncestr.toLowerCase();
+  },
 
+ // 生成header
+ header(url) {
+  var timestamp = Date.parse(new Date());
+  timestamp = timestamp / 1000;
+  this.randomWord();
+  var noncestr = this.data.noncestr;
+  var api_url = url;
+  var key = 'myzy3224326de100671291c7d1a6353ff6db';
+  var arr = [api_url, key, this.data.noncestr, timestamp];
+  var str = '';
+  for (let i in arr) {
+    str += arr[i];
+  }
+  //md5加密生成
+  var password = '';
+  password = util.hexMD5(str);
+  password = password.toUpperCase();
+  //发起请求
+  var content = wx.getStorageSync('content');
+  if (content) {
+    var uuid = content.data.uuid;
+    var token = content.data.token;
+    var expiry_time = content.data.expiry_time;
+    var logintype = content.data.login_type;
+    var header = {
+      "sign": password,
+      "timestamp": timestamp,
+      "noncestr": noncestr,
+      "uuid": uuid,
+      "token": token,
+      "expirytime": expiry_time,
+      "logintype":logintype
+    }
+  } else {
+    var header = {
+      "sign": password,
+      "timestamp": timestamp,
+      "noncestr": noncestr,
+    }
+  }
+
+
+
+  this.setData({
+    header: header
+  })
+},
   /**
    * 生命周期函数--监听页面隐藏
    */

@@ -1,0 +1,61 @@
+<!--pages/WhitCash/WhitCash.wxml-->
+<!-- 引用组件的页面模版 -->
+ <view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+  </view>
+  <view class="tetxs">可提现金额</view>
+</view>
+
+<!-- 内容部分 -->
+<view class='container'>
+  <!-- 顶部部分 -->
+    <view class='tops'>
+        <view class='top-One'>
+          可提现金额
+        </view>
+        <view class='top-Two'>
+            <view class='mony'>￥{{money}}</view>
+            <view class='btn' bindtap='Deposit'>提现</view>
+        </view>
+    </view>
+    <!-- 结算部分 -->
+    <view class='last'>
+    <view class="order">
+        <view class="myOrder" >已结算收入</view>
+        <view class="icon">
+            <text class='all' style='font-size:33.3rpx;color:#666;'>0.00</text>
+            <text class="iconfont icon-arrow" style='color:#666'></text>
+        </view> 
+    </view>
+    <view class="order">
+        <view class="myOrder" >未结算收入</view>
+        <view class="icon">
+            <text class='all' style='font-size:33.3rpx;color:#666;'>0.00</text>
+            <text class="iconfont icon-arrow" style='color:#666'></text>
+        </view> 
+    </view>
+    </view>
+     
+
+     <!-- 明细部分 -->
+    <view class='last'>
+    <view class="order">
+        <view class="myOrder" >收支明细</view>
+        <view class="icon">
+            <text class="iconfont icon-arrow" style='color:#666'></text>
+        </view> 
+    </view>
+    <view class="order">
+        <view class="myOrder" >提现记录</view>
+        <view class="icon">
+            <text class="iconfont icon-arrow" style='color:#666'></text>
+        </view> 
+    </view>
+    </view>
+
+</view>
+
+<view class='text'>
+  <text>销售收入将显示在这里，已结算收入可以随时申请提现</text>
+</view>

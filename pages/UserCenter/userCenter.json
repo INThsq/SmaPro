@@ -1,1 +1,6 @@
-{}
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "dialog": "../../public/Dialog/dialog"
+  }
+}

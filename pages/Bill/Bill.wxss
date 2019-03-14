@@ -1,0 +1,91 @@
+/* pages/Bill/Bill.wxss */
+.container{
+  margin-top: 140rpx;
+  box-sizing: border-box;
+}
+.expend text{
+  display: block;
+}
+.expend{
+  padding: 12rpx 30rpx;
+  position: fixed;
+  width: 100%;
+  background:#FAFAFA;
+  box-sizing: border-box;
+}
+/* pages/Address/Address.wxss */
+.container{
+  margin-top:140rpx;
+  height:89.5vh;
+  background: white;
+  text-align: left;
+}
+.container image{
+width: 121px; 
+margin-top: 124px;
+  height:119px;
+}
+.container text{
+  display: block;
+  font-size: 33.3rpx;
+  color:#999;
+}
+.expend .exp_title{
+  font-size:33.3rpx;
+  line-height:1;
+  color: #333;
+}
+.expend .exp_cont{
+  color: #999;
+  font-size: 25rpx;
+}
+.expend_container image{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+.expend_container{
+  background: white;
+  padding-top:100rpx;
+}
+.expend_container .list{
+  padding-left:30rpx;
+overflow: hidden;
+}
+.left{
+  float: left;
+  display:flex;
+  align-items: center;
+  height:140rpx;
+}
+.left image{
+  display: flex;
+  margin-right: 30rpx;
+  margin-top:24rpx; 
+}
+.right .right_one{
+  display: flex;
+  justify-content: space-between;
+}
+.right .right_one text{
+  color: #333;
+}
+.right_title{
+  font-size: 29.17rpx;
+}
+.right_two{
+  font-size: 25rpx;
+  margin-top: 12rpx;
+}
+.right_three{
+  font-size: 10px;
+  color: #999;
+  margin-top: 12rpx;
+}
+.right{
+  display: block;
+  float: left;
+  width:80%;
+  padding: 20rpx 30rpx 20rpx 0;
+  border-bottom: 1px solid #F3F3F3;
+}

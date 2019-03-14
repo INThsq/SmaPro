@@ -1,0 +1,52 @@
+/* pages/FyCenter/FyCenter.wxss */
+@import "../Setted/Setted.wxss";
+@import "../Earn/Earning.wxss";
+
+.container{
+  margin-top: 140rpx;
+}
+.tops{
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding-bottom:30rpx;
+  border-bottom:.5px solid rgba(243,243,243,1);
+}
+.item .num{
+  border:0!important;
+}
+.num{
+  color: #F43736!important;
+  font-size: 20px;
+}
+.order-item{
+  margin: 16rpx 0!important;
+}
+.order text{
+  font-size: 29.17rpx!important;
+}
+.tops text{
+  display: flex;
+  justify-content: center;
+
+}
+.top-One{
+  font-size: 29.17rpx;
+  color: #333;
+  line-height: 20px;
+  margin: 30rpx 0 2rpx;
+}
+.top-Two{
+color: #333;
+font-size: 58rpx;
+font-weight:bold;
+line-height: 82rpx;
+margin-bottom:2rpx;
+}
+.top-Thr{
+  font-size: 29.17rpx;
+  color: #999;
+}
+.order{
+  margin-top: 0!important;
+}

@@ -1,0 +1,65 @@
+<!--pages/Near/Near.wxml-->
+<view>
+  <my-component>
+     <view>附近门店</view> 
+  </my-component>
+</view> 
+
+<!-- 内容部分 -->
+<view class='container'>
+   <!-- 搜索框 -->
+<view class='search'>
+<view class='left' bindtap='chooseLocation'>
+  <text>{{province}}</text>
+  <view class='arrow'></view>
+</view>
+<form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
+
+      <input confirm-type="search" placeholder-class='placeholder' placeholder='请输入关键字'  type="search" value="{{searchValue}}" class='topInput' name='input' bindinput='keyword'  bindconfirm="searchSubmitFn"/>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_1.png' class='searches'></image>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_2.png' class='del' bindtap='del' hidden="{{del}}"></image>
+    </form>
+</view>
+<!-- 内容部分 -->
+<view class='near-cont'>
+    <view class='items'>
+      <view class='zt-One'>
+        <text class='left'>中信未来自提点</text>
+        <text class='right' bindtap="chooseLocation">[详情地图]</text>
+      </view>
+
+      <view class='zt-Two'>
+        <view class='left-T'>
+            <text class='T-O'>商家：久加宝</text>
+            <text class='T-W'>地址：北京市朝阳区来广营北苑大路北北京301号</text>
+        </view>
+        <view class='right-T' bindtap='calling'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_jj_12.png'></image>
+        </view>
+      </view>
+    </view>
+<view class='items'>
+      <view class='zt-One'>
+        <text class='left'>中信未来自提点</text>
+        <text class='right'>[详情地图]</text>
+      </view>
+
+      <view class='zt-Two'>
+        <view class='left-T'>
+            <text class='T-O'>商家：久加宝</text>
+            <text class='T-W'>地址：北京市朝阳区来广营北苑大路北北京301号</text>
+        </view>
+        <view class='right-T'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_jj_12.png'></image>
+        </view>
+      </view>
+    </view>
+</view>
+</view>
+
+
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+ <template is="toast" data="{{ ..._toast_ }}"/>
+  
+

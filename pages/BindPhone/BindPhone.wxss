@@ -1,0 +1,101 @@
+/* pages/BindPhone/BindPhone.wxss */
+.container{
+  margin-top: 140rpx;
+}
+.bind{
+  padding:32rpx 30rpx;
+  background: #FFF8E6;
+  position: relative;
+}
+.bind text{
+  display: block;
+}
+.bind image{
+  width: 24rpx;
+  height: 24rpx;
+  position: absolute;
+  right:30rpx;
+  top:32rpx;
+}
+.bind .err{
+  font-size: 33.3rpx;
+  color: #FD7640;
+  /* font-weight: bold; */
+  background:transparent;
+  text-align:left;
+  padding: none!important;
+  margin-left: -14px;
+  line-height: 1.6!important;
+}
+button::after{
+  border: none;
+  text-align: left;
+  background: transparent
+}
+.bind .grey{
+  color: #999;
+  font-size: 29.17rpx;
+}
+.info{
+  display: flex;
+  justify-content: space-between;
+  padding:20rpx 30rpx;
+  background: white;
+  margin-bottom: 20rpx;
+}
+.info image{
+width: 108rpx;
+height: 108rpx;
+border-radius: 50%;
+vertical-align: middle;
+margin-right: 30rpx;  
+}
+.info .right{
+  line-height:108rpx; 
+  color: #999;
+}
+.list{
+  background: white;
+  padding: 0 30rpx;
+}
+.list-s{
+  display: flex;
+  justify-content: space-between;
+  line-height:96rpx;
+
+}
+.lefts{
+  color: #333;
+  font-size: 33.3rpx;
+  
+}
+.list view{
+  color: #999;
+  font-size: 33.3rpx;
+}
+.rights{
+  color: #999;
+}
+.rights:last-child{
+  margin-left: 28rpx;
+}
+.list-s:first-child{
+  border-bottom: .5px solid #f3f3f3;
+}
+.btn{
+  
+  width: 100%;
+  line-height: 88rpx;
+  color: white;
+  font-size: 33.3rpx;
+  background: #F43736;
+  border-radius: 4px;
+}
+.bottom{
+  width: 100%;
+  padding: 0 30rpx;
+  position: absolute;
+  bottom:30rpx;
+  box-sizing: border-box;
+
+}

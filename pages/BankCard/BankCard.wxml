@@ -1,0 +1,56 @@
+<!--pages/BankCard/BankCard.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>银行卡</view> 
+  </my-component>
+</view>
+
+<!-- 内容区域 -->
+<view class='container'>
+  <!-- 没有卡   -->
+  <view class='noCard' wx:if="{{bankList.length == 0}}">
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_msg_2.png'></image>
+  <text>您还没有绑定银行卡</text>
+  <button class='bind' bindtap='bind'>添加银行卡</button>
+  </view>
+
+  <!-- 列表 -->
+  <view class='cards'  wx:else>
+      <view class='list' wx:for="{{bankList}}">
+        <image class='list_img' src='{{item.bank_backdrop}}'></image>
+        <view class='list_cont'>
+        <image src='{{item.bank_icon}}'></image>
+        <view class='list_right'>
+          <text class='list_one'>{{item.bank}}</text>
+          <text class='list_Two'>{{item.type}}</text>
+          <text class='list_Thr'>{{item.bank_card}}</text>
+
+        </view>
+        </view>
+      </view>
+      <button bindtap='bind' class='bind'>添加银行卡</button>
+
+  </view>
+
+</view>
+
+<!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="去认证"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>您的账户未实名认证</view>     
+    </view>
+
+</dialog>
+
+
+
+  
+  

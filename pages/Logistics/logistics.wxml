@@ -1,0 +1,105 @@
+<!--pages/Logistics/logistics.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>查看物流</view> 
+  </my-component>
+</view>
+
+<!-- 详情 -->
+<view class='container'>
+    <!-- 商品 -->
+    <view class='logistics-top'>
+        <view class='top-left'>
+          <image src='{{lists.goods_img}}'></image>
+          <text class='num'>共{{lists.goods_buy_num}}件商品</text>
+        </view>
+        <view class='top-right'>
+        <!-- 已发货有物流 -->
+        <block wx:if="{{lists.is_logistics == 1}}">
+        <view class='company'>物流公司 :  <text>顺丰快递</text></view>
+        <view class='num'>物流单号 :  <text>{{lists.logistics_num}}</text></view>
+        <view class='tel'>物流状态 :  <text>{{lists.logistics_status}}</text></view>
+        </block>
+        <!-- 刚揽收 -->
+        <block wx:else>
+          <view class='order-num'>订单编号 : <text>{{lists.logistics_status.order_num}}
+          </text></view>
+          <view class='order-time'>订单时间 : <text>{{lists.pay_time}}</text></view>
+        </block>
+        </view>
+    
+    </view>
+    
+    <!-- 分割线 -->
+    <view class='cian'></view>
+    <!-- 物流 -->
+    <view class='black'></view>
+    <!-- <view class='spans'></view> -->
+    <view class='logistics-conts'>
+    <view class='spans'></view>
+    <view class='items'>
+    <!-- 查看物流 -->
+
+    <!-- 最新 -->
+    <view class='item top' wx:if="{{lists.is_logistics == 1}}">
+            <view class='col1'>
+            </view>
+            <view class='col2'>
+              <view class='col2-conts'>
+                <text class='state'> {{lists.logistics_status}}</text>
+                  <image wx:if="{{lists.logistics_state == 0}}" src='http://oss.myzy.com.cn/wechat/images/icon_wuliu_ysz.png'></image>
+                  <!-- 已签收图标 -->
+                  <image wx:if="{{lists.logistics_state == 3}}" src='http://oss.myzy.com.cn/wechat/images/icon_wuliu_yiqianshou.png'></image>
+                  <image wx:if="{{lists.logistics_state == 1}}" src='http://oss.myzy.com.cn/wechat/images/icon_wuliu_zhunbeihuise.png'></image>
+                  <text class='conts'>{{listO.context}}</text>
+                  <text class='time'>{{listO.time}}</text>
+              </view>
+            </view>
+    </view>
+
+    <!-- 运输中 -->
+    <view class='item middle' wx:for="{{listT}}" wx:key="{{index}}" wx:if="{{lists.is_logistics == 1}}">
+        <view class='col1'>
+            </view>
+            <view class='col2'>
+              <view class='col2-conts'>
+              <view class='circle'></view>
+                  <text class='conts'>
+                  {{item.context}}
+                  </text>
+                  <text class='time'>{{item.time}}</text>
+              </view>
+            </view>
+    </view>
+    </view>
+    
+    <!-- 发货 -->
+    <view class='item top' wx:if="{{lists.is_logistics == 0}}">
+      <view class='col1'>
+      </view>
+      <view class='col2'>
+        <view class='col2-conts'>
+            <image style="top:25%!important"  src='http://oss.myzy.com.cn/wechat/images/icon_wuliu_ysz.png'></image>
+            <!-- 已签收图标 -->
+            <text class='conts'>正在为您准备商品，请耐心等待</text>
+            <text class='time'>{{lists.pay_time}}</text>
+        </view>
+      </view>
+</view>
+    <view class='item bottom' wx:if="{{lists.is_logistics == 0}}">
+            <view class='col1'>
+            </view>
+            <view class='col2'>
+              <view class='col2-conts'>
+              <view class='circle'></view>
+                  <text class='conts'>
+                    您已提交了订单，请等待系统确认
+                  </text>
+                  <text class='time'>{{lists.pay_time}}</text>
+              </view>
+            </view>
+        </view>
+    </view> 
+
+</view>

@@ -1,110 +1,231 @@
 // pages/Address/Address.js
-var app = getApp()
+var app = getApp();
+var util = require('../../utils/md5.js');
+var utils = require('../../utils/util.js'); 
+
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // datas:{
-    //   sa_name: '贺淑青',
-    //   sa_tel: '17600784408',
-    //   sa_addr_true:0,
-    //   sa_area_xx: '回龙观龙博苑101',
-    //   choose: {
-    //     sheng: '北京市',
-    //     shi: '北京市',
-    //     qu: '北京市'
-    //   },
-    // },
-    chooseType:''
+    wxdata:'',
+    chooseType:'',
+    del_num:'',
+    index:'',
+    datas:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    new app.ToastPannels();
+
     var a = getApp().chooseType;
-    console.log(a); 
     var that = this;    
-    
     that.setData({
       chooseType: a
-
     }) 
     if (a!=='1'){
-      console.log('4444');
+    
       var datas = getApp().datas;
-
       that.setData({
         datas: datas,
       })
     }
-   
+ 
+    this.getsAdress();
   },
-  addAdress: function () {
+  
 
-    wx.navigateTo({
-      url: '../Address_es/Address_es',
+  //获取地址
+  //md5
+  getsAdress() {
+    this.header(app.globalData.url+'addressList');
+    wx.request({
+      url:app.globalData.url+'addressList',
+      method: 'GET',
+      header:this.data.header,
+      success: res => {
+     
+        if (res.data.data.address_list.length > 0){
+          this.setData({
+            datas: res.data.data.address_list
+          })
+        }
+        
+      }
     })
   },
+  //生成随机字符串
+  randomWord() {
+    var noncestr;
+    noncestr = '';
+    var noncestrLength = 8;
+    var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    for (var i = 0; i < noncestrLength; i++) {
+      var index = Math.floor(Math.random() * 36);
+      noncestr += random[index];
+    }
+    this.data.noncestr = noncestr.toLowerCase();
+  },
+ //生成header
+ header(url) {
+  var timestamp = Date.parse(new Date());
+  timestamp = timestamp / 1000;
+  this.randomWord();
+  var noncestr = this.data.noncestr;
+  var api_url = url;
+  var key = 'myzy3224326de100671291c7d1a6353ff6db';
+  var arr = [api_url, key, this.data.noncestr, timestamp];
+  var str = '';
+  for (let i in arr) {
+    str += arr[i];
+  }
+  //md5加密生成
+  var password = '';
+  password = util.hexMD5(str);
+  password = password.toUpperCase();
+  //发起请求
+  var content = wx.getStorageSync('content');
+  if (content) {
+    var uuid = content.data.uuid;
+    var token = content.data.token;
+    var expiry_time = content.data.expiry_time;
+    var logintype = content.data.login_type;
+    var header = {
+      "sign": password,
+      "timestamp": timestamp,
+      "noncestr": noncestr,
+      "uuid": uuid,
+      "token": token,
+      "expirytime": expiry_time,
+      "logintype":logintype
+    }
+  } else {
+    var header = {
+      "sign": password,
+      "timestamp": timestamp,
+      "noncestr": noncestr,
+    }
+  }
+
+
+
+  this.setData({
+    header: header
+  })
+},
   //选择地址
   chooseAdress(e){
+    if(this.data.chooseType == 1){
     // 如果下单页面就点击返回
-    console.log(this.data.chooseType)
-    if (this.data.chooseType == 1){
-      console.log('222');
-      // console.log(this.data.datas)
-      //   wx.setStorage({
-      //     key: 'chooseAdress',
-      //     data:this.data.datas,
-      //   }),
-      //     setTimeout(() => {
-      //     wx.navigateBack();
-      //     },50)
-
-      var datas = getApp().datas;
-console.log(datas);
-      this.setData({
-        datas: datas,
-        choose: datas.choose
-      }),
-        setTimeout(() => {
-        wx.redirectTo({
-          url: '../Confirm/Confirm',
+      let member_address_id = e.currentTarget.dataset.member;
+      let index = e.currentTarget.dataset.index;
+      let datas = this.data.datas;
+      let choose =  datas[index];
+      // app.chooseAddress = datas[index];
+      // wx.setStorageSync('chooseAddress',datas[index])
+      var flag = true;
+        wx.navigateTo({
+          url: '../Confirm/Confirm?id='+choose.member_address_id+"&address="+choose.region_path_name+choose.address+"&mobile="+choose.mobile+"&realname="+choose.realname+"&flag="+flag,
         })
-        }, 50)
-
-    }else{
+    } else if (this.data.chooseType == 3){
+      let member_address_id = e.currentTarget.dataset.member;
+      let index = e.currentTarget.dataset.index;
+      let datas = this.data.datas;
+      let choose = datas[index];
+      // app.chooseAddress = datas[index];
+      // wx.setStorageSync('chooseAddress',datas[index])
+      var flag = true;
+      wx.navigateTo({
+        url: '../Converted/Converted?id=' + choose.member_address_id + "&address=" + choose.region_path_name + choose.address + "&mobile=" + choose.mobile + "&realname=" + choose.realname + "&flag=" + flag,
+      })
+    }
       
         
 
-    }
   },
   //设置默认地址
   selectList(e) {
-    const index = e.currentTarget.dataset.index;
-    console.log(index);
-    if (index == 0) {
-      this.setData({
-        'datas.sa_addr_true': 1
+    let member_address_id = e.currentTarget.dataset.member;
+    let index = e.currentTarget.dataset.index;
+    let datas = this.data.datas;
+    this.header(app.globalData.url+'setAddressDefault');
+    wx.request({
+      url:app.globalData.url+'setAddressDefault',
+      method: 'post',
+      header:this.data.header,
+      data:{
+        member_address_id: member_address_id
+      },
+      success: res => {
+        if(res.data.code == 200){
+          for (var i in datas) {
+            datas[i].is_default = 0;
+          }
+          datas[index].is_default = 1;
+          this.setData({
+            datas:datas
+          })
+          this.shows(res.data.msg)
+          
+
+        }else{
+          utils.error(res);
+        }
+
+      }
       })
-    } else {
-      this.setData({
-        'datas.sa_addr_true': 0
-      })
-    }
+  //   if (index == 0) {
+  //     this.setData({
+  //       'datas.sa_addr_true': 1
+  //     })
+  //   } else {
+  //     this.setData({
+  //       'datas.sa_addr_true': 0
+  //     })
+  //   }
 
   },
-
   //删除地址
   del(e) {
+    const index = e.currentTarget.dataset.index;
+    this.setData({
+      del_num: e.currentTarget.dataset.member,
+      index:index
+    })
     this.Modal.showModal();
-
-  },
+    },
   // 确定删除
-  _confirmEventFirst: function () {
+  _confirmEventFirst() {
+    this.header(app.globalData.url+'deleteAddress');
+    var datas = this.data.datas
+    wx.request({
+      url:app.globalData.url+'deleteAddress',
+      method: 'post',
+      header:this.data.header,
+      data:{
+        member_address_id: this.data.del_num
+      },
+      success:res=>{
+        if(res.data.code == 200){
+          this.shows(res.data.msg)
 
+          datas.splice(this.data.index, 1);
+          this.setData({
+            datas:datas
+          })
+          this.getsAdress();
+        }else{
+          utils.error(res);
+        }
+        
+      }
+      })
+    this.getAdress();
     this.Modal.hideModal();
   },
   // 取消删除
@@ -120,7 +241,7 @@ console.log(datas);
     }, 2000)
   },
   //新建收货地址
-  addAdr: function () {
+  addAdress: function () {
     getApp().changeAddressStart(1);
     wx.navigateTo({
       url: '../Address_es/Address_es',
@@ -128,7 +249,9 @@ console.log(datas);
   },
   //编辑收货地址
 
-  edit: function () {
+  edit: function (e) {
+    var index = e.currentTarget.dataset.index;
+    app.datas = this.data.datas[index];
     getApp().changeAddressStart(2);
     wx.navigateTo({
       url: '../Address_es/Address_es',
@@ -140,11 +263,59 @@ console.log(datas);
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
   },
+  // 获取微信地址
+  getAdress(){
+    wx.getSetting({
+      success(res) {
+        var that = this;
+        console.log("vres.authSetting['scope.address']：", res.authSetting['scope.address'])
+        if (res.authSetting['scope.address']) {
+          
+          wx.chooseAddress({
+            success:res => {
+              app.wxdata = res;
+             wx.navigateTo({
+               url: '../Confirm/Confirm',
+             })
+              
+            }
+          })
+          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
 
+        } else {
+          if (res.authSetting['scope.address'] == false) {
+            console.log("222")
+            wx.openSetting({
+              success(res) {
+                console.log(res.authSetting)
+
+              }
+            })
+          } else {
+            console.log("eee")
+            wx.chooseAddress({
+              success(res) {
+                console.log(res.userName)
+                console.log(res.postalCode)
+                console.log(res.provinceName)
+                console.log(res.cityName)
+                console.log(res.countyName)
+                console.log(res.detailInfo)
+                console.log(res.nationalCode)
+                console.log(res.telNumber)
+              }
+            })
+          }
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getsAdress();
+
   },
 
   /**

@@ -1,0 +1,68 @@
+<!--pages/Error/Error.wxml-->
+<view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">支付异常</view>
+</view>
+
+
+<view class='container'>
+    
+    <!-- 标题部分 -->
+    <view class='top'>
+      <text class='top-title'>Error502</text>
+      <text class='top-conts'>服务器分布式订单数据同步异常，点击售后处理即可 得以解决！
+      </text>
+    </view>
+  
+    <!-- 内容部分 -->
+    <view class='conts'>
+          <view class='one'>
+              <image src='http://oss.myzy.com.cn/wechat/images/img_502_1.png'></image>
+              <text class='blcak'>应用</text>
+              <text class='blue'>系统正常</text>
+          </view>
+          
+          <view class='small'>
+            <image src='http://oss.myzy.com.cn/wechat/images/img_502_2.png'></image>
+          </view>
+
+          <view class='one two'>
+                <image src='http://oss.myzy.com.cn/wechat/images/img_502_3.png'></image>
+                <text class='blcak two'>三方支付</text>
+                <text class='blue two'>支付成功(正常)</text>
+          </view>
+
+          <view class='small'>
+            <image src='http://oss.myzy.com.cn/wechat/images/img_502_4.png'></image>
+          </view>
+
+          <view class='one'>
+                <image src='http://oss.myzy.com.cn/wechat/images/img_502_5.png'></image>
+                <text class='blcak three'>服务器系统</text>
+                <text class='blue red three'>服务器状态未知</text>
+          </view>
+
+    </view>
+
+    <!-- 底部部分 -->
+    <view class='bottom'>
+        <text class='bottom-title'>温馨提示</text>
+        <text class='bottom-conts'>
+          点击申请售后订单将在60分钟内同步成功，如未成功 超时24小时系统将支付金额原路返回。
+        </text>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class='button'>
+        <view class='btn' bindtap='Apply'>申请售后</view>
+    </view>
+</view>
+
+
+  
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+

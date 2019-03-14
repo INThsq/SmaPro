@@ -11,11 +11,11 @@
 <view class='container'>
   <view class='top'>
       <view class='top-title'>
-        <image src='http://oss.myzy.com.cn/wechat/images/icon_fukuanfangshi_xuanzhong.png'></image>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_succefful.png'></image>
         支付成功
       </view>
       <view class='top-cont'>
-      商家正在努力发货，请耐心等待!
+      {{paymentInfo.msg}}
       </view>
   </view>
 
@@ -24,7 +24,7 @@
   <view class='buttons'>
   <view>
    <button class='check-order' bindtap='look'>查看订单</button>
-    <button class='to-shop'>继续购物</button>
+    <button class='to-shop' bindtap='back'>继续购物</button>
   </view>
   </view>
   <view class='br'></view>
@@ -34,36 +34,37 @@
   <view class='detail'>
 
       <view class='detail-head'>
-          <image src='http://oss.myzy.com.cn/wechat/images/touxiang.jpg'></image>
+          <image src='{{paymentInfo.data.callback.image}}'></image>
       </view>
 
       <view class='detail-conts'>
           <view class='item'>
             <text class='left'>商品名称</text>
-            <text class='right'>乡巴佬喜蛋，得了啊啊啊啊...</text>
+            <text class='right'>{{paymentInfo.data.callback.title}}</text>
           </view>
 
           <view class='item'>
             <text class='left'>收货人</text>
-            <text class='right'>欧阳 17744512345</text>
+            <text class='right'>{{paymentInfo.data.callback.realname}}  {{paymentInfo.data.callback.mobile}}</text>
           </view>
 
           <view class='item'>
             <text class='left'>收货地址</text>
-            <text class='right'>北京市丰台区光彩路钱来前往...</text>
+            <text class='right'>{{paymentInfo.data.callback.address}}</text>
           </view>
 
 
           <view class='item'>
             <text class='left'>支付方式</text>
-            <text class='right'>微信现金支付</text>
+            <text class='right'>{{paymentInfo.data.callback.pay_type}}</text>
           </view>
 
           <view class='item'>
             <text class='left'>支付时间</text>
-            <text class='right'>2018-01-13 18:23:00</text>
+            <text class='right'>{{paymentInfo.data.callback.pay_time}}</text>
           </view>
       </view>
   </view>
 
 </view>
+

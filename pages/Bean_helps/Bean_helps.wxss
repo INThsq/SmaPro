@@ -1,0 +1,52 @@
+/* pages/Bean_helps/Bean_helps.wxss */
+@import "../Bean_helping/Bean_helping.wxss";
+.container{
+  padding: 32rpx 0;
+}
+.container text{
+  display: block;font-size: 33.3rpx;
+  font-weight: bold;
+  line-height: 48rpx;
+}
+
+
+/* pages/Bean_helping/Bean_helping.wxss */
+@import "../Bean_help/Bean_help.wxss";
+.over{
+  padding: 0 30rpx;
+  background: white;
+  margin-top: 16rpx;
+}
+ .over .items{
+  padding: 26rpx 0;
+}
+ .over .items text{
+  color: #999!important;
+}
+.over .title{
+  font-size: 33.3rpx;
+  color: #666;
+  font-weight: bold;
+  text-align: center;
+  line-height:140rpx;
+}
+ .btns{
+  position: fixed;
+  width: 100%;
+  bottom: 30rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+button::after{
+  border: none;
+}
+ button{
+  background: #F13D3D;
+  color: white;
+  line-height: 42px;
+  font-size: 33.3rpx;
+  letter-spacing: 1px;
+}
+.pa{
+  padding: 32rpx 30rpx;
+}

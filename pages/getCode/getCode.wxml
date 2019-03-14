@@ -1,0 +1,60 @@
+<!--pages/getCode/getCode.wxml-->
+<scroll-view style='height:100vh' scroll-y="true" bindscroll="scrollTopFun">
+
+<!-- 组件模板 -->
+<view class="{{top>100 ? ' wrappers' : 'wrapper'}}" data-top="{{top}}">
+   <view class=' back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+  </view> 
+  <view class="tetxs">
+    我的圈子
+  </view>
+</view>
+
+
+<!-- 内容部分 -->
+<view class='container'>
+
+<!-- 头部 -->
+  <view class='head'>
+  </view>
+
+<!-- 二维码 -->
+<view class='code'>
+    <view class='code-top'>
+      <image src='http://oss.myzy.com.cn/wechat/images/img_hengtiao_.png'></image>
+    </view>
+    <!-- 二维 -->
+    <view class='code-bot'>
+      <view class='code-bot-cont'>
+        <view class='code-info'>
+        <view class='left'>
+            <image src='{{info.portrait}}'></image>
+        </view>
+        <view class='right'>
+            <text class='tel'>{{info.username}}</text>
+            <text class='id'>ID:{{info.number}}</text>
+        </view>
+        </view>
+      
+        <view class='get-code'>
+          <image src='{{info.qr_code}}'></image>
+        </view>
+        <!-- 提示 -->
+        <view class='tip'>
+        <text>1.微信扫一扫直接扫描</text>
+        <text>2.打开微信扫一扫，相册读取二维码即可关注</text>
+
+        </view>
+      </view>
+    </view>
+    
+</view>
+<view class='btns'>
+    <button class='save' bindtap='save'>保存图片</button>
+
+</view>
+
+  </view>
+
+</scroll-view>

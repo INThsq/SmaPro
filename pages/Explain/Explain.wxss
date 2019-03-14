@@ -1,0 +1,172 @@
+/* pages/Explain/Explain.wxss */
+page{
+  background: white;
+}
+.top{
+  height:552rpx;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+.top image{
+  height: 100%;
+  width:100%;
+}
+.container{
+  margin-top: 141rpx;
+}
+.top-title{
+  position: absolute;
+  bottom:120rpx;
+  left: 50%;
+  display: block;
+  margin-left:-183rpx;
+  width:366rpx;
+  height:60rpx;
+  color: #9D4C00;
+  font-size: 33.3rpx;
+  background:url('http://oss.myzy.com.cn/wechat/images/img_fenxiao2.png')no-repeat center;
+  border-radius:100px;
+  text-align: center;
+  line-height: 60rpx;
+}
+.top-title+text{
+  font-size: 29.17rpx;
+  color: white;
+  position: relative;
+  bottom:120rpx;
+}
+.cont{
+  padding:0 30rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+.conts-tit image{
+  width: 412rpx;
+  height: 30rpx;
+  display: flex;
+}
+.conts{
+  background:rgba(255,248,244,1);
+  height:364rpx;
+  border-radius:10px;
+  justify-content: center;
+  padding: 42rpx 28rpx;
+  box-sizing: border-box;
+}
+.conts-tit{
+  display: flex;
+  flex:1;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+.list-left{
+  display: block;
+  float: left;
+  width:50%;
+  height: 180rpx;
+  background: url(http://oss.myzy.com.cn/wechat/images/img_fenxiao4.png) no-repeat center;
+  background-size: 100% 100%;
+  text-align: center;
+}
+.list-left text{
+  display: block;
+}
+.lists{
+  box-sizing: border-box;
+  clear: both;
+}
+.list-left .list-o{
+  color: #9D4C00;
+  font-size: 25rpx;
+  margin-top: 4rpx;
+}
+.list-left .list-t{
+  color: #fff;
+  font-size: 33.3rpx;
+  margin: 18rpx  0 18rpx; 
+}
+.list-left .list-h{
+  font-size: 25rpx;
+  color:white;
+}
+.listes .list-left{
+  display: block;
+  float: right;
+  width:50%;
+  height: 180rpx;
+  background: url(http://oss.myzy.com.cn/wechat/images/img_fenxiao5.png) no-repeat center;
+  background-size: 100% 100%;
+  text-align: center;
+}
+.conts-tits{
+  color: #9D4C00;
+  font-size: 10px;
+  width: 180rpx;
+  height: 54rpx;
+    background: url(http://oss.myzy.com.cn/wechat/images/img_fenxiao7.png) no-repeat center;
+     background-size: 100% 100%;
+  text-align: center;
+  line-height: 44rpx;
+  margin-bottom: 10rpx;
+  margin-left:20rpx;
+}
+
+.article .conts-tit{
+  margin-bottom: 34rpx;
+  margin-top:54rpx;
+}
+.conts-art text{
+  display: flex;
+  font-size: 29.17rpx;
+  margin-bottom: 20rpx;
+  color: #666;
+}
+.conts-art{
+  padding-bottom:150rpx;
+}
+.swiper_container {
+ height:40rpx;
+ width:100%;
+}
+ 
+.swiper_item {
+ font-size: 25rpx;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+ letter-spacing: 2px;
+ text-align: center;
+ width: 100%;
+}
+
+.zou{
+  padding:  0 30rpx;
+  margin: 48rpx 0;
+
+  box-sizing: border-box;
+}
+.footer{
+  display: flex;
+  bottom: 0;
+  width: 100%;
+}
+.footer view{
+  display: flex;
+  line-height: 100rxp;
+  font-size: 33.3rpx;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+.footer-left{
+  width:394rpx;
+  height:100rpx;
+  background:linear-gradient(90deg,rgba(255,191,100,1) 0%,rgba(255,155,47,1) 100%);
+}
+.footer-right{
+  background:linear-gradient(270deg,rgba(249,58,65,1) 0%,rgba(250,99,17,1) 100%);
+  width: 100%;
+}
+

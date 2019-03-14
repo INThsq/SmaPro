@@ -1,4 +1,5 @@
-
+<!-- 未开通 -->
+<block wx:if="{{member_mall}}">
 <!--pages/UserCenter/userCenter.wxml-->
 <view>
   <my-component>
@@ -7,24 +8,24 @@
   </my-component>
 </view>
 
+<view style="margin-top:140rpx">
 <!-- 警告框 -->
-<view class='warn'>
+<view class='warn' wx:if="{{res.expire_time.expire_status == 1}}">
   <view class='warn-text'>
-      距离店铺到期时间还有5天,请赶紧续费
+      {{res.expire_time.expire_tip}}
   </view>
   <view class='warn-btn'>
-    <button>
+    <button data-free="{{res.expire_time.total_fee}}" bindtap='setted'>
     续费
     </button>
   </view>
 </view>
-
 <!-- 轮播图 -->
-  <view class='swipercontent'>
+  <view class='swipercontent' wx:if="{{imgUrls.length>0}}">
   <swiper autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
     <block wx:for="{{imgUrls}}" wx:key="unique">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" width="355" height="150"/>
+        <image src="{{item.image}}" class="slide-image" width="355" height="150"/>
       </swiper-item>
     </block>
   </swiper>
@@ -35,67 +36,60 @@
     </block>
   </view>
 </view>
-
-
 <!-- 总收入 -->
 <view class='income' bindtap='income'>
-  <view class='top'>
-      今日总收入
+  <view class='top' style='padding-top:0'>
+      总收入(元)
   </view>
   <view class='bottom'>
-    <text class='left'>0.00</text>
+    <text class='left'>{{res.today_money}}</text>
     <text class=" right iconfont icon-arrow"></text>    
   </view>
 </view>
-
-
 <!-- 我的订单 -->
 <view class="order-item">
     <view class="navCont">
         <navigator hover-class="none"  class="item">
-            <view class='num'>0</view>
+            <view class='num'>{{res.seller_total.click_rate}}</view>
             <view>今日访客</view>
         </navigator>
-        <navigator  hover-class="none"  class="item" >
-            <view class='num'>0</view>
+         <navigator  hover-class="none"  class="item" >
+            <view class='num'>{{res.seller_total.order_total}}</view>
             <view>今日订单</view>
         </navigator>
         <navigator  hover-class="none" class="item">
-           <view class='num'>0</view>
+           <view class='num'>{{res.seller_total.order_moeny}}</view>
             <view>今日交易额</view>
         </navigator>
         <navigator  hover-class="none"  class="item">
-            <view class='num'>0</view>
+            <view class='num'>{{res.seller_total.reward_money}}</view>
             <view>今日佣金</view>
         </navigator>
         
     </view>
 </view>
-
-
 <!-- 预览 -->
 <view class='preview'>
   <view class='pre-left'>
   <view class='img'>
-    <image src='../../static/imgs/touxiang.jpg'></image>
+    <image src='{{res.seller_info.logo}}'></image>
   
   </view>
   <view class='txt'>
   <text class='dianname'>
-    fanyuxi官方店
+    {{res.seller_info.name}}
     </text>
     <text class='small'>
-    待签约
+    {{res.seller_info.signing_ratio}}
     </text>
   </view>
     
   </view>
-  <view class='pre-right'>
+  <view class='pre-right' data-id='{{res.seller_info.store_id}}' bindtap='prevViwe'>
       <image src='http://oss.myzy.com.cn/wechat/images/icon_sjzx_yl.png'></image>
       <text>预览</text>
   </view>
 </view>
-
 <!-- 我的订单 -->
 <view class="order-item">
 <view class="order" bindtap='myOrder'>
@@ -107,37 +101,36 @@
     </view>
     <view class="navCont">
         <navigator hover-class="none"  class="item">
-            <view class='num'>0</view>
+            <view class='num'>{{res.seller_order[0].total_num}}</view>
             <view>待支付</view>
         </navigator>
         <navigator  hover-class="none"  class="item" >
-            <view class='num'>0</view>
-            <view>代发货</view>
+            <view class='num'>{{res.seller_order[2].total_num}}</view>
+            <view>待发货</view>
         </navigator>
         <navigator  hover-class="none" class="item">
-           <view class='num'>0</view>
+           <view class='num'>{{res.seller_order[6].total_num}}</view>
             <view>已完成</view>
         </navigator>
         <navigator  hover-class="none"  class="item">
-            <view class='num'>0</view>
+            <view class='num'>{{res.seller_order[5].total_num}}</view>
             <view>待退款</view>
         </navigator>
         
     </view>
 </view>
-
 <view class="order-item ords">
 
     <view class="navCont">
-        <navigator hover-class="none"  class="item">
+        <view hover-class="none"  class="item" bindtap='FanNum'>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_syzx_hygl.png'></image>
             <view>会员管理</view>
-        </navigator>
-        <navigator  hover-class="none"  class="item" >
+        </view>
+        <navigator  hover-class="none"  data-id='{{res.seller_info.store_id}}' class="item" bindtap='ShopGl' >
         <image src='http://oss.myzy.com.cn/wechat/images/icon_syzx_dpgl.png'></image>
             <view>店铺管理</view>
         </navigator>
-        <navigator  hover-class="none" class="item">
+        <navigator  hover-class="none" class="item" bindtap='ShopMan'>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_syzx_spgl.png'></image>
             <view>商品管理</view>
         </navigator>
@@ -148,3 +141,167 @@
         
     </view>
 </view>
+</view>
+</block>
+
+<!-- 已开通 -->
+<block wx:else>
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>入驻</view> 
+  </my-component>
+</view>
+
+
+
+<!-- 主体 -->
+<view class='container'>
+    <view class='top' >
+      <text class='title' decode="{{true}}">{{store.title}}</text>
+    </view>
+    <view class='check' bindtap='navCour' data-type="{{store.jump}}">
+        <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_zhishi.png'></image>
+        <text>点击查看教程</text>
+    </view>
+
+    <!-- 流程 -->
+    <view class='lc'>
+    <text decode="{{true}}">[ &nbsp;在线开通&nbsp;→&nbsp;签约上架&nbsp;→ &nbsp;开店成功&nbsp;]</text>
+    </view>
+      <!-- 加入我们 -->
+      <view class='join'>
+        <view class='carret'></view>
+        <text>加入我们一起赚钱</text>
+        <view class='carrets'></view>
+        
+      </view>
+
+
+    <!-- 优势 -->
+    <view class='adv'>
+      <view class='adv-title'>
+         <view class='hr'></view>
+         <text>合伙人的优势</text>    
+      </view>
+    <!-- 内容 -->
+    <view class='adv-conts'>
+        <view class='adv-list'>
+          <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_dianpu.png'></image>
+          <view class='f-r'>
+          <text class='list-title'>促销利器，独立专属店铺</text>
+          <text class='atricle'>
+          鼓励消费者每日抢礼物，极大提升消费者活跃度，快捷高效的管理功能一键开店，操作简单
+          </text>
+          </view>
+          
+        </view>
+
+        <view class='adv-list '>
+          <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_tuijian.png'></image>
+          <view class='f-r no'>
+          <text class='list-title'>裂变透传，店铺官方推荐</text>
+          <text class='atricle'>
+          活动、商品、礼物支持分享功能，参加即可成为店铺会员,店铺会员发起的活动分享的活动、礼物、商品参加也均属于本店会员。量身定制，精准定位，快速推广，快速搭建粉丝专属店铺
+          </text>
+          </view>
+          
+        </view>
+
+          <view class='adv-list '>
+          <image src='http://oss.myzy.com.cn/wechat/images/tab_rz_tuijian.png'></image>
+          <view class='f-r frs'>
+          <text class='list-title'>高转化，额外高额奖励</text>
+          <text class='atricle'>
+          凡店铺会员在本店铺消费额，奖励10%，最高随机奖励50%
+          </text>
+          </view>
+          
+        </view>
+
+      <button bindtap='go'>立即开通</button>
+
+    </view>
+</view>
+    </view>
+
+
+
+
+</block>
+
+
+   <!-- toast -->
+   <import src="../../public/appToast/appToast.wxml"/>
+   <template is="toast" data="{{ ..._toast_ }}"/>
+
+
+   <!-- 选择支付方式 -->
+   <view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+  <!--弹出框  -->
+  <view animation="{{animationData}}" class="commodity_attr_box"  wx:if="{{showModalStatus}}">
+
+  <view class='titles' bindtap="close" style='padding:20rpx 0 22rpx;'>
+      <image style='width:14px;height:14px' src='http://oss.myzy.com.cn/wechat/images/icon_del_vip.png'></image>
+  </view>
+  <!-- 方式 -->
+  <view class='way'>
+  <view class='way-title'>
+  选择支付方式
+  </view>
+ 
+ <view class='way-cont'>
+        <view class='way-list'  bindtap='menuTaps' data-current="0" data-pay="3">
+            <view class='way-left'>
+             <block wx:if="{{menuTapCurrents== 0}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+              </block>
+              <block wx:else>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+              
+              </block>
+            </view>
+            <view class='way-icon'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixin.png'></image>
+            </view>
+            <view class='way-text'>
+              <text>微信支付</text>
+              <text class='small'>推荐已安装微信用户使用</text>
+            </view>
+        </view>
+        <view class='way-list'  bindtap='menuTaps' data-current="1" data-pay="1">
+            <view class='way-left'>
+            <block wx:if="{{menuTapCurrents== 1}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+              </block>
+              <block wx:else>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+              
+              </block>
+            </view>
+            <view class='way-icon'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_yue.png'></image>
+            </view>
+           
+            <view class='way-text way-texts'>
+              <text>余额支付 (剩余:￥{{money}}）</text>
+              <text class='small'>账户余额支付</text>
+            </view>
+        </view>
+ </view>
+  
+<!-- 需付款 -->
+  <view class='way-pay'>
+    <text class='w'>需付款</text>
+    <text class='m'>￥</text>
+    <text class='q'>{{res.expire_time.total_fee}}</text>
+  </view>
+
+  <!-- 支付按钮 -->
+  <view class='pay'>
+  <button class='pay-btn' bindtap='topay' data-pay="{{res.expire_time.total_fee}}">立即支付</button>
+  </view>
+  </view>
+  </view>
+
+   

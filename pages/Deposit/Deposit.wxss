@@ -1,7 +1,7 @@
 /* pages/Deposit/Deposit.wxss */
 .Deposit-cont{
   padding: 0 30rpx;
-  margin-top: 154rpx;
+  margin-top: 172rpx;
   display: flex;
 }
 .Deposit-cont .Deposit-title{
@@ -10,13 +10,31 @@
   flex: 1;
   background: white;
   height: 140rpx;
-  padding: 50rpx;
+  padding: 50rpx 40rpx;
   box-sizing: border-box;
   font-size: 32rpx;
   color: #333;
   box-shadow:0px 0px 4px 0px rgba(246,246,246,1);
   border-radius:6px; 
   letter-spacing: 1rpx; 
+}
+.Card{
+  display: flex;
+  padding:24rpx 40rpx!important;
+  align-items: center;
+}
+.Card image{
+  width: 72rpx!important;
+  height: 72rpx!important;
+}
+.Card .right text{
+  display: block;
+  line-height: 48rpx;
+}
+.Card .right .r_T{
+  color: #666;
+  font-size:29.17rpx;
+  margin-top: 4rpx;
 }
 .pa{
   position: absolute;
@@ -30,6 +48,7 @@ line-height: 80rpx;
   width:76rpx;
   height: 64rpx;
   margin-right: 24rpx;
+
 }
 
 .Deposit-money{
@@ -40,7 +59,7 @@ line-height: 80rpx;
    box-shadow:0px 0px 4px 0px rgba(246,246,246,1);
   border-radius:6px; 
   margin-top: 24rpx;
-  padding:30rpx 70rpx;
+  padding:30rpx 40rpx;
   box-sizing: border-box;
 }
 .tx-jine{
@@ -74,7 +93,7 @@ letter-spacing: 1rpx;
   line-height:1.6;
 }
 .Deposit-money button{
-  margin-top: 24rpx;
+  margin-top:40rpx;
   border: none;
   color: white;
 }
@@ -97,4 +116,56 @@ button::after{
 .about{
   font-size: 26rpx;
   color: #666;
+}
+/* //弹出框 */
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.6;
+  overflow: hidden;
+  z-index: 1000;
+}
+/*对话框 */
+.title{
+  height: 96rpx;
+  line-height:96rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  text-align: center;
+ color: #333;
+  border-bottom:1px solid rgba(243,243,243,1);
+
+}
+.title_left{
+  float: left;
+  color: #666!important;
+}
+ .item{
+  display: flex;
+  padding: 0 30rpx;
+  align-items: center;
+  line-height: 96rpx;
+  height: 96rpx;
+  border-bottom:1px solid rgba(243,243,243,1);
+}
+ .item image{
+  width:48rpx;
+  height: 48rpx;
+  margin-right: 30rpx;
+}
+.commodity_attr_box {
+  box-sizing: border-box;
+  height:400rpx;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  font-size: 33.3rpx;
+  color: #333;
 }

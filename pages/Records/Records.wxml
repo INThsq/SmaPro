@@ -1,0 +1,46 @@
+<!--pages/Records/Records.wxml-->
+<view>
+  <my-component>
+     <view>兑换列表</view> 
+  </my-component>
+</view> 
+
+
+<view class='container'>
+
+    <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+    <text>抱歉，暂无数据</text>
+        <!-- <view class='imts' style='display:flex;'>
+        <view class='ims'>
+         <image src='http://api.myzy.com.cn/uploads/member_mall/goods_image/2/1547789587.jpeg'></image>
+        </view>
+        <view class='items'>
+              <view class='item'>
+                <text class='iteml' style='text-center:left!imporatnt'>小天鹅男士加绒加厚哈哈保...</text>
+                <text class='itemr'>共1件</text>
+              </view>
+              <view class='item'>
+                <text class='itemls' style='font-size:25rpx!important;font-weight:400!important'>兑换时间:2018-10-26 19:04</text>
+                <text class='itemrs'>100豆</text>
+              </view>
+        </view>
+        </view>
+
+
+ <view class='imts' style='display:flex;'>
+        <view class='ims'>
+         <image src='http://api.myzy.com.cn/uploads/member_mall/goods_image/2/1547789587.jpeg'></image>
+        </view>
+        <view class='items'>
+              <view class='item'>
+                <text class='iteml' style='text-center:left!imporatnt'>小天鹅男士加绒加厚哈哈保...</text>
+                <text class='itemr'>共1件</text>
+              </view>
+              <view class='item'>
+                <text class='itemls' style='font-size:25rpx!important;font-weight:400!important'>兑换时间:2018-10-26 19:04</text>
+                <text class='itemrs'>100豆</text>
+              </view>
+        </view>
+        </view> -->
+
+        </view>

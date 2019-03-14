@@ -1,273 +1,339 @@
+<!--pages/Details/Details.wxml-->
+<import src="../../components/wxParse/wxParse.wxml"/> 
 
-<!-- 内容区域 -->
-<view class='container' >
-
-<scroll-view scroll-y="true" style="height:100vh;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" scroll-with-animation="true">
-<!-- 视图1 -->
- <view class='detail scroll-view-item' id='one'>
- 
-<!-- 轮播图 -->
-<view class='swipercontent'>
-  <swiper class='swiper' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
-    <block wx:for="{{imgUrls}}" wx:key="unique">
-      <swiper-item>
-        <image src="{{item}}" class="slide-image" width="355" height="150"/>
-      </swiper-item>
+<!-- 引用组件的页面模版 -->
+  <view class="wrapper"  hidden='{{!titleType}}'>
+  <view class='backes' bindtap='backes'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">{{title}}</view>
+</view>
+  
+  
+  <!-- 内容区域 -->
+  <view class='container' scroll-y="true" >
+  <view hidden='{{!hideBottom}}' class="{{annoType ? 'conall' : ''}}">
+  <!-- 轮播图 -->
+  <view class='swipercontent'>
+    <swiper  bindanimationfinish="changeGoodsSwip" class='swiper' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
+      <block wx:for="{{imgUrls}}" wx:key="unique">
+        <swiper-item>
+          <image bindtap='preview' data-index="{{index}}" src="{{item}}" lazy-load='true' class="slide-image" width="355" height="150"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="dotes">
+        <view class="nums">{{swiperCurrent +1}}/{{imgUrls.length}}</view>
+    </view>
+    <view class=' back' bindtap='back'>
+      <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+    </view>
+  </view>
+  <!-- 特权 -->
+  <!-- <view class='privilege'>
+    <view class='pri-left'>
+      <view class='tequan'>
+          <image src='http://oss.myzy.com.cn/wechat/images/icon_tequan.png'></image>
+          活动特权
+      </view>
+      <text class='present'>购买可获得免费赠礼领现金特权</text>
+    </view>
+    <view class='pri-right'>
+      查看详情
+    </view>
+  </view> -->
+  <!-- 价格 -->
+  <view class='price'>
+    <view class='one'>
+      <text class="yang">￥</text>
+      <text class='nl'>{{sku.market_price ? sku.market_price:detail.goods_details.price}}</text>
+    </view>
+    <block wx:if="{{detail.goods_details.sale_price !=='0.00' }}">
+    <text class='two'>￥{{detail.goods_details.sale_price}}</text>
     </block>
-  </swiper>
-  <view class="dotes">
-      <view class="nums">{{swiperCurrent +1}}/{{imgUrls.length}}</view>
-  </view>
-  <view class=' back' bindtap='back'>
-    <image src='http://oss.myzy.com.cn/wechat/images/back.png'></image>
-  </view>
-</view>
-<!-- 特权 -->
-<view class='privilege'>
-  <view class='pri-left'>
-    <view class='tequan'>
-        <image src='http://oss.myzy.com.cn/wechat/images/icon_tequan.png'></image>
-        活动特权
-    </view>
-    <text class='present'>购买可获得免费赠礼领现金特权</text>
-  </view>
-  <view class='pri-right'>
-    查看详情
-  </view>
-</view>
-<!-- 价格 -->
-<view class='price'>
-  <view class='one'>
-    <text class="yang">￥</text>
-    <text class='nl'>599.00</text>
-  </view>
-  <text class='two'>￥789</text>
-  <text class='ys'>已售6789件</text>
-</view>
-<!-- 标题 -->
-<view class='title'>
-  <text class='circle'>自营</text> {{shopInfo.shop_name}}
   
-</view>
-<!-- 选择规格 -->
-<view class='choose'>
-  <view class='choose-one' bindtap='chooseSize'>
-  <text class='o' decode="{{true}}">已选择    {{color[cindex].name}}    {{guige[gindex].name}}码  {{num}}件</text>
-  <text class="right iconfont icon-arrow"></text>
+    <block wx:if="{{detail.goods_details.activity_money!=='0.00'}}">
+    <view class='get'>
+      赚<text class="yang">￥</text>{{detail.goods_details.activity_money}}
+    </view>
+    </block>
+    <text class='ys'>{{detail.goods_details.sell_out}}</text>
+  </view>
+  <!-- 标题 -->
+  <view class='title'>
+    <!-- <text class='circle'>自营</text> -->
+    {{detail.goods_details.title  }}
+  </view>
+  <!-- 贡献 -->
+  <view class='contribute' wx:if="{{detail.goods_details.goods_type == 1 }}">
+    <view class='play'>
+    <view class='play_title'>促销玩法</view>
+    <view class='play_img'>
+        <image src='http://oss.myzy.com.cn/wechat/images/img_cuxiaowanfa.png'></image>
+
+    </view>
+        <view class='play-cont'>
+          <view class='p_l'>购买商品</view>
+          <view class='p_t'>
+            <text class='big'>获得贡献值</text>
+            <text class='small'>累计贡献值升级会员</text>
+          </view>
+          <view class='p_th'>
+            <text class='big'>赠送礼品赚佣金</text>
+            <text class='small'>不限量立即到账可提现</text>
+          </view>
+        </view>
+    </view>
+
+    <view class='con-gx'>
+      <view class='con-left'>贡献</view>
+      <view class='cont-right'>此单可得 <text class='cont-red'>{{detail.goods_details.points}}</text> 个贡献值</view>
+    </view>
+    <view  class='con-gxs' bindtap='navCour' data-name="{{detail.apply_type.unique_name}}" data-type="{{detail.apply_type.image}}">
+        <image src='http://oss.myzy.com.cn/wechat/images/jiangnang_banner.png'></image>
+    </view>
+    <view class='con-gx'>
+      <view class='con-left'>活动</view>
+      <view class='cont-right cont-red' style='font-siz'>赠送不限量，每日更新</view>
+    </view>
+    <view class='noes'>
+      <view class='con-left'>服务</view>
+      <view class='cont-right'>免费赠送包邮 |  24小时发货  |  7天无条件退货</view>
+    </view>
   </view>
 
-  <view class='choose-two'>
-  <view>
-  <text class='zp'>正品保证</text>
-    <text class='zp'>全场包邮</text>
-    <text class='zp'>48小时发货</text>
-  </view>
-  <text class="right iconfont icon-arrow"></text>
+
+  <!-- 选择规格 -->
+  <view class='choose'>
+    <view class='choose-one' bindtap='chooseSize'>
+    <block wx:if="{{sku_ids == ''}}">
+    <text class='o' decode="{{true}}">请选择商品规格 </text>
+    </block>
+      <block wx:else>
+    <block wx:if="{{goods_sku.length > 1}}">
+    <text class='o' decode="{{true}}">已选择  {{goods_sku[0].name+skusss1}} , {{goods_sku[1].name+skusss2}}  {{num}}件</text>
+    </block>
+    <block wx:if="{{goods_sku.length == 1}}">
+    <text class='o' decode="{{true}}">已选择  {{goods_sku[0].name}}  {{num}}件</text>
+    </block>
+    </block>
+    <!-- <text class="right iconfont icon-arrow"></text> -->
+   <image class="rights" src='http://oss.myzy.com.cn/wechat/images/jiantou.png'></image> 
   
-    
-  </view>
-</view>
-<!-- 评价 -->
-<view class='evaluate'>
-    <text class='eva'>商品评价</text>
-  <view style='color:#666;font-size:29.17rpx;'>查看全部
-  <text  class="right iconfont icon-arrow" style='margin-left:10px'></text>
+    </view>
   
- </view>
-    
-</view>
-<!-- 店铺 -->
-<view class='store'>
-    <view class='store-image'>
-        <image src='http://oss.myzy.com.cn/wechat/images/icon_logo.png'></image>
-    </view>
-    <view class='store-details'>
-      <text class='tit'>梵羽熙官方店</text>
-      <text class='small'  decode="{{true}}">商品数量：8968件 &nbsp; 已售3040件</text>
-    </view>
-    <view class='store-btn'>
-      <button>进店逛逛</button>
-    </view>
-</view>
-<!-- 店铺推荐 -->
-<view class='recommend'>
-  <view class='rec-title'>
-  店铺推荐
-  </view>
-  
-  <view class='rec-conts'>
-    <view class='rec-detail'>
-        <image src='http://oss.myzy.com.cn/wechat/images/yifu.png'></image>
-        <view class='biaoti'>
-          <text class='titles'>2018冬季新款加… </text>
-          <view class='jg'>
-          <view class='one'>
-            <text class="yang">￥</text>
-            <text class='nl'>599.00</text>
-          <text class='two'>已售480件</text>
-            
-          </view>
-          </view>
-        </view>
-    </view>
-
-     <view class='rec-detail'>
-        <image src='http://oss.myzy.com.cn/wechat/images/yifu.png'></image>
-        <view class='biaoti'>
-          <text class='titles'>2018冬季新款加… </text>
-          <view class='jg'>
-          <view class='one'>
-            <text class="yang">￥</text>
-            <text class='nl'>599.00</text>
-          <text class='two'>已售480件</text>
-            
-          </view>
-          </view>
-        </view>
-    </view>
-
-
-
-     <view class='rec-detail'>
-        <image src='http://oss.myzy.com.cn/wechat/images/yifu.png'></image>
-        <view class='biaoti'>
-          <text class='titles'>2018冬季新款加冬季新款2018冬季新款加冬季新款</text>
-          <view class='jg'>
-          <view class='one'>
-            <text class="yang">￥</text>
-            <text class='nl'>599.00</text>
-          <text class='two'>已售480件</text>
-            
-          </view>
-          </view>
-        </view>
-    </view>
-  </view>
-</view>
-<!-- 上拉显示全部 -->
-  <!-- hidden="{{ScrollFlag}}"  -->
-  <view class='up-all' hidden='{{!hides}}'>
-      <image src='http://oss.myzy.com.cn/wechat/images/shangla-2.png'></image>上拉查看图文详情
-  </view>
-
-  <view>
-
-  </view>
-</view>
-
-
-
-<!-- 详情模块 -->
-<view id='two' class='scroll-view-item' hidden='{{hides}}'>
-  <view class='show-conts'>
-        <view class="wrapper">
-  <view class=' back' bindtap='back'>
-    <image src='http://oss.myzy.com.cn/wechat/images/back.png'></image>
-  </view>
-  <view class="tetxs">商品详情</view>
-</view>
-  </view>
-
-</view>
-
-</scroll-view>
-
- </view> 
-
-
-
-
-<!-- 底部 -->
-<view class='footer'>
-    <view class='f-l'>
-        <view class='shop'>
-          <image src='http://oss.myzy.com.cn/wechat/images/icon_dp_sj.png'></image>
-          <text>店铺</text>
-        </view>
-        <view class='sx'></view>
-        <view class='service'>
-          <image src='http://oss.myzy.com.cn/wechat/images/icon_dp_kf.png'></image>
-          <text>客服</text>
-        </view>
-    </view>
-    <view class='f-r'>
+    <view class='choose-two'>
     <view>
-    <button  bindtap='buy' >立即购买</button>
+    <text class='zp'>正品保证</text>
+      <text class='zp'>全场包邮</text>
+      <text class='zp'>48小时发货</text>
+    </view>
+   <image class="rights" src='http://oss.myzy.com.cn/wechat/images/jiantou.png'></image> 
+      
+    </view>
+  </view>
+  <!-- 评价 -->
+  <view class='evaluate'>
+      <text class='eva'>商品评价</text>
+    <view style='color:#999;font-size:25rpx;display:flex'>查看全部
+   <image class="rights" style="margin-left:22rpx;" src='http://oss.myzy.com.cn/wechat/images/jiantou.png'></image> 
+    
+   </view>
+      
+  </view>
+  <!-- 店铺 -->
+  <view class='store'>
+      <view class='store-image'>
+          <image src='{{detail.goods_details.member_mall.logo}}'></image>
+      </view>
+      <view class='store-details'>
+        <text class='tit'>{{detail.goods_details.member_mall.name}}</text>
+        <text class='small'  decode="{{true}}">商品数量：{{detail.goods_details.member_mall.product_total}} &nbsp;  {{detail.goods_details.member_mall.sell_out}}
+        </text>
+      </view>
+      <view class='store-btn'>
+        <button bindtap='EnterShop' data-id="{{mall_id}}">进店逛逛</button>
+      </view>
+  </view>
+  <!-- 店铺推荐 -->
+  <view class='recommend' wx:if="{{detail.interest_list.length != 0}}">
+    <view class='rec-title'>
+    店铺推荐
+    </view>
+    <view class='rec-conts'>
+    <block wx:for="{{detail.interest_list}}" wx:key="{{index}}">
+      <view class='rec-detail' data-id="{{item.goods_id}}" bindtap='detail'>
+          <image src='{{item.goods_image}}'></image>
+          <view class='biaoti'>
+            <text class='titles'>{{item.title}} </text>
+            <view class='jg'>
+            <view class='one'>
+              <text class="yang">￥</text>
+              <text class='nl'>{{item.price}}</text>
+              <text class='two'>{{item.sell_out}}</text>
+            </view>
+            </view>
+          </view>
+      </view>
+      </block>
+
+      </view>
+
+  
+  </view>
+  <!-- 上拉显示全部 -->
+    <!-- hidden="{{ScrollFlag}}"  -->
+    <view class='up-all' >
+    <!-- style='padding-bottom:200rpx;' -->
+        <image src='http://oss.myzy.com.cn/wechat/images/shangla-2.png'></image>上拉查看图文详情
+    </view>
+    </view>
+  <!-- 上拉显示详情 -->
+    <view>
+       <view class='bottom gradient-wrapper' style='background:white;padding-top:140rpx;' hidden="{{hideBottom}}"><view class='bottom_txt'>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+       </view></view>
+    </view>
+  </view>
+  
+  <!-- 底部 -->
+  <view class='footer'>
+      <view class='f-l'>
+          <view class='shop'  bindtap='EnterShop' data-id="{{mall_id}}">
+            <image src='http://oss.myzy.com.cn/wechat/images/icon_dp_sj.png'></image>
+            <text>店铺</text>
+          </view>
+          <view class='sx'></view>
+          <view class='service' bindtap='calling'>
+            <image src='http://oss.myzy.com.cn/wechat/images/icon_dp_kf.png'></image>
+            <text>客服</text>
+          </view>
+      </view>
+      <view class='f-r'>
+      <!-- <view>
+      <button  bindtap='buy' >立即购买</button>
+      
+      </view> -->
+       <block wx:if="{{detail.goods_details.activity_money == '0.00'}}"> 
+       
+      <view class='submit' wx:if="{{code == 401}}" style='background:#999'>
+      提交订单
+      </view>
+      <view class='submit' wx:else bindtap='buys'>
+      提交订单
+      </view>
+      </block> 
+  
+      <block wx:else>
+      <view class='submits' bindtap='buys'>
+        <text>￥{{detail.goods_details.price}}</text>
+        <text>赚￥{{detail.goods_details.activity_money}}</text>
+      </view>
+      </block>
+      </view>
+  </view>
+  
+  
+  
+  <!-- 弹出框 -->
+   
+  <!--屏幕背景变暗的背景  -->
+    <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+    <!--弹出框  -->
+    <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+    <view class='chosoe-top'>
+      <view class='top-left'>
+        <image src='{{sku.sku_thumb ? sku.sku_thumb:modalInfo.goods_data.goods_image}}'></image>
+      </view>
+      <view class='top-right'>
+        <view class='one'>
+          <text class="yang">￥</text>
+          <text class='nl'>{{sku.market_price ? sku.market_price:modalInfo.goods_data.price}}</text>
+          </view>
+          <text class='two'>库存{{sku.stock}}件</text>
+        <block wx:if="{{goods_sku.length > 1}}">
+         <!--<block wx:if="{{goods_sku[0].attr_idsname!=undefined}}">-->
+          <text class='ys yes' >已选:{{goods_sku[0].name+skusss1}} , {{goods_sku[1].name +skusss2}}</text>
+          </block>
+          <!--</block>-->
+   <block wx:else="{{goods_sku.length == 1}}">
+          <text class='ys yes' style='float:none!important' >已选:{{goods_sku[0].name+skusss1}}</text>
+          </block>
+      </view>   
+      <view class='choose-top' bindtap='cloose'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_guige_guanbi.png'></image>
+      </view>
     
     </view>
-    </view>
-</view>
-
-
-
-<!-- 弹出框 -->
- 
-<!--屏幕背景变暗的背景  -->
-  <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
-  <!--弹出框  -->
-  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
-  <view class='chosoe-top'>
-    <view class='top-left'>
-      <image src='{{imgUrls[0]}}'></image>
-    </view>
-    <view class='top-right'>
-      <view class='one'>
-        <text class="yang">￥</text>
-        <text class='nl'>599.00</text>
+  
+  
+    <!-- 规格可滚动区域 -->
+    <view class='scroll-views'>
+    <scroll-view scroll-y  style="height:400px">
+    <view>
+    
+  
+  <view class="wraper">
+   <view class='color' wx:for="{{goods_sku}}" wx:key="{{index}}" wx:for-item="property" wx:for-index="idx" class="{{idx == 0 ? 'color' : ''}}">
+      <view class="titles">{{property.name}}</view>
+      <view class='row' > 
+        <view wx:for="{{property.children}}" wx:key="{{index}}" bindtap='choose' data-index='{{index}}' data-id='{{idx}}' class="{{item.attr_ids == property.attr_ids ? 'active' : ''}}">
+          {{item.name }}
         </view>
-        <text class='two'>库存5双</text>
-        <text class='ys yes' >已选:{{color[cindex].name}},{{guige[gindex].name}}码</text>
-    </view>   
-    <view class='choose-top' bindtap='cloose'>
-      <image src='http://oss.myzy.com.cn/wechat/images/close.png'></image>
+      </view>
+    </view>
     </view>
   
-  </view>
-
-
-  <!-- 规格可滚动区域 -->
-  <view class='scroll-views'>
-  <scroll-view scroll-y  style="height:400px">
-  <view>
+  <!-- <view>{{guige[gindex].name}}:{{color[cindex].name}}</view> -->
+    
+  <!-- 数量增减 -->
+  <view class='shul'>
+    <view class='left'>商品数量:</view>
   
-  <view class='colors'>颜色：</view>
-  <view class='dis'>
-    <block wx:for="{{color}}" wx:key="{{index}}">
-      <view class="{{cindex==index?'color':''}}" bindtap='color' data-index='{{item.id}}' data-current='{{index}}'>{{item.name}}</view>
-    </block>
-  </view>
-  <view class='colors'>鞋码：</view>
-  <view class='dis'>
-    <block wx:for="{{guige}}" wx:key="{{index}}">
-      <view class="{{gindex==index?'color':''}}" bindtap='guige' data-index='{{item.id}}'    
-           data-current='{{index}}'>{{item.name}}</view>
-    </block>
-  </view>
-<!-- <view>{{guige[gindex].name}}:{{color[cindex].name}}</view> -->
   
-<!-- 数量增减 -->
-<!-- 主容器 -->
-<view class='shul'>
-  <view class='left'>商品数量:</view>
-
-
-<view class="stepper">
-	<!-- 减号 -->
-	<text class="{{minusStatus}} nos" bindtap="bindMinus">
-  <text class='iconfont icon-jianhaob'></text>
-  </text>
-	<!-- 数值 -->
-	<input type="number" bindchange="bindManual" value="{{num}}" />
-	<!-- 加号 -->
-	<text class="normal no" bindtap="bindPlus">
-      <text class='iconfont icon-jiahaob'></text>
-  
-  </text>
-</view>
-</view>
+  <view class="stepper">
+    <!-- 减号 -->
+    <text class="{{minusStatus}} nos " bindtap="bindMinus">
+    <text class='iconfont icon-jianhaob'></text>
+    
+    </text>
+    <!-- 数值 -->
+    <input type="number" bindchange="bindManual" value="{{num}}" />
+    <!-- 加号 -->
+    <text class="normal no" bindtap="bindPlus">
+    <text class='iconfont icon-jiahaob'></text></text>
   </view>
-</scroll-view>
-</view>
+  </view>
+    </view>
+  </scroll-view>
+  </view>
+  
+  <button wx:if="{{stock != 0 || code != 401}}" class='btn' bindtap='buy'>完成</button>
+  <button wx:else class='btn' style='background:#999'>完成</button>
+  </view>
+  
+  
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+  
 
-<button class='btn' bindtap='Confirm'>完成</button>
-</view>
+  <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
+
+    <!-- 拨打电话 -->
+     <!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>客服电话400 8010 168</view>     
+    </view>
+
+</dialog>

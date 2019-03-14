@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "收益报表",
+  "navigationStyle": "custom",
+  "disableScroll": true,
   "usingComponents": {
     "my-component": "../../public/compback/compback"
   }

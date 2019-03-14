@@ -1,8 +1,7 @@
 {
   "navigationBarTitleText": "",
+  "navigationStyle": "custom",
   "usingComponents": {
-    "my-component": "../../public/compback/compback",
-    
-    "nyz_area_picker": "../../public/nyz_area_picker/nyz_area_picker"
+    "my-component": "../../public/compback/compback"
   }
 }

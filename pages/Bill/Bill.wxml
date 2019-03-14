@@ -1,0 +1,58 @@
+<!--pages/Bill/Bill.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>账单</view> 
+  </my-component>
+</view>
+
+
+
+
+<!-- 内容 -->
+<view class='container'>
+
+
+    <view class='expend' wx:for="{{money_bill}}" wx:key="index">
+    <text class='exp_title'>{{item.month_money_bill.money_bill[0].month}}月</text>
+    <text class='exp_cont' decode="{{true}}">收入 ￥{{item.month_money_bill.enter_money_total}} &nbsp;&nbsp;  收入 ￥{{item.month_money_bill.out_money_total}}</text>
+    </view>
+
+    
+     <view class='expend_container' wx:if="{{money_bill.length > 0}}">
+     <block wx:for="{{money_bill}}" wx:key="index">
+    <view class='list' bindtap='getDetail' data-index="{{index}}"   wx:for="{{item .month_money_bill.money_bill}}" wx:for-index="billindex"  wx:for-item="bill" data-id="{{bill.bill_id}}" wx:key="bill" >
+    <view class='left'>
+    <image src='http://oss.myzy.com.cn/wechat/images/touxiang.png'></image> 
+    </view>
+      <view class='right'>
+      <view class='right_one'>
+        <text class='right_title'>{{bill.title}}</text>
+        <text class='right_money'>{{bill.turnover}}</text>
+      </view>
+      <view class='right_two'>
+      [{{bill.remark}}]
+      </view>
+      <view class='right_three'>
+      {{bill.create_time}}
+      </view>
+      </view>
+    </view>
+    </block>
+    </view> 
+
+
+    <view class='container' wx:else style='text-align:center'>
+    <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+    <text>抱歉，暂无数据</text>
+    </view>
+
+</view>
+
+
+
+
+   <!-- toast -->
+   <import src="../../public/appToast/appToast.wxml"/>
+   <template is="toast" data="{{ ..._toast_ }}"/>
+

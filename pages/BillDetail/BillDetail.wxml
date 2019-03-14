@@ -1,0 +1,37 @@
+<!--pages/BillDetail/BillDetail.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>账单明细</view> 
+  </my-component>
+</view>
+
+<!-- 详情 -->
+<view class='container'>
+
+  <!-- 红包 -->
+  <view class='packet'>
+    <text class='pack-left'>{{detail.bill_name}}</text>
+    <text class='pack-right'>{{detail.turnover}}</text>
+  </view>
+
+  <!-- 详情 -->
+  <view class='type'>
+    <view class='list'>
+      <text class='left'>类型</text>
+      <text class='right'>{{detail.remark}}</text>
+    </view>
+    <view class='list'>
+      <text class='left'>时间</text>
+      <text class='right'>{{detail.create_time}}</text>
+    </view>
+    <view class='list'>
+      <text class='left'>交易单号</text>
+      <text class='right' style="font-size:25rpx;">{{detail.order}}</text>
+    </view>
+    <view class='list'>
+      <text class='left'>剩余零钱</text>
+      <text class='right'>{{detail.money_proof}}</text>
+    </view>
+  </view>
+</view>

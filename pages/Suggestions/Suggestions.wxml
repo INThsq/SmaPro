@@ -1,0 +1,70 @@
+<!--pages/Suggestions/Suggestions.wxml-->
+<view>
+  <my-component>
+     <view>意见反馈</view> 
+  </my-component>
+</view>
+
+
+<view class='container'>
+  <view class='type'>
+    <text class='title'>反馈分类</text>
+    <view class='type_cont'>
+      <view class="swiper-tab">
+      <block wx:for="{{feedbackType}}" wx:key="{{index}}">
+    <view class="swiper-tab-item {{currentTab==index?'active':''}}" data-id="{{item.type_id}}" data-current="{{index}}" bindtap="clickTab">{{item.name}}</view>
+    </block>
+  </view>
+    </view>
+  </view>
+  <!-- 反馈文字 -->
+  <view class='bot'>
+     <textarea  bindinput="bindTextAreaBlur" value="{{details}}" class="detailText" maxlength="300"
+    placeholder="请输入您需要反馈的问题">
+</textarea>
+<!-- 添加图片 -->
+<view class='add_img'>
+<block wx:for="{{photos}}" wx:key="{{index}}">
+  <view class='item'>
+    <image class='big' src='{{item}}' mode="aspectFill" data-index="{{index}}" catchtap='preview'></image>
+    <image class='close' bindtap='Del' data-index="{{index}}" src='http://oss.myzy.com.cn/wechat/images/icon_yijianfankui_shanchutupina.png'></image>
+  </view>
+  </block>
+  <view class='item' wx:if="{{photos.length < 3}}">
+  <image class='big' bindtap='listenerButton' src='http://oss.myzy.com.cn/wechat/images/img_tianjiatupian.png'></image>
+  </view>
+</view>
+  </view>
+  <!-- 联系方式 -->
+  <view class='Way'>
+      <view class='phone'>
+          <text>联系方式</text>
+          <input type='number' bindinput="getPhone" placeholder='请留下您的电话'></input>
+        </view>
+         <view class='tishi'>
+      为了及时反馈解决方案，请仔细填写联系方式
+      </view>
+      <button bindtap='submit'>确认提交</button>
+  </view>
+ 
+</view>
+
+
+<!-- 拍照 -->
+<!--默认action-sheet为隐藏，由button触发-->
+<action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
+
+    <block wx:for-items="{{actionSheetItems}}" wx:key="{{key}}" > 
+        <action-sheet-item  data-index="{{index}}" data-text="{{item}}" bindtap="itemChange">{{item}}</action-sheet-item>
+    </block>
+    <!--自动隐藏action-sheet-->
+    <action-sheet-cancel>取消</action-sheet-cancel>
+</action-sheet>
+
+<!-- loading -->
+<view class="load" hidden='{{hide}}'>
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
+   <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>

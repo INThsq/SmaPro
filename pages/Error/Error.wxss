@@ -1,0 +1,114 @@
+/* pages/Error/Error.wxss */
+@import '../../public/compback/compback.wxss';
+page{
+  height: 100vh;
+  background: white;
+}
+.container{
+  margin-top: 141rpx;
+}
+.one image{
+  width:100rpx;
+  height: 112rpx;
+}
+.small image{
+  width: 42rpx;
+  height: 42rpx;
+}
+.top{
+  display: flex;
+  flex-direction: column;
+  padding:54rpx 40rpx 72rpx 36rpx;
+  box-sizing: border-box;
+}
+.top-title{
+  font-size: 50rpx;
+  color: #333;
+  font-weight: bold;
+  line-height:78rpx;
+  margin-bottom: 20rpx;
+}
+.top-title+.top-conts{
+  font-size: 29.17rpx;
+  color: #999;
+}
+.one text{
+  display: flex;
+  justify-content: center;
+}
+.conts{
+  padding: 0 60rpx 58rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+.one{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.one image{
+  display: flex;
+}
+.small{
+  height: 112rpx;
+  display: flex;
+  align-items: center;
+  margin:0 44rpx;
+}
+.bottom{
+  padding: 0 36rpx;
+  box-sizing: border-box;
+  border-top:2px solid rgba(238,238,238,1);
+  display: flex;
+  flex-direction: column;
+}
+.bottom-title{
+  font-size: 29.17rpx;
+  color: #333;
+  padding-top:36rpx;
+}
+.button{
+  padding: 0 30rpx;
+  box-sizing:border-box;
+  color:white;
+  height: 42px;
+  line-height: 42px;
+  position: absolute;
+  bottom:20rpx;
+  width: 100%;
+}
+.btn{
+  background: #F13D3D;
+  font-size:33.3rpx;
+  text-align: center;
+  border-radius:4px;
+}
+.bottom-conts{
+  font-size: 29.17rpx;
+  color: #999;
+}
+.bottom text{
+  display: flex;
+}
+.blcak{
+  color: #333;
+  font-size: 25rpx;
+  line-height: 36rpx;
+  margin: 24rpx 0 4rpx;
+}
+.blue{
+  font-size:20rpx;
+  color: #12AA00;
+  line-height: 30rpx;
+}
+.two{
+  width: 140rpx;
+}
+.red{
+  color:#F13D3D!important;
+}
+.three{
+  width:140rpx;
+}

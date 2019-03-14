@@ -1,6 +1,9 @@
 {
   "navigationBarTitleText": "提现",
+  "navigationStyle": "custom",
+  
   "usingComponents": {
+    
     "my-component": "../../public/compback/compback",
     "dialog": "../../public/Dialog/dialog"
   }

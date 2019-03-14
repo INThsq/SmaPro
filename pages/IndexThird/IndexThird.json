@@ -1,4 +1,6 @@
 {
+  "navigationStyle": "custom",
+  
   "usingComponents": {
     "my-component": "../../public/compback/compback"
   }

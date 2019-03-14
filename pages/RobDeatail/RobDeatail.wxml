@@ -1,0 +1,198 @@
+<!--pages/RobDeatail/RobDeatail.wxml-->
+<view class='container'>
+    <!-- 轮播图 -->
+<view class='swipercontent'>
+    <swiper class='swiper' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
+      <block wx:for="{{imgUrls}}" wx:key="unique">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" width="355" height="150"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="dotes">
+        <view class="nums">{{swiperCurrent +1}}/{{imgUrls.length}}</view>
+    </view>
+    <view class=' back' bindtap='back'>
+      <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+    </view>
+  </view>
+
+<!-- 标题 -->
+<view class="title">
+    <view class="left">
+        <text class='circle'>自营</text>
+       {{detail.goods_details.title}}
+    </view>
+    <view class="right" bindtap='detail' data-id="{{detail.goods_details.goods_id}}">
+            <image src='http://oss.myzy.com.cn/wechat/images/icon_xq_xq.png'></image>
+            <text>详情 </text>
+    </view>
+</view> 
+
+<!-- 免费赠送 -->
+<view class='free'>
+{{detail.goods_details.sell_out_tips}}
+</view>
+
+<!-- 已售 -->
+<view class='sales'>
+<text>￥{{detail.goods_details.price}}</text>
+<text>{{detail.goods_details.sell_out}}</text>
+</view>
+
+<!-- 当前佣金 -->
+<view class='commission'>
+  <view class='com-left'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_xq_qb.png'></image>
+  </view>
+  <view class='com-right'>
+    <text>当前赠送佣金{{detail.goods_details.reward_money}}/每单</text>
+    <text>努力升级，可以获得更高佣金哦~</text>
+  </view>
+</view>
+
+<!-- 正在赠送 -->
+<view class='presented'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_xq_ren.png'></image>
+  {{detail.give_count_list.length}}人正在赠送
+</view>
+
+<!-- 生成海报 -->
+<view class='poster'>
+    生成海报
+</view>
+
+<!-- 赠送列表 -->
+<!-- <view class='presented-list'> -->
+ <!--  -->
+  <!-- <view class='list' id='list' animation="{{animationData}}">
+    <view wx:for="{{give_count_list}}" wx:key="{{index}}">
+        <view class='lists'>
+      <view class='list-left'>
+        <image src='{{item.headimgurl}}'></image>
+        <text>{{item.nickname}}</text>
+      </view>
+      <view class='list-right'>
+        已送出
+        <text class='span'>{{item.order_count}}</text> 件
+      </view>
+    </view>
+    </view>
+    <view>
+    </view>
+    </view> -->
+  <!-- </view> -->
+
+
+<!--pages/test2/test2.wxml-->
+
+<view style='position:relative' data-id="{{detail.goods_details.goods_id}}" catchtap='goOpen'>
+    <cover-view class="controls"></cover-view>
+    <swiper class='presented-list' 
+      vertical="true" 
+      intervals="1000"
+      current="{{control.current}}"
+      next-margin="90rpx"
+      circular="true"
+      autoplay='false'
+      >
+      <!-- 
+        presented-list的高度 = swiper-item高度 *（ 需要显示的个数 + 1 ）
+        next-margin大小 = swiper-item高度 * 需要显示的个数
+      -->
+      <view class='list' id='list' >
+        <block wx:for="{{give_count_list}}">
+          <swiper-item class='lists'>
+               <view class='list-left'>
+                <image src='{{item.headimgurl}}'></image>
+                <text>{{item.nickname}}</text>
+              </view>
+              <view class='list-right'>
+                已送出
+                <text class='span'>{{item.order_count}}</text> 件
+              </view>
+          </swiper-item>
+        </block>
+        <view>
+        </view>
+      </view>
+    </swiper>
+  </view>
+
+<!-- 留白 -->
+<view class='banck'>
+</view>
+
+<!-- 免费商品 -->
+<view class='free-shop'  wx:if ="{{content&&detail.gift_goods_list.length>0}}">
+  <view class='free-title'>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_meifeishangpin.png'></image>
+  </view>
+  <!-- 提示 -->
+  <view class='free-hit'>
+  {{detail.give_gift_tips}}
+  </view>
+  <!-- 列表 -->
+  <!-- 列表 -->
+<view class='list-conts'>
+    <!-- 已售完状态 -->
+    <block wx:for="{{listData}}" wx:key="{{index}}">
+    
+  <view class='free-list' data-id="{{item.goods_id}}" bindtap='navCont' data-type="{{index}}">
+      <view class='list-left'>
+        <image  class='pr prs' src='{{item.goods_image}}'></image>
+        <image wx:if="{{item.is_unlock == 0}}" class='pa' src='{{item.corner_icon}}'>
+        </image>
+      </view>
+        <image wx:if="{{item.sell_out_ratio == 1}}" src='http://oss.myzy.com.cn/wechat/images/icon-ysw2.png' class='sale'></image>
+
+      <view class='list-right'>
+      <view class="{{item.sell_out_ratio==1?'grey':'name'}}" >{{item.title}}</view>
+      <view class='list-bottom'>
+        <view class='bottom-left'>
+            <!-- frees -->
+          <text class="{{item.sell_out_ratio==1?'grey':'name'}}">{{item.sell_out_tips}}</text>
+          <text class='price prices'>￥{{item.price}}</text>
+            <text class="{{item.sell_out_ratio==1?'grey':'pur'}}">{{item.sell_out}}</text>
+            <view class='pro' wx:if="{{item.sell_out_ratio !== 1}}">
+             <progress class='tx_top_progress' percent="{{item.sell_out_ratio * 100}}" border-radius='4px' stroke-width="5" backgroundColor="#F3F3F3" activeColor="#F43736" active></progress>
+           <view class='ll'>已抢{{item.sell_out_ratio * 100}}%</view>
+          </view>
+          <view class='next' wx:if="{{item.sell_out_ratio == 1}}">
+            <text class="{{item.sell_out_ratio==1?'wz greys':'wz'}}">距离下场:</text>
+            <text class='hours'>{{item.hh}}</text> :
+            <text class='min'>{{item.mm}}</text> :
+            <text class='second'>{{item.ss}}</text> :
+            <text class='second'>{{item.ms}}</text> 
+
+          </view>
+        </view>
+        <view class='bottom-right'>
+            <image  wx:if="{{item.sell_out_ratio == 1}}" src='http://oss.myzy.com.cn/wechat/images/icon-ysw1.png'></image>
+            <image wx:else src='http://oss.myzy.com.cn/wechat/images/Group 4 Copy 3.png'></image>
+            <text class="{{item.sell_out_ratio == 1?'yjs':'yj'}}">赚￥{{item.reward_money}}</text>
+        </view>
+      </view>
+      </view>
+</view>
+  </block>
+  <!-- </view> -->
+  </view>
+  
+</view>
+</view>
+
+<!-- 底部按钮 -->
+<view class='btns' data-id="{{detail.goods_details.goods_id}}"  >
+    <view class='btn-left'>
+    赠送佣金:
+    <text class='span'>￥</text>
+    <text class='gets'>{{detail.goods_details.reward_money}}/单</text>
+    </view>
+    <button class='btn-right' data-id="{{detail.goods_details.goods_id}}" catchtap='goOpen'>
+    立即开团
+    </button>
+</view>
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+ <template is="toast" data="{{ ..._toast_ }}"/>

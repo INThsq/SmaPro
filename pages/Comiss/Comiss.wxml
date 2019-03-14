@@ -1,0 +1,67 @@
+<!--pages/Comiss/Comiss.wxml-->
+<view>
+  <my-component>
+     <view>分销中心</view> 
+  </my-component>
+</view> 
+
+
+<!-- 内容部分 -->
+<view class='container'>
+<view class='conter'>
+<!-- 搜索框 -->
+<view class='search'>
+<form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
+      <input confirm-type="search" placeholder-class='placeholder' placeholder='请输入关键字'  type="search" value="{{searchValue}}" class='topInput' name='input' bindinput='keyword' focus='true' bindconfirm="searchSubmitFn"/>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_1.png' class='searches'></image>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_sosuo_2.png' class='del' bindtap='del' hidden="{{del}}"></image>
+    </form>
+
+</view>
+</view>
+
+
+<!-- 内容部分 -->
+  <view class="body">
+
+ <block wx:for="{{list}}" wx:key="{{index}}">
+ <view class='list'>
+        <view class='list-left'>
+           <view class='one'> 
+            <image src='{{item.logo}}'></image> 
+           </view>
+           <view class='two'>
+              <view class='tit'>{{item.name}}</view>
+              <view class='tit-o'>{{item.classify_name}}</view>
+              <view class='tit-t'>{{item.sales_volume}}</view>
+              
+              <view class='wel' style='display:inherit!important' >
+              <view wx:for="{{item.welfare}}" wx:for-item="items" wx:for-inde="ind" wx:if="{{index<2&&num==0}}">
+              <view class='tit-h'>
+                <text class='jiang' style='background:{{items[1]}}'>{{items[0]}}</text>
+                <text class='jis'>{{items[2]}}</text>
+              </view>
+              </view>
+
+              <view wx:for="{{item.welfare}}" wx:for-item="items" wx:for-index="ind" wx:if="{{num==1}}">
+              <view class='tit-h'>
+                <text class='jiang' style='background:{{items[1]}}'>{{items[0]}}</text>
+                <text class='jis'>{{items[2]}}</text>
+              </view>
+              </view>
+              </view>
+               <!-- 福利总数 -->
+              <view class='fl-num' wx:if="{{item.welfare.length > 2}}" bindtap="Sum">
+              <text>{{item.welfare.length}}个福利</text>
+              <image  src='{{picture}}'></image>
+              </view>
+           </view>
+        </view>
+        <view class='list-right'>
+              <text class='btn' bindtap='Tj' wx:if="{{item.mall_dot_log}}">申请自提点</text>
+              <text class='btn' bindtap='Come' wx:else>进入</text>
+        </view>
+    </view>
+ </block>
+ </view>
+</view>

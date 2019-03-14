@@ -1,5 +1,8 @@
 /* pages/UserCenter/userCenter.wxss */
 /**index.wxss**/
+@import "../SettedBefore/SettedBefore.wxss";
+@import  "../Confirm/Confirm.wxss";
+
 .swipercontent {
   position: relative;
 }
@@ -59,6 +62,7 @@ swiper image {
   font-size:44rpx;
   color: #FF0000;
   margin-top:12rpx;
+  padding-left: 0!important;
 }
 .iconfont {
   color: #999;
@@ -67,9 +71,9 @@ swiper image {
   font-size: 12px!important;
 }
 .navCont{
-  padding: 0 10px;
   background: white;
   display: flex;
+  position: relative;
 }
 
 .navCont .item{
@@ -81,7 +85,7 @@ swiper image {
 .navCont .item view{
   display: block;
   color: #666;
-  font-size:25rpx;
+  font-size:29.17rpx;
   line-height:2.2;
 }
 .num{
@@ -142,13 +146,14 @@ swiper image {
 }
  .order,.courtesy_title{
       display:flex;
+      align-items: center;
       background: white;
       height:85.5rpx;
       padding:0 30rpx;
       margin-top: 16rpx;
       box-sizing: border-box;
       line-height:85.5rpx;
-      border-bottom:1px solid #fafafa;
+      border-bottom:.5px solid #fafafa;
   }
   .myOrder,.myCour{
       flex:1;
@@ -175,14 +180,14 @@ swiper image {
   display: flex;
   justify-content: space-between;
   padding:20rpx 30rpx;
-  margin-top: 140rpx;
+  /* margin-top: 140rpx; */
   background: #FDFAE5;
 }
 .warn view{
   display: flex;
   font-size: 28rpx;
   color: #FE5124;
-  line-height: 44rpx;
+  line-height: 44rpx!important;
 }
 .warn button{
   width: 100rpx;
@@ -194,6 +199,7 @@ font-size: 24rpx;
 text-align: center;
 padding: 0;
 line-height: 44rpx;
+margin-top: 0!important;
 }
 .wrapper{
   position: fixed;

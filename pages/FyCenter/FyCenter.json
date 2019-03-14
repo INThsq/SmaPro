@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "商家分佣中心",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "my-component": "../../public/compback/compback"
+  }
+}

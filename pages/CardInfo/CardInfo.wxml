@@ -1,0 +1,65 @@
+<!--pages/BankCard/BankCard.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>添加银行卡</view> 
+
+  </my-component>
+</view>
+
+<!-- 内容 -->
+<view class='container'>
+ <text class='info'>请输入持卡人本人的信息</text>
+ <view class='cont'>
+    <!-- 姓名 -->
+    <view class='item' wx:if="{{realname}}">
+         <view class='item-title'>持卡人姓名</view>
+        <text class='item-content' style='font-size:29.19rpx;'>{{realname}}</text>
+      </view>
+      <view class='item' wx:else >
+         <view class='item-title'>持卡人姓名</view>
+        <input placeholder-class="place-holder" class='item-content' type='text' value='{{name}}' placeholder='请输入您的姓名' bindinput='getUserIdCardName'></input>
+      </view>
+      
+      <!-- 卡号 -->
+      <view class='enroll-item item' style='padding:20rpx 30rpx!important'>
+      <view class='item-title' style='line-height:54rpx!important;height:54rpx!important;margin-bottom:8rpx;'>持卡人卡号</view>
+        <input class='item-content' placeholder-class="place-holder" type='number' style='line-height:54rpx!important;height:54rpx!important' value="{{bankNumber}}"  placeholder='请输入银行卡号' bindinput='getUserIdCardNumber'  focus='{{gets}}' bindblur="bindblur"></input>
+  </view>
+  <!-- 商行 -->
+      <view class='item none' hidden="{{hide}}">
+        <image src='{{bank.bank_icon}}'></image>
+         <view class='item-title'>{{bank.bank}}</view>
+          <view class='item-cont'>{{bank.nature}}</view>
+      </view>
+  <!-- 手机号     -->
+
+    <view class='item none' style='margin-top:20rpx;'>
+           <view class='item-title'>手机号</view>
+        <input class='item-content' style='width:70%!important;display:inline-block' type='text' placeholder='持卡人卡号开户银行预留手机号' bindinput='getPhone'></input>
+ </view>
+
+    
+</view>
+
+  <text class='title'>仅支持建设、农业、邮政、工商、中国银行</text>
+  <view class='button'>
+    <button bindtap='submit'>确认提交</button>
+    </view>
+</view>
+
+
+<!-- 提示 -->
+<view class='tool'>
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_anquan.png'></image>
+信息已加密，仅用于银行验证
+</view>
+
+  <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+
+ <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"     src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>

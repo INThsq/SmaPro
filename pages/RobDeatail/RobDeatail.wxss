@@ -1,0 +1,367 @@
+/* pages/RobDeatail/RobDeatail.wxss */
+@import '../Details/Details.wxss';
+.title{
+  padding:32rpx 30rpx 0 30rpx!important;
+  width: 100%;
+  box-sizing: border-box;
+  clear:both;
+}
+.swiper-2 .swiper-container{height:80rpx;}
+
+.swiper-2 .swiper-container .item{
+
+font-size:35rpx;
+
+text-overflow: ellipsis;
+
+white-space: nowrap;
+
+line-height: 80rpx;
+
+text-indent: 28rpx;
+
+color:red;
+
+}
+
+.title .left{
+  width: 580rpx;
+  float:left;
+  text-overflow:ellipsis;
+ overflow:hidden;
+ display:-webkit-box;
+ -webkit-line-clamp:2; /*这个数字是设置要显示省略号的行数*/
+ -webkit-box-orient:vertical;
+}
+.title .right{
+  width: 60rpx;
+  float: right;
+  text-align: center;
+}
+.title .right image{
+  width: 38rpx;
+  height: 38rpx;
+}
+.title .right text{
+  display: block;
+  font-size: 25rpx;
+}
+.container{
+  background: white;
+}
+.free{
+  font-size: 33.3rpx;
+  color: #26C713;
+  padding: 0 30rpx;
+  font-weight: 500;
+}
+.sales{
+  display: flex;
+  padding: 0 30rpx;
+  color: #999;
+  justify-content: space-between;
+  margin-top:4rpx;
+  margin-bottom: 25rpx;
+}
+.sales text{
+  line-height: 36rpx;
+  font-size: 25rpx;
+}
+.sales text:first-child{
+  text-decoration: line-through;
+  margin-top: 2rpx;
+}
+.commission .com-left image{
+  width:32rpx;
+  height: 32rpx;
+  margin-right: 24rpx;
+}
+.commission{
+  padding: 20rpx 0 20rpx 34rpx;
+  background: #FFEEEC;
+  display: flex;
+}
+.com-right text{
+  display: block;
+}
+.com-right text:first-child{
+  color: #333;
+  font-size: 29.17rpx;
+  line-height: 40rpx;
+}
+.com-right text:last-child{
+  font-size: 25rpx;
+  color: #666;
+  margin-top: 4rpx;
+  line-height:36rpx;
+}
+.presented{
+  padding:28rpx 30rpx;
+  font-size: 29.17rpx;
+  border-bottom:.5px solid #f3f3f3;
+}
+.presented image{
+  width: 40rpx;
+  height: 32rpx;
+  margin-right:24rpx;
+  vertical-align: bottom;
+}
+ .sale{
+  display: block;
+  position:absolute;
+  content: '';
+  width:234rpx;
+  height:234rpx;
+    background: url('http://oss.myzy.com.cn/wechat/images/icon-ysw2.png') no-repeat center;
+  background-size: 100% 100%;
+  top:22rpx;
+  left:24rpx;
+  z-index: 0;
+  opacity: .5;
+}
+.prs{
+  width:234rpx;
+  height: 234rpx;
+ position: relative;
+}
+.poster{
+  width:96rpx;
+  height:96rpx;
+  border-radius:50%;
+  background:rgba(0,0,0,1);
+  opacity:0.7;
+  padding: 16rpx 18rpx;
+  box-sizing: border-box;
+  color: white;
+  font-size: 25rpx;
+  text-align: center;
+  position: fixed;
+  top: 170rpx;
+  right: 30rpx;
+  z-index: 88;
+}
+.presented-list .lists{
+  border-bottom: .5px solid #f3f3f3;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 94rpx;
+  line-height: 94rpx;
+  padding: 0 30rpx;
+}
+.lists .list-left image{
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 50%;
+  margin-right: 24rpx;
+  vertical-align: middle;
+}
+.list-left{
+  font-size: 25rpx;
+  color:#666;
+} 
+.list-right{
+  font-size: 25rpx;
+  color: #666;
+}
+.list-right .span{
+  color:#FB0007;
+  font-size: 33.3rpx;
+  font-weight:bold;
+}
+
+.banck{
+  height: 20rpx;
+  background: #f3f3f3;
+}
+.free-title image{
+  width: 206rpx;
+  height: 32rpx;
+  display: inline-block;
+}
+.free-title{
+  text-align: center;
+  padding: 30rpx 0 30rpx;
+}
+.free-hit{
+  padding: 20rpx 15rpx;
+  background: #FFFAEC;
+  color: #FD6740;
+  font-size: 29.17rpx;
+}
+.btns{
+  position: fixed;
+  background: white;
+  bottom: 0;
+  display: flex;
+  line-height: 100rpx;
+  justify-content: space-between;
+  width: 100%;
+  border-top:.5px solid #f3f3f3;
+  z-index: 9999;
+}
+.btns view{
+  display: flex;
+}
+.btn-right{
+  width: 190rpx;
+  background: #F43736;
+  color: white;
+  align-items:center;
+  justify-content:center;
+}
+.btn-left{
+  padding-left: 30rpx;
+  font-size: 33.3rpx;
+}
+.btn-left .gets{
+  font-size: 18px;
+  color:#FF0000; 
+}
+.btn-left .span{
+  font-size: 10px;
+  color:#FF0000;
+}
+.btn-right{
+  width: 300rpx;
+  font-size:33.3rpx;
+  line-height:inherit!important;
+  z-index: 8888;
+
+}
+button{
+  margin: 0!important;
+border-radius:0!important;
+}
+button::after{
+  border: none;
+  outline: none;
+}
+.controls{
+  position: absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:12;
+  /* background:rgba(0, 0, 0, .5); */
+}
+
+
+.lists .list-left image{
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 50%;
+  margin-right: 24rpx;
+  vertical-align: middle;
+}
+.list-left{
+  font-size: 25rpx;
+  color:#666;
+  position: relative;
+} 
+.list-right{
+  font-size: 25rpx;
+  color: #666;
+}
+.free-list .list-left{
+  margin-right: 24rpx;
+
+}
+.list-right .span{
+  color:#FB0007;
+  font-size: 33.3rpx;
+  font-weight:bold;
+}
+ .sale{
+  display: block;
+  position:absolute;
+  content: '';
+  width:234rpx;
+  height:234rpx;
+    background: url('http://oss.myzy.com.cn/wechat/images/icon-ysw2.png') no-repeat center;
+  background-size: 100% 100%;
+  top:22rpx;
+  left:24rpx;
+  z-index: 0;
+  opacity: .5;
+}
+.prices{
+  font-size: 10px!important;
+  color: #999!important;
+ text-decoration: line-through!important;
+ margin: 6rpx 0!important;
+ padding: 0!important;
+}
+.next text{
+  display: inline-block;
+  line-height: 30rpx;
+}
+.yjs{
+  color: #999!important;
+}
+.hours,.min,.second{
+  font-size:8px;
+  width: 30rpx;
+  height: 30rpx;
+  background:linear-gradient(270deg,rgba(255,124,98,1) 0%,rgba(244,55,54,1) 100%);
+border-radius:2px;
+text-align: center;
+color: white;
+}
+.list-bottom{
+  display: flex;
+}
+.bottom-left{
+  width:62%;
+float: left;
+}
+.bottom-right image{
+  width: 64rpx;
+  height: 64rpx;
+  margin-top: 32rpx;
+}
+.bottom-right{
+  width:150rpx;
+  text-align: center;
+  position: absolute;
+  right:24rpx;
+  
+}
+.bottom-right text{
+  display: block;
+  color: #F43736;
+  font-size: 25rpx;
+  margin-top: 8rpx;
+}
+.free-list{
+    padding:22rpx 24rpx 10rpx;
+  border-bottom: .5px solid #f3f3f3;
+  display: flex;
+  position: relative;
+}
+.wz{
+  font-size:10px;
+  color: #333;
+  margin-right: 8rpx;
+}
+.presented-list{
+  height:190rpx;
+  overflow: auto;
+  position: relative;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  z-index: 1;
+}
+ .lists{
+  border-bottom: .5px solid #f3f3f3;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 94rpx;
+  line-height: 94rpx;
+  padding: 0 30rpx;
+  
+}

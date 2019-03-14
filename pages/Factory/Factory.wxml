@@ -1,0 +1,71 @@
+<!--pages/Factory/Factory.wxml-->
+<view>
+  <my-component>
+     <view>厂家促销</view> 
+  </my-component>
+</view> 
+
+
+<!-- 内容部分 -->
+<view class='container'>
+    <view class='bg'>
+      <image src='http://oss.myzy.com.cn/wechat/images/img_benqibaokuan.png'></image>
+    </view>
+    <view class='conts'>
+      <view class='list'>
+      <view class="{{percent == 100 ? 'list-after show':'list-after'}}"></view>
+        <image src='http://oss.myzy.com.cn/wechat/images/imgs4.png'></image>
+        <view class='list-cont'>
+          <text class='title'>科沃斯扫地机器人地宝DN55智能家用超薄全自动洗擦地拖地扫一体机</text>
+          <view class='title-cont'>
+              <view class='one'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_baokuai_huo.png'></image>
+              <text>惊喜一：免费获得本品</text>
+              <text class='free'>已抢{{percent}}%</text>
+              </view>
+               <view class='one two'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_baokuai_huo.png'></image>
+              <text>惊喜二：获得本产品促销等值奖励金</text>
+              <progress class='tx_top_progress' percent="{{percent}}" border-radius='4px' stroke-width="5" backgroundColor="#F3F3F3" activeColor="#F43736" active></progress>
+              </view>
+              <view class='three'>
+                  <view class='money'>
+                    <text class='yang'>￥</text>
+                    <text class='num'>399.00</text>
+                  </view>
+                  <view class='th'>￥1299.00</view>
+                  <view class="{{percent == 100 ? 'grey btn':'btn'}}" bindtap='Go'>{{percent == 100 ? '已抢光':'立即参加'}}</view>
+              </view>
+          </view>
+        </view>
+      </view>
+      <view class='list-ti'>
+        <image src='http://oss.myzy.com.cn/wechat/images/img_xiaqiyugao.png'></image>
+        <text>即将开抢</text>
+      </view>
+       <view class='list'>
+        <image src='http://oss.myzy.com.cn/wechat/images/imgs3.png'></image>
+        <view class='list-cont'>
+          <text class='title'>Dyson戴森V8 Fluffy 家用手持无线吸尘器 运行高达40分钟</text>
+          <view class='title-cont'>
+              <view class='one'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_baokuai_huo.png'></image>
+              <text>惊喜一：免费获得本品</text>
+              </view>
+               <view class='one two'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_baokuai_huo.png'></image>
+              <text>惊喜二：获得本产品促销等值奖励金</text>
+              </view>
+              <view class='three'>
+                  <view class='money'>
+                    <text class='yang'>￥</text>
+                    <text class='num'>499.00</text>
+                  </view>
+                  <view class='th'>￥1099.00</view>
+                  <view class='btn grey'>立即参加</view>
+              </view>
+          </view>
+        </view>
+      </view>
+    </view>
+</view>

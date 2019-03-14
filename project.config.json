@@ -1,16 +1,17 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.93",
+	"libVersion": "2.6.2",
 	"appid": "wx05423f696872e38c",
-	"projectname": "qlqw",
+	"projectname": "qlqw_xcx",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -20,13 +21,69 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 4,
+			"list": [
+				{
+					"id": -1,
+					"name": "携参",
+					"pathName": "pages/Accredit/Accredit",
+					"query": "name=int?id=3",
+					"scene": "1047"
+				},
+				{
+					"id": -1,
+					"name": "携参",
+					"pathName": "pages/index/index",
+					"query": "headimgurl=http://thirdwx.qlogo.cn/mmopen/vi_32/dlIBXlicZrol8keYAiawEVvia7tbTpUQGEN0vTHaRopYSFU1tvNvnSerb4yGzeAibdASOWPL6x1k6DqGT4kIkDoXCQ/132&nickname=ddd",
+					"scene": "1047"
+				},
+				{
+					"id": 2,
+					"name": "分享",
+					"pathName": "pages/index/index",
+					"query": "share_queue_id=4",
+					"scene": 1036,
+					"referrerInfo": {
+						"appId": "wx05423f696872e38c"
+					}
+				},
+				{
+					"id": 3,
+					"name": "的分享",
+					"pathName": "pages/EarnMoney/EarnMoney",
+					"query": "gift_queue_id=3&order_num=B3049649991148002019030451100101",
+					"scene": 1036,
+					"referrerInfo": {
+						"appId": "wx05423f696872e38c"
+					}
+				},
+				{
+					"id": 4,
+					"name": "开团",
+					"pathName": "pages/EarnMoney/EarnMoney",
+					"query": "gift_queue_id=19&order_num=B3083588861229002019030848575355&goods={\"goods_id\":10,\"member_group_id\":2,\"goods_type\":2,\"virtual_type\":0,\"title\":\"汽车轮胎杯个性潮流车载水杯男士带盖便携随手杯韩版创意学生杯子\",\"price\":\"0.02\",\"images\":[\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382174.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382176.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382177.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382178.jpeg\"],\"reward_money\":\"5.00\",\"sell_out\":\"已售2183件\",\"sell_out_tips\":\"免费赠送(包邮)\",\"is_unlock\":1,\"is_unlock_tips\":\"\"}",
+					"scene": 1036,
+					"referrerInfo": {
+						"appId": "wx05423f696872e38c"
+					}
+				},
+				{
+					"id": -1,
+					"name": "开团",
+					"pathName": "pages/Order/Order",
+					"query": "gift_queue_id=144&order_num=B2194139572911002019021951985048&goods={\"goods_id\":12,\"member_group_id\":2,\"goods_type\":2,\"virtual_type\":0,\"title\":\"MMCO领针织背心连衣裙中长款修身毛衣长裙毛线女装秋冬\",\"price\":\"20.00\",\"images\":[\"http://api.myzy.com.cn/uploads/member_mall/images/1/1546966775876.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1546966775877.jpeg\"],\"reward_money\":\"5.00\",\"sell_out\":\"已售1320件\",\"sell_out_tips\":\"免费赠送(包邮)\",\"is_unlock\":1,\"is_unlock_tips\":\"\"",
+					"scene": null
+				}
+			]
 		}
 	}
 }

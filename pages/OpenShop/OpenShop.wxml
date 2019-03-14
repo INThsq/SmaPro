@@ -9,20 +9,21 @@
 
 <!-- 内容 -->
 <view class='container'>
-    <view class='item' catchtap='onshowActionSheet'>
+    <view class='item' catchtap='listenerButton'>
       <view class='text'>店铺头像</view>
       <view>
-       <image src='{{avatarUrl}}'></image>
+       <image src='{{avatarUrl}}' data-img="{{base64}}"></image>
   <text  class="right iconfont icon-arrow" style='margin-left:10px'></text>
       </view>
     </view>
     <!-- 店铺名称 -->
     <view class='item'>
+    
       <view class='text'>
       店铺名称
       </view>
        <view>
-        <input placeholder='输入名称'></input>  
+        <input placeholder='输入名称' value='{{shopname}}' bindinput='shopname'></input>  
         </view>
     </view>
   <!-- 店铺认证 -->
@@ -35,10 +36,9 @@
     </view>
   </view>
   <!-- 经营类目 -->
-   <view class='item' bindtap='chooseAddress'>
+   <view class='item' bindtap='choose'>
       <view class='text'>经营类目</view>
-      <view class='texts' style='text-align:right'>
-       {{province == ''?'请选择':province}}
+      <view class='texts'  style='text-align:right'>{{province}}
   <text  class="right iconfont icon-arrow" style='margin-left:10px'></text>
       </view>
     </view>
@@ -47,16 +47,17 @@
   <view class='shop-type'>
       <view class='text'>店铺类型</view>
       <view class='menu_box'>
-        <view class='menu1' bindtap='menuTap' data-current="0">
+
+         <view class='menu1' bindtap='menuTap' data-current="0" data-type='{{res.data.set_store.store_type[0].type}}'>
         <block wx:if="{{menuTapCurrent== 0}}">
           <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_xuanzhong.png'></image>
           </block>
           <block wx:else>
           <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_weixuanzhong.png'></image>
-          
           </block>
-        促销店</view>
-        <view class='menu2'  bindtap='menuTap' data-current="1">
+        {{res.data.set_store.store_type[0].name}}</view>
+
+        <view class='menu2'  bindtap='menuTap' data-current="1" data-type="{{res.data.set_store.store_type[1].type}}">
          <block wx:if="{{menuTapCurrent== 1}}">
          <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_xuanzhong.png'></image>
          </block>
@@ -64,24 +65,27 @@
           <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_weixuanzhong.png'></image>
           
           </block>
-        商品店</view>
+        {{res.data.set_store.store_type[1].name}}</view>
         
-      </view>
+      </view> 
   </view>
   <block wx:if="{{menuTapCurrent== 1}}">
   <!-- 权限须知 -->
   <view class='limits'>
-  <text>商品店铺权限须知</text>
-  <text>1.不享有用户消费平台津贴10%-50%的奖励</text>
-  <text>2.不享有官方店铺推荐、会员裂变奖励</text>
-  <text>3.不享有商品活动促销</text>
+  <text>{{res.data.set_store.store_type[1].explain}}</text>
+ 
+  </view>
+  </block>
+  <block wx:else>
+   <view class='limits'>
+  <text>{{res.data.set_store.store_type[0].explain}}</text>
   </view>
   </block>
 
   <!-- 用户条款 -->
   <view class='clause'>
      <view>
-     <checkbox></checkbox>
+     <checkbox checked='true'></checkbox>
      勾选即代表你同意<text style="color:#3660E0">《用户使用条款》</text>
      </view>
   </view>
@@ -90,19 +94,17 @@
 <block wx:if="{{menuTapCurrent== 0}}">
   <!-- 提示信息 -->
   <view class='prompt'>
-    <text>温馨提示：开通促销店成功即可享有促销店所有权利 同时也支持商品店。</text>
+    <text> {{res.data.set_store.store_type[0].reminder}}</text>
   </view>
-
-
   <!-- 付款按钮 -->
   <view class='payfor'>
     <view class='left'>
       实付款:
       <text class='m'>￥</text>
-      <text>8999.00</text>
+      <text> {{res.data.set_store.store_type[0].price}}</text>
     </view>
     <view class='btn' bindtap='setted'>
-    在线付款
+     {{res.data.set_store.store_type[0].price_tip}}
     </view>
   </view>
   </block>
@@ -113,7 +115,7 @@
   <block wx:if="{{menuTapCurrent== 1}}">
   <!-- 提示信息 -->
   <view class='prompt'>
-    <text>温馨提示：开通商品店成功后期随时可升级促销店，升级完毕 即可享有促销店所有权利同时也支持商品店。</text>
+    <text> {{res.data.set_store.store_type[1].reminder}}</text>
   </view>
 
 
@@ -122,47 +124,118 @@
     <view class='left'>
       实付款:
       <text class='m'>￥</text>
-      <text>00.00</text>
+      <text>{{res.data.set_store.store_type[1].price}}</text>
     </view>
-    <view class='btn'>
-    立即开通
+    <view class='btn' bindtap='setted' data-type = "1">
+    {{res.data.set_store.store_type[1].price_top}}
     </view>
   </view>
   </block>
 </view>
 
 
-<!-- 弹窗 -->
-<nyz_area_picker
-  show="{{show}}"
-  bind:sureSelectArea="sureSelectAreaListener"
->
-</nyz_area_picker>
+<!-- 拍照 -->
+<!--默认action-sheet为隐藏，由button触发-->
+<action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
+
+    <block wx:for-items="{{actionSheetItems}}" wx:key="{{key}}" > 
+        <action-sheet-item  data-index="{{index}}" data-text="{{item}}" bindtap="itemChange">{{item}}</action-sheet-item>
+    </block>
+    <!--自动隐藏action-sheet-->
+    <action-sheet-cancel>取消</action-sheet-cancel>
+</action-sheet>
 
 
- 
-<!--屏幕背景变暗的背景  -->
-  <!-- <view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
- 
-  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
-
-  <view class='titles'>
-    <view class='lefts' bindtap='close'>取消</view>
-    <view class='rights' bindtap='close'>确定</view>
+<!-- 支付弹窗 -->
+<view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+  <!--弹出框  -->
+  <view animation="{{animationData}}" class="commodity_attr_box"  wx:if="{{showModalStatus}}">
+  <view class='titles' bindtap="close" style='padding:20rpx 0 22rpx;'>
+      <image style='width:14px;height:14px' src='http://oss.myzy.com.cn/wechat/images/icon_del_vip.png'></image>
   </view>
-  <view class='scroll'>
-<scroll-view  scroll-y  style="height:160px">
-      <block wx:for="{{navData}}" wx:for-index="idx" wx:for-item="navItem" wx:key="idx">
-
-        <view class="nav-item {{currentTab == idx ?'active':''}}" data-text="{{navItem.text}}"  data-current="{{idx}}" 
-        bindtap="switchNav">{{navItem.text}}</view>
-        </block>
-
- </scroll-view>
-
+  <!-- 方式 -->
+  <view class='way'>
+  <view class='way-title'>
+  选择支付方式
   </view>
- 
+ <view class='way-cont'>
+        <view class='way-list'  bindtap='menuTaps' data-current="0" data-pay="3">
+            <view class='way-left'>
+             <block wx:if="{{menuTapCurrents== 0}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+              </block>
+              <block wx:else>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+              
+              </block>
+            </view>
+            <view class='way-icon'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixin.png'></image>
+            </view>
+            <view class='way-text'>
+              <text>微信支付</text>
+              <text class='small'>推荐已安装微信用户使用</text>
+            </view>
+        </view>
+        <view class='way-list'  bindtap='menuTaps' data-current="1" data-pay="1">
+            <view class='way-left'>
+            <block wx:if="{{menuTapCurrents== 1}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+              </block>
+              <block wx:else>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+              
+              </block>
+            </view>
+            <view class='way-icon'>
+              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_yue.png'></image>
+            </view>
+           
+            <view class='way-text way-texts'>
+              <text>余额支付 (剩余:￥{{res.data.set_store.balance}}）</text>
+              <text class='small'>账户余额支付</text>
+            </view>
+        </view>
+ </view>
+  
+<!-- 需付款 -->
+  <view class='way-pay'>
+    <text class='w'>需付款</text>
+    <text class='m'>￥</text>
+    <text class='q'>{{price}}</text>
+  </view>
 
-  </view> -->
+  <!-- 支付按钮 -->
+  <view class='pay'>
+  <button class='pay-btn' bindtap='topay'>立即支付</button>
+  </view>
+  </view>
+  </view>
+
+
+  <!-- toast -->
+  <import src="../../public/appToast/appToast.wxml"/>
+  <template is="toast" data="{{ ..._toast_ }}"/>
+
+   <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
+
+<!-- 选择器 -->
+
+<view class="nyz_area_mask {{maskShow?(show ? 'show':'hide'):'hide'}}"></view>
+<view class="nyz_area_view {{show ? 'show':'hide'}}">
+  <view class="nyz_area_view_btns">
+    <text class="nyz_area_view_btn_cancle" bindtap="handleNYZAreaCancle">取消</text>
+    <text class="nyz_area_view_btn_sure" bindtap="handleNYZAreaSelect" data-province="{{province}}" data-classify="{{classify}}">确定</text>
+  </view>
+  <picker-view class="nyz_area_pick_view" indicator-style="height: 35px;" bindchange="handleNYZAreaChange" value="{{value}}">
+    <picker-view-column>
+      <view class="nyz_area_colum_view" wx:for="{{provinces}}" wx:key="{{index}}" data-classify="{{item.classify_id}}">{{item.name}}</view>
+    </picker-view-column>
+  </picker-view>
+</view>
 
 
