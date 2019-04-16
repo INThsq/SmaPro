@@ -9,11 +9,16 @@
 
 <!-- 提现内容 -->
 <view class='Deposit-cont'>
-  <view class='Deposit-title' wx:if="{{bank.length == 0}}" bindtap='toCard'>
+  <view class='Deposit-title'  bindtap='toCard'  wx:if="{{jump == 1&& bank.length == 0}}">
   <image src='http://oss.myzy.com.cn/wechat/images/icon_jia.png' style='width:40rpx;height:40rpx;'></image>
   <text>添加银行卡</text>
   </view>
-  <view class='Deposit-title Card' bindtap='showModal' wx:else>
+  <view class='Deposit-title'  wx:if="{{jump == 0 }}">
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_wechat.png' class='wechat' style='width:40rpx;height:40rpx;'></image>
+  <text>微信提现 ({{putForward.put_forward.member_oauth[0].nickname}}) </text>
+  </view>
+  <!-- wx:else -->
+  <view class='Deposit-title Card' wx:if="{{bank.length!=0 && jump==1}}" bindtap='showModal' >
   <image src='{{bank.bank_icon}}'></image>
   <view class='right'>
   <text class='r_O'>{{bank.bank}}({{bank.nature}})</text>
@@ -23,7 +28,6 @@
   </view>
 </view>
 
-
   <view class="Deposit-money">
     <view class='Deposit-mon'>
         <text class='tx-jine'>提现金额{{putForward.service_charge}}</text>
@@ -31,17 +35,22 @@
         <view class='pa'>
         ￥
         </view>
-        <input type='digit' name='name' placeholder="0"  value='{{money}}'      bindinput='money' />
+        <input type='digit' name='name' placeholder=""  focus='true'  value='{{money}}'      bindinput='money' />
         </view>
         
         <!-- <view class='fh'>￥</view> -->
-        <view class='all' wx:if="{{money > putForward.put_forward.money}}">
-        <text class='abouts'>输入金额超过余额</text>
         
-        </view>
+
+        <view class='all' wx:if="{{money == null}}">
+          <text class='about'>可提现 ￥  {{putForward.put_forward.money}}元</text>
+          </view>
+
+          <view class='all' wx:elif="{{money > putForward.put_forward.money}}">
+            <text class='abouts'>输入金额超过余额</text>
+            </view>
+
         <view class='all' wx:else>
         <text class='about'>预计48小时到账</text>        
-        
         </view>
     </view>
 
@@ -59,7 +68,7 @@
    <view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
     <!--弹出框  -->
     <view animation="{{animationData}}" style='height:{{height}}rpx' class="commodity_attr_box" wx:if="{{showModalStatus}}">
-      <view class='title'>
+      <view class='titles'>
         <text class='title_left' bindtap='hideModal'>取消</text>
         <text class='title_center'>选择银行卡</text>
       </view>
@@ -82,23 +91,63 @@
     </view>
     
 
+    <!-- 提现提示 -->
+     <view class='commodity_screen' wx:if="{{tool}}">
+      <view animation="{{animationData}}"  class="commodity_attr_box boxs" wx:if="{{tool}}">
+          <view class='T-title'>
+          <image src='http://oss.myzy.com.cn/wechat/images/close.png' bindtap='hideTool'></image>
+          <text class=''>收费提示</text>
+          </view>
+          <!-- 内容 -->
+          <view class='T-cont'>
+            <view class='cont-title'>提现服务费，实际到账金额如下</view>
+            <view class='conts'>
+                <view class='item items'>
+                  <text class='left'>提现金额</text>
+                  <text class='right'>{{money}}元</text>
+                </view>
+                <view class='item items'>
+                  <text class='left'>本次服务费</text>
+                  <text class='right'>{{service}}元</text>
+                </view>
+            </view>
+            <view class='bot'>
+              <view class='bottom'>
+              <text class='text-left'>实际到账金额</text>
+              <text class='text-money'>￥</text>
+              <text class='text-num'>{{sum}}</text>
+            </view>
+            <view class='T-btn'  bindtap="Cash">继续提现</view>
+            </view>
 
-  <!-- 自定义模态框 -->
-  <dialog id="modal"
-            title="温馨提示"
-            cancelText="取消"
-            confirmText="确认"
-            bind:cancelEvent="_cancelEvent"  
-            bind:confirmEvent="_confirmEventFirst" 
-            >
+          </view>
+      </view>
 
-    <view class='modal-body'>
-        <view>您确定提现金额{{money}}元?</view>     
+     </view>
+
+
+
+
+<import src="../../public/appToasts/appToasts.wxml"/>
+<template is="toasts" data="{{ ..._toast_ }}"/>
+
+
+<!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
     </view>
 
+<!-- 自定义模态框 -->
+<dialog id="modal"
+title="温馨提示"
+cancelText="取消"
+confirmText="去认证"
+bind:cancelEvent="_cancelEvent"  
+bind:confirmEvent="_confirmEventFirst" 
+>
+
+<view class='modal-body'>
+<view>您的账户未实名认证</view>     
+</view>
+
 </dialog>
-
- <!-- toast -->
-  <import src="../../public/appToast/appToast.wxml"/>
-  <template is="toast" data="{{ ..._toast_ }}"/>
-

@@ -17,8 +17,6 @@
     <text class='exp_title'>{{item.month_money_bill.money_bill[0].month}}月</text>
     <text class='exp_cont' decode="{{true}}">收入 ￥{{item.month_money_bill.enter_money_total}} &nbsp;&nbsp;  收入 ￥{{item.month_money_bill.out_money_total}}</text>
     </view>
-
-    
      <view class='expend_container' wx:if="{{money_bill.length > 0}}">
      <block wx:for="{{money_bill}}" wx:key="index">
     <view class='list' bindtap='getDetail' data-index="{{index}}"   wx:for="{{item .month_money_bill.money_bill}}" wx:for-index="billindex"  wx:for-item="bill" data-id="{{bill.bill_id}}" wx:key="bill" >
@@ -27,8 +25,8 @@
     </view>
       <view class='right'>
       <view class='right_one'>
-        <text class='right_title'>{{bill.title}}</text>
-        <text class='right_money'>{{bill.turnover}}</text>
+        <text class='right_title' style='font-size:29.17rpx!important;'>{{bill.name}}</text>
+        <text class='right_money' style='font-size:37rpx!important;'>{{bill.turnover}}</text>
       </view>
       <view class='right_two'>
       [{{bill.remark}}]

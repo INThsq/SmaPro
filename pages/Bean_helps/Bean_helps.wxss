@@ -3,12 +3,25 @@
 .container{
   padding: 32rpx 0;
 }
-.container text{
-  display: block;font-size: 33.3rpx;
-  font-weight: bold;
-  line-height: 48rpx;
-}
 
+.Now text{
+  display:flex;
+  justify-content: center;
+  margin-top: 32rpx;
+  font-size: 33.3rpx;
+  color:#999;
+}
+.Now image{
+  width:260rpx;
+  height:260rpx;
+  display: flex;
+}
+.Now{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 /* pages/Bean_helping/Bean_helping.wxss */
 @import "../Bean_help/Bean_help.wxss";

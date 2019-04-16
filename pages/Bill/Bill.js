@@ -17,8 +17,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getBill();
+    let group = options.group;
+    let ids = options.ids;
+    if(group){
+      this.getBill(1,group,ids)
+    }else{
+      this.getBill(1,0,0);
 
+    }
   },  
   move(e){
     console.log(e);
@@ -32,11 +38,16 @@ Page({
   onPageScroll(e){
   },
   //获取账单详情
-  getBill(){
+  getBill(now_page,bill_type_ids,bill_type_group){
    this.header(app.globalData.url+'getBillList'),
     wx.request({
       url:app.globalData.url+'getBillList',
       method: 'GET',
+      data:{
+        now_page:now_page,
+        bill_type_ids:bill_type_ids,
+        bill_type_group:bill_type_group
+      },
       header:this.data.header,
       success: res => {
         if(res.data.code == 200){

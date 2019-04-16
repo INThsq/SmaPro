@@ -1,14 +1,14 @@
 // pages/Factory/Factory.js
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    percent:80
+    percent:100
   },
   Go() {
-    console.log('1');
     this.setData({
       percent: 100,
     })

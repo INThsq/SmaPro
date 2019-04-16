@@ -14,42 +14,6 @@ Page({
     texte:'',
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    navData: [
-      {
-        text: '推荐',
-        typeId: '0'
-      },
-      {
-        text: '配饰',
-        typeId: '1'
-      },
-      {
-        text: '电格',
-        typeId: '2'
-
-      },
-      {
-        text: '电器',
-        typeId: '3'
-      },
-      {
-        text: '电器3',
-        typeId: '4'
-      },
-      {
-        text: '水果',
-        typeId: '5'
-      },
-      {
-        text: '啦啦',
-        typeId: '6'
-      },
-      {
-        text: '哈哈',
-        typeId: '7'
-      },
-
-    ],
     currentTab: 0,
     navScrollLeft: 0,
     hiddenName: true,
@@ -57,7 +21,9 @@ Page({
     hides: false,
     hidden: true,
     load: '加载中...',
-    tjhide: true
+    tjhide: true,
+    up: '暂时没有更多内容了~',
+
 
   },
   swiperChange: function (e) {
@@ -89,19 +55,27 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      texte: options.texte
+      texte: options.texte,
+      navData: JSON.parse(options.navData),
+      currentTab: options.currentTab,
+      id:options.id,
+      listx:JSON.parse(options.listx)
     })
     //获取元素宽高
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
-          // pixelRatio: res.pixelRatio,
-          // windowHeight: res.windowHeight,
           windowWidth: res.windowWidth
         })
       },
     })
+  },
 
+  //  显示
+  shows: function () {
+    this.setData({
+      hiddenName: false
+    })
   },
   switchNav(event) {
     var cur = event.currentTarget.dataset.current;

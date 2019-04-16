@@ -38,7 +38,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    new app.ToastPannel();
+    new app.ToastPannels();
   },
 
   /**
@@ -155,6 +155,9 @@ Page({
     // })
     // 
     this.Modal.hideModal();
+    this.setData({
+      isShow: true
+    })
     this.header(app.globalData.url + 'recharge');
     wx.request({
       url:app.globalData.url + 'recharge',
@@ -165,10 +168,10 @@ Page({
         pay_type:3
       },
       success:res=>{
+        this.setData({
+          isShow: false
+        })
         if(res.data.code == 200){
-          this.setData({
-            isShow:true
-          })
           let payment = res.data.data.callback;
             wx.requestPayment({
               timeStamp: payment.timeStamp,
@@ -182,16 +185,18 @@ Page({
                       wx.redirectTo({
                         url: '/pages/Balance/Balance',
                       })
-                    },2000)
+                    },500)
                 }
               }
             })
+            }else{
+              this.shows(res.data.msg)
             }
 
       }
     })
   },
   _cancelEvent: function () {
-    this.show('充值失败');
+    this.shows('充值失败,请联系客服');
   },
 })

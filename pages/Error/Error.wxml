@@ -63,6 +63,6 @@
 
   
   <!-- toast -->
-  <import src="../../public/appToast/appToast.wxml"/>
-  <template is="toast" data="{{ ..._toast_ }}"/>
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
 

@@ -15,9 +15,17 @@ Page({
 
   },
   go:function(){
-    wx.navigateTo({
-      url: '../OpenShop/OpenShop',
-    })
+    let content = wx.getStorageSync('content');
+    if(content){
+      // wx.navigateTo({
+      //   url: '../OpenShop/OpenShop',
+      // })
+    }else{
+      wx.navigateTo({
+        url: '../Accredit/Accreditz',
+      })
+    }
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

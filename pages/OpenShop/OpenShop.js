@@ -9,7 +9,6 @@ Page({
    */
   data: {
     avatarUrl: 'http://oss.myzy.com.cn/wechat/images/icon_kd_zhanweitu.png',
-    menuTapCurrent:0,
     shopname:'',
     //店铺长度
     shoplen:'',
@@ -25,8 +24,8 @@ Page({
     types:1,
     res:'',
     price:'',
-    menuTapCurrents:'',
-    pay_type:3,
+    menuTapCurrent:0,
+    pay_type:1,
     isShow:false,
     type:0,
     choseQuestionBank:"点击选择",
@@ -49,10 +48,12 @@ Page({
     var that = this;
     var provinces = that.data.provinces;
     var value = e.detail.value;
+
     that.setData({
       value: value,
       province: provinces[value].name,
-      classify: provinces[value].classify_id
+      classify: provinces[value].classify_id,
+
     })
   },
   //确定事件
@@ -142,17 +143,26 @@ Page({
     this.hideModal();
   },
   menuTaps: function (e) {
-    var current = e.currentTarget.dataset.current;//获取到绑定的数据
-    var pay_type = e.currentTarget.dataset.pay;
-    //改变menuTapCurrent的值为当前选中的menu所绑定的数据
+    let settlement_type = this.data.settlement_type;
+    settlement_type = settlement_type.map(item => {
+      item.is_default = false
+      return item
+    })
     this.setData({
-      menuTapCurrents: current,
-      pay_type:pay_type
-    });
-
+     settlement_type: settlement_type
+    })
+    var current = e.currentTarget.dataset.current;//获取到绑定的数据
+    if (settlement_type[current].is_disabled) {
+    } else {
+      var type = e.currentTarget.dataset.type;
+      this.setData({
+        menuTapCurrents: current,
+        type: type
+      });
+    }
   },
   change:function(){
-    this.showModal();
+    this.showsModal();
   },
   //显示对话框
   showModal: function () {
@@ -257,90 +267,94 @@ Page({
   },
 //验证以及请求
   topay(){
-    this.setData({
-      isShow:true
-    })
-    this.header(app.globalData.url+'storePayment')
-    var data = {
-      logo: 'data: image/png;base64,'+ this.data.base64,
-      name: this.data.shopname,
-      auth_type: 1,
-      classify_id: this.data.classify,
-      type: this.data.types,
-      pay_type: this.data.pay_type,
-      total_fee: this.data.price,
-      telephone: '17600784408'
-    }
-    wx.request({
-      url:app.globalData.url+'storePayment',
-      method: 'POST',
-      header: this.data.header,
-      data:data,
-      success: res => {
-        if(res.data.code == 200){
-          wx.setStorageSync('member_mall', true)
-          let pay_type = this.data.pay_type;
-          // 余额支付
-          if(pay_type == 1){
-            this.show(res.data.msg)
-            setTimeout(function() {
-              wx.switchTab({
-                url: '../Setted/Setted',
-              })
-            }, 1500)
-              
-              this.setData({
-                isShow: false
-              })
-          }else if(pay_type ==3){
-
-            // 微信支付
-            let payment = res.data.data.callback;
-            //调起微信支付
-            wx.requestPayment({
-              timeStamp: payment.timeStamp,
-              nonceStr: payment.nonceStr,
-              package: payment.package,
-              signType: payment.signType,
-              paySign: payment.paySign,
-              success(res) {
-                wx.setStorageSync('member_mall', true)
-                this.setData({
-                  isShow: false
+    var content = wx.getStorageSync('content');
+      this.setData({
+        isShow: true
+      })
+      this.header(app.globalData.url + 'storePayment')
+      var data = {
+        classify_name:this.data.province,
+        logo: 'data: image/png;base64,' + this.data.base64,
+        name: this.data.shopname,
+        auth_type: 1,
+        classify_id: this.data.classify,
+        type: this.data.types,
+        pay_type: this.data.pay_type,
+        total_fee: this.data.price,
+        telephone: '17600784408'
+      }
+      wx.request({
+        url: app.globalData.url + 'storePayment',
+        method: 'POST',
+        header: this.data.header,
+        data: data,
+        success: res => {
+          this.setData({
+            isShow: false
+          })
+          if (res.data.code == 200) {
+            wx.setStorageSync('member_mall', true)
+            let pay_type = this.data.pay_type;
+            // 余额支付
+            if (pay_type == 1) {
+              this.shows(res.data.msg)
+                wx.navigateTo({
+                  url: '../Setted/Setted',
                 })
-                if (res.errMsg == "requestPayment:ok") {
-                  
-                  setTimeout(function () {
-                    wx.switchTab({
-                      url: '../Setted/Setted',
-                    })
-                },1500)
-              }
-              }
+             
+            } else if (pay_type == 3) {
+
+              // 微信支付
+              let payment = res.data.data.callback;
+              //调起微信支付
+              wx.requestPayment({
+                timeStamp: payment.timeStamp,
+                nonceStr: payment.nonceStr,
+                package: payment.package,
+                signType: payment.signType,
+                paySign: payment.paySign,
+                success(res) {
+                  wx.setStorageSync('member_mall', true)
+                  this.setData({
+                    isShow: false
+                  })
+                  if (res.errMsg == "requestPayment:ok") {
+
+                    setTimeout(function () {
+                      wx.navigateTo({
+                        url: '../Setted/Setted',
+                      })
+                    }, 500)
+                  }
+                }
+              })
+            }
+          } else if(res.data.code == 401){
+            this.shows(res.data.msg)
+          }else {
+            this.shows(res.data.msg);
+            wx.navigateTo({
+              url: '../Accredit/Accredit',
             })
           }
-        }else{
-          this.show(res.data.msg);
-          wx.navigateTo({
-            url: '../Accredit/Accredit',
-          })
         }
-      }
-    })
+      })
+   
   },
   
  
   //跳转
   setted(e){
+
     var type = e.currentTarget.dataset.type;
     if (this.data.avatarUrl == 'http://oss.myzy.com.cn/wechat/images/icon_kd_zhanweitu.png'){
-      this.show('请选择上传头像')
+      this.shows('请选择上传头像')
     }
     else if (this.data.shopname == '') {
-      this.show('店铺名称不能为空')
+      this.shows('店铺名称不能为空')
       }
       else if (this.data.shoplen >= 12) {
-        this.show( '店铺输入不合法')
+        this.shows( '店铺输入不合法')
         }
         else{
       this.showModal();
@@ -353,8 +367,6 @@ Page({
           price: this.data.res.data.set_store.store_type[0].price
         })  
       }
-      
-
     }
    
   },
@@ -369,8 +381,14 @@ Page({
     });
   },
   onLoad: function (options) {
-    this.getJson();
-    new app.ToastPannel();
+    let res = JSON.parse(options.res);
+    console.log(res.data.set_store.classify)
+    this.setData({
+      res: res,
+      settlement_type: res.data.set_store.settlement_type,
+      provinces: res.data.set_store.classify
+    })
+    new app.ToastPannels();
   },
 //获取页面数据
   getJson() {
@@ -383,6 +401,7 @@ Page({
       success: res => { 
         if(res.data.code == 200){
           this.setData({
+            settlement_type: res.data.set_store.settlement_type,
             res:res.data,
             provinces:res.data.data.set_store.classify
           })
@@ -392,10 +411,7 @@ Page({
       }
     })
   },
-  //开店
-  openShop(){
-
-  },
+  
   //显示对话框
   showModal: function () {
     // 显示遮罩层

@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "商家分销",
   "navigationStyle": "custom",
   "usingComponents": {
     "my-component": "../../public/compback/compback",

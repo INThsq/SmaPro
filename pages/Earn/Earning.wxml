@@ -15,7 +15,7 @@
   </view>
   <view class='withdraw_right'>
   
-    <view class='btn' bindtap='withdraw'>提现</view> 
+    <view class='btnes' bindtap='Deposit'>提现</view> 
       
   </view>
 </view>
@@ -68,187 +68,43 @@
 </view>
 
 <view class='tab_cont'>
-<swiper current="{{currentTab}}" duration="300"  bindchange="swiperTab">
-    <swiper-item >
     <view class='conts'>
+    <block wx:for="{{callback.total_list}}" wx:key="index">
         <view class='num'>
             <view class='zs'>
-              助力总数(人)
+             {{item[0]}}
             </view>
             <view class='number'>
-              {{callback.income_total.people_totel}}
+              {{item[1]}}
             </view>
         </view>
-        <view class='num'>
-            <view class='zs'>
-              助力佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.people_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              付款订单(笔)
-            </view>
-            <view class='number'>
-              {{callback.income_total.order_total}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝分享(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_share_reward}}
-            </view>
-        </view>
+        </block>
     </view>
-    </swiper-item>
-    <swiper-item>
-    <view class='conts'>
-        <view class='num'>
-            <view class='zs'>
-              助力总数(人)
-            </view>
-            <view class='number'>
-              {{callback.income_total.people_totel}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              助力佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.people_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              付款订单(笔)
-            </view>
-            <view class='number'>
-              {{callback.income_total.order_total}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝分享(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_share_reward}}
-            </view>
-        </view>
-    </view>
-    </swiper-item>
-    <swiper-item>
-    <view class='conts'>
-        <view class='num'>
-            <view class='zs'>
-              助力总数(人)
-            </view>
-            <view class='number'>
-              {{callback.income_total.people_totel}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              助力佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.people_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              付款订单(笔)
-            </view>
-            <view class='number'>
-              {{callback.income_total.order_total}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝分享(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_share_reward}}
-            </view>
-        </view>
-    </view>
-    </swiper-item>
-    <swiper-item>
-    <view class='conts'>
-        <view class='num'>
-            <view class='zs'>
-              助力总数(人)
-            </view>
-            <view class='number'>
-              {{callback.income_total.people_totel}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              助力佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.people_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              付款订单(笔)
-            </view>
-            <view class='number'>
-              {{callback.income_total.order_total}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝佣金(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_reward}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              粉丝分享(元)
-            </view>
-            <view class='number'>
-              {{callback.income_total.fans_share_reward}}
-            </view>
-        </view>
-    </view>
-    </swiper-item>
-    
-</swiper>
-
 </view>
 
+
+<!-- 慕态框 -->
+<view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+<!--弹出框  -->
+<view animation="{{animationData}}"  class="commodity_attr_box tx-box" wx:if="{{showModalStatus}}">
+  <view class='titles'>
+    <text class='title_left' bindtap='hideModal'>取消</text>
+    <text class='title_center'>选择提现方式</text>
+  </view>
+  <block wx:for="{{callback.application}}" wx:key="{{index}}">
+  <view class='item' bindtap='Choose'  data-jump='{{item.jump}}'>
+      <image src='{{item.image}}' class='way'></image>
+      <view class='item_right'>
+        <text class='choose_one' decode="{{true}}">{{item.name}}</text>
+        <!-- <text class='choose_two' decode="{{true}}">(暂未开通)</text> -->
+      </view>
+    </view>
+  </block>
+</view>
+
+ <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+        <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+        </view>
 
 

@@ -11,21 +11,41 @@ Page({
 
   //跳转主页
   toIndex:function(){
+    wx.navigateTo({
+      url: '../Balance/Balance',
+    })
+    app.ban = 1;
+  
+  },
+  toUser(){
     wx.switchTab({
-      url: '../index/index',
+      url:'../UserCenter/userCenter'
     })
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (){ 
-    var cz = getApp().czmoney;
-    var that = this;
-    that.setData({
-      //充值保留两位小数
-      czmoney :Number(cz).toFixed(2),
-    })
+  onLoad: function (options){ 
+    console.log(options)
+    var msgs = options.msgs;
+    if(msgs){
+      this.setData({
+        msgs:msgs,
+        cz:2
+      })
+    }else{
+      var money = options.money;
+      var msg = options.msg;
+      var that = this;
+      that.setData({
+        //充值保留两位小数
+        czmoney: Number(money).toFixed(2),
+        msg: msg,
+        cz:1
+      })
+      app.czmoney = 1;
+    }
+    
   },
 
   /**

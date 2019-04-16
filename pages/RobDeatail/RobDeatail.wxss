@@ -1,10 +1,26 @@
 /* pages/RobDeatail/RobDeatail.wxss */
 @import '../Details/Details.wxss';
+@import "../../static/css/index.wxss";
+page{
+  padding-bottom: 50px!important;
+}
 .title{
   padding:32rpx 30rpx 0 30rpx!important;
   width: 100%;
   box-sizing: border-box;
   clear:both;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.fade_in {
+  animation-delay:2s;
+  animation: fadeIn 2s both;
+}
+swiper image{
+  animation: fade-in 2s linear;
+
 }
 .swiper-2 .swiper-container{height:80rpx;}
 
@@ -173,7 +189,7 @@ color:red;
 
 .banck{
   height: 20rpx;
-  background: #f3f3f3;
+  background: #fafafa;
 }
 .free-title image{
   width: 206rpx;
@@ -344,10 +360,10 @@ float: left;
 .wz{
   font-size:10px;
   color: #333;
-  margin-right: 8rpx;
+  margin-right: 8rpx;   
 }
 .presented-list{
-  height:190rpx;
+  height:300rpx;
   overflow: auto;
   position: relative;
   padding: 0 30rpx;

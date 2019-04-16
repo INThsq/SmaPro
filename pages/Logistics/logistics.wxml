@@ -23,7 +23,7 @@
         </block>
         <!-- 刚揽收 -->
         <block wx:else>
-          <view class='order-num'>订单编号 : <text>{{lists.logistics_status.order_num}}
+          <view class='order-num'>订单编号 : <text>{{lists.logistics_status.order_num||lists.order_num}}
           </text></view>
           <view class='order-time'>订单时间 : <text>{{lists.pay_time}}</text></view>
         </block>
@@ -82,7 +82,7 @@
         <view class='col2-conts'>
             <image style="top:25%!important"  src='http://oss.myzy.com.cn/wechat/images/icon_wuliu_ysz.png'></image>
             <!-- 已签收图标 -->
-            <text class='conts'>正在为您准备商品，请耐心等待</text>
+            <text class='conts'>{{lists.logistics_status}}</text>
             <text class='time'>{{lists.pay_time}}</text>
         </view>
       </view>
@@ -103,3 +103,9 @@
     </view> 
 
 </view>
+
+
+<!-- 加载框 -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>

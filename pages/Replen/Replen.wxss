@@ -1,0 +1,99 @@
+/* pages/ Replen/Replen.wxss */
+.container{
+    margin-top: 142rpx;
+}
+.title{
+    display: flex;
+    justify-content: space-between;
+    padding: 24rpx 0 12rpx;
+    box-sizing: border-box;
+    background: white;
+}
+.cont{
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    background: white;
+    margin-bottom: 12rpx;
+}
+.ing{
+    padding-bottom: 24rpx;
+    box-sizing: border-box;
+    position: relative;
+}
+.fix-btn{
+    display:flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+}
+.fix-left{
+    width: 150px;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: #643D3D;
+    font-size: 29.17rpx;
+}
+.fix-right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 150px);
+    background:#F43736;
+    font-size: 29.17rpx;
+    color: white;
+}
+.ing::after,.qy::after{
+    position: absolute; 
+    content: '';
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: #f2f2f2;
+    -webkit-transform: scale(1, 0.5);
+    transform: scale(1, 0.5);
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+}
+.tit-left{
+    font-size: 33.3rpx;
+    color: #333;
+    line-height: 24px;
+}
+.name{
+    color: #666;
+    font-size: 29.17rpx;
+    margin-bottom:6rpx;
+    line-height: 20px;
+}
+.icon{
+    align-items: center;
+    line-height: 48px;
+    margin-top: 16rpx;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    background: white;
+    font-size:29.17rpx;
+}
+.tit-right{
+    font-size: 29.17rpx;
+    display: flex;
+    color: #4C86F8;
+    line-height: 20px;
+    margin-bottom: 6rpx;
+}
+.qy{
+    padding: 24rpx 0;
+    box-sizing: border-box;
+    position: relative;
+}
+.tj{
+    padding: 24rpx 0;
+    box-sizing: border-box;
+}

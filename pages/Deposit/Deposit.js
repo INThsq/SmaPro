@@ -13,35 +13,39 @@ Page({
     visible: false,
     showModalStatus: false,
     height:'',
-   
+    tool:false
   },
   money: function (e) {
     app.txmoney = e.detail.value;
-    
     this.setData({
       money: e.detail.value,
-     
+    })
+  },
+  // 关闭模态框
+  hideTool(){
+    this.setData({
+        tool:false
     })
   },
   //提现
-  putForward(){
+  putForward(cash_type){
+    
     this.header(app.globalData.url + 'putForward');
     wx.request({
       url: app.globalData.url +'putForward',
       method:'get',
       header:this.data.header,
+      data:{
+        cash_type: cash_type
+      },
       success:res=>{
         if(res.data.code == 200){
-          
-          let putForward = res.data.data.content;
+          let putForward = res.data.data.callback;
           putForward.put_forward.money = Number(putForward.put_forward.money);
-
           if (putForward.put_forward.bank.length !=0){
             let bank = putForward.put_forward.bank[0];
-
             for (var p = 0; p < putForward.put_forward.bank.length; p++) {
               let len = putForward.put_forward.bank[p].bank_card.length;
-              console.log(putForward.put_forward.bank[p])
               putForward.put_forward.bank[p].num = putForward.put_forward.bank[p].bank_card.substring(len - 4)
               putForward.put_forward.bank[p].bank_card = putForward.put_forward.bank[p].bank_card.replace(/\s/g, '').replace(/[^\d]/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
               putForward.put_forward.bank[p].banks = putForward.put_forward.bank[p].bank_card.replace(/\s|\xA0/g, "");
@@ -52,16 +56,11 @@ Page({
           }else{
             let bank = putForward.put_forward.bank;
             this.setData({
-              bank: bank
+              bank: bank,
             })
           }
-          
-         
-          let height = (putForward.put_forward.bank.length + 3) * 100;
-
           this.setData({
             putForward: putForward,
-            height:height
           })
         }
       }
@@ -69,17 +68,41 @@ Page({
   },
   //点击赋值
   Choose(e){
-    console.log(e);
     let index = e.currentTarget.dataset.id;
     let bank = this.data.putForward.put_forward.bank[index];
     this.setData({
       bank:bank
     })
+    this.hideModal();
+  },
+  //继续提现
+  Cash(e){
+    let jump = this.data.jump;
+    let money = this.data.money;
+
+    // 微信提现 
+    switch(jump){
+      case "0":
+        let cash_id = this.data.putForward.put_forward.member_oauth[0].id;
+        this.cashForward(jump,money,cash_id)
+      break;
+      case "1":
+        var cash_id = this.data.bank.id;
+        this.cashForward(jump,money,cash_id)
+      break;
+    }
+
+    //银行卡提现
   },
   //提现到账户
-  cashForward(money, bank_id) {
+  cashForward(cash_type, money,cash_id) {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url + 'cashForward');
+    let jump = this.data.jump;
     let header = this.data.header;
+    let service = this.data.service;
     this.setData({
       ['header.content-type']: 'application/x-www-form-urlencoded',
     })
@@ -87,14 +110,33 @@ Page({
       url: app.globalData.url + 'cashForward',
       method: 'POST',
       data: {
+        cash_type: cash_type,
         money: money,
-        bank_id: bank_id
+        cash_id: cash_id
       },
       header:header,
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if(res.data.code == 200){
-          app.cookie = res.header['Set-Cookie']
+          app.cookie = res.header['Set-Cookie'];
+          if(jump == 0){
+            wx.navigateTo({
+              url: '../RechSucess/RechSucess?money='+money+'&msg='+res.data.data.callback.reminder,
+            })
+          }else{
+            wx.navigateTo({
+              url:'../Coindeposit/Coindeposit?money='+money+'&service='+service,
+            })
+          }
         }else{
+          this.shows(res.data.msg);
+          this.hideModal();
+          this.setData({
+            money:'',
+            tool:false
+          })
         }
       }
     })
@@ -106,9 +148,7 @@ Page({
     // 0未认证
     switch(is_cards){
         case 0:
-        wx.navigateTo({
-          url: '../BankCard/BankCard',
-        });
+         this.Modal.showModal();
         break;
         case 1:
         var  realname = content.data.content.userinfo.member_info.realname;
@@ -121,6 +161,16 @@ Page({
         app.card_type = 1;
     }
    
+  },
+  _confirmEventFirst: function () {
+    this.Modal.hideModal();
+    wx.navigateTo({
+      url: '../Certification/Certification',
+    })
+
+  },
+  _cancelEvent: function () {
+    this.Modal.hideModal();
   },
   //提现失败
   toDespositfalse:function(){
@@ -168,12 +218,63 @@ Page({
       })
     }.bind(this), 200)
   },
+  //服务费以及服务费计算
+  Sum(){
+    let money = this.data.money;
+    let sum_money = this.data.putForward.put_forward.money;
+    // 计算服务费方式
+    let service_type =  this.data.putForward.service_type;
+    let service_money = this.data.putForward.service_rate;
+    let sum = '';
+    let service = '';
+    // 1固定   2百分比
+    switch(service_type){
+      case 1: 
+        service = service_money;
+        sum = Number(money) - Number(service_money);
+        let sums = Number(money)+Number(service_money);
+        if( sums > Number(sum_money)||sums == Number(sum_money)){
+          this.setData({
+            sum:sum
+          })
+        }else{
+          this.setData({
+            sum:money
+          })
+        }
+        this.setData({
+          service:service,
+        })
+        break;
+      case 2:
+        service = Number(money) * 0.1;
+        sum = Number(money) - Number(service);
+        var sums = Number(money)+Number(service);
+        if( sums > Number(sum_money)||sums == Number(sum_money)){
+          this.setData({
+            sum:sum
+          })
+        }else{
+          this.setData({
+            sum:money
+          })
+        }
+        this.setData({
+          service:service,
+        })
+        break;
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.putForward();
-    new app.ToastPannel();
+    let jump = options.jump;
+    this.setData({
+      jump:jump
+    })
+    this.putForward(jump);
+    new app.ToastPannels();
 
   },
 
@@ -182,8 +283,7 @@ Page({
    */
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
-    
-
+  
   },
 
   /**
@@ -285,19 +385,10 @@ Page({
 
 
   _onShowModal: function (e) {
-    this.Modal.showModal();
-
-  },
-  _confirmEventFirst: function () {
-    let money = this.data.money;
-    let bank_id = this.data.bank.banks;
-    this.cashForward(money,bank_id)
-    // wx.navigateTo({
-    //   url: '../Coindeposit/Coindeposit?money=' + money + '&bank_id=' + bank_id,
-    // })
-    this.Modal.hideModal();
-  },
-  _cancelEvent: function () {
-    this.show('取消提现')
+    // this.Modal.showModal();
+    this.setData({
+      tool:true
+    })
+    this.Sum()
   }
 })

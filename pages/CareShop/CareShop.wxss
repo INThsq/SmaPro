@@ -1,10 +1,24 @@
 /* pages/CareShop/CareShop.wxss */
 @import "../index/index.wxss";
+@import "../../static/css/index.wxss";
 .logo image{
   width: 90rpx;
   height: 90rpx;
   border-radius: 4px;
   display: inline-block;
+  border:1px solid #FAFAFA;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.fade_in {
+  animation-delay:2s;
+  animation: fadeIn 2s both;
+}
+.order-list image{
+  animation: fade-in 2s linear;
+
 }
 .logo{
   display: block;

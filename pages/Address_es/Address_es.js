@@ -13,6 +13,7 @@ Page({
     pageType: 1,
     noncestr: '',
     //表单信息  为下单页面测试
+    
     addressDetails: {
       realname: '',
       mobile: '',
@@ -145,6 +146,8 @@ Page({
         hiddenth: false
 
       }
+      this.hideModal();
+     
     }
 
     that.setData(data)
@@ -257,12 +260,18 @@ Page({
   },
   //获取地区地址
   getArea() {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url+'getRegion');
     wx.request({
       url: app.globalData.url+'getRegion',
       method: 'GET',
       header: this.data.header,
       success: res => {
+        this.setData({
+          isShow:false
+        })
         this.setData({
           defaultsheng: res.data.data.region.area_list
         })
@@ -271,6 +280,9 @@ Page({
   },
   //获取二级地址
   getTwoArea() {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url+'getRegion');
     wx.request({
       url:app.globalData.url+'getRegion',
@@ -281,6 +293,9 @@ Page({
       },
       success: res => {
         this.setData({
+          isShow:false
+        })
+        this.setData({
           defaultCity: res.data.data.region.area_list
         })
       }
@@ -288,6 +303,9 @@ Page({
   },
   //获取三级地址
   getThreeArea() {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url+'getRegion');
     wx.request({
       url: app.globalData.url+'getRegion',
@@ -297,6 +315,9 @@ Page({
         parent_id: this.data.id
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         this.setData({
           defaultQu: res.data.data.region.area_list
         })
@@ -308,6 +329,9 @@ Page({
 
   //获取二级地址
   getTwoAreaEdit(pids) {
+    this.setData({
+      isShow:true
+    })
     // debugger;
     this.header(app.globalData.url+'getRegion');
     wx.request({
@@ -318,6 +342,9 @@ Page({
         parent_id: pids
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         // debugger;
         this.setData({
           defaultCity: res.data.data.region.area_list
@@ -327,6 +354,9 @@ Page({
   },
   //获取三级地址
   getThreeAreaEdit(pids) {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url+'getRegion');
     wx.request({
       url:app.globalData.url+'getRegion',
@@ -336,6 +366,9 @@ Page({
         parent_id: pids
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         this.setData({
           defaultQu: res.data.data.region.area_list
         })
@@ -365,12 +398,18 @@ Page({
         region_path_name: region_path_name
       }
       this.header(app.globalData.url+'createAddress');
+      this.setData({
+        isShow:true
+      })
       wx.request({
         url: app.globalData.url+'createAddress',
         method: 'POST',
         header: this.data.header,
         data: datas,
         success: res => {
+          this.setData({
+            isShow:false
+          })
           if (res.data.code == 200) {
             this.shows(res.data.msg)
             wx.navigateTo({
@@ -400,41 +439,45 @@ Page({
     //获取一级地区
     this.getArea();
     var datas = getApp().datas;
-    var region_path_name_str = datas.region_path_name;
-    var region_path_name_arr = new Array();
-    region_path_name_arr = region_path_name_str.split(',');
+    if(datas){
+      var region_path_name_str = datas.region_path_name;
+      var region_path_name_arr = new Array();
+      region_path_name_arr = region_path_name_str.split(',');
 
-    var region_path_id_str = datas.region_path_id;
-    var region_path_id_arr = new Array();
-    region_path_id_arr = region_path_id_str.split(',');
+      var region_path_id_str = datas.region_path_id;
+      var region_path_id_arr = new Array();
+      region_path_id_arr = region_path_id_str.split(',');
 
-    this.setData({
-      pageType: app.globalData.addressStart,
-      // choose: datas.choose
-      addressDetails: datas,
-      choose: {
-        sheng: {
-          short_name: region_path_name_arr[0],
-          id: region_path_id_arr[0]
-        },
-        shi: {
-          short_name: region_path_name_arr[1],
-          id: region_path_id_arr[1]
-        },
-        qu: {
-          short_name: region_path_name_arr[2],
-          id: region_path_id_arr[2]
-        },
-      }
-    });
+      this.setData({
+        pageType: app.globalData.addressStart,
+        // choose: datas.choose
+        addressDetails: datas,
+        choose: {
+          sheng: {
+            short_name: region_path_name_arr[0],
+            id: region_path_id_arr[0]
+          },
+          shi: {
+            short_name: region_path_name_arr[1],
+            id: region_path_id_arr[1]
+          },
+          qu: {
+            short_name: region_path_name_arr[2],
+            id: region_path_id_arr[2]
+          },
+        }
+      }); 
+      this.getTwoAreaEdit(region_path_id_arr[0]);
+
+      this.getThreeAreaEdit(region_path_id_arr[1]);
+    }
+  
     if(this.data.pageType == 1){
       this.setData({
         datas:''
       })
     }
-    this.getTwoAreaEdit(region_path_id_arr[0]);
-
-    this.getThreeAreaEdit(region_path_id_arr[1]);
+   
 
 
   },

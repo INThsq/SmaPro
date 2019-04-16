@@ -29,9 +29,27 @@ function formatTime(number, format) {
   }
   return format;
 }
+function throttle(fn, gapTime) {
+  if (gapTime == null || gapTime == undefined) {
+      gapTime = 1500
+  }
+
+  let _lastTime = null
+
+  // 返回新的函数
+  return function () {
+      let _nowTime = + new Date()
+      if (_nowTime - _lastTime > gapTime || !_lastTime) {
+          fn.apply(this, arguments)   //将this和参数传给原函数
+          _lastTime = _nowTime
+      }
+  }
+}
+
 //抛出异常
 function error(res) {
   new app.ToastPannel();
+  app.error = 1;
   var erroe_code = res.data.code;
   switch (erroe_code) {
     case 5:
@@ -47,13 +65,15 @@ function error(res) {
       })
       break;
   }
-  wx.clearStorageSync('content');
+  wx.removeStorage({
+    key: 'content',
+  })
   setTimeout(function () {
     wx.navigateTo({
       url: '../Accredit/Accredit',
     })
-  }, 1500)
-
+  }, 500)
+ 
 }
 //全局跳转
 function skip(url) {
@@ -68,50 +88,25 @@ function skip(url) {
     })
   }
 }
-//分享
-function onShareAppMessage(title, path, callback, imageUrl) {
-  //设置一个默认分享背景图片
-  let defaultImageUrl = 'http://oss.myzy.com.cn/wechat/images/wechat.png';
-  return {
-    title: title,
-    path: path,
-    imageUrl: imageUrl || defaultImageUrl,
-    success(res) {
-      console.log("转发成功！");
-      if (!res.shareTickets) {
-        //分享到个人
-        api.shareFriend().then(() => {
-          console.warn("shareFriendSuccess!");
-          //执行转发成功以后的回调函数
-          callback && callback();
-        });
-      } else {
-        //分享到群
-        let st = res.shareTickets[0];
-        wx.getShareInfo({
-          shareTicket: st,
-          success(res) {
-            let iv = res.iv
-            let encryptedData = res.encryptedData;
-            api.groupShare(encryptedData, iv).then(() => {
-              console.warn("groupShareSuccess!");
-              //执行转发成功以后的回调函数
-              callback && callback();
-            });
-          }
-        });
-      }
-    },
-    fail: function (res) {
-      console.log("转发失败！");
-    }
-  };
+// 解析链接中的参数
+let getQueryString = function (url, name) {
+  // console.log("url = " + url)
+  // console.log("name = " + name)
+  var reg = new RegExp('(^|&|/?)' + name + '=([^&|/?]*)(&|/?|$)', 'i')
+  var r = url.substr(1).match(reg)
+  if (r != null) {
+    // console.log("r = " + r)
+    // console.log("r[2] = " + r[2])
+    return r[2]
+  }
+  return null;
 }
 
-
+// 继承
 module.exports = {
   formatTime: formatTime,
   error: error,
   skip: skip,
-  onShareAppMessage: onShareAppMessage
+  getQueryString: getQueryString,
+  throttle: throttle
 }

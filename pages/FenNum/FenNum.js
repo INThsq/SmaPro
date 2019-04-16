@@ -16,10 +16,6 @@ Page({
    * 页面的初始数据
    */
 
-
-
-
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -27,7 +23,6 @@ Page({
     this.fansTotal();
     this.fansList(1,1);
   },
-
 
   //滑动切换
   swiperTab: function (e) {
@@ -40,13 +35,10 @@ Page({
   //点击切换
   clickTab: function (e) {
     var type = e.currentTarget.dataset.type;
-    if (this.data.currentTab === e.target.dataset.current) {
-      return false;
-    } else {
       this.setData({
+        type:type,
         currentTab: e.target.dataset.current
       })
-    }
     this.fansList(type, 1);
   },
   //生成随机字符串
@@ -110,25 +102,26 @@ Page({
     })
   },
 
-  //提现
-  withdraw: function () {
-    console.log('提现');
-  },
   //跳转粉丝订单
   Fanorder() {
     wx.navigateTo({
-
       url: '../Fanorder/Fanorder',
     })
   },
   //获取粉丝
   fansTotal() {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url+'fansTotal');
     wx.request({
       url: app.globalData.url + 'fansTotal',
       method: 'GET',
       header: this.data.header,
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           this.setData({
             fansTotal: res.data.data.callback
@@ -141,6 +134,9 @@ Page({
   },
   //获取粉丝订单
   fansList(param_type, now_page){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url + 'fansList');
     wx.request({
       url: app.globalData.url + 'fansList',
@@ -151,9 +147,15 @@ Page({
         now_page: now_page
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
+          for(let r=0;r<res.data.data.callback.fans_list.length;r++){
+                res.data.data.callback.fans_list[r].create_time = utils.formatTime(res.data.data.callback.fans_list[r].create_time, 'Y-M-D h:m:s')
+          }
           this.setData({
-            fansList: res.data.data.callback
+            fansList: res.data.data.callback.fans_list
           })
         }else{
           utils.error(res);
@@ -200,7 +202,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+      let type = this.data.type;
+      
   },
 
   /**

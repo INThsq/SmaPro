@@ -16,6 +16,10 @@ Page({
    */
   onLoad: function (options) {
       this.supportTotal();
+      this.setData({
+        Beans: app.globalData.Beans,
+        Bean: app.globalData.Bean
+      })
   },
   ing(){
     wx.navigateTo({

@@ -13,12 +13,12 @@
 <!-- 收货人 -->
     <view class='item'>
         <text>收货人</text>
-         <input placeholder="会飞的猪" placeholder-class="placeholderStyle" bindinput='inputDataChenge' data-item='realname' value='{{addressDetails.realname}}'/>
+         <input placeholder="收货人姓名" placeholder-class="placeholderStyle" bindinput='inputDataChenge' data-item='realname' value='{{addressDetails.realname}}'/>
     </view>
     <!-- 手机号 -->
 <view class='item'>
         <text>手机号码</text>
-         <input placeholder="联系人手机号" type='number' placeholder-class="placeholderStyle" bindinput='inputDataChenge' data-item='mobile' value='{{addressDetails.mobile}}' />
+         <input placeholder="收货人联系方式" type='number' placeholder-class="placeholderStyle" bindinput='inputDataChenge' data-item='mobile' value='{{addressDetails.mobile}}' />
     </view>
 
     <!-- 所在区域 -->
@@ -30,7 +30,7 @@
     </view>
     <!-- 详细地址 -->
     <view class='remarks-wrap'>
-    <textarea wx:if="{{!isShowText}}" placeholder='详细地址：如道路、门牌号等' class='remarks' bindblur='onRemarkInput' bindconfirm='onShowText'     focus='{{onFacus}}' maxlength='20'  value='{{addressDetails.address}}'></textarea>
+    <textarea wx:if="{{!isShowText}}" placeholder='详细地址：如道路、门牌号等' class='remarks' bindblur='onRemarkInput' bindconfirm='onShowText' bindinput='onRemarkInput'    focus='{{onFacus}}' maxlength='20'  value='{{addressDetails.address}}'></textarea>
     <text wx:else class='remarks' bindtap='onShowText'>{{addressDetails.address}}</text>
   </view>
 
@@ -94,4 +94,11 @@
  
  <import src="../../public/appToasts/appToasts.wxml"/>
   <template is="toasts" data="{{ ..._toast_ }}"/>
+
+
+  <!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+    </view>
+  
   

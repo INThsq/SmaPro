@@ -8,7 +8,9 @@ Page({
   data: {
     url:'http://oss.myzy.com.cn/wechat/images/img_jj_8.png',
     check: 1,
-    hide:true
+    hide:true,
+    show:true,
+    video:true,
   },
 
   /**
@@ -16,12 +18,33 @@ Page({
    */
   onLoad: function (options) {
     new app.ToastPannels();
-    // let data = JSON.parse(options.data);
-    let data = wx.getStorageSync('datas')
+    let data = JSON.parse(options.data);
+    // let data = wx.getStorageSync('datas')
     this.setData({
       data:data
     })
   },
+  //播放视频
+  playvedio: function (e) {
+    let vediocon = wx.createVideoContext("myvedio", this)
+    vediocon.play()
+    this.setData({
+      show: false,
+      video:false
+    })
+  },
+  /*
+      *视频播放完毕重新上封面
+      */
+     endvedio: function () {
+      let vediocon = wx.createVideoContext("myvedio", this)
+      // vediocon.play()
+      console.log(vediocon)
+      this.setData({
+        show: true,
+        video:true
+      })
+    },
   choose(e){
     let src = e.target.dataset.src;
     if (src == 'http://oss.myzy.com.cn/wechat/images/img_jj_8.png'){
@@ -38,19 +61,63 @@ Page({
       })
     }
   },
-  detail: function (e) {
+  //返回上一页
+  back(){
+    console.log('eee');
+    this.setData({
+      hide:true
+    })
+      wx.navigateBack({
+        delta:1
+      })
+  },
+  //跳转协议
+  Equit(e){
+    let src = e.currentTarget.dataset.src;
+    wx.navigateTo({
+      url: '../Webview/Webview?h5='+src,
+    })
+  },
+  swiperTab(){
+    this.setData({
+        video:true
+    })
+
+  },
+  detail(e){
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../Details/Details?id=' + id,
+    })
+  },
+  details: function (e) {
     let check = this.data.check;
     let id = e.currentTarget.dataset.id
+    var content = wx.getStorageSync('content');
+
     switch(check){
+
       case 0:
-        wx.navigateTo({
-          url: '../Details/Details?id=' + id,
-        })
-        app.get = 1;
+        if (content) {
+          wx.navigateTo({
+            url: '../Details/Details?id=' + id,
+          })
+          app.get = 1;
+        } else {
+          wx.navigateTo({
+            url: '../Accredit/Accredit',
+          })
+        }
         break;
 
         case 1:
-        this.shows('请勾选权益说明后再进行购买');
+        if(content){
+          this.shows('请勾选权益说明后再进行购买');
+        }else{
+          wx.navigateTo({
+            url: '../Accredit/Accredit',
+          })
+        }
         break;
     }
    

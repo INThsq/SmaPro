@@ -122,7 +122,6 @@ Page({
     this.header(app.globalData.url + 'checkBank')
     let header = this.data.header;
     let cookie = getApp().cookie;
-    console.log(cookie)
     if (cookie) {
       header.Cookie = cookie;
     }

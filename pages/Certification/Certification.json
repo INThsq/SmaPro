@@ -1,5 +1,6 @@
 {
   "navigationStyle": "custom",
+  "disableScroll":true,
   "usingComponents": {
     "my-component": "../../public/compback/compback"
   }

@@ -9,19 +9,49 @@ Page({
    */
   data: {
     top: '',
-    info:''
+    info:'',
+    code:2
   },
-
+  //点击复制功能
+  Ctrlc(e){
+    let text = e.currentTarget.dataset.text;
+    wx.setClipboardData({
+      data:text,
+       success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            wx.showToast({
+              title: '复制成功'
+            })
+          }
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let code = options.code;
+    if(code){
+      this.setData({
+        code:code
+      })
+    }
     this.getCode();
   },
   back: function () {
-    wx.navigateBack({
-      delta: 1,
-    })
+    let code = this.data.code;
+    if(code == 1){
+      wx.switchTab({
+        url:"../UserCenter/userCenter"
+      })
+    }else{
+      wx.navigateBack({
+        delta: 1,
+      })
+    }
+    
   },
   //滚动
   scrollTopFun(e) {
@@ -54,13 +84,19 @@ Page({
   },
   //获取二维码
   getCode(){
+    this.setData({
+      isShow:true
+    })
     var that = this;
-    that.header('http://api.myzy.com.cn/v1/getQrCode');
+    that.header(app.globalData.url+'getQrCode');
     wx.request({
-      url: 'http://api.myzy.com.cn/v1/getQrCode',
+      url: app.globalData.url + 'getQrCode',
       method: 'GET',
       header:that.data.header,
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if(res.data.code == 200){
           this.setData({
             info: res.data.data.content

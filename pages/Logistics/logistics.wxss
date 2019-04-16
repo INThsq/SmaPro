@@ -6,6 +6,41 @@
   position: relative;
   background: #fafafa;
 }
+.show{
+  display: block!important;
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+}
+.load{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display: none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
 .spans::after{
   position: absolute; 
   content: '';
@@ -33,7 +68,9 @@
   -webkit-transform-origin: center bottom; 
   transform-origin: center bottom 
 }
-
+.top-right{
+  overflow: hidden;
+}
 /* 商品 */
 .logistics-top{
   padding: 20rpx 30rpx;
@@ -99,6 +136,10 @@ border:1px solid rgba(195,195,195,1);
   font-size: 29.17rpx;
   line-height: 40rpx;
   margin-bottom: 2rpx;
+   overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+box-sizing: border-box;
 }
 .company text{
   color: #EE1E2A;
@@ -112,6 +153,7 @@ border:1px solid rgba(195,195,195,1);
 .top-right .tel text,.order-time text,.order-num text{
    color: #535353;
   margin-left:10rpx;
+
 }
 page{
   background: white;
@@ -202,7 +244,7 @@ page{
   top:17%!important;
 }
 .bottom .col2::after,.item:last-child .col2::after{
-  height:23%!important;
+  height:25%!important;
   top:-10rpx;
 }
 .item:last-child .col2 .circle{

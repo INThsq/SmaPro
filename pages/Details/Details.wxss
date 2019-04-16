@@ -21,6 +21,14 @@
 .two{
   font-size: 29.17rpx!important;
 }
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.fade_in {
+  animation-delay:2s;
+  animation: fadeIn 2s both;
+}
 .swiper image {
   display: block;
   width: 100%;
@@ -88,13 +96,15 @@ text-align: center;
   
 }
 .title{
+  
   margin-bottom: 16rpx;
-  display: inline-block!important;
+  display:flex!important;
   padding-top: 0!important;
   font-size:29.17rpx!important;
   line-height: 24px;
   font-weight:bold;
   padding-bottom:6rpx!important;
+  justify-content:center;
 }
 .circle{
   font-size: 10px;
@@ -343,21 +353,8 @@ margin-right: 54rpx;
 }
 .play_img image{
   width: 100%;
-  height:26px;
+  height:30px;
 }
-/* .contribute .con-gx::after{
-   position: absolute; 
-  content: '';
-  width: 100%;
-  left: 0;
-  top: 0;
-  height: 1px;
-  background-color: #f3f3f3;
-  -webkit-transform: scale(1, 0.5);
-  transform: scale(1, 0.5);
-  -webkit-transform-origin: center bottom;
-  transform-origin: center bottom;
-} */
 .evaluate{
   font-weight:400!important;
 }
@@ -799,7 +796,7 @@ line-height: 30px;
 /*普通样式*/
 .stepper .normal{
 	color: #979797;
-  background: #F3F3F3;
+  background: #E2E2E2;
   border-radius: 2px;
   
 }
@@ -809,7 +806,7 @@ line-height: 30px;
   width: 32px;
   height: 25px;
   color: #979797;
-  background:#E2E2E2;
+  background:#F4F4F4;
   border-radius: 2px;
   opacity: .5;
   }

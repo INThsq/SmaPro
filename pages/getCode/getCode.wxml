@@ -7,7 +7,7 @@
     <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
   </view> 
   <view class="tetxs">
-    我的圈子
+    我的二维码
   </view>
 </view>
 
@@ -30,15 +30,26 @@
         <view class='code-info'>
         <view class='left'>
             <image src='{{info.portrait}}'></image>
+            
         </view>
         <view class='right'>
             <text class='tel'>{{info.username}}</text>
-            <text class='id'>ID:{{info.number}}</text>
+            <view class='ctrl'>
+            <text class='id' style="font-size:8px!important;">顾问编号:{{info.number}}</text>
+            <text class='btnes' bindtap='Ctrlc'  data-text='{{info.number}}'>复制</text>
+            </view>
+            
         </view>
         </view>
       
         <view class='get-code'>
+          <view class='images'>
           <image src='{{info.qr_code}}'></image>
+
+          </view>
+          <view class='Mask' wx:if="{{!info.is_show}}">
+          <text>{{info.disabled_tip}}</text>
+          </view>
         </view>
         <!-- 提示 -->
         <view class='tip'>
@@ -50,11 +61,18 @@
     </view>
     
 </view>
-<view class='btns'>
+<view class='btns' wx:if="{{info.is_show}}">
     <button class='save' bindtap='save'>保存图片</button>
 
 </view>
 
   </view>
 
+  
+ <!-- load -->
+ <view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
 </scroll-view>
+

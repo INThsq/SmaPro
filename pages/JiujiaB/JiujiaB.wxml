@@ -1,0 +1,142 @@
+<!--pages/JiujiaB/JiujiaB.wxml-->
+<view>
+  <my-component>
+     <view>久加宝</view> 
+  </my-component>
+</view> 
+
+
+
+<!-- 内容部分 -->
+<scroll-view scroll-y="true" bindscroll="Bind" style='height:100vh;'>
+<view class='container'>
+    <view class='top_banner'>
+    <image src='http://oss.myzy.com.cn/wechat/images/partner_003.jpg'></image>
+    </view>
+
+    <!-- 内容部分 -->
+    <view class='cont'>
+        <!-- 视频 -->
+        <view class='video'>
+          <video id="myVideo" hidden="{{video}}" objectFit='cover'  controls   page-gesture="true" enable-progress-gesture = true src='https://huixuangou.oss-cn-beijing.aliyuncs.com/video/5ffa640c0bd09e9e277ed9fcfdcf3a71.mp4'  controls='true'></video>
+
+           <view wx:if="{{show}}"  bindtap="playvedio" class='coversrc' style='position:absolute'>
+            <view class='playbtn'>
+               <image src='http://oss.myzy.com.cn/wechat/images/video.png'></image>
+            </view>
+            </view>
+            </view>
+
+        <!-- 项目介绍 -->
+        <view class='introduce' style='padding-top:10rpx;'>
+            <view class='int-title'>项目介绍</view>
+            <view class='int-cont'>
+          久加宝是一款快速解酒醒酒功能型饮料，3两白酒10分钟分解，其原理是通过乙醇与解酒饮料接触，在胃酸的共同作用下，将酒中的主要成分乙醇直接分解，避免乙醇直接通过小肠进入血液，达到降低乙醇浓度，保肝护胃的目的。
+            </view>
+        </view>
+        <!-- 加盟福利 -->
+        <view class='Join'>
+            <view class='Join-title'>
+                <block wx:for="{{nav}}" wx:key="index">
+               <view class='Join-item {{cursetIndex == index?"active":""}}' data-index='{{index}}' bindtap='getCur'>{{item}}<text>(3)</text></view>
+               </block>
+            </view>
+            <view class='Join-box'>
+              <view class='Join-boxes' wx:if="{{cursetIndex == 0}}"> 
+                  <view><text>优享:</text>价值8800元产品现场拿走.</view>
+                  <view><text>尊享:</text>推荐用户消费TA可获得对应专属特权，你可获得订单实付金额的10%~30%作为奖励，重复消费重复获得，多邀多得.</view>
+                  <view><text>臻享:</text> 每核销一单奖励3元，额外每单奖励2元.</view>
+              </view>
+
+              <view class='Join-boxes' wx:if="{{cursetIndex == 1}}"> 
+                  <view><text>1、</text> 必须体验过本公司的产品，认可确实是一款不错的产品.</view>
+                  <view><text>2、</text> 拥有线下实体店.</view>
+                  <view><text>3、</text>  需缴纳8800.00元押金，详细说明请阅读久加宝线下自提点相关协议.</view>
+              </view>
+            </view>
+        </view>
+
+
+        <!-- 简单八步 -->
+        <view class='Eight'>
+        <view class='Eight-title'>
+            <text class='Eight-One'>简单8步 共创 共赢</text>
+            <text class='Eight-Two'>SIMPLE  EIGHT  PARTS</text>
+        </view>
+        <view class='Eight-cont'>
+          <block wx:for="{{data}}"  wx:key="index">
+            <view class='E-items'>
+                <image src='{{item.img}}'></image>
+                <text class='num'>{{item.num}}</text>
+                <text class='wenzi'>{{item.wz}}</text>
+            </view>
+            </block>
+        </view>
+        </view>
+
+
+        <!-- 运营流程 -->
+         <view class='Eight Pro'>
+        <view class='Eight-title'>
+            <text class='Eight-One'>运营分红流程</text>
+            <text class='Eight-Two'>SIMPLE  EIGHT  PARTS</text>
+        </view>
+        <view class='Eight-cont'>
+          <block wx:for="{{datas}}" wx:key="index">
+            <view class='E-items'>
+                <image src='{{item.img}}'></image>
+                <text class='num'>{{item.num}}</text>
+                <text class='wenzi'>{{item.wz}}</text>
+                <text class='wenzis'>{{item.wz1}}</text>
+            </view>
+            </block>
+        </view>
+        </view>
+    </view>
+    <!-- 勾选框 -->
+    <view class='check' >
+        <image src="{{url}}" data-src='{{url}}' bindtap='choose'></image>
+        <view style='margin-left:3px;display:flex;'>购买即视为同意<view style='color:blue' bindtap='Equit' data-id="{{data.activity_url}}">《开通权限协议书》</view></view>
+    </view>
+
+<view class='bt'  wx:if="{{scrollTop>200}}">
+   <!-- 底部按钮 -->
+   <view class='btns'>
+    <view class='btn-left' bindtap='detail' style='background:{{callback.tel_background}}' data-id='{{data.goods_id}}'>意向咨询</view>
+    <view class='btn-right bb'  bindtap='Go' style='background:{{callback.submit_background}}' data-id='{{data.goods_id}}'>立即申请￥{{money}}</view>
+   </view>
+
+   <view class='arrow'>
+      <text class="text">{{buy_tips}}</text>
+      <view class='triangle'></view>
+   </view>
+</view>
+
+</view>
+</scroll-view>
+
+
+
+  <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+ <template is="toasts" data="{{ ..._toast_ }}"/>
+
+<!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
+ <!-- 自定义模态框 -->
+ <dialog id="modal"
+ title="温馨提示"
+ cancelText="取消"
+ confirmText="确认"
+ bind:cancelEvent="_cancelEvent"  
+ bind:confirmEvent="_confirmEventFirst" 
+ >
+
+<view class='modal-body'>
+<view>{{callback.disabled_tip}}</view>     
+</view>
+
+</dialog>

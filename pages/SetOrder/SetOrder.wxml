@@ -1,0 +1,88 @@
+<!--pages/SetOrder/SetOrder.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>可结算订单</view> 
+  </my-component>
+</view>
+
+
+<!-- 内容部分 -->
+<view class='container'>
+  <view class='top'>
+    <view class='top-left'>可核销金额</view>
+    <view class='top-right'>{{give.order_total}}</view>
+  </view>
+
+  <view class='middle' wx:if="{{give.reward_praise}}">
+                  
+    <view class='mid-zs' data-id='1' bindtap='Title'>赠送佣金奖励<image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_5.png'></image></view>
+    <view class='mid-js'>结算单数：{{give.reward_praise.handle_num}}单</view>
+    <view class='mid-yj'>佣金单价：{{give.reward_praise.give_reward}}元/单</view>
+    <view class='mid-yj'>结算总额：{{give.reward_praise.reward_money_total}}元</view>
+
+  </view>
+
+  <view class='middle' wx:if="{{give.task_praise}}">
+    <view class='mid-zs'  data-id='2' bindtap='Title'>任务额外奖励<image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_5.png'></image></view>
+    <view class='mid-js'>任务单数：{{give.task_praise.handle_num}}单</view>
+    <view class='mid-yj'>任务单价：{{give.task_praise.task_reward}}元/单</view>
+    <view class='mid-yj'>结算总额：{{give.task_praise.task_reward_total}}元</view>
+
+  </view>
+ 
+</view>
+
+
+
+<!-- 按钮 -->
+<view class='btns'> 
+    <view class='btn' bindtap='Apply'>立即申请核销</view>
+</view>
+
+
+
+
+  <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
+
+ 
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>     
+
+
+<!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst">
+
+    <view class='modal-body'>
+        <view>您确定立即申请结算吗？</view>     
+    </view>
+
+</dialog>
+
+
+ <!-- 模态框 -->
+   <cover-view   hidden="{{!isShows}}"  class='modal'>
+      <cover-view  data-type="mask"  catchtap='hideModal' class='modal-mask' ></cover-view>
+      <cover-view  class='modal-layer  modal-layer-radius {{modalSize == "sm" ? " modal-layer-sm" : " modal-layer-md" }} ' >
+          <!-- 头部 -->
+          <cover-view class='modal-header'>        
+              <cover-view>温馨提示</cover-view>        
+          </cover-view>
+
+          <!-- 内容区域 -->
+          <cover-view class='modal-body'>         
+            <cover-view>{{Toast==1?give.reward_praise.give_remark:give.task_praise.task_remark}}</cover-view>                         
+          </cover-view>
+          <cover-view class='modal-footer' bindtap='Sure'>
+                <cover-view>确定</cover-view>
+          </cover-view>
+      </cover-view>
+  </cover-view>

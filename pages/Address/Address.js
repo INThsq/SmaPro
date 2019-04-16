@@ -22,7 +22,7 @@ Page({
    */
   onLoad: function (options) {
     new app.ToastPannels();
-
+    app.adress = 1;
     var a = getApp().chooseType;
     var that = this;    
     that.setData({
@@ -39,17 +39,45 @@ Page({
     this.getsAdress();
   },
   
-
+  back(){
+   
+    let types = getApp().types;
+    console.log(types)
+    if(types == 2){
+      let datas = this.data.datas;
+      var shuju = ''
+      for(let d=0;d<datas.length;d++){
+        if(datas[d].is_default ==1){
+          shuju = datas[d]
+        }
+      }
+      var flag = true;
+      wx.navigateTo({
+        url: '../Confirm/Confirm?id='+shuju.member_address_id+"&address="+shuju.region_path_name+shuju.address+"&mobile="+shuju.mobile+"&realname="+shuju.realname+"&flag="+flag,
+      })
+     
+    }else{
+      wx.navigateBack({
+        delta: 1,
+      })
+    }
+  
+  },
   //获取地址
   //md5
   getsAdress() {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url+'addressList');
     wx.request({
       url:app.globalData.url+'addressList',
       method: 'GET',
       header:this.data.header,
       success: res => {
-     
+        this.setData({
+          isShow:false
+        })
         if (res.data.data.address_list.length > 0){
           this.setData({
             datas: res.data.data.address_list

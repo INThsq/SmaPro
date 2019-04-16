@@ -1,0 +1,48 @@
+<!--pages/ Replen/Replen.wxml-->
+        <view>
+        <my-component>
+           <view>门店补货</view> 
+        </my-component>
+      </view>   
+    <!-- 内容部分 -->
+    <view class="container">
+        <view class="cont">
+            <view class="ing">
+            <view class="title">
+                <view class="tit-left">#{{callback.dot_num}}</view>
+                <view class="tit-right">履行中</view>
+            </view>
+            <view class="name">名店名称：{{callback.dot_name}} </view>
+            <view class="name">门店地址：{{callback.pois_address}}</view>
+            <view class="name">合同编号：{{callback.order_num}}</view>
+        </view>
+
+        <!-- 签约 -->
+        <view class="qy">
+                <view class="name">签约日期：{{callback.create_time}}</view>
+                <view class="name">合同期限：{{callback.create_time}} 至 {{callback.signing_time}}</view>
+                <view class="name">押金额度：{{callback.money}}元</view>
+            </view>
+
+        <!-- 统计 -->
+        <view class="tj">
+                <view class="name">商品名称：{{callback.name}}</view>
+                <!-- <view class="name">补货数量：30箱</view> -->
+                <view class="name">剩余次数：{{callback.supply_num}}次</view>
+
+        </view>
+       
+    </view>
+    <view class="icon">
+            <text class='all'>补货记录</text>
+            <text class="iconfont icon-arrow" style='color:#999'></text>
+        </view>
+    </view>
+
+
+    <!-- 按钮 -->
+    <view class="fix-btn">
+        <view class="fix-left" data-id="{{callback.mall_goods_id}}" bindtap='Details'>商品详情</view>
+        <view class="fix-right" data-id='{{callback.mall_goods_id}}' bindtap='Detail'>立即补货</view>
+    </view>
+

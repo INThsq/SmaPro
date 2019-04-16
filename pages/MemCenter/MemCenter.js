@@ -15,11 +15,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     this.getMemberGroup();
     let content = wx.getStorageSync('userInfo');
     let name = content.userInfo.nickName;
     this.setData({
-      name:name
+      name:name,
+      Tname: app.globalData.Tname
     })
   },
   // 返回上一页

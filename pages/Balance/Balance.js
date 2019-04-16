@@ -12,26 +12,107 @@ Page({
   data: {
     
     noncestr:'',
-    balance:''
+    balance:'',
+    showModalStatus: false
   },
-  Back(){
+  back(){
+    // let ban = getApp().ban;
+    // if(ban == 1){
+      wx.switchTab({
+        url: '../UserCenter/userCenter',
+      })
+    //   app.ban =2;
+    // }else{
+    //   wx.navigateBack({
+    //     delta:1
+    //   })
+    // }
+    
+  },
+  //跳转h5页面
+  getH5(e){
+    let h5 = e.currentTarget.dataset.url;
     wx.navigateTo({
-      url: '/pages/userCenter/userCenter',
+      url: '../Webview/Webview?h5='+h5,
     })
   },
+  //显示对话框
+  showModal: function () {
+    // 显示遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      showModalStatus: true
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  //隐藏对话框
+  hideModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        showModalStatus: false
+      })
+    }.bind(this), 200)
+  },
   //提现跳转
-  deposit: function () {
+  deposit: function (e) {
     let content = wx.getStorageSync('content');
     if (content) {
-      wx.navigateTo({
-        url: '../Deposit/Deposit',
-      })
+      let forward = e.target.dataset.forward;
+      var jump = this.data.list[0].jump;
+      if(forward == 1){
+        wx.navigateTo({
+          url: '../Deposit/Deposit?jump='+jump,
+        })
+      }else{
+        this.showModal();
+
+      }
     } else {
       wx.navigateTo({
         url: '../Accredit/Accredit',
       })
     }
    
+  },
+  //跳转h5
+  hideModal(){
+   this.setData({
+     showModalStatus:false
+   })
+  },
+  Choose(e){
+    this.setData({
+      showModalStatus:false
+    })
+    let jump = e.currentTarget.dataset.jump;
+    wx.navigateTo({
+      url: '../Deposit/Deposit?jump=' + jump,
+    })
   },
   //银行卡跳转
   bankCard(){
@@ -71,6 +152,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      isShow:true
+    })
    var that= this;
    that.header(app.globalData.url+'finance')
     wx.request({
@@ -78,9 +162,15 @@ Page({
       method:'GET',
       header:that.data.header,
       success: res =>{
+        this.setData({
+          isShow:false
+        })
         if(res.data.code == 200){
           that.setData({
-            balance: res.data.data.content.balance
+            balance: res.data.data.content.balance,
+            list: res.data.data.content.application,
+            answers: res.data.data.content.answers,
+            forward_count:res.data.data.content.forward_count
           })
         }else{
           utils.error(res);

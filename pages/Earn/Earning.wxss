@@ -1,4 +1,6 @@
 /* pages/Earn/Ear.wxss */
+@import "../../static/css/index.wxss";
+@import "../Balance/Balance.wxss";
 .withdraw{
   height: 180rpx;
   background:url("http://oss.myzy.com.cn/wechat/images/img_sybb_beijing.png") no-repeat center;          background-size:cover;
@@ -34,7 +36,7 @@
   font-size: 28rpx;
   letter-spacing: 2px;
 }
-.btn{
+.btnes{
   padding:2rpx 28rpx;
   border-radius:20px;
   border: 1px solid white;
@@ -44,10 +46,10 @@
 .earn{
     display:flex;
     background: white;
-    height:80rpx;
+    height:84rpx;
     padding:0 40rpx;
     box-sizing: border-box;
-    line-height:80rpx;
+    line-height:84rpx;
     border-bottom:.5px solid #F3F3F3;
 }
 .myEarn{
@@ -102,13 +104,20 @@
   height: 24rpx;
   position: absolute;
   right:62%;
-  top:25%;
+  top:24%;
 }
+.zs{
+  font-size: 25rpx!important;
+}
+/* .order{
+  line-height: 100rpx!important;
+  height: 100rpx!important;
+} */
 .swiper-tab{
     background: white;
     text-align: center;
-    height:60rpx;
-    line-height:60rpx;
+    height:64rpx;
+    line-height:64rpx;
     display: flex;
     flex-flow: row;
     font-size:26rpx;
@@ -153,7 +162,6 @@ swiper .number{
 .num{
   display: flex;
   line-height: 100rpx;
-  
   justify-content: space-between;
   border-bottom:.5px solid #F3F3F3;
 }

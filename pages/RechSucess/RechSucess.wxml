@@ -1,11 +1,29 @@
 <!--pages/RechSucess/RechSucess.wxml-->
+<view wx:if="{{cz==1}}">
 <view class='conts'>
     <view class='icon'>
     <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_zfcg.png'></image>
-    <text class='success'>充值成功</text>
-    <text class='money'>￥{{czmoney}}</text>
+    <text class='success'>提现成功</text>
+    <text class='num'>￥{{czmoney}}</text>
+    <text class='money'>{{msg}}</text>
     
     </view>
 </view>
+<view class='btns'><button class='btn' bindtap='toIndex'>完成</button></view>
+</view>
 
-<button class='btn' bindtap='toIndex'>完成</button>
+
+
+<!-- 绑定顾问 -->
+<view wx:if="{{cz== 2}}">
+<view class='conts'>
+    <view class='icon'>
+    <image src='http://oss.myzy.com.cn/wechat/images/icon_xcx_zfcg.png'></image>
+    <text class='success'>绑定成功</text>
+    <!-- <text class='num'>￥{{czmoney}}</text> -->
+    <text class='money'>{{msgs}}</text>
+    
+    </view>
+</view>
+<view class='btns'><button class='btn' bindtap='toUser'>完成</button></view>
+</view>

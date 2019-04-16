@@ -28,9 +28,11 @@
     <view style="padding-bottom:150rpx;">
       <view class='order-conts' >
           <view class='noW' wx:if ="{{listData.length == 0}}">
+          <view class='noW-cont'>
               <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
               <text>抱歉，暂无数据</text>
               </view>
+          </view>    
 
         <view class="order-info" wx:else>
         <view class='order-lists' wx:for="{{listData}}" wx:key="index" >
@@ -69,7 +71,7 @@
             </view>
             <view class='order-fans'>
               <view class='sf'>
-              实付:￥{{item.total_price}}
+              实付:￥{{item.total_price}}{{item.logistics_tip}}
               </view>
             </view>
           </view>
@@ -83,7 +85,7 @@
             <!-- 待发货 -->
            <view class='btn' wx:if="{{item.share_queue.state==0 && item.order_status == 2 }}">
             <button class='check' data-id='{{item.order_num}}' bindtap='check'>查看物流</button>
-            <button class='pay'  bindtap='remind'>提醒发货</button>
+            <!-- <button class='pay'  bindtap='remind'>提醒发货</button> -->
             </view>
             <!-- 待收货 -->
             <view class='btn' wx:if="{{item.order_status == 3}}">
@@ -144,3 +146,8 @@
     </view>
 </dialog> 
   
+<!-- 加载框 -->
+  <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+    </view>

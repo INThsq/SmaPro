@@ -93,7 +93,7 @@
   height: 24rpx;
   position: absolute;
   right:62%;
-  top:25%;
+  top:22%;
 }
 .swiper-tab{
     background: white;

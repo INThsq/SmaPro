@@ -17,7 +17,8 @@ Page({
   Save() {
     let member_mall_id = this.data.getStoreDetails.member_mall_id;
     let logo = this.data.base64;
-    let detection = this.data.detail;
+    let detection = this.data.details;
+    
     this.setDetails(member_mall_id,logo,detection)
     
   },
@@ -99,7 +100,6 @@ Page({
   },
   itemChange(e) {
     var text = e.target.dataset.text;
-    console.log(text)
     this.setData({
       actionSheetHidden: true
     })
@@ -116,6 +116,7 @@ Page({
 
   },
   chooseCrame() {
+    let member_mall_id = this.data.getStoreDetails.member_mall_id;
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -132,9 +133,10 @@ Page({
           encoding: 'base64', //编码格式
           success: res => { //成功的回调
             this.setData({
-              base64: res.data
+              base64: 'data:image/png;base64,'+ res.data
 
             })
+            this.setDetails(member_mall_id, 'data:image/png;base64,' + res.data,'')
           }
         })
       }
@@ -142,6 +144,7 @@ Page({
     })
   },
   chooseInt() {
+    let member_mall_id = this.data.getStoreDetails.member_mall_id;
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -157,8 +160,9 @@ Page({
           filePath: res.tempFilePaths[0], //选择图片返回的相对路径
           encoding: 'base64', //编码格式
           success: res => { //成功的回调
+            this.setDetails(member_mall_id, 'data:image/png;base64,'+res.data, '')
             this.setData({
-              base64: res.data
+              base64: 'data:image/png;base64,'+res.data
             })
           }
         })
@@ -169,6 +173,11 @@ Page({
   getStoreDetails(member_mall_id){
     let that = this;
     this.header(app.globalData.url+'getStoreDetails');
+    let cookie = getApp().cookie;
+    let header = this.data.header;
+    if (cookie) {
+      header.Cookie = cookie;
+    }
     wx.request({
       url:app.globalData.url + 'getStoreDetails',
       method: 'GET',
@@ -178,6 +187,7 @@ Page({
       },
       success: res => {
         if (res.data.code == 200) {
+          app.cookie = res.header['Set-Cookie'];
           var res = res.data.data.callback;
           switch(res.auth_type){
             case 1:
@@ -208,6 +218,11 @@ Page({
   //更新店铺信息
   setDetails(member_mall_id,logo,detection){
     this.header(app.globalData.url+'setDetails');
+    let cookie = getApp().cookie;
+    let header = this.data.header;
+    if (cookie) {
+      header.Cookie = cookie;
+    }
     wx.request({
       url:app.globalData.url+'setDetails',
       header:this.data.header,
@@ -218,14 +233,12 @@ Page({
       },
       method:'post',
       success:res=>{
-        
         if(res.data.code == 200){
           this.show(res.data.msg)
-        let cont = this.data.details;
-        
-          this.setData({
-            cont: cont
-          })
+          let cont = this.data.details;
+            this.setData({
+              cont: cont
+            })
           this.hideModal();
         }
       }

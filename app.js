@@ -27,6 +27,13 @@ App({
  onLoad(){
   new app.ToastPannel();
   new app.ToastPannels();
+   wx.login({
+      success: res => {
+        console.log(res.code)
+        this.globalData.code = res.code;
+        wx.setStorageSync('codes', res.code)
+      }
+   })
  },
  
  onShow(options){
@@ -35,6 +42,42 @@ App({
    let order_num = options.query.order_num;
  },
   onLaunch: function (options) {
+    if (wx.canIUse('getUpdateManager')) {
+      const updateManager = wx.getUpdateManager()
+      updateManager.onCheckForUpdate(function (res) {
+        if (res.hasUpdate) {
+          updateManager.onUpdateReady(function () {
+            wx.showModal({
+              title: '更新提醒',
+              content: '检测到新版本哦~，是否立即重启？',
+              success: function (res) {
+                if (res.confirm) {
+                  updateManager.applyUpdate()
+                }
+              }
+            })
+          })
+          updateManager.onUpdateFailed(function () {
+            wx.showModal({
+              title: '更新提醒',
+              content: '新版本上线啦！请删除当前应用，重新搜索打开哦~'
+            })
+          })
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '温馨提醒',
+        content: '当前微信版本过低无法使用该功能，请升级到最新微信版本后重试.'
+      })
+    }
+    wx.login({
+      success: res => {
+        // console.log(res.code)
+        this.globalData.code = res.code;
+        wx.setStorageSync('codes', res.code)
+      }
+    })
     // 当前时间戳
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
@@ -43,7 +86,7 @@ App({
     this.randomWord();
     var noncestr = this.globalData.noncestr;
     //接口地址
-    var api_url = 'http://api.myzy.com.cn/v1/wxLogin';
+    var api_url = 'https://api.myzy.com.cn/v1/wxLogin';
     var key = 'myzy3224326de100671291c7d1a6353ff6db';
     var arr = [api_url,key,noncestr,timestamp];
     var str = '';
@@ -66,14 +109,6 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    // 登录
-    wx.login({
-      success: res => {
-        console.log(res.code)
-        this.globalData.code = res.code;
-        wx.setStorageSync('codes', res.code)
-      }
-    })
   },
   //改变地址状态的值
   changeAddressStart(type) {
@@ -126,7 +161,6 @@ App({
   globalData: {
     userInfo: null,
     addressStart: 1,//1新增,2编辑
-    code: null,
     noncestr: '',
     header: null,
     openid: null,
@@ -139,9 +173,15 @@ App({
     // expiry_time:null,
     //个人中西状态值
     usrState: null,
-    url:'http://api.myzy.com.cn/v1/',
+    url:'https://api.myzy.com.cn/v1/',
     scene:'',
-    phone:'10010'
+    
+    phone:'10010',
+    urls: 'https://api.myzy.com.cn/',
+    //腾讯地图公共key值 
+    key:'PLJBZ-VICWG-5OMQF-IJHEB-OEAPO-WYBNB',
+    Tname:'惠选购',
+    Bean:'惠选豆(劵)',
+    Beans:'惠选豆'
   }
-  
 })

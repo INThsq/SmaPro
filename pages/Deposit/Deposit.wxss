@@ -1,7 +1,7 @@
 /* pages/Deposit/Deposit.wxss */
 .Deposit-cont{
   padding: 0 30rpx;
-  margin-top: 172rpx;
+  margin-top: 150rpx;
   display: flex;
 }
 .Deposit-cont .Deposit-title{
@@ -16,7 +16,49 @@
   color: #333;
   box-shadow:0px 0px 4px 0px rgba(246,246,246,1);
   border-radius:6px; 
-  letter-spacing: 1rpx; 
+  /* letter-spacing: 1rpx;  */
+}
+.Deposit-title{
+  margin-top: 30rpx;
+}
+.wechat{
+  width:76rpx!important;
+  height: 64rpx!important;
+}
+.show{
+  display: block!important;
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+}
+.load{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display: none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
 }
 .Card{
   display: flex;
@@ -40,10 +82,20 @@
   position: absolute;
 line-height: 80rpx;
  font-size: 56rpx;
- 
-
 }
-
+.T-title::after{
+   position: absolute; 
+  content: '';
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #f3f3f3;
+  -webkit-transform: scale(1, 0.5);
+  transform: scale(1, 0.5);
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+}
 .Deposit-title image{
   width:76rpx;
   height: 64rpx;
@@ -65,7 +117,7 @@ line-height: 80rpx;
 .tx-jine{
 font-size: 32rpx;
 color: #333;
-letter-spacing: 1rpx;
+/* letter-spacing: 1rpx; */
 }
 .Deposit-mon input{
   border-bottom: .5px #f3f3f3 solid;
@@ -125,12 +177,12 @@ button::after{
   top: 0;
   left: 0;
   background: #000;
-  opacity: 0.6;
+  opacity:.9;
   overflow: hidden;
   z-index: 1000;
 }
 /*对话框 */
-.title{
+.titles{
   height: 96rpx;
   line-height:96rpx;
   padding: 0 30rpx;
@@ -153,13 +205,13 @@ button::after{
   border-bottom:1px solid rgba(243,243,243,1);
 }
  .item image{
-  width:48rpx;
-  height: 48rpx;
+  width:50rpx;
+  height:50rpx;
   margin-right: 30rpx;
 }
 .commodity_attr_box {
   box-sizing: border-box;
-  height:400rpx;
+  height:420rpx;
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -168,4 +220,83 @@ button::after{
   background: #fff;
   font-size: 33.3rpx;
   color: #333;
+}
+.T-cont .bottom{
+    padding:38rpx 0 24rpx;
+    box-sizing: border-box;
+    justify-content: center;
+    display: flex;
+
+}
+.text-left{
+  font-size: 12px;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+}
+.text-money{
+  color: #F43736;
+  font-size: 33.3rpx;
+  display: flex;
+  align-items: center;
+}
+.text-num{
+  font-size: 44rpx;
+  color: #F43736;
+}
+
+
+.T-title image{
+width: 32rpx;
+height:28rpx;
+display: flex;
+position: absolute;
+left:36rpx;
+top:38rpx;
+}
+.items{
+  display: flex;
+  justify-content: space-between;
+}
+.items text{
+  font-size: 29.17rpx;
+}
+.items .left{
+  color: #999;
+}
+.bot{
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.T-btn{
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F43736;
+  color: white;
+  font-size: 33.3rpx;
+  border-radius: 4px;
+}
+.T-title{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  line-height: 51px;
+  align-items: center;
+  border-bottom:1px solid rgba(243,243,243,1); 
+}
+.cont-title{
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  font-size:29.17rpx;
+  line-height: 48px;
+}
+.T-title text{
+color: #333!important;
+  font-size: 36rpx;
+}
+.boxs{
+  height:auto!important;
+  padding-bottom:28rpx!important;
 }

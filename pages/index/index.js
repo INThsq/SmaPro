@@ -1,5 +1,10 @@
 var util = require('../../utils/md5.js');
+var utils = require('../../utils/util.js');
 var app = getApp();
+var w = "";
+var h = "";
+const ImgLoader = require('../../public/img-loader/img-loader.js')
+
 // pages/UserCenter/userCenter.js
 Page({
   /**
@@ -7,6 +12,7 @@ Page({
    */
   //商家中心
   data: {
+    score: 25,
     pages:1,
     progress:'',
     left:'',
@@ -20,7 +26,7 @@ Page({
     hiddenName: true,
     currentId: 0,
     hides: false,
-    autoplay: true,
+    autoplay: false,
     interval: 5000,
     duration: 1000,
     swiperCurrent: 0,
@@ -37,10 +43,6 @@ Page({
     imghide:true,
     up:'下拉加载更多~',
     id:'0',
-    imgUrlss: [
-      'http://oss.myzy.com.cn/wechat/images/img_sjzx_banner.png',
-      'http://oss.myzy.com.cn/wechat/images/img_sjzx_banner.png',
-    ],
   },
   swiperChange: function (e) {
     this.setData({
@@ -52,13 +54,32 @@ Page({
       swiperCurrents: e.detail.current
     })
   },
+ //点击跳转消息
+  More(){
+      let id =this.data.wxIndex.more_notice;
+      let content = wx.getStorageSync('content')
+      if(content){
+        wx.navigateTo({
+          url:'../NewsCont/NewsCont?id='+id
+        })
+      }else{
+        wx.navigateTo({
+          url:'../Accredit/Accredit'
+        })
+      }
+     
+  },
+
   //跳转三级分类携参
   IndexSecond: function (e) {
     var texts = e.currentTarget.dataset.texts;
+    var id = e.currentTarget.dataset.id;
+    this.goodsList(id,1,1)
     wx.navigateTo({
-      url: '../IndexThird/IndexThird?texte=' + texts,
+      url: '../IndexThird/IndexThird?texte=' + texts + '&id=' + id + '&navData=' + JSON.stringify(this.data.navData) + '&currentTab=' + this.data.currentTab +'&listx='+ JSON.stringify(this.data.listx),
     })
   },
+
   //天天抢钱
   Ronmoney(){
   wx.navigateTo({
@@ -91,36 +112,151 @@ Page({
       url: '../Search/Search?search_term=' + search_term,
     })
   },
-  //赠送商家入驻
-  activity(){
-    this.header(app.globalData.url +'activity');
+  // 分销中心
+  distribution(member_mall_id) {
+    var scenes = 0;
+    var data = {};
+    switch (scenes) {
+      // 非订单验证
+      case 0:
+        data = {
+          scene: 0,
+          order_num: '',
+          goods_id: 0,
+          member_mall_id: 0
+        }
+        break;
+      // 订单验证
+      case 1:
+        let goods_id = this.data.goods_id;
+        let mall_goods_id = this.data.mall_goods_id;
+        let order_num = this.data.order_num;
+        data = {
+          scene: 1,
+          goods_id: goods_id,
+          mall_goods_id: mall_goods_id,
+          order_num: order_num
+        }
+        break;
+    }
+    this.header(app.globalData.url + 'distribution');
     wx.request({
-      url: app.globalData.url +'activity',
-      method:'get',
-      header:this.data.header,
-      success:res=>{
-        if(res.data.code == 200){
+      url: app.globalData.url + 'distribution',
+      header: this.data.header,
+      method: 'get',
+      data: data,
+      success: res => {
+        if (res.data.code == 200) {
           wx.navigateTo({
-            url: '../Comiss/Comiss',
+            url: '../FyCenter/FyCenter?top=' + JSON.stringify(res.data.data.callback)
           })
-        }else{
-          wx.setStorageSync('datas',res.data.data.callback)
-          wx.navigateTo({
-            url: '../jjb/jjb?data='+JSON.stringify(res.data.data.callback),
-          })
+
         }
       }
+    })
+  },
+  //赠送商家入驻
+  activity(member_mall_id) {
+    this.header(app.globalData.url + 'activity');
+    wx.request({
+      url: app.globalData.url + 'activity',
+      method: 'get',
+      data:{
+        member_mall_id: member_mall_id
+      },
+      header: this.data.header,
+      success: res => {
+        if (res.data.code == 200) {
+          let type = res.data.data.callback.type;
+          switch (type) {
+            case 0:
+              app.scenes = 1;
+              wx.setStorageSync('datas', res.data.data.callback)
+              wx.navigateTo({
+                url: '../jjb/jjb?data=' + JSON.stringify(res.data.data.callback),
+              })
+              break;
+            case 1:
+              this.distribution('')
+              app.scenes = 0;
+              break;
+          }
+        } else {
+          this.show(res.data.code)
+        }
+      }
+    })
+  },
+  //门店管理
+  switchDotCenter(){
+    let content = wx.getStorageSync('content');
+    if(content){
+      this.header(app.globalData.url + 'switchDotCenter');
+      wx.request({
+        url: app.globalData.url + 'switchDotCenter',
+        method: 'get',
+        header: this.data.header,
+        success: res => {
+            if(res.data.code == 200){
+                if(res.data.data.callback.length <1){
+                  this.show('您还未开通相关门店,请前去开通或联系客服')
+                }else{
+                  this.dotCenter(res.data.data.callback[0].mall_dot_authorize_id, res.data.data.callback[0].order_num)
+                  setTimeout(function(){
+                    wx.navigateTo({
+                      url: '../WhitCenter/WhitCenter?list=' + JSON.stringify(res.data.data.callback),
+                    })
+                  },500)
+                  
+                }
+             
+            }else{
+              this.show(res.data.msg)
+            }
+        }
+      })
+    }else{
+      wx.navigateTo({
+        url:'/pages/Accredit/Accredit'
+      })
+    }
+   
+  },
+  dotCenter(mall_dot_authorize_id, order_num) {
+    this.header(app.globalData.url + 'dotCenter');
+    wx.request({
+      url: app.globalData.url + 'dotCenter',
+      header: this.data.header,
+      method: 'get',
+      data: {
+        mall_dot_authorize_id: mall_dot_authorize_id,
+        order_num: order_num
+      },
+      success: res => {
+        app.top = res.data.data.callback
+        wx.setStorageSync('top', res.data.data.callback)
+      }
+
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+    this.setData({
+      Tname: app.globalData.Tname
+    })
+    this.setData({
+      autoplay:true
+    })
     new app.ToastPannel();
     let share_queue_id = options.share_queue_id;
-    this.setData({
-      share_queue_id: share_queue_id
-    })
+    if (share_queue_id){
+      this.setData({
+        share_queue_id: share_queue_id
+      })
+    }
     this.wxIndex();
     this.classify();
     this.goodsList(0,2,1);
@@ -157,6 +293,13 @@ Page({
         packet: true
       })
     }
+    let that = this;
+    let allSrc = 0.015 * that.data.score; //应该绘制的弧度
+    let src = allSrc / 100
+    that.setData({
+      src: src,
+      allSrc: allSrc
+    })
   },
   switchNav(event) {
     var cur = event.currentTarget.dataset.current;
@@ -197,6 +340,12 @@ Page({
      this.goodsList(0, 2, 1);
    }
   },
+  onHide: function () {
+    this.setData({
+      swiperCurrent:0,
+      autoplay:false
+    })
+},
   //点击每个导航的点击事件
   handleTap: function (event) {
     let id = event.currentTarget.id;
@@ -215,6 +364,7 @@ Page({
         hides: false,
         tjhide: true
       })
+
     } else {
       this.setData({
         hides: true,
@@ -306,9 +456,31 @@ Page({
       },
       success: res => {
         if (res.data.code == 200) {
+          app.cookie = res.header['Set-Cookie'];
+          wx.setStorageSync('cookie',res.header['Set-Cookie']);
+          if (res.data.data.application.length>5){
+            this.setData({
+              imgUrlss: [
+                'http://oss.myzy.com.cn/wechat/images/img_sjzx_banner.png',
+                'http://oss.myzy.com.cn/wechat/images/img_sjzx_banner.png',
+              ],
+            })
+          }else{
+            this.setData({
+              imgUrlss: [
+                'http://oss.myzy.com.cn/wechat/images/img_sjzx_banner.png'
+              ],
+            })
+          }
+          
           this.setData({
-            wxIndex: res.data.data
+            wxIndex: res.data.data,
+            Banner:res.data.data.banner
           })
+          wx.setStorageSync('telephone',res.data.data.telephone)
+          wx.setStorageSync('telephone_tip', res.data.data.telephone_tip)
+
+          app.phone = res.data.data.telephone;
           app.store = res.data.data.store;
         }
       }
@@ -340,6 +512,7 @@ Page({
   },
   //首页列表数据
   goodsList(classify_id, goods_type, now_page){
+  
     this.header(app.globalData.url + 'goodsList');
     wx.request({
       url: app.globalData.url + 'goodsList',
@@ -351,6 +524,9 @@ Page({
         now_page:now_page
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           if(res.data.data.goods_list<10){
             this.setData({
@@ -361,18 +537,20 @@ Page({
               listx: res.data.data.goods_list,
               pages: res.data.data.now_page,
             })
+           
           }
         }
     })
   },
   //列表跳转
-  navCour(e){
+  navCour:utils.throttle(function (e){
     let id = e.currentTarget.dataset.id;
     let name = e.currentTarget.dataset.name;
     let type = e.currentTarget.dataset.type;
     switch(name){
       //促销商品
       case "promotion":
+      
         wx.navigateTo({
           url: '../Sale/Sale?type=' + type,
         })
@@ -388,14 +566,36 @@ Page({
       wx.switchTab({
         url: '../CareShop/CareShop',
       })
-      //web页面
         app.store_id = store_id;
+        break;
+      //web页面
       case "web":
       wx.navigateTo({
-        // url: '../Webview/Webview?h5='+type,
+        url: '../Webview/Webview?h5=' + type,
+      }) 
+      break;
+      //优惠券兑换
+      case "coupon":
+        wx.navigateTo({
+          url: '../FreeConvert/FreeConvert',
+        })
+        break;
+      //商品详情
+      case "details":
+        wx.navigateTo({
+          url: '../Details/Details?id=' + id,
+        })
+        break;
+      // 厂家促销 
+      case "factory":
+      wx.navigateTo({
         url:'../Factory/Factory',
       })
       break;
+      //商品兑换
+      case "convert":
+      break;
+      //活动申请
       case "market":
         let content = wx.getStorageInfoSync('content');
         if(!content){
@@ -403,31 +603,77 @@ Page({
               url: '../jjb/jjb',
             })
         }
-      this.activity()
+        this.activity(type)
         break;
-
-      //优惠券
-      case "coupon":
-      wx.navigateTo({
-        url: '../FreeConvert/FreeConvert',
-      })
-      break;
-      //商品详情
-      case "details":
-      wx.navigateTo({
-        url: '../Details/Details?id='+id,
-      })
-      break;
-      //附近好店
+      //附近门店
       case "nearby":
       wx.navigateTo({
         url: '../Near/Near',
       })
       break;
-
+      //门店管理
+      case "malldot":
+        this.switchDotCenter();
+        break;
+      //销售管理中心
+      case "sale":
+      break;
+      //促销商家 
+      case "merchant":
+        var content = wx.getStorageSync('content');
+        if(content){
+          wx.navigateTo({
+            url: '../Comiss/Comiss',
+          });
+        }else{
+          wx.navigateTo({
+            url: '../Accredit/Accredit',
+          });
+        }
+       break; 
+       //礼品详情
+       case "givegift":
+       let id = e.currentTarget.dataset.gift;
+       wx.navigateTo({
+         url:'../RobDeatail/RobDeatail?id='+type
+       }) 
+       break;
+       //跳转微信提现
+       case "wechat":
+       var content = wx.getStorageSync('content');
+       let jump = e.currentTarget.dataset.jump;
+       if(content){
+        wx.navigateTo({
+          url: '../Deposit/Deposit?jump='+type,
+        });
+      }else{
+        wx.navigateTo({
+          url: '../Accredit/Accredit',
+        });
+      }
+      break;
+      //跳转实名认证
+      case "realname":
+      var content = wx.getStorageSync('content');
+      if(content){
+        wx.navigateTo({
+          url: '../Certification/Certification',
+        });
+      }else{
+        wx.navigateTo({
+          url: '../Accredit/Accredit',
+        });
+      }   
+      break;   
+      //跳转8800开通页面
+    
+      case "enterdot":
+      wx.navigateTo({
+        url:"../JiujiaB/JiujiaB?id="+ e.currentTarget.dataset.type
+      })
+      break;
     }
-   
-  },
+  },1000),
   //模态框点击穿透事件
   move: function () { },
   //助力弹窗事件
@@ -531,6 +777,7 @@ Page({
       this.clickPraise(this.data.share_queue_id)
     }
   },
+  
   //获取授权信息
   bindGetUserInfo: function (e) {
     getApp().globalData.userInfo = e.detail;
@@ -631,17 +878,15 @@ Page({
       wx.removeStorageSync('text')
     })
   },
-  // 下拉加载
-  // bindDownLoad(){
-  //     let id = this.data.id;
-  //     let page = this.data.now_page;
-  //     page++;
-  //     let goods_type = 2;
-  //     this.goodsList(id,goods_type,page)
-  // },
+ 
   /**
    * 页面上拉触底事件的处理函数
    */
+  onReady: function () {
+  },
+  onPullDownRefresh(){
+    wx.stopPullDownRefresh;
+  },
   onReachBottom: function () {
     let that = this;
     var page = that.data.pages;
@@ -673,6 +918,9 @@ Page({
                 listx: listx,
                 pages: res.data.data.now_page
               })
+              listx.forEach(item => {
+                this.imgLoader.load(item.goods_image)
+            })
             }
           }
         }

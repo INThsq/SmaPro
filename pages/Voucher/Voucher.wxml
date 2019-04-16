@@ -1,0 +1,111 @@
+<!--pages/Voucher/Voucher.wxml-->
+
+<import src="../../components/wxParse/wxParse.wxml"/> 
+
+<view wx:if="{{code == 200}}">
+<view>
+    <my-component>
+      <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+       <view>提货凭证</view> 
+    </my-component>
+  </view>
+
+
+  <!-- 内容部分 -->
+  <view class="container">
+      <view class="conts">
+          <!-- 顶部部分 -->
+          <view class="top">
+              <view class="title">
+                  <text class="title-bt">{{callback.mall_dot.dot_name}}</text>
+                  <text class="title-span">提货点</text>
+              </view>
+              <view class="local">
+                  <image src='http://oss.myzy.com.cn/wechat/images/icon_erweima_dingwei.png'></image>
+                  <text>{{callback.mall_dot.pois_address}}</text>
+              </view>
+              <view class="tel">
+                  <image src='http://oss.myzy.com.cn/wechat/images/icon_erweima_dianhua.png'></image>
+                  <text>{{callback.mall_dot.telephone}}</text>
+              </view>
+          </view>
+          <!-- 背景 -->
+          <view class='bg'>
+            <image src='http://oss.myzy.com.cn/wechat/images/icon_erweima_beijing.png'></image>
+          </view>
+        <!-- 条形码 -->
+        <view class='code'>
+            <view class="barcode"> <template is="wxParse" data="{{wxParseData:article.nodes}}"/></view>
+            <text>提货码：:{{callback.mall_dot.dot_num}}</text>
+            <image src='{{callback.qr_code}}' class="ewm"></image>
+            <view class='tihuos'>
+              <view class='tihuo'>
+                          <text class='tishi'>{{callback.remind.praise_tip}}</text>
+                          <text class='blue' bindtap="confirm" data-id="{{callback.proo_flist.order_num}}">{{callback.remind.button_text}}</text></view>
+                      </view>
+            </view>
+           
+        <view class='bg'>
+            <image src='http://oss.myzy.com.cn/wechat/images/icon_erweima_beijing.png'></image>
+          </view>
+        <!-- 列表 -->
+        <view class='lists'>
+          <block wx:for="{{json}}" wx:key="{{index}}">
+            <view class='list'>
+                <text class='list-title'>{{item.title}}</text>
+                <view class='list-conts'>
+                  <text class='list-left'>{{item.sku_names?item.sku_names:'商品规格:无'}}</text>
+                  <text class='list-right'> X {{item.buy_num}}</text>
+                </view>
+            </view>
+          </block>  
+        </view>
+        <!-- 按钮 -->
+        <view class='gets'>
+          <view class='btn'>查看更多</view>
+        </view>
+
+      </view>
+
+
+  </view>
+</view>
+
+  
+ <!-- 自定义模态框 -->
+ <!-- <dialog id="modal"
+ title="温馨提示"
+ cancelText="取消"
+ confirmText="确认"
+ bind:cancelEvent="_cancelEvent"  
+ bind:confirmEvent="_confirmEventFirst" 
+ >
+<view class='modal-body'>
+<view>您确定手上已拿到货了吗?</view>     
+</view>
+</dialog> -->
+
+<!-- 核销订单 -->
+
+<dialog id="modal"
+ title="温馨提示"
+ cancelText="取消"
+ confirmText="确认"
+ bind:cancelEvent="_cancelEvent"  
+ bind:confirmEvent="_confirmEventFirst" 
+ >
+<view class='modal-body'>
+<view>您确定上传核销订单?</view>     
+</view>
+</dialog>
+<import src="../../public/appToasts/appToasts.wxml"/>
+<template is="toasts" data="{{ ..._toast_ }}"/>
+
+
+
+
+<view wx:if="{{code !=200}}">
+   <view class="load show" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
+</view>

@@ -17,7 +17,7 @@
 
   <!-- 列表 -->
   <view class='cards'  wx:else>
-      <view class='list' wx:for="{{bankList}}">
+      <view class='list' wx:for="{{bankList}}" wx:key="index"> 
         <image class='list_img' src='{{item.bank_backdrop}}'></image>
         <view class='list_cont'>
         <image src='{{item.bank_icon}}'></image>

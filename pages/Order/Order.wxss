@@ -1,5 +1,5 @@
 @import '../../public/compback/compback.wxss';
-
+@import "../../static/css/index.wxss";
 .swiper-tab{
     /* width: 120%; */
     text-align: center;
@@ -20,11 +20,19 @@
  left:30rpx;
 }
 .noW{
- height: 85vh;
+ height:calc(100vh - 226rpx);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+.noW-cont{
+  display:flex;
+  flex-direction: column;
 }
 .noW image{
-  margin-top: 120px!important;
+  margin-top:0!important;
 }
+
 
 ::-webkit-scrollbar {
   width: 0;
@@ -49,6 +57,7 @@
     width: 20%; 
     color:#333;
     display: inline-block;
+    /* font-weight:bold; */
 }
 .active{
     color:#FF2742;
@@ -73,8 +82,8 @@
   display: flex;
 }
 .order-num image{
-  width:50rpx;
-  height:50rpx;
+  width:46rpx;
+  height:46rpx;
   vertical-align: middle;
   border-radius:4px;
 }
@@ -92,7 +101,7 @@
   font-size: 28rpx;
   color: #333;
   background: white;
-  padding:20rpx 30rpx;
+  padding:18rpx 30rpx;
   align-items:center;
 }
 .order-list .order-num .wait{
@@ -129,7 +138,7 @@
   display: flex;
   justify-content:flex-end;
   background: white;
-  padding: 18rpx 30rpx;
+  padding:8rpx 30rpx;
   position: relative;
 }
 .order-fans::after{
@@ -153,6 +162,7 @@ button{
 }
 .order-fans>view{
   display: flex;
+  align-items: center;
 }
 .order-fans .names image{
   width:64rpx;
@@ -165,7 +175,7 @@ button{
   margin-left: 20rpx;
 }
 .order-fans .sf{
-  line-height:60rpx;
+  line-height:62rpx;
   color: #262626;
 }
 .order-list .order-con>view .size{
@@ -191,7 +201,7 @@ button{
 
 .order-lists .btn{
   justify-content: flex-end;
-  padding:26rpx 0;
+  padding:16rpx 0;
   display: flex;
   background: white;
 }
@@ -199,10 +209,10 @@ button::after{
   border:none;
 }
 .order-lists button{
- height:56rpx;
+ height:60rpx;
  font-size: 28rpx;
  color: #666;
- line-height: 56rpx;
+ line-height:60rpx;
  padding:0 20rpx;
  margin: 0;
  background: white;

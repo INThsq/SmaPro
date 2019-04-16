@@ -2,7 +2,7 @@
 <view>
   <my-component>
     <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>惠选购商城</view> 
+     <view>{{Tname}}商城</view> 
   </my-component>
 </view>
 
@@ -17,7 +17,7 @@
     <image src='{{store_info.logo}}'></image>
     </view>
 <!-- title -->
-  <view class='title' style='padding:0!important;'>
+  <view class='title' style='padding:0!important;display:inline-block!important;justify-content:center!important;'>
   <text>{{store_info.name}}</text>
   
   </view>
@@ -46,6 +46,7 @@
 <view class='sort-wrap ' bindtap='tabFun'>
   <view class="sort-btn {{tabArr.curHdIndex=='0'? 'active' : ''}}" data-id="0">
     综合
+    
   </view>
   <view class="sort-btn {{tabArr.curHdIndex=='1'? 'active' : ''}}" data-id="1">
     新品
@@ -68,7 +69,7 @@
         <view class='order-lists' data-id="{{item.goods_id}}"  bindtap='detail'>
          <view class="order-list">
             <view class="order-con">
-              <image src="{{item.goods_image}}"></image>
+              <image src="{{item.goods_image}}" class='fade_in'></image>
               <view>
                 <view class="name">{{item.title}}</view>
                 <view class='spec'>
@@ -98,7 +99,6 @@
         
 
 
-
  
 
 <!-- 无商品 -->
@@ -111,11 +111,10 @@
  
  </view> 
 
- <view class="body-view">
-        <loading hidden="{{hidden}}" bindchange="loadingChange">  
-        {{load}}  
-        </loading>  
-</view>
+ <!-- load -->
+ <view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
 
    <!-- toast -->
    <import src="../../public/appToast/appToast.wxml"/>

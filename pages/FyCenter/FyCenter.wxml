@@ -1,18 +1,28 @@
 <!--pages/FyCenter/FyCenter.wxml-->
-<view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>商家分佣中心</view> 
-  </my-component>
+ <view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">分销中心</view>
 </view>
 
 
 <!-- 内容部分 -->
 <view class='container'>
+<!-- 悬浮框 -->
+  <view class='speion' wx:if="{{top.waring_tip != ''}}">
+      <view class='spe-left'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_tishi.png'></image>
+        <text>{{top.waring_tip}}</text>
+      </view>
+      <view class='spe-right' bindtap='Query'>
+          立即处理
+      </view>
+  </view>
       <view class='tops'>
-        <text class='top-One'>进入佣金(元)</text>
-        <text class='top-Two'>{{top.money}}</text>
-        <text class='top-Thr'>昨日{{top.yesterday}}</text>
+        <text class='top-One'>待激活佣金(元)</text>
+        <text class='top-Two'>{{top.today_reward}}</text>
+        <text class='top-Thr' wx:if="{{top.yesterday!=''}}">已激活{{top.yesterday}}</text>
         </view>
 
         <view class="order" bindtap='myOrder'>
@@ -26,25 +36,66 @@
         <!-- 我的订单 -->
 <view class="order-item">
     <view class="navCont">
-        <navigator hover-class="none"  class="item">
-            <view class='num'>{{top.referee_total}}</view>
-            <view>直接粉丝(总)</view>
+        <navigator hover-class="none"  class="item" bindtap='Record'> 
+            <view class='num'>1/{{top.task_ratio}}</view>
+            <view style='font-size:29.17rpx;'>任务比例(单)</view>
         </navigator>
-         <navigator  hover-class="none"  class="item" >
+         <navigator  hover-class="none"  class="item" bindtap='Record'>
             <view class='num'>{{top.settle_order}}</view>
-            <view>待核销(单)</view>
+            <view style='font-size:29.17rpx;'>待核销(单)</view>
         </navigator>
-        <navigator  hover-class="none" class="item">
+        <navigator  hover-class="none" class="item" bindtap='Notgifts'>
            <view class='num'>{{top.giveaway_total}}</view>
-            <view>剩余赠送(单)</view>
+            <view style='font-size:29.17rpx;'>剩余赠送(单)</view>
         </navigator>
      
         
+
 </view>
     </view>
+ 
+    <!-- 绩效统计 -->
+    <view class='Sum' wx:if="{{top.task_title.is_show}}">
+            <view class='Sum-title'>
+            <view class='T-tl'>
+              <text>{{top.task_title.subtitle}}</text>
+              <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_5.png' bindtap='Title' data-id="1"></image>
+            </view>
+                <!-- <view class='T-tr btn-s' wx:if="{{!top.task_title.is_disabled}}"  bindtap='SetOrder'>{{top.task_title.button}}</view> -->
+                <view class='T-tr btn-s'  wx:if="{{top.task_title.is_disabled}}"  bindtap='SetOrder'>{{top.task_title.button}}</view>
+                <view class='T-tr btn-s grey' bindtap='Title' data-id="2" wx:else  >{{top.task_title.button}}</view>
+              
+              </view>
+        </view>
+    
+        <!-- 统计列表 -->
+        <view class='Sum-list'>
+        <block wx:for="{{top.task_list}}" wx:key="index">
+          <view class='Sunm-item'>
+           <view class='Sunm-left'> 
+            <canvas canvas-id='bgCanvas{{item.scale}}{{index}}'  class='canvasI'></canvas>
+            <canvas canvas-id="runCanvas{{item.scale}}{{index}}" class='canvasII' ></canvas>
+            </view>  
+              <view class='item-right'>
+                <view class='title'> 
+                  <text style='font-size:25rpx;'>{{item.title}}</text>
+                  <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_5.png'></image>
+                </view>
+                <view class='title-bot'>
+                  <text class='bot-O'>{{item.finish_total}}</text>
+                  <text class='bot-T'>({{item.sub_title}})</text>
+                </view>
+            </view>
+              
+          </view>
+          </block>
+        </view>
+         
+    
+
+
 
     <!-- 全部订单 -->
-
 <view class='all'>
   <view  class="earn">
   <view class="myEarn" style='font-size:29.17rpx;font-weight:bold;padding-left:0!important;'>数据统计</view>
@@ -65,36 +116,41 @@
 <swiper  duration="300" >
     <swiper-item>
     <view class='conts'>
+    <block wx:for="{{total_list}}" wx:key="index">
         <view class='num'>
-            <view class='zs'>
-             赠送商品
-            </view>
-            <view class='number'>
-            {{total_list.give_total}}
-            </view>
+            <view class='zs'>{{item[0]}} </view>
+            <view class='number'>{{item[1]}}</view>
         </view>
-        <view class='num'>
-            <view class='zs'>
-              核销订单
-            </view>
-            <view class='number'>
-            {{total_list.settle_total}}
-            </view>
-        </view>
-        <view class='num'>
-            <view class='zs'>
-              会员拉新
-            </view>
-            <view class='number'>
-            {{total_list.newly_member_total}}
-            </view>
-        </view>
+        </block>
     </view>
     </swiper-item>
-    
 </swiper>
-
 </view>
 </view>
 
 
+
+
+   <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
+
+<!-- 模态框 -->
+  <cover-view   hidden="{{!isShows}}"  class='modal'>
+      <cover-view  data-type="mask"  catchtap='hideModal' class='modal-mask' ></cover-view>
+      <cover-view  class='modal-layer  modal-layer-radius {{modalSize == "sm" ? " modal-layer-sm" : " modal-layer-md" }} ' >
+          <!-- 头部 -->
+          <cover-view class='modal-header'>        
+              <cover-view>温馨提示</cover-view>        
+          </cover-view>
+
+          <!-- 内容区域 -->
+          <cover-view class='modal-body'>         
+            <cover-view>{{Toast==1?top.task_title.remark:top.task_title.button_tip}}</cover-view>                         
+          </cover-view>
+          <cover-view class='modal-footer' bindtap='Sure'>
+                <cover-view>确定</cover-view>
+          </cover-view>
+      </cover-view>
+  </cover-view>

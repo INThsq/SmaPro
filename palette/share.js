@@ -1,3 +1,4 @@
+const app = getApp();
 export default class ImageExample {
   palette(options) {
    const image = options.imges;
@@ -6,7 +7,7 @@ export default class ImageExample {
       var obj = {
         width: '630rpx',
         height: '490rpx',
-        background: 'https://huixuangou.oss-cn-beijing.aliyuncs.com/wechat/images/share_2.jpg',
+        background: 'https://api.myzy.com.cn/api/images/20190410122419.jpg',
         views: [
           {
             type: 'image',

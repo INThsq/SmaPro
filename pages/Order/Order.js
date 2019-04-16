@@ -16,16 +16,16 @@ Page({
   },
   //返回上一页
   back:function(){
-    let tz = this.data.tz;
-    if(tz == 1){
+    // let tz = this.data.tz;
+    // if(tz == 1){
       wx.switchTab({
         url: '../UserCenter/userCenter',
       })
-    }else{
-      wx.navigateBack({
-        delta: 1,
-      })
-    }
+    // }else{
+    //   wx.navigateBack({
+    //     delta: 1,
+    //   })
+    // }
   },
   check(e){
     let order_num =e.currentTarget.dataset.id;
@@ -35,6 +35,8 @@ Page({
   },
   //待支付
   toPay(e){
+    app.types = 2;
+    app.index = 1;
     let state = e.currentTarget.dataset.status;
     let order_num = e.currentTarget.dataset.order;
     if(state == 0 || state ==2){
@@ -190,6 +192,9 @@ Page({
   },
   //确认收货接口
   confirmReceipt(order_num){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url +'confirmReceipt');
     wx.request({
       url: app.globalData.url +'confirmReceipt',
@@ -199,10 +204,12 @@ Page({
       },
       method:'POST',
       success:res=>{
+        this.setData({
+          isShow:false
+        })
           if(res.data.code == 200){
             this.Modals.hideModal();
             this.show(res.data.msg);
-          
             this.getOrder(4)
             this.setData({
               "currentTab": 5,
@@ -292,6 +299,9 @@ Page({
   },
   //获取订单数据
   getOrder(order_status){
+    this.setData({
+      isShow:true
+    })
     var that = this;
     that.header(app.globalData.url + 'orderList');
     wx.request({
@@ -302,6 +312,9 @@ Page({
         order_status: order_status
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           var detail = res.data.data.callback.order_list;
           let date = Math.round(new Date().getTime() / 1000).toString();
@@ -393,6 +406,9 @@ Page({
   },
   //未支付订单详情
   orderArticle(order_num){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url +'orderArticle');
     wx.request({
       url: app.globalData.url + 'orderArticle',
@@ -402,6 +418,9 @@ Page({
         order_num: order_num
       },
       success:res=>{
+        this.setData({
+          isShow:false
+        })
         if(res.data.code ==200){
           let callback = JSON.stringify(res.data.data);
           wx.navigateTo({
@@ -417,6 +436,9 @@ Page({
   },
   // 去支付
   getWaitPay(order_num) {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url + 'getWaitPay');
     wx.request({
       url: app.globalData.url + 'getWaitPay',
@@ -426,6 +448,9 @@ Page({
         order_num: order_num
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if(res.data.code == 200){
           wx.setStorageSync('details', res.data.data.callback);
           wx.setStorageSync('market_price', res.data.data.callback.mall_goods.sale_price);
@@ -443,6 +468,9 @@ Page({
   },
   //取消订单
   invalidOrder(order_num,index){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url + 'invalidOrder');
     let detail = this.data.listData;
     wx.request({
@@ -453,6 +481,9 @@ Page({
         order_num: order_num
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           detail.splice(index,1)
           this.setData({

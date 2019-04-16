@@ -23,10 +23,12 @@ Page({
       this.setData({
         sex:"男"
       })
+      break;
       case 2:
       this.setData({
         sex:'女'
       })
+      break;
     }
     this.setData({
       nickname: nickname,

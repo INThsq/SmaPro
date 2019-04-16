@@ -2,7 +2,7 @@
 <view>
   <my-component>
     <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>惠选豆</view> 
+     <view>{{Beans}}</view> 
   </my-component>
 </view>
 
@@ -14,7 +14,7 @@
 <view class='fanNum' style='background:url("http://oss.myzy.com.cn/wechat/images/img_fsrs_beijing.png") no-repeat center; background-size:cover;'>
   <view class='top'>
     <image src='http://oss.myzy.com.cn/wechat/images/icon_fensirenshu.png'></image>
-    <text>惠选豆(券)</text>
+    <text>{{Bean}}</text>
   </view>
   <view class='bottom'>
  {{support.support_total}}
@@ -24,7 +24,7 @@
 <!-- 内容 -->
 <view class="bean-cont">
   <!-- 待提现 -->
-  <block wx:for="{{support.support_List}}">
+  <block wx:for="{{support.support_List}}" wx:key="index">
   <view class="item" bindtap='wait' data-status="{{item.status}}">
     <view class="left">
       <text class="left-title" wx:if="{{item.status == 0}}">待提现</text>

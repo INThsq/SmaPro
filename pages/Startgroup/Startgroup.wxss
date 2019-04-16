@@ -1,4 +1,5 @@
 /* pages/Startgroup/Startgroup.wxss */
+@import "../StoreCode/StoreCode.wxss";
 page{
   overflow:hidden;
 }
@@ -101,7 +102,7 @@ letter-spacing: .5px;
   width: 600rpx;
   height: 800rpx;
   position: relative;
-  top:466rpx;
+  top:36%;
   left: 76rpx;
 }
 .info{

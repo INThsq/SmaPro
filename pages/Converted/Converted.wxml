@@ -49,7 +49,7 @@
                 <text> 麦芙迪男士面膜美白补水控油控都保湿去黑头 ...</text>
                 <view class='right_bot'>
                   <image src='http://oss.myzy.com.cn/wechat/images/icon_doudou.png'></image>
-                  <view class='doudou'>99<text>惠选豆</text></view>
+                  <view class='doudou'>99<text>{{Beans}}</text></view>
                 </view>
             </view>
         </view>
@@ -87,7 +87,7 @@
         <view class='Exp_conts'>
           <text>1.金币直接兑换商品，所兑换商品数量有限，先兑先得，兑完即止</text>
           <text>2.通过本活动金币兑换的商品以兑换码形式发放</text>
-          <text>3.获得兑换码后，打开惠选购APP，点击商品兑换待领取，点击加入购物车即可</text>
+          <text>3.获得兑换码后，打开{{Tname}}APP，点击商品兑换待领取，点击加入购物车即可</text>
           <text>4.此款商品每人先兑换1个</text>
         </view>
     </view>
@@ -98,7 +98,7 @@
   <view class='payfor'>
     <view class='left'>
       总计:
-      <text style='color:#F43736'>{{total}}惠选豆</text>
+      <text style='color:#F43736'>{{total}}{{Beans}}</text>
     </view>
     <view class='submit' bindtap='submits'>
     立即兑换

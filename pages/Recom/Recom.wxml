@@ -1,6 +1,4 @@
 <!--pages/Recom/Recom.wxml-->
-
-<!--pages/Explain/Explain.wxml-->
 <view>
   <my-component>
      <view>分销推广说明</view> 

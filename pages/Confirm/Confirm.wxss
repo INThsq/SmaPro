@@ -1,4 +1,6 @@
 /* pages/Confirm/Confirm.wxss */
+@import '../../public/compback/compback.wxss';
+
 .container{
   margin-top: 140rpx;
 }
@@ -260,7 +262,7 @@ color: transparent;
 	line-height:30px;
 	text-align: center;
 	float: left;
-  background: #F3F3F3;
+  /* background: #F3F3F3; */
   
 }
 .shul .left{
@@ -285,7 +287,7 @@ line-height: 30px;
 /*普通样式*/
 .stepper .normal{
 	color: #979797;
-  background: #F3F3F3;
+  background: #E2E2E2;
 }
  
 /*禁用样式*/
@@ -387,7 +389,7 @@ line-height: 30px;
 }
 /*对话框 */
 .commodity_attr_box {
-  height:692rpx;
+  height:722rpx;
   width: 100%;
   overflow: hidden;
   position: fixed;
@@ -453,8 +455,24 @@ width:40rpx;
   font-size:25rpx!important;
 
 }
+.titles{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.titles image{
+  position: absolute;
+  top:30rpx;
+  left:0;
+}
+.titles text{
+  font-size: 29.17rpx;
+  font-weight: bold;
+}
 .way-pay{
-  padding-top:50rpx;
+  /* padding-top:50rpx; */
+  padding-top:90rpx;
   box-sizing: border-box;
   text-align: center;
 }

@@ -8,5 +8,8 @@
   border-top: 1px solid #f7f7f7;
 } */
 .order-conts{
-  margin-top:216rpx;
+  margin-top:180rpx;
+}
+.conts{
+  background: white;
 }

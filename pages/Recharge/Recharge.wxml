@@ -16,7 +16,7 @@
         <view class='pa'>
         ￥
         </view>
-         <input type='digit' name='name' placeholder="0" class='regCon-txt'  value='{{money}}' bindinput='money' style='padding-bottom:{{padTop}}rpx' />
+         <input type='digit' name='name' placeholder="" focus='true' class='regCon-txt'  value='{{money}}' bindinput='money' style='padding-bottom:{{padTop}}rpx' />
         </view>
         
         <view class='all' wx:if="{{money > 1000}}">
@@ -64,8 +64,8 @@
 </dialog>
 
   <!-- toast -->
-  <import src="../../public/appToast/appToast.wxml"/>
-  <template is="toast" data="{{ ..._toast_ }}"/>
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
 
   <!-- load -->
   <view class="load {{isShow ? 'show' : ''}}" >

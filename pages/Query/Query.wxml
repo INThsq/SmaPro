@@ -1,0 +1,33 @@
+<!--pages/Query/Query.wxml--> 
+<view class="wrapper">
+    <view class='back' bindtap='back'>
+      <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+    </view>
+    <view class="tetxs">网点查询</view>
+  </view>
+
+
+
+<!-- 内容部分 -->
+<view class='container' >
+  <view class='top'>
+    <!-- 搜索框 -->
+        <view class='search'>
+            <form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
+                  <input confirm-type="search" placeholder-class='placeholder' placeholder='请输入提货网点编号'  type="search" value="{{scene_num}}" class='topInput' name='input' bindinput='keyword' bindconfirm="searchSubmitFn"/>
+                  <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_7.png' bindtap="ScanCode"  class='searches'></image>
+          </form>
+      </view>
+
+      <!-- 按钮 -->
+      <view class='top-btn'>
+          <view class='button' bindtap='Query'>提货网点查询</view>
+      </view>
+  </view>
+</view>
+
+
+<!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+

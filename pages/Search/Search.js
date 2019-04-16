@@ -22,7 +22,6 @@ Page({
    */
   onLoad: function (options) {
     this.openHistorySearch();
-    this.goodsList(0, 2, 1);
     new app.ToastPannel();
     let search_term = options.search_term;
     if(search_term){
@@ -34,6 +33,66 @@ Page({
     }
     
   },
+  tabFun: function (e) {
+    //获取触发事件组件的dataset属性 
+    var _datasetId = e.target.dataset.id;
+    switch(_datasetId){
+      // 综合
+      case "0":
+        this.goodsList(0,2, 1, '');
+        this.setData({
+          keyword: ''
+        })
+        break;
+      // 新品
+      case "1":
+        this.goodsList(0,2, 1, 'asc_create_time');
+        this.setData({
+          keyword: 'asc_create_time'
+        })
+        break;
+      // 销量
+      case "2":
+        this.goodsList(0,2, 1, 'desc_sales_volume');
+        this.setData({
+          keyword: 'desc_sales_volume'
+        })
+        break;
+    }
+    var _obj = {};
+    _obj.curHdIndex = _datasetId;
+    _obj.curBdIndex = _datasetId;
+    this.setData({
+      tabArr: _obj
+    });
+  },
+  // 价格排序
+  changechoose: function (e) {
+    var index = e.target.dataset.index;
+    index++;
+    var  that = this;
+    if (index == 1) {
+      that.setData({
+        dataindex: index,
+        imageurl2: 'http://oss.myzy.com.cn/wechat/images/icon_xq_s.png'
+      })
+      this.goodsList(0, 2, 1,'asc_price')
+    } else if (index == 2) {
+      that.setData({
+        dataindex: index,
+        imageurl2: 'http://oss.myzy.com.cn/wechat/images/icon_xq_x.png'
+      })
+      this.goodsList(0, 2, 1, 'desc_price')
+
+    } else {
+      that.setData({
+        dataindex: 1,
+        imageurl2: 'http://oss.myzy.com.cn/wechat/images/icon_xq_s.png'
+      })
+      this.goodsList(0, 2, 1, 'asc_price')
+
+    }
+  }, 
   // 内容赋值
   Assign(e){
     let text = e.currentTarget.dataset.text;
@@ -60,6 +119,8 @@ Page({
   //点击搜索按钮提交表单跳转并储存历史记录
   searchSubmitFn: function (e) {
     let searchValue = this.data.searchValue;
+    this.goodsList(0, 2, 1, searchValue);
+    this.goodsList
     if (e){
       var inputVal = e.detail.value||this.data.inputVal
       this.setData({
@@ -148,7 +209,7 @@ Page({
     })
   },
   //列表
-  goodsList(classify_id, goods_type, now_page) {
+  goodsList(classify_id, goods_type, now_page, keyword) {
     this.header(app.globalData.url + 'goodsList');
     wx.request({
       url: app.globalData.url + 'goodsList',
@@ -157,12 +218,12 @@ Page({
       data: {
         classify_id: classify_id,
         goods_type: goods_type,
-        now_page: now_page
+        now_page: now_page,
+        keyword: keyword
       },
       success: res => {
         if (res.data.code == 200) {
           let listx = res.data.data.goods_list;
-         
           this.setData({
             listx: listx,
             page: res.data.data.now_page

@@ -15,38 +15,45 @@
           可提现金额
         </view>
         <view class='top-Two'>
-            <view class='mony'>￥{{money}}</view>
+            <view class='mony'>￥{{callback.account_money}}</view>
             <view class='btn' bindtap='Deposit'>提现</view>
         </view>
     </view>
+    <view class="order">
+            <view class="myOrder" >不可用金额</view>
+            <view class="icon">
+                <text class='all' style='font-size:33.3rpx;color:#666;'>{{callback.freeze_money}}</text>
+                <text class="iconfont icon-arrow" style='color:#666'></text>
+            </view> 
+        </view>
+
     <!-- 结算部分 -->
     <view class='last'>
-    <view class="order">
-        <view class="myOrder" >已结算收入</view>
-        <view class="icon">
-            <text class='all' style='font-size:33.3rpx;color:#666;'>0.00</text>
-            <text class="iconfont icon-arrow" style='color:#666'></text>
-        </view> 
-    </view>
-    <view class="order">
-        <view class="myOrder" >未结算收入</view>
-        <view class="icon">
-            <text class='all' style='font-size:33.3rpx;color:#666;'>0.00</text>
-            <text class="iconfont icon-arrow" style='color:#666'></text>
-        </view> 
-    </view>
-    </view>
+            <view class="order"  bindtap='Bill'  data-group="{{callback.income.bill_type_group}}"  data-ids="{{callback.income.bill_type_ids}}">
+                <view class="myOrder" >已结算收入</view>
+                <view class="icon">
+                    <text class='all' style='font-size:33.3rpx;color:#666;'>{{callback.payment_money}}</text>
+                    <text class="iconfont icon-arrow" style='color:#666'></text>
+                </view> 
+            </view>
+            <view class="order">
+                <view class="myOrder" >未结算收入</view>
+                <view class="icon">
+                    <text class='all' style='font-size:33.3rpx;color:#666;'>{{callback.wait_activate_money}}</text>
+                    <text class="iconfont icon-arrow" style='opacity:0;'></text>
+                </view> 
+            </view>
+            </view>
      
-
      <!-- 明细部分 -->
     <view class='last'>
-    <view class="order">
+    <!-- <view class="order">
         <view class="myOrder" >收支明细</view>
         <view class="icon">
             <text class="iconfont icon-arrow" style='color:#666'></text>
         </view> 
-    </view>
-    <view class="order">
+    </view> -->
+    <view class="order" bindtap='Bill' data-group="{{callback.reward.bill_type_group}}"  data-ids="{{callback.reward.bill_type_ids}}">
         <view class="myOrder" >提现记录</view>
         <view class="icon">
             <text class="iconfont icon-arrow" style='color:#666'></text>
@@ -59,3 +66,34 @@
 <view class='text'>
   <text>销售收入将显示在这里，已结算收入可以随时申请提现</text>
 </view>
+
+
+<!-- 慕态框 -->
+<view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+<!--弹出框  -->
+<view animation="{{animationData}}"  class="commodity_attr_box tx-box" wx:if="{{showModalStatus}}">
+  <view class='titles'>
+    <text class='title_left' bindtap='hideModal'>取消</text>
+    <text class='title_center'>选择提现方式</text>
+  </view>
+  <block wx:for="{{callback.application}}" wx:key="{{index}}">
+  <view class='item' bindtap='Choose'  data-jump='{{item.jump}}'>
+      <image src='{{item.image}}' class='way'></image>
+      <view class='item_right'>
+        <text class='choose_one' decode="{{true}}">{{item.name}}</text>
+        <!-- <text class='choose_two' decode="{{true}}">(暂未开通)</text> -->
+      </view>
+    </view>
+  </block>
+</view>
+
+
+
+
+
+
+
+  <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+        <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+        </view>

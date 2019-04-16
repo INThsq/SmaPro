@@ -1,6 +1,5 @@
 {
   "navigationStyle": "custom",
-  "disableScroll": true,
   "usingComponents": {
     "my-component": "../../public/components/component-tag-name"
   }

@@ -1,4 +1,5 @@
 /* pages/UserCenter/userCenter.wxss */
+@import "../../static/css/index.wxss";
 view{
   font-family:"SourceHanSansSC-Regular";
 }
@@ -192,6 +193,9 @@ navigator{
 }
 .Two{
   padding:44rpx 10px 20rpx;
+}
+.Two>view:nth-child(8){
+  margin-right: 0!important;
 }
 .Two .sy{
   display: flex;

@@ -10,15 +10,16 @@
 </view>
   
   
+
   <!-- 内容区域 -->
   <view class='container' scroll-y="true" >
   <view hidden='{{!hideBottom}}' class="{{annoType ? 'conall' : ''}}">
   <!-- 轮播图 -->
   <view class='swipercontent'>
-    <swiper  bindanimationfinish="changeGoodsSwip" class='swiper' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
+    <swiper  bindanimationfinish="changeGoodsSwip" class='swiper' autoplay="{{autoplay}}" interval="5000" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
       <block wx:for="{{imgUrls}}" wx:key="unique">
-        <swiper-item>
-          <image bindtap='preview' data-index="{{index}}" src="{{item}}" lazy-load='true' class="slide-image" width="355" height="150"/>
+        <swiper-item >
+          <image  bindtap='preview' data-index="{{index}}" src="{{item}}" lazy-load='true' class="slide-image fade_in" width="355" height="150"/>
         </swiper-item>
       </block>
     </swiper>
@@ -89,7 +90,7 @@
       <view class='con-left'>贡献</view>
       <view class='cont-right'>此单可得 <text class='cont-red'>{{detail.goods_details.points}}</text> 个贡献值</view>
     </view>
-    <view  class='con-gxs' bindtap='navCour' data-name="{{detail.apply_type.unique_name}}" data-type="{{detail.apply_type.image}}">
+    <view  class='con-gxs' bindtap='navCour' data-name="{{detail.apply_type.unique_name}}" data-type="{{detail.apply_type.jump}}">
         <image src='http://oss.myzy.com.cn/wechat/images/jiangnang_banner.png'></image>
     </view>
     <view class='con-gx'>
@@ -142,7 +143,7 @@
       
   </view>
   <!-- 店铺 -->
-  <view class='store'>
+  <view class='store' bindtap='EnterShop' data-id="{{mall_id}}">
       <view class='store-image'>
           <image src='{{detail.goods_details.member_mall.logo}}'></image>
       </view>
@@ -152,7 +153,7 @@
         </text>
       </view>
       <view class='store-btn'>
-        <button bindtap='EnterShop' data-id="{{mall_id}}">进店逛逛</button>
+        <button >进店逛逛</button>
       </view>
   </view>
   <!-- 店铺推荐 -->
@@ -250,7 +251,7 @@
           <text class="yang">￥</text>
           <text class='nl'>{{sku.market_price ? sku.market_price:modalInfo.goods_data.price}}</text>
           </view>
-          <text class='two'>库存{{sku.stock}}件</text>
+          <text class='two'>库存{{detail.goods_details.stock_count||sku.stock}}件</text>
         <block wx:if="{{goods_sku.length > 1}}">
          <!--<block wx:if="{{goods_sku[0].attr_idsname!=undefined}}">-->
           <text class='ys yes' >已选:{{goods_sku[0].name+skusss1}} , {{goods_sku[1].name +skusss2}}</text>
@@ -293,20 +294,35 @@
   
   <view class="stepper">
     <!-- 减号 -->
-    <text class="{{minusStatus}} nos " bindtap="bindMinus">
-    <text class='iconfont icon-jianhaob'></text>
     
-    </text>
     <!-- 数值 -->
+    <block wx:if="{{touch}}">
+        <text class="{{minusStatus}} nos " bindtap="bindMinus">
+            <text class='iconfont icon-jianhaob'></text>
+            
+            </text>
     <input type="number" bindchange="bindManual" value="{{num}}" />
     <!-- 加号 -->
     <text class="normal no" bindtap="bindPlus">
     <text class='iconfont icon-jiahaob'></text></text>
+    </block>
+    <blcok wx:else>
+        <text class="disabled  nos ">
+            <text class='iconfont icon-jianhaob'></text>
+            
+            </text>
+      <input type="number" disabled="disabled"  value="{{num}}" />
+      <!-- 加号 -->
+      <text class="disabled  no" style='background:#F4F4F4!important;' >
+      <text class='iconfont icon-jiahaob'></text></text>
+    </blcok>
   </view>
   </view>
     </view>
   </scroll-view>
   </view>
+  
+
   
   <button wx:if="{{stock != 0 || code != 401}}" class='btn' bindtap='buy'>完成</button>
   <button wx:else class='btn' style='background:#999'>完成</button>
@@ -333,7 +349,8 @@
             >
 
     <view class='modal-body'>
-        <view>客服电话400 8010 168</view>     
+        <view>{{telephone_tip}}</view>     
     </view>
-
 </dialog>
+
+

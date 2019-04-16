@@ -22,7 +22,34 @@ Page({
     content:'',
     virtual_money:''
   },
-
+  Steed(e){
+    let name=e.currentTarget.dataset.name;
+    
+    switch(name){
+      case "商家入驻":
+        wx.navigateTo({
+          url: "../Setted/Setted"
+        })
+        break;
+      case "店铺管理":
+      wx.navigateTo({
+        url: '../Setted/Setted',
+      })
+      break;
+      case "顾问编号":
+      let content = wx.getStorageSync('content');
+      if(content){
+        wx.navigateTo({
+          url: '../getCode/getCode?code=1',
+        })
+      }else{
+        wx.navigateTo({
+          url: '../Accredit/Accredit',
+        })
+      }
+    }
+    
+  },
   //收益列表跳转事件
   navCour: function () {
     utils.skip('../Earn/Earning')
@@ -30,6 +57,9 @@ Page({
   //绑定手机号跳转
   BindPhone(){
     utils.skip('../BindPhone/BindPhone')
+  },
+  query(){
+    utils.skip('../Querys/Query')
   },
   // 粉丝订单跳转
   fanOrder:function(){
@@ -42,7 +72,7 @@ Page({
   },
   //未领礼物
   notgift(){
-    utils.skip('../Not/Not')
+    utils.skip('../Notgifts/Notgifts')
   },
   //天天抢钱
   Ronmoney() {
@@ -88,8 +118,9 @@ Page({
   _confirmEventFirst: function () {
     this.Modal.hideModal();
     wx.showTabBar();
+    let telephone = "'"+this.data.telephone+"'";
     wx.makePhoneCall({
-      phoneNumber: '4008010168', //此号码并非真实电话号码，仅用于测试
+      phoneNumber:telephone, //此号码并非真实电话号码，仅用于测试
       success: function () {
         console.log("拨打电话成功！")
       },
@@ -99,11 +130,12 @@ Page({
     })
   },
   _cancelEvent: function () {
+    wx.showTabBar();
   },
   //收货地址跳转
   adress: function () {
+    app.types =1;
     utils.skip('../Address/Address')
-   
   },
 //会员中心跳转
   toAttention(){
@@ -115,6 +147,14 @@ Page({
   jump(){
     wx.navigateTo({
       url: '../Accredit/Accredit',
+    })
+  },
+  //跳转到账单
+  Bill(e){
+    let ids = e.currentTarget.dataset.ids;
+    let group = e.currentTarget.dataset.group;
+    wx.navigateTo({
+      url:'../Bill/Bill?ids='+ids+'&group='+group
     })
   },
   onReady: function () {
@@ -144,18 +184,24 @@ Page({
 
   },
   onShow: function () {
-    this.getUser();
+    wx.login({
+      success: res => {
+        wx.setStorageSync('codes', res.code)
+      }
+    })
     // 生命周期函数--监听页面显示
-    var uuid = wx.getStorageSync('uuid');
+    var content = wx.getStorageSync('content');
     // 没有授权登录
-    if (uuid == '') {
+    if (content) {
       this.setData({
-        usrState: 0
+        usrState:3
       })
+    this.getUser();
+
     } else {
       // 已经获取授权登录
       this.setData({
-        usrState: 1
+        usrState: 0
       })
     }
 
@@ -167,8 +213,8 @@ Page({
       this.setData({
         money: content.data.content.userinfo.money,
         points: content.data.content.userinfo.points,
-        fans_order_total: content.data.content.fans_order_total,
-        fans_total: content.data.content.fans_total,
+        fans_order_total: content.data.content.welfare.fans_order_total,
+        fans_total: content.data.content.welfare.fans_total,
         order_total: content.data.content.order_total,
         receive_total: content.data.content.receive_total,
 
@@ -204,11 +250,27 @@ Page({
    
   },
   onLoad:function(){
-    
-    this.getUser();
+    var  telephone=wx.getStorageSync('telephone');
+    var  telephone_tip = wx.getStorageSync('telephone_tip');
+    this.setData({
+      telephone:telephone,
+      telephone_tip:telephone_tip,
+      Tname:app.globalData.Tname,
+      Beans: app.globalData.Beans,
+      Bean: app.globalData.Bean
+    })
+    app.types =1;
+    wx.login({
+      success: res => {
+        console.log(res.code)
 
+      }
+    })
+    app.gift_praise_list =0;
     var content = wx.getStorageSync('content');
     if(content){
+    this.getUser();
+
       this.setData({
         content: content
       })
@@ -218,7 +280,6 @@ Page({
     }
     
   new app.ToastPannel();
-
   },
   //生成随机字符串
   randomWord() {
@@ -281,13 +342,26 @@ Page({
   },
   //获取个人信息
   getUser(){
+    this.setData({
+      isShow:true,
+    })
     this.header(app.globalData.url+'user');
     wx.request({
       url: app.globalData.url+'user',
       method: 'get',
       header: this.data.header,
       success: res => {
+        this.setData({
+          isShow:false,
+        })
         if(res.data.code == 200 ){
+            this.setData({
+              mall_giveaway_log: res.data.data.content.userinfo.mall_giveaway_log,
+              is_show: res.data.data.content.welfare.is_show,
+              fans_order_total: res.data.data.content.welfare.fans_order_total,
+              fans_total: res.data.data.content.welfare.fans_total,
+              content:res.data,
+            })
              wx.setStorage({
              key: 'content',
              data: res.data,
@@ -302,7 +376,12 @@ Page({
           wx.clearStorageSync('content');
           this.show(res.data.msg);
         }else{
-          wx.clearStorageSync('content');
+          wx.removeStorage({
+            key: 'content',
+           
+          })
+
+          // wx.clearStorageSync('content');
 
         }
       }
@@ -311,7 +390,91 @@ Page({
 
 
   },
+  //跳转我的分销
+  Dis:utils.throttle(function (e){
+    this.activity();
+  },1000),
+  //
+   // 分销中心
+   distribution(member_mall_id){
+    var scenes = 0;
+    var data ={};
+    switch(scenes){
+      // 非订单验证
+        case 0:
+        data={
+          scene:0,
+          order_num:'',
+          goods_id:0,
+          member_mall_id:0
+        }
+        break;
+        // 订单验证
+        case 1:
+        let goods_id = this.data.goods_id;
+        let mall_goods_id = this.data.mall_goods_id;
+        let order_num = this.data.order_num;
+        data={
+          goods_id:goods_id,
+          mall_goods_id:mall_goods_id,
+          order_num:order_num
+        }
+        break;
+    }
+    this.header(app.globalData.url +'distribution');
+    wx.request({
+     
+      url: app.globalData.url +'distribution',
+      header:this.data.header,
+      method:'get',
+      data:data,
+      success:res=>{
+        if(res.data.code ==200){
+          wx.navigateTo({
+            url:'../FyCenter/FyCenter?top='+JSON.stringify(res.data.data.callback)
+          })
+         
+        }
+      }
+    })
+  },
+  //赠送商家入驻
+  activity() {
+    this.setData({
+      isShow:true,
+    })
+    this.header(app.globalData.url + 'activity');
+    wx.request({
+      url: app.globalData.url + 'activity',
+      method: 'get',
+      header: this.data.header,
+      success: res => {
+        this.setData({
+          isShow:false,
+        })
+        if (res.data.code == 200) {
+          let type = res.data.data.callback.type;
+          switch (type) {
+            case 0:
+              app.scenes = 1;
+              wx.setStorageSync('datas', res.data.data.callback)
+              wx.navigateTo({
+                url: '../jjb/jjb?data=' + JSON.stringify(res.data.data.callback),
+              })
+              break;
+            case 1:
+              this.distribution('')
+              app.scenes = 0;
+              break;
+          }
+        } else {
+          this.show(res.data.code)
+        }
+      }
+    })
+  },
     onLaunch: function () {
+     
     }
 
 })

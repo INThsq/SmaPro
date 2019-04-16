@@ -1,6 +1,7 @@
 /* pages/WhitCash/WhitCash.wxss */
 @import '../../public/compback/compback.wxss';
-
+@import "../../static/css/index.wxss";
+@import "../Balance/Balance.wxss";
 page{
   height: 100vh;
 }

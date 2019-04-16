@@ -1,10 +1,10 @@
 <!--pages/waitPay/waitPay.wxml-->
 <!-- 组件模板 -->
-<view class="wrapper" >
+<view class="wrapper" style='background:transparent!important'>
    <view class=' back' bindtap='back'>
     <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
   </view> 
-  <view class="tetxs">
+  <view class="tetxs" style='color:white!important'>
     {{Waitpay.callback.order_queue.status}}
   </view>
 </view>

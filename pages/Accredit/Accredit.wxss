@@ -1,4 +1,5 @@
 /* pages/Accredit/Accredit.wxss */
+@import "../../static/css/index.wxss";
 .acc_conts{
   margin-top:140rpx;
   padding: 30rpx;
@@ -84,8 +85,7 @@ button::after{
 }
 .refer{
   display: flex;
-  margin: 54rpx 0;
-
+  margin-bottom:74rpx;
 }
 .refer image{
  display: block;

@@ -85,8 +85,31 @@ Page({
       header: header
     })
   },
+  getLocation: function () {
+
+    let that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      success(res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+        let lnglat = longitude + ',' + latitude;
+        that.setData({
+          latitude: latitude,
+          longitude: longitude,
+          lnglat: lnglat
+        })
+      },
+      fail(res) {
+      }
+    })
+  },
   //获取授权信息
   bindGetUserInfo: function (e) {
+    this.getLocation();
+    var dot_num = this.data.dot_num;
+    var recInfo = this.data.recInfo;
+    
     getApp().globalData.userInfo = e.detail;
     wx.setStorageSync('userInfo', e.detail);
     var referee_id = '';
@@ -106,29 +129,41 @@ Page({
       wx.login({
         success: res => {
           this.setData({
-            hide: false
+            isShow: true
           })
-          // this.setData({
-          //   code:res.code
-          // })
           var code = res.code;
+          console.log(code)
           userInfo.code = code;
-          wx.request({
-            url: app.globalData.url + 'wxLogin',
-            method: 'POST',
-            header: app.globalData.header,
-            data: {
+          if (recInfo.number) {
+            var data = {
+              login_type: 2,
+              client_type: 3,
+              client_version: '1.0.0',
+              oauth_data: JSON.stringify(userInfo),
+              referee_data: JSON.stringify(recInfo)
+            }
+           
+          }else{
+            var data = {
               login_type: 2,
               client_type: 3,
               client_version: '1.0.0',
               oauth_data: JSON.stringify(userInfo)
-            },
+            }
+            
+          }
+          wx.request({
+            url: app.globalData.url + 'wxLogin',
+            method: 'POST',
+            header: app.globalData.header,
+            data:data,
             success: res => {
 
               //返回值为401的情况下  未授权  跳转授权页面
               if (res.data.code == 401) {
                 this.setData({
-                  hide: true
+                  isShow: false
+                  
                 })
                 // var res = res.data.data;
                 this.shows(res.data.msg)
@@ -136,6 +171,8 @@ Page({
                   url: '../userCenter/userCenter',
                 })
               } else if (res.data.code == 200) {
+              
+                app.token = res.data.data.token;
                 //已登录情况下为2  后台获取到的信息渲染到页面上
                 //生成header
                 var uuid = res.data.data.uuid;
@@ -181,20 +218,34 @@ Page({
                         key: 'content',
                         data: res.data
                       })
-                      setTimeout(function () {
-                        wx.switchTab({
-                          url: '../index/index',
-                        })
-                        wx.setStorageSync('text', '登录成功')
-                      }, 1500)
+                      if(dot_num){
+                        setTimeout(function () {
+                          app.scene =0;
+                          wx.navigateTo({
+                            url: '../Query/Query?dot_num=' + dot_num
+                          })
+                          wx.setStorageSync('text', '登录成功')
+                        }, 1500)
+                      }else{
+
+                        setTimeout(function () {
+                          wx.switchTab({
+                            url: '../index/index',
+                          })
+                          wx.setStorageSync('text', '登录成功')
+                        }, 1500)
+
+                      }
+                      
                       this.setData({
-                        hide: false
+                        isShow: true
                       })
                     } else {
                         
                       this.shows(res.data.msg);
                           this.setData({
-                            hide:true
+                            isShow: false
+                            
                           })
                     }
 
@@ -209,7 +260,7 @@ Page({
       })
     } else {
       this.setData({
-        hide: true
+        isShow: false
       });
       setTimeout(function () {
         wx.navigateBack({
@@ -220,119 +271,49 @@ Page({
       }, 1500);
     }
   },
-  //获取推荐授权
-  wxAuthorize(unionid, code) {
-    var that = this;
-    that.header(app.globalData.url + 'wxAuthorize');
-    wx.request({
-      url: app.globalData.url + 'wxAuthorize',
-      method: 'POST',
-      header: that.data.header,
-      data: {
-        unionid: 'o8Vin1LnB282t-JodFHJApuKlbFo',
-        auth_code: code,
-        login_type: '2'
-      },
-      success: res => {
-        if (res.data.code == 200) {
-          that.setData({
-            recInfo: res.data.data
-          })
-        } else {
-          this.shows(res.data.msg)
-          this.setData({
-            Authorize: false
-          })
-
-        }
-      }
-    })
-  },
+ 
   //发送模板消息
   /**
    * 触发微信提醒
    */
-  formSubmit: function (e) {
-    console.log(e)
-    var formid = e.detail.formSubmit;
-    wx.setStorageSync('formid', formid);
-  },
-  
-  bindGetUserInfos: function (e) {
-    this.header(app.globalData.url + 'wxTplMessageTest');
-    getApp().globalData.userInfo = e.detail;
-    wx.setStorageSync('userInfo', e.detail);
-    var referee_unionid = '';
-    if (this.data.recInfo.referee_unionid !== '') {
-      referee_unionid = this.data.recInfo.referee_unionid
-    }
-    this.setData({
-      userInfo: e.detail.userInfo
-    })
-    var userInfo = e.detail;
-    var formid = wx.getStorageSync('formid');
-    userInfo.code = getApp().globalData.code;
-    userInfo.referee_unionid = referee_unionid;
-    userInfo.formid = formid;
-    if (e.detail.userInfo) {
-      wx.login({
-        success: res => {
-          this.setData({
-            code: res.code
-          })
-          var code = getApp().globalData.code;
-          wx.request({
-            url: app.globalData.url + 'wxTplMessageTest',
-            method: 'POST',
-            header: this.data.header,
-            data: {
-              login_type: 1,
-              client_type: 3,
-              client_version: '1.0.0',
-              // code:code,
-              oauth_data: JSON.stringify(userInfo)
-            },
-            success: res => {
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'none'
-              })
-
-            }
-          })
-        }
-      })
-    } else {
-
-      setTimeout(function () {
-        wx.navigateBack({
-          delta: 1
-        })
-        app.state = 2;
-
-      }, 1500);
-    }
-  },
+ 
+ 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    let that = this
-
-    //地址有参
-    let unionid = 'o0dfU1Is3kvvWY1j7t4duHbozu0o';
-    if (unionid) {
-      let that = this
+    let Tname = app.globalData.Tname;
+    this.setData({
+      Tname: Tname
+    })
+    if (options.dot_num){
+      this.setData({
+        dot_num: options.dot_num
+      })
+    }
+    if(options.q){
+      let qrUrl = decodeURIComponent(options.q);
+      let index = qrUrl.lastIndexOf('=');
+      qrUrl = qrUrl.substring(index+1,qrUrl.length);
+      // qrUrl = JSON.parse(qrUrl);
+      var referee_data = qrUrl;
       wx.login({
         success: res => {
-          // wx.setStorageSync('code',res.code)
-          this.wxAuthorize(unionid, res.code)
+          var code = res.code
+          this.wxAuthorize(code, referee_data)
+        }
+      })
+    }else{
+      wx.login({
+        success: res => {
+          var code = res.code
+          this.wxAuthorize(code, '')
         }
       })
     }
-    new app.ToastPannel();
 
+    new app.ToastPannels();
+    
   },
 
   /**
@@ -340,6 +321,32 @@ Page({
    */
   onReady: function () {
 
+  },
+  //授权推荐
+  wxAuthorize(auth_code, referee_data){
+    this.header(app.globalData.url +'wxAuthorize');
+    wx.request({
+      url: app.globalData.url +'wxAuthorize',
+      header:this.data.header,
+      method:'POST',
+      data:{
+        auth_code:auth_code,
+        referee_data:referee_data
+      },
+      success:res=>{
+        if(res.data.code == 200){
+          this.setData({
+            recInfo:res.data.data.callback
+          })
+          wx.removeStorage({
+            key: 'codes',
+          })
+        }else{
+          this.shows(res.data.msg)
+        }
+       
+      }
+    })
   },
 
   /**
@@ -351,10 +358,9 @@ Page({
     //
     if (this.data.Authorize) {
       this.setData({
-        hide: true
+        isShow:false
       })
     } else {
-      this.wxAuthorize();
     }
     var animation = wx.createAnimation({
       duration: 500,

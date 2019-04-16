@@ -16,9 +16,13 @@ Page({
    */
   onLoad: function (options) {
     this.newGuide(1);
+    
   },
   //列表
   newGuide(now_page){
+    this.setData({
+      isShow:true
+    })
     var that = this
     that.header(app.globalData.url + 'newGuide');
     wx.request({
@@ -30,6 +34,7 @@ Page({
       },
       success:res=>{
         this.setData({
+          isShow:false,
           newGuide:res.data.data.callback
         })
       }

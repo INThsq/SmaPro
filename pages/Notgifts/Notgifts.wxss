@@ -1,36 +1,118 @@
 /* pages/Notgift/Notgift.wxss */
-@import "../Fanorder/Fanorder.wxss";
+@import "../Order/Order.wxss";
+@import "../../public/compback/compback.wxss";
+@import "../../static/css/index.wxss";
+
 .order-lists{
   margin-top: 24rpx!important;
 }
-.order-conts{
-  margin-top:154rpx!important;
+
+.swiper-tab-item{
+  width:25%!important;
+}
+.order-fans{
+  justify-content:space-between!important;
+  align-items: center;
+
+}
+.names image{
+  width:46rpx!important;
+  height:46rpx!important;
+}
+
+.button-hover{
+  color: none!important;
+}
+.order-list .order-num .wait{
+  color: #333!important;
 }
 .order-lists .btn{
   justify-content: flex-end;
-  padding:28rpx 0;
+  padding:18rpx 0;
   border-bottom: none;
   display: flex;
   background: white;
- border-top:.5px solid #f3f3f3;
-  
+  position: relative;  
+}
+
+.swiper-tab::after{
+  position: absolute; 
+ content: '';
+ width: 100%;
+ left: 0;
+ bottom: 0;
+ height: 1px;
+ background-color: #f2f2f2;
+ -webkit-transform: scale(1, 0.5);
+ transform: scale(1, 0.5);
+ -webkit-transform-origin: center bottom;
+ transform-origin: center bottom;
+}
+/* .noW image{
+  margin-top: 0!important;
+  display: flex;
+}
+.noW{
+  flex-direction: column;
+  height:auto!important;
+}
+.order-conts{
+  display: flex;
+  justify-content: center;
+  height:90vh;
+  background: white;
+  align-items: center;
+}
+.item-left{
+  position: relative;
+}
+.span{
+right:8px;
+top:-8px;
+width:17px;
+height:17px;
+background:rgba(255,255,255,1);
+box-shadow:0px 0px 0px 1px rgba(255,255,255,1);
+border-radius:100px;
+border:1px solid rgba(231,62,62,1);
+line-height: 17px;
+text-align: center;
+font-size: 12px;
+color: #EC3535;
+position: absolute;
+} */
+.swiper-tab{
+  width: 100%!important;
+  position: relative;
 }
 button::after{
   border:none;
 }
 .order-lists button{
- width: 150rpx;
- height:56rpx;
+ min-width: 150rpx;
+ height:64rpx;
  font-size: 28rpx;
  color: #333;
- line-height: 56rpx;
+ line-height: 64rpx;
  padding:0 10rpx;
  margin: 0;
  background: white;
- margin-right: 36rpx;
+ margin-right: 30rpx;
+}
+.order-con{
+  position: relative;
+}
+.price{
+  position: absolute;
+  bottom:44rpx;
 }
 .order-fans{
-  padding: 15rpx 40rpx 10rpx;
+  /* padding: 15rpx 30rpx 15rpx; */
+  padding:8rpx 30rpx;
+}
+.order-list .order-con>view .price{
+  margin-top: 54rpx;
+  font-size: 29.17rpx;
 }
 .sf{
   color: #1E8713!important;
@@ -47,6 +129,8 @@ button::after{
   border: none!important;
 }
 .pay{
-  width: 240rpx!important;
+  /* width: 240rpx!important; */
   border:none!important;
+  height:62rpx!important;
+  line-height:62rpx!important;
 }

@@ -3,9 +3,19 @@
   display: flex;
   padding-top: 320rpx;
 }
+.success{
+  margin-top:16rpx;
+}
+.money{
+  font-size: 29.17rpx!important;
+  color: #666;
+  margin-top:13px;
+}
 .conts>view{
-  display: block;
   margin: 0 auto;
+ justify-content: center;
+  color: #666;
+  flex-direction: column;
   text-align: center;
 }
 .conts>view image{
@@ -13,35 +23,40 @@
   height: 128rpx;
   display: inline-block;
 }
+.icon{
+  display: inline-block
+}
 .conts view text{
-  display: block;
-  margin-left: -10rpx;
+  display: flex;
   font-size: 36rpx;
   color: #333;
-  letter-spacing: 1rpx;
-  line-height: 2;
-  text-align: center;
+  justify-content: center;  
+}
+.num{
+  font-size:30px!important;
+  margin-top: 9px;
 }
 page{
   height: 100vh;
   background: white;
 }
-.money{
-  font-size: 64rpx!important;
-  color: #000;
+
+.btns{
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  bottom:100px;
 }
 .btn{
-  width: 328rpx;
-  height:64rpx;
-  line-height: 64rpx;
+  width:165px;
+  height:34px;
   border-radius:4px;
   background: white;
-  position: absolute;
-  bottom:140rpx;
-  left: 50%;
-  margin-left: -164rpx;
   font-size:32rpx;
   color: #666;
-  letter-spacing: 1rpx;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
