@@ -43,25 +43,28 @@ Page({
   },     
   Record(){
     wx.navigateTo({
-      url: '../Record/Record?scene_type=1',
+      url: '../Record/Record?scene_type=1&&way=0',
     })
   },
   //页面跳转
-  Query(){
-    wx.navigateTo({
-      url: '../Query/Query',
-    })
-  },  
+  
   Replen(e){
     let id = e.currentTarget.dataset.id;
-    console.log(id)
     this.deliveryGoods(id)
   },
   //扫码
   ScanCode(){
       wx.scanCode({
           success:res=>{
-            console.log(res)
+            let path =res.path||res.result;
+            var index = path.lastIndexOf("=");
+            path = path.substring(index + 1, path.length);
+             this.setData({
+               searchValue:path
+             })
+             wx.navigateTo({
+               url:'../Query/Query?dot_num='+path,
+             })
           }
       })  
   },
@@ -72,7 +75,18 @@ Page({
       url: '../StoreCode/StoreCode?mall_dot_authorize_id=' + mall_dot_authorize_id
     })
   },
- 
+  searchSubmitFn(){
+    let searchValue = this.data.searchValue;
+    wx.navigateTo({
+      url: '../Query/Query?dot_num='+searchValue,
+    })
+  },
+  //获取input内的值
+  keyword(e){
+    this.setData({
+      searchValue:e.detail.value
+    })
+  },
   deliveryGoods(mall_dot_authorize_id) {
     this.header(app.globalData.url + 'deliveryGoods');
     wx.request({
@@ -85,7 +99,7 @@ Page({
       success: res => {
         if(res.data.code == 200){
           wx.navigateTo({
-            url: '../Replen/Replen?callback='+JSON.stringify(res.data.data.callback),
+            url: '../Replen/Replen?callback=' + JSON.stringify(res.data.data.callback),
           })
         }else{
           this.shows(res.data.msg)
@@ -109,6 +123,7 @@ Page({
    let imgs = wx.getStorageSync('imgs');
     that.dotCenter(shop.mall_dot_authorize_id, shop.order_num)
    that.setData({
+
      list:list,
      shop:shop,
      img:img,
@@ -117,17 +132,18 @@ Page({
      text: top.system_notice.content
    })
    top.task_list.map((item,key) => {
-     console.log(`runCanvaes${item.scale}${key}`)
-     this.drawCanvas(item.scale * 100,item.total, `runCanvaes${item.scale}${key}`);
+     this.drawCanvas(item.scale * 100, item.total, `runCanvae${item.total}${key}`);
     })
   },
   //跳转提现页面
   Apply(){
+  
     let money = this.data.callback.mall_dot.money;
     wx.navigateTo({
       url: '../WhitCash/WhitCash?money='+money+'&type=1',
     })
   },
+  //绘制内容
   drawCanvas(e, scale, id) {
     let that = this;
     let canvasid = id
@@ -162,11 +178,12 @@ Page({
         ctx2.setFillStyle("#FF9948");
         ctx2.setTextAlign("center");
         ctx2.fillText(scale, w, h * 1.4);
-        ctx2.draw();
+        ctx2.draw(false);
       }, 50)
     })
   },
- 
+
+ //绘制背景
   shadowCanvas(id) {
     const ctx = wx.createCanvasContext(id);
     w = parseInt(65 / 2); //获取canvas宽的的一半
@@ -296,7 +313,7 @@ Page({
    */
   onHide: function () {
 
-  },
+  },  
 
   /**
    * 生命周期函数--监听页面卸载
@@ -320,7 +337,7 @@ Page({
   },
   onReady: function () {
     this.data.top.task_list.map((item,key) => {
-      this.shadowCanvas(`bgCanvas${item.scale}${key}`);
+      this.shadowCanvas(`bgCanva${item.total}${key}`);
     })
    
   },

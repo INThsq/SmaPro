@@ -9,7 +9,6 @@
 
 <!-- 内容 -->
 <view class="container">
-
   <!-- 惠选豆 总数 -->
 <view class='fanNum' style='background:url("http://oss.myzy.com.cn/wechat/images/img_fsrs_beijing.png") no-repeat center; background-size:cover;'>
   <view class='top'>
@@ -37,7 +36,5 @@
     </view>
   </view>
 </block>
-
 </view> 
-
 </view>

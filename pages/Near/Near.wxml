@@ -47,12 +47,12 @@
         <text class='right' bindtap="chooseLocation">{{item.earth_radius}}</text>
       </view>
       <text class='T-O'>商家:{{item.name}}</text>
-
+		
       <view class='zt-Two'>
         <view class='left-T'>
             <text class='T-W'>地址：{{item.pois_address}}{{item.pois_title}}</text>
         </view>
-        <view class='right-T' bindtap='calling'>
+        <view class='right-T' data-tel="{{item.telephone}}" bindtap='calling'>
           <image src='http://oss.myzy.com.cn/wechat/images/icon_zitidiandianhua.png'></image>
         </view>
       </view>

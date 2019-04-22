@@ -20,7 +20,6 @@
 <!-- 标题 -->
 <view class="title">
     <view class="left">
-        <text class='circle'>自营</text>
        {{detail.goods_details.title}}
     </view>
     <view class="right" bindtap='detail' data-id="{{detail.goods_details.goods_id}}">

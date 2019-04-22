@@ -1,7 +1,7 @@
 <!--pages/UserCenter/userCenter.wxml-->
 <!-- 用户信息 -->
 <view class="head">
-  <view class='head-top' style='background:url("http://oss.myzy.com.cn/wechat/images/icon_sc_6_bj.png") no-repeat center; background-size:cover;'>
+  <view class='head-top' style='background:url("{{bg}}") no-repeat center; background-size:cover;'>
   <view class='arrwo'>
   <image src='../../static/imgs/icon_wdym_gdt.png'></image>
   </view>
@@ -73,7 +73,7 @@
         <text class='m_text'>账户余额(元)</text>
       </navigator>
     </view>
-    <view class='accout_item' hover-class="none" data-group="{{content.data.content.reward.reward_total}}" data-ids="{{content.data.content.reward.bill_type_ids}}" bindtap="Bill">
+    <view class='accout_item' hover-class="none" data-group="{{content.data.content.reward.bill_type_group}}" data-ids="{{content.data.content.reward.bill_type_ids}}" bindtap="Bill">
       <navigator>
         <text class='money' wx:if="{{usrState == 3}}">{{content.data.content.reward.reward_total}}</text>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_wushuju.png' wx:if = "{{usrState == 0}}" class='sl'></image>

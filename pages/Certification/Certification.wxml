@@ -49,6 +49,8 @@
   <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
   </view>
 
-   <import src="../../public/appToast/appToasts.wxml"/>
+  <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
   <template is="toasts" data="{{ ..._toast_ }}"/>
+  
   

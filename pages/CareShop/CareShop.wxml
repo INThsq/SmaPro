@@ -7,7 +7,7 @@
 </view>
 
 
- <view class='conts'>
+ <view class='conts' style='padding-top:0!important;'>
 <scroll-view style='height:100vh' bindscrolltolower="bindDownLoad"  scroll-y="true" bindscroll="scrollTopFun">
 
 <!-- 店铺内容 -->
@@ -42,6 +42,8 @@
   <image src='http://oss.myzy.com.cn/wechat/images/icon_sjzx_qb.png'></image>
   <text>全部商品</text>
 </view>
+  
+
     <view class="{{top>180 ? 'topnav' : ''}}" data-top="{{top}}">
 <view class='sort-wrap ' bindtap='tabFun'>
   <view class="sort-btn {{tabArr.curHdIndex=='0'? 'active' : ''}}" data-id="0">

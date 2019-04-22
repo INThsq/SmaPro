@@ -147,10 +147,14 @@ Page({
       data: data,
       success: res => {
         if (res.data.code == 200) {
+          wx.setStorageSync('data',data)
+          app.data = data
           wx.navigateTo({
             url: '../FyCenter/FyCenter?top=' + JSON.stringify(res.data.data.callback)
           })
 
+        }else{
+          this.show(res.data.msg)
         }
       }
     })
@@ -210,14 +214,15 @@ Page({
                   
                 }
              
+            }else if(res.data.code == 401){
+              this.show(res.data.msg)
             }else{
               this.show(res.data.msg)
+              wx.navigateTo({
+                url: '/pages/Accredit/Accredit'
+              })
             }
         }
-      })
-    }else{
-      wx.navigateTo({
-        url:'/pages/Accredit/Accredit'
       })
     }
    
@@ -233,8 +238,18 @@ Page({
         order_num: order_num
       },
       success: res => {
-        app.top = res.data.data.callback
-        wx.setStorageSync('top', res.data.data.callback)
+        if(res.data.code == 200){
+          app.top = res.data.data.callback
+          wx.setStorageSync('top', res.data.data.callback)
+        }else if(res.data.code == 401){
+          this.show(res.data.msg)
+        }else{
+          this.show(res.data.msg)
+          wx.navigateTo({
+            url: '/pages/Accredit/Accredit'
+          })
+        }
+     
       }
 
     })
@@ -305,7 +320,7 @@ Page({
     var cur = event.currentTarget.dataset.current;
     var id = event.currentTarget.dataset.id;
     //每个tab选项宽度占1/5
-    var singleNavWidth = (this.data.windowWidth - 84) / 6;
+    var singleNavWidth = (this.data.windowWidth) / 6;
     //tab选项居中                            
     this.setData({
       navScrollLeft: (cur - 2.5) * singleNavWidth,
@@ -458,6 +473,7 @@ Page({
         if (res.data.code == 200) {
           app.cookie = res.header['Set-Cookie'];
           wx.setStorageSync('cookie',res.header['Set-Cookie']);
+          wx.setStorageSync('bg', res.data.data.background)
           if (res.data.data.application.length>5){
             this.setData({
               imgUrlss: [

@@ -1,11 +1,10 @@
 var util = require('md5.js');
 const app = getApp();
-
+import { ToastPannels } from '../public/appToasts/appToasts';
 function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-
 /**
  * 时间戳转化为年 月 日 时 分 秒
  * number: 传入时间戳
@@ -45,9 +44,9 @@ function throttle(fn, gapTime) {
       }
   }
 }
-
 //抛出异常
 function error(res) {
+	ToastPannels;
   new app.ToastPannel();
   app.error = 1;
   var erroe_code = res.data.code;
@@ -90,16 +89,32 @@ function skip(url) {
 }
 // 解析链接中的参数
 let getQueryString = function (url, name) {
-  // console.log("url = " + url)
-  // console.log("name = " + name)
   var reg = new RegExp('(^|&|/?)' + name + '=([^&|/?]*)(&|/?|$)', 'i')
   var r = url.substr(1).match(reg)
   if (r != null) {
-    // console.log("r = " + r)
-    // console.log("r[2] = " + r[2])
     return r[2]
   }
   return null;
+}
+//全局域名
+const Api_url="https://api.myzy.com.cn";
+//网络请求封装
+function getRequest(url,header,parmas){
+	let promise = new Promise(function(resolve,reject){
+		wx.request({
+			url:Api_url+url,
+			method:'get',
+			header:header,
+			data:parmas,
+			success:res=>{
+				resolve(res)
+			},
+			fail:res=>{
+				reject(res)
+			}
+		})
+	})
+	return  promise
 }
 
 // 继承
@@ -108,5 +123,6 @@ module.exports = {
   error: error,
   skip: skip,
   getQueryString: getQueryString,
-  throttle: throttle
+  throttle: throttle,
+	getRequest:getRequest
 }

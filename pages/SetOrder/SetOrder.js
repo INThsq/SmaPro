@@ -96,14 +96,17 @@ Page({
       header:this.data.header,
       method:'post',
       success:res=>{
+        this.setData({
+          isShow: false
+        })
           this.shows(res.data.msg)
           if(res.data.code == 200){
-            this.setData({
-              isShow:false
-            })
             wx.navigateTo({
-              url: '../Record/Record?scene_type=0',
+              url: '../Record/Record?scene_type=0&&way=1',
             })
+          }else{
+            this.shows(res.data.msg)
+
           }
       }
     })

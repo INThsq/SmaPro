@@ -1,10 +1,10 @@
 <!--pages/SetOrder/SetOrder.wxml-->
 <view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>可结算订单</view> 
-  </my-component>
-</view>
+    <my-component>
+       <view>可结算订单</view> 
+    </my-component>
+  </view>   
+  
 
 
 <!-- 内容部分 -->
@@ -28,9 +28,15 @@
     <view class='mid-js'>任务单数：{{give.task_praise.handle_num}}单</view>
     <view class='mid-yj'>任务单价：{{give.task_praise.task_reward}}元/单</view>
     <view class='mid-yj'>结算总额：{{give.task_praise.task_reward_total}}元</view>
-
   </view>
  
+
+  <view class='middle' wx:if="{{give.mall_dot_authorize}}">
+    <block wx:for="{{give.mall_dot_authorize}}">
+    <view class='mid-zs'  data-id='2' bindtap='Title'>门店信息</view>
+    <view class='mid-js'>结算门店：{{item.dot_name}}单</view>
+    </block>
+  </view>
 </view>
 
 

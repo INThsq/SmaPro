@@ -186,7 +186,7 @@
   <!--弹出框  -->
   <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
 
-  <view class='titles'bindtap="close">
+  <view class='titles' bindtap="close">
       <image style='width:14px;height:14px' src='http://oss.myzy.com.cn/wechat/images/icon_del_vip.png'></image>
       <text>确认付款</text>
   </view>
@@ -237,8 +237,8 @@
 
   <!-- 支付按钮 -->
   <view class='pay'>
-  <button class='pay-btn' style='background:{{grey?"#E2E2E2":"#F43736"}};color:{{grey?"#999":"#fff"}}' wx:if="{{types == 1}}" bindtap='topays'>立即支付</button>
- <button class='pay-btn' style='background:{{grey?"#E2E2E2":"#F43736"}};color:{{grey?"#999":"#fff"}}' wx:else bindtap='topay'>立即支付</button>
+  <button class='pay-btn' style='opacity:{{grey?"0.7":"1"}};background:{{grey?"#F43736":"#F43736"}}' wx:if="{{types == 1}}" bindtap='topays'>立即支付</button>
+ <button class='pay-btn' style='opacity:{{grey?"0.7":"1"}};background:{{grey?"#F43736":"#F43736"}}' wx:else bindtap='topay'>立即支付</button>
   </view>
 
   </view>

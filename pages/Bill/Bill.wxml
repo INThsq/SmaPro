@@ -15,7 +15,7 @@
 
     <view class='expend' wx:for="{{money_bill}}" wx:key="index">
     <text class='exp_title'>{{item.month_money_bill.money_bill[0].month}}月</text>
-    <text class='exp_cont' decode="{{true}}">收入 ￥{{item.month_money_bill.enter_money_total}} &nbsp;&nbsp;  收入 ￥{{item.month_money_bill.out_money_total}}</text>
+    <text class='exp_cont' decode="{{true}}">收入 ￥{{item.month_money_bill.enter_money_total}} &nbsp;&nbsp;  支出 ￥{{item.month_money_bill.out_money_total}}</text>
     </view>
      <view class='expend_container' wx:if="{{money_bill.length > 0}}">
      <block wx:for="{{money_bill}}" wx:key="index">

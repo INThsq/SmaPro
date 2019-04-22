@@ -31,9 +31,12 @@ Page({
     if (a!=='1'){
     
       var datas = getApp().datas;
-      that.setData({
-        datas: datas,
-      })
+      if(datas){
+        that.setData({
+          datas: datas,
+        })
+      }
+      
     }
  
     this.getsAdress();

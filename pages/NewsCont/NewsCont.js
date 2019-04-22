@@ -21,6 +21,7 @@ Page({
       url: '../Webview/Webview?h5='+h5,
     })
   },
+  
   noticeList(notice_type_id) {
     this.setData({
       isShow:true
@@ -34,19 +35,23 @@ Page({
       },
       header: this.data.header,
       success: res => {
+        if(res.data.code == 200){
         this.setData({
           isShow:false
         })
         res.data.data.expiry_time = utils.formatTime(res.data.data.expiry_time, 'Y-M-D')
         for(let i=0;i<res.data.data.noticle_list.length;i++){
           res.data.data.noticle_list[i].creates_time = utils.formatTime(res.data.data.noticle_list[i].create_time, 'Y-M-D h:m:s')
-          res.data.data.noticle_list[i].update_time = utils.formatTime(res.data.data.noticle_list[i].create_time, 'Y-M-D')
+          res.data.data.noticle_list[i].update_time = utils.formatTime(res.data.data.noticle_list[i].create_time, 'M-D h:m')
 
         }
         this.setData({
           time: res.data.data.expiry_time,
           list: res.data.data.noticle_list
         })
+      }else{
+        utils.error(res)
+      }
       }
     })
   },
@@ -55,9 +60,15 @@ Page({
    */
   onLoad: function (options) {
     let id = options.id;
+    this.setData({
+      id:id
+    })
     this.noticeList(id)
   },
-
+  onPullDownRefresh() {
+    let id = this.data.id;
+    this.noticeList(id)
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

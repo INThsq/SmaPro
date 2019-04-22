@@ -17,7 +17,7 @@ Page({
   back(){
     let gift_praise_type = this.data.gift_praise_type;
     let curs = this.data.curs;
-    console.log(gift_praise_type)
+    let tab = this.data.tab;
     if(gift_praise_type == 1){
       if(curs){
         this.setData({
@@ -31,12 +31,17 @@ Page({
           delta:1
         })
       }
-    }else{
+      }else{
       wx.switchTab({
         url: '../UserCenter/userCenter',
       })
     }
    
+  },
+  backs(){
+    wx.navigateBack({
+      delta:3
+    })
   },
   //获取提货凭证
   Voucher(e){
@@ -51,14 +56,27 @@ Page({
   new app.ToastPannels();
    let gift_praise_type = options.gift;
    var page = this.data.page;
-   this.setData({
-    gift_praise_type:gift_praise_type,
-   })
+   let tab = options.tab
+   if(gift_praise_type){
+     this.setData({
+       gift_praise_type: gift_praise_type,
+     })
+   }
+   
    if(gift_praise_type == 1){
      let curs = options.curs;
+     let tab =options.tab;
+     if(tab){
+       
+       this.setData({
+         tab:tab,
+          gift_praise_type:3
+       })
+     }
      if(curs){
        this.setData({
         clickTabs:curs,
+        currentTabs:tab,
        })
        this.giveList(curs,page)
      }else{
@@ -77,6 +95,7 @@ Page({
      }
    }
  },
+ 
  //下拉刷新
  onReachBottom: function () {
     let page = this.data.page;
@@ -227,6 +246,7 @@ Page({
 
   //分销商列表
   giveList(praise_status, now_page){
+    let tab = this.data.tab;
     this.header(app.globalData.url + 'giveList');
     wx.request({
       url: app.globalData.url + 'giveList',
@@ -238,10 +258,13 @@ Page({
       },
       success: res => {
         if (res.data.code == 200) {
+         
+            this.setData({
+              gift_praise_type:res.data.data.callback.gift_praise_type
+            })
           let gift_praise_list = res.data.data.callback.gift_praise_list;
           this.setData({
-            gift_praise_list: res.data.data.callback.gift_praise_list,
-            gift_praise_type: res.data.data.callback.gift_praise_type
+            gift_praise_list: res.data.data.callback.gift_praise_list
           })
         }
       }

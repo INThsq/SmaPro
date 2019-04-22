@@ -15,15 +15,28 @@
     overflow: hidden;
     white-space: nowrap;
 }
+.up-text{
+  display: block;
+  width: 100%;
+  position: relative;
+  top:-24rpx;
+  font-size:26rpx;
+  text-align:center;
+  line-height: 2;
+  color: #999;
+  background: #FAFAFA;
+}
 .zuan{
  position: absolute;
  left:30rpx;
 }
 .noW{
- height:calc(100vh - 226rpx);
+ height:calc(100vh - 100rpx);
  display: flex;
  align-items: center;
  justify-content: center;
+ flex-direction: column;
+ 
 }
 .noW-cont{
   display:flex;

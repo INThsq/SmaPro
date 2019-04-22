@@ -11,8 +11,6 @@
 
 <!-- 内容部分 -->
 <view class='container'>
-
-
   <!-- 顶部内容 -->
     <view class='top'>
         <view class='local'>
@@ -27,7 +25,7 @@
         <!-- 搜索框 -->
         <view class='search'>
             <form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
-                  <input confirm-type="search" placeholder-class='placeholder' placeholder='请输入核销码或分佣金者编号'  type="search" value="{{searchValue}}" class='topInput' name='input' bindinput='keyword' bindconfirm="searchSubmitFn"/>
+                  <input  placeholder-class='placeholder' placeholder='请输入核销码或分佣金者编号'  type="search" value="{{searchValue}}" class='topInput' name='input' bindinput='keyword' bindconfirm="searchSubmitFn"/>
                   <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_7.png' bindtap="ScanCode"  class='searches'></image>
           </form>
       </view>
@@ -103,8 +101,8 @@
         <block wx:for="{{top.task_list}}" wx:key="index">
           <view class='Sunm-item'>
            <view class='Sunm-left'> 
-            <canvas canvas-id='bgCanvas{{item.scale}}{{index}}'  class='canvasI'></canvas>
-            <canvas canvas-id="runCanvaes{{item.scale}}{{index}}" class='canvasII' ></canvas>
+            <canvas canvas-id='bgCanva{{item.total}}{{index}}'  class='canvasI'></canvas>
+            <canvas canvas-id="runCanvae{{item.total}}{{index}}" class='canvasII' ></canvas>
             </view>  
               <view class='item-right'>
                 <view class='title'> 

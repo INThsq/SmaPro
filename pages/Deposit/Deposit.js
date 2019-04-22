@@ -17,8 +17,11 @@ Page({
   },
   money: function (e) {
     app.txmoney = e.detail.value;
+    let moneys = e.detail.value;
+    moneys = parseInt(moneys).toFixed(2)
     this.setData({
       money: e.detail.value,
+      moneys:moneys
     })
   },
   // 关闭模态框
@@ -41,6 +44,13 @@ Page({
       success:res=>{
         if(res.data.code == 200){
           let putForward = res.data.data.callback;
+
+          let min_money = Number(putForward.min_money);
+          let max_money = Number(putForward.max_money);
+          this.setData({
+            min_money: min_money,
+            max_money: max_money
+          })
           putForward.put_forward.money = Number(putForward.put_forward.money);
           if (putForward.put_forward.bank.length !=0){
             let bank = putForward.put_forward.bank[0];
@@ -174,9 +184,22 @@ Page({
   },
   //提现失败
   toDespositfalse:function(){
-   this.show('提现金额有误');
+    let money = this.data.money;
+    let min_money =Number(this.data.putForward.min_money);
+    let min_tips = this.data.putForward.min_money_tips;
+    let max_money = Number(this.data.putForward.max_money);
+    let max_tips = this.data.putForward.max_money_tips;
+    this.setData({
+      min_money:min_money,
+      max_money:max_money
+    })
+    if(money<min_money){
+      this.shows(min_tips)
+    }else if(money >max_money){
+      this.shows(max_tips)
+    }
   },
-  //显示对话框
+  //显示对话框  
   showModal: function () {
     // 显示遮罩层
     var animation = wx.createAnimation({
@@ -220,43 +243,54 @@ Page({
   },
   //服务费以及服务费计算
   Sum(){
-    let money = this.data.money;
+    let money =this.data.money;
+    money = parseInt(money).toFixed(2)
     let sum_money = this.data.putForward.put_forward.money;
     // 计算服务费方式
     let service_type =  this.data.putForward.service_type;
     let service_money = this.data.putForward.service_rate;
     let sum = '';
     let service = '';
+    this.setData({
+      service_type: service_type
+    })
     // 1固定   2百分比
     switch(service_type){
+      case 0 :
+      this.setData({
+        sum:Number(money),
+        service:'免费',
+      })
+      break;
       case 1: 
         service = service_money;
-        sum = Number(money) - Number(service_money);
+        sum = (Number(money) - Number(service_money)).toFixed(2);
         let sums = Number(money)+Number(service_money);
         if( sums > Number(sum_money)||sums == Number(sum_money)){
           this.setData({
-            sum:sum
+            sum: sum
           })
         }else{
           this.setData({
-            sum:money
+            sum: money
           })
         }
         this.setData({
-          service:service,
+          service: service,
         })
         break;
       case 2:
-        service = Number(money) * 0.1;
-        sum = Number(money) - Number(service);
+        service = (Number(money) * this.data.putForward.service_rate).toFixed(2);
+        sum = (Number(money) - Number(service)).toFixed(2);
+        console.log(sum)
         var sums = Number(money)+Number(service);
         if( sums > Number(sum_money)||sums == Number(sum_money)){
           this.setData({
-            sum:sum
+            sum: sum
           })
         }else{
           this.setData({
-            sum:money
+            sum: money
           })
         }
         this.setData({

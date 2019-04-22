@@ -1,6 +1,8 @@
 /* pages/Record/Record.wxss */
 @import "../Notgifts/Notgifts.wxss";
 @import "../../static/css/index.wxss";
+@import "../../public/compback/compback.wxss";
+
 .swiper-tab-item{
     width: 50%!important;
 }

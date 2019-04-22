@@ -70,6 +70,12 @@ Page({
    
     
   },
+  //查看更多
+  More(){
+    wx.navigateTo({
+      url: '../Notgifts/Notgifts?gift=1&&curs=0&&tab=1',
+    })
+  },
  //取货凭证获取
  proofList(scene_num){
   this.header(app.globalData.url +'proofList');

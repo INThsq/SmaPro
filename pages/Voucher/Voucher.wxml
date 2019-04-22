@@ -62,7 +62,7 @@
         </view>
         <!-- 按钮 -->
         <view class='gets'>
-          <view class='btn'>查看更多</view>
+          <view class='btn' bindtap='More'>查看更多</view>
         </view>
 
       </view>
@@ -95,7 +95,7 @@
  bind:confirmEvent="_confirmEventFirst" 
  >
 <view class='modal-body'>
-<view>您确定上传核销订单?</view>     
+<view>您确定上传凭证到此门店吗?</view>     
 </view>
 </dialog>
 <import src="../../public/appToasts/appToasts.wxml"/>

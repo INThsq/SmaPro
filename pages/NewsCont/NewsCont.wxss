@@ -8,6 +8,12 @@
     padding: 0 30rpx;
   box-sizing: border-box;
 }
+.grey{
+  color: #999!important;
+}
+.blcak{
+  color: #333!important;
+}
 .date text{
   width:100px;
 height:30px;
@@ -87,4 +93,14 @@ white-space: nowrap;
 }
 .all{
   color: #666;
+}
+.newImg{
+  overflow:hidden;
+  height:326rpx;
+}
+.new-image{
+  height:100%;
+  display:inline-block;
+  width:100%;
+  transform:scaleY(2.5);
 }

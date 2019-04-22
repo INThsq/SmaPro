@@ -10,19 +10,25 @@
 <!-- 内容部分 -->
 <view class='container'>
  
-<block wx:for="{{list}}" wx::key="index">
+<block wx:for="{{list}}" wx:key="index">
+
  <view class='date'>
       <text>{{item.update_time}}</text>
   </view>
   <view class='cont'>
   <view class='top-cont' data-url='{{item.notice_article}}'  bindtap='H5'>
-  <view class='title'>{{item.title}}</view>
+  <view class='title {{item.is_read == 1?"grey":""}}'>{{item.title}}</view>
     <view class='dates'>{{item.creates_time}}</view>
-    <view class='conts'>{{item.content}}</view>
+    <view class='conts {{item.is_read == 1?"grey":""}}' wx:if="{{item.content!=''}}">{{item.content}}</view>
+    <block wx:if="{{item.type == 1}}">
+    <view class='newImg'>
+      <image src="{{item.figure}}" class='new-image'></image>
+    </view>
+    </block>
   </view>
-  <view class='bot-cont'>
+  <view class='bot-cont'  data-url='{{item.notice_article}}'  bindtap='H5'>
         <view class="icon">
-            <text class='all'>查看详情</text> 
+            <text class='all {{item.is_read == 1?"grey":""}}'>查看详情</text> 
         </view> 
   </view>
  

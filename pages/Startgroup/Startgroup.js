@@ -35,8 +35,16 @@ Page({
       scrollTop: scrollTop
     })
   },
+  //禁用按钮提示
+  Now(){
+    this.shows(this.data.giftGiving.is_online.disabled_tip)
+  },
   //生成二维码
   GetCode(e){
+    let is_inline = this.data.giftGiving.is_inline.is_disabled
+    if(is_inline){
+      this.shows(this.data.giftGiving.is_inline.is_disabled)
+    }else{
     let type = e.currentTarget.dataset.type
     let state = e.target.dataset.state
     this.setData({
@@ -51,17 +59,15 @@ Page({
         })
         break;
       case 2:
-        // this.shows('级别不够无法解锁,赶紧升级吧~');
         this.shows(share_gift_tips)
         break;
       case 1:
         this.Modal.showModal();
         break;
       case 3:
-        // this.shows('暂不支持分享,维护中...')  
         this.shows(share_gift_tips)
     }    
-   
+    }
   },
   close(){
     this.setData({
@@ -142,9 +148,11 @@ Page({
              })
            }
            if (res.data.data.callback.gift_praise.length == 0){
+             if(!res.data.data.callback.is_online.is_disabled){
              this.openGiftSharing(mall_goods_id)
+
+             }
            }
-           console.log(Number(res.data.data.callback.give_num) - Number(res.data.data.callback.gift_praise.length))
            that.setData({
              giftGiving: res.data.data.callback,
              //可赠送人数

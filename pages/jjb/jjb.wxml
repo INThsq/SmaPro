@@ -10,6 +10,7 @@
           <video id="myvedio" hidden="{{video}}"  bindended="endvedio" controls  page-gesture="true" enable-progress-gesture = true src='{{data.video}}'  controls='true' binderror="videoErrorCallback"></video>
           <view wx:if="{{show}}"  bindtap="playvedio" class='coversrc' style='position:absolute'>
             <image class='img' src='{{data.video_src}}'></image>
+            
             <view class='playbtn'>
                <image src='http://oss.myzy.com.cn/wechat/images/icon_shipinbofang.png'></image>
             </view>

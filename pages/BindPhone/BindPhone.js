@@ -65,8 +65,6 @@ Page({
         wx.request({
           url:app.globalData.url+'bingPhone',
           method: 'POST',
-          // header:
-          //  utils.header('http://api.myzy.com.cn/bingPhone'),
           header:that.data.header,
           data: {
             oauth_data: oauth_data

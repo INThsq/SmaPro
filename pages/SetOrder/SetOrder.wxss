@@ -100,7 +100,6 @@
 
   .modal-body{
     flex:  1;  
-    padding:0 48rpx;
     background: #ffffff; 
     margin-bottom:50rpx; 
   color: #999;
@@ -200,7 +199,7 @@
   transform-origin: center bottom;
 }
 .middle .mid-zs,.bottom .bot-title{
-  font-size:29.17rpx;
+  font-size:33.3rpx;
   line-height: 24px;
   font-weight: bold;
   margin-bottom: 6rpx;

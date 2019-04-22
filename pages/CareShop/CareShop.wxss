@@ -24,16 +24,30 @@
   display: block;
   text-align: center;
   padding:30rpx 0 20rpx;
+  position: relative;
 }
 .ys{
   color: #999!important;
 }
 .CareShop{
-  margin-top:124rpx;
+  margin-top:140rpx;
   background: white;
-  border-top: .5px solid #f3f3f3;
   text-align: center;
   margin-bottom: 16rpx;
+  position: relative;
+}
+.logo::after{
+   position: absolute; 
+    content: '';
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 1px;
+    background-color: #f7f7f7;
+    -webkit-transform: scale(1, 0.5);
+    transform: scale(1, 0.5);
+    -webkit-transform-origin: center top;
+    transform-origin: center top;
 }
 .title,.small{
   text-align: center;

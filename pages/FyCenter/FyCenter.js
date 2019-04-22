@@ -29,7 +29,6 @@ Page({
     })
   },
   Title(e){
-    console.log(e);
     let id = e.currentTarget.dataset.id;
     this.setData({
       Toast:id,
@@ -41,7 +40,7 @@ Page({
   //跳转核销记录
   Record(){
     wx.navigateTo({
-      url: '../Record/Record?scene_type=0',
+      url: '../Record/Record?scene_type=0&&way=0',
     })
   },
   //赠送记录
@@ -53,6 +52,7 @@ Page({
   //申请结算
   SetOrder(){
     let mall_giveaway_authorize_id = this.data.top.mall_giveaway.mall_giveaway_authorize_id;
+
     wx.navigateTo({
       url: '../SetOrder/SetOrder?id='+mall_giveaway_authorize_id,
     })
@@ -62,8 +62,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let data = wx.getStorageSync('data');
     this.setData({
-      isShow:true
+      isShow:true,
+      scene: data.scene,
+      order_num: data.order_num,
+      member_mall_id: data.member_mall_id,
+      goods_id: data.goods_id
     })
     new app.ToastPannels();
     if(options.top){
@@ -75,7 +80,6 @@ Page({
         isShow:false
       })
        top.task_list.map((item,key) => {
-         console.log(key)
         this.drawCanvas(item.scale * 100,item.total, `runCanvas${item.scale}${key}`);
       })
 
@@ -89,9 +93,12 @@ Page({
     }
     let content = wx.getStorageSync('content');
     let scenes = app.scenes;
-    this.setData({
-      scenes:scenes
-    })
+    if(scenes){
+      this.setData({
+        scenes: scenes
+      })
+    }
+    
     if(content){
       let mall_giveaway_authorize_id =top.mall_giveaway.mall_giveaway_authorize_id;
       let giveaway_num =top.mall_giveaway.giveaway_num;
@@ -118,7 +125,10 @@ Page({
   },
   // 分销中心
   distribution(member_mall_id){
-    var scenes = this.data.scenes;
+    this.setData({
+      isShow:true
+    })
+    var scenes = this.data.scene;
     var data ={};
     switch(scenes){
       // 非订单验证
@@ -136,6 +146,7 @@ Page({
         let mall_goods_id = this.data.mall_goods_id;
         let order_num = this.data.order_num;
         data={
+          scene:1,
           goods_id:goods_id,
           mall_goods_id:mall_goods_id,
           order_num:order_num
@@ -150,11 +161,13 @@ Page({
       method:'get',
       data:data,
       success:res=>{
-        
+        this.setData({
+          isShow:false
+        })
         if(res.data.code ==200){
           this.setData({
             top:res.data.data.callback,
-            giveaway_num: res.data.data.callback.mall_giveaway.mall_giveaway_authorize_id,
+            mall_giveaway_authorize_id: res.data.data.callback.mall_giveaway.mall_giveaway_authorize_id,
             giveaway_num: res.data.data.callback.mall_giveaway.giveaway_num
           })
         }
@@ -280,6 +293,7 @@ Page({
     }
     this.data.noncestr = noncestr.toLowerCase();
   },
+
   //生成header
   header(url) {
     var timestamp = Date.parse(new Date());
@@ -324,11 +338,18 @@ Page({
       header: header
     })
   },
+
   /**
+   * 
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let data = wx.getStorageSync('data')||getApp().data;
+    console.log(data.member_mall_id)
+    let goods_id = data.goods_id;
+    let member_mall_id =data.member_mall_id;
+    let order_num = data.order_num;
+    this.distribution(member_mall_id)
   },
 
   /**

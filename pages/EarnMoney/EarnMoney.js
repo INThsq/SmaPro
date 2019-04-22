@@ -396,6 +396,8 @@ Page({
                 },
                 success: res => {
                   if (res.data.code == 200) {
+                    wx.setStorageSync('bg', res.data.data.content.background)
+
                     this.setData({
                       isShow: false
                     })

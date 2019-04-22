@@ -42,7 +42,7 @@
         
 
         <view class='all' wx:if="{{money == null}}">
-          <text class='about'>可提现 ￥  {{putForward.put_forward.money}}元</text>
+          <text class='about'>可提现 ￥{{putForward.put_forward.money}}元</text>
           </view>
 
           <view class='all' wx:elif="{{money > putForward.put_forward.money}}">
@@ -54,7 +54,7 @@
         </view>
     </view>
 
-    <block  wx:if="{{money <= 0|| money > putForward.put_forward.money}}">
+    <block  wx:if="{{money <= 0|| money > max_money|| money<min_money}}">
     <button class='btns' bindtap='toDespositfalse'>提现</button>    
     </block>
     <block  wx:else>  
@@ -100,15 +100,15 @@
           </view>
           <!-- 内容 -->
           <view class='T-cont'>
-            <view class='cont-title'>提现服务费，实际到账金额如下</view>
+            <view class='cont-title'>提现实际到账金额如下</view>
             <view class='conts'>
                 <view class='item items'>
                   <text class='left'>提现金额</text>
-                  <text class='right'>{{money}}元</text>
+                  <text class='right'>{{moneys}}元</text>
                 </view>
                 <view class='item items'>
-                  <text class='left'>本次服务费</text>
-                  <text class='right'>{{service}}元</text>
+                  <text class='left'>{{putForward.taxrate_text}}</text>
+                  <text class='right'>{{service}}{{service_type=='0'?"":"元"}}</text>
                 </view>
             </view>
             <view class='bot'>

@@ -20,7 +20,7 @@
         <!-- 签约 -->
         <view class="qy">
                 <view class="name">签约日期：{{callback.create_time}}</view>
-                <view class="name">合同期限：{{callback.create_time}} 至 {{callback.signing_time}}</view>
+                <view class="name">合同期限：{{callback.create_time}} 至 {{callback.expire_time}}</view>
                 <view class="name">押金额度：{{callback.money}}元</view>
             </view>
 
@@ -46,3 +46,22 @@
         <view class="fix-right" data-id='{{callback.mall_goods_id}}' bindtap='Detail'>立即补货</view>
     </view>
 
+
+ <!-- 模态框 -->
+   <cover-view   hidden="{{!isShows}}"  class='modal'>
+      <cover-view  data-type="mask"  catchtap='hideModal' class='modal-mask' ></cover-view>
+      <cover-view  class='modal-layer  modal-layer-radius {{modalSize == "sm" ? " modal-layer-sm" : " modal-layer-md" }} ' >
+          <!-- 头部 -->
+          <cover-view class='modal-header'>        
+              <cover-view>温馨提示</cover-view>        
+          </cover-view>
+
+          <!-- 内容区域 -->
+          <cover-view class='modal-body'>         
+            <cover-view>{{callback.disabled_tips}}</cover-view>                         
+          </cover-view>
+          <cover-view class='modal-footer' bindtap='Sure'>
+                <cover-view>确定</cover-view>
+          </cover-view>
+      </cover-view>
+  </cover-view>

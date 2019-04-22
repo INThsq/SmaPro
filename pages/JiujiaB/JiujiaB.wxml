@@ -18,7 +18,7 @@
     <view class='cont'>
         <!-- 视频 -->
         <view class='video'>
-          <video id="myVideo" hidden="{{video}}" objectFit='cover'  controls   page-gesture="true" enable-progress-gesture = true src='https://huixuangou.oss-cn-beijing.aliyuncs.com/video/5ffa640c0bd09e9e277ed9fcfdcf3a71.mp4'  controls='true'></video>
+          <video id="myvedio" hidden="{{video}}" objectFit='cover'  controls controls='true'  page-gesture="true" enable-progress-gesture = true src='https://huixuangou.oss-cn-beijing.aliyuncs.com/video/5ffa640c0bd09e9e277ed9fcfdcf3a71.mp4'  controls='true'></video>
 
            <view wx:if="{{show}}"  bindtap="playvedio" class='coversrc' style='position:absolute'>
             <view class='playbtn'>
@@ -96,13 +96,13 @@
     <!-- 勾选框 -->
     <view class='check' >
         <image src="{{url}}" data-src='{{url}}' bindtap='choose'></image>
-        <view style='margin-left:3px;display:flex;'>购买即视为同意<view style='color:blue' bindtap='Equit' data-id="{{data.activity_url}}">《开通权限协议书》</view></view>
+        <view style='margin-left:3px;display:flex;'>购买即视为同意<view style='color:blue' bindtap='Equit' data-id="{{callback.activity_url}}">《开通权限协议书》</view></view>
     </view>
 
 <view class='bt'  wx:if="{{scrollTop>200}}">
    <!-- 底部按钮 -->
    <view class='btns'>
-    <view class='btn-left' bindtap='detail' style='background:{{callback.tel_background}}' data-id='{{data.goods_id}}'>意向咨询</view>
+    <view class='btn-left' bindtap='detail' style='background:{{callback.tel_background}}'>意向咨询</view>
     <view class='btn-right bb'  bindtap='Go' style='background:{{callback.submit_background}}' data-id='{{data.goods_id}}'>立即申请￥{{money}}</view>
    </view>
 
@@ -137,6 +137,21 @@
 
 <view class='modal-body'>
 <view>{{callback.disabled_tip}}</view>     
+</view>
+
+</dialog>
+
+<!-- again -->
+<dialog id="modals"
+title="温馨提示"
+cancelText="取消"
+confirmText="确认"
+bind:cancelEvent="CancelEvent"  
+bind:confirmEvent="ConfirmEventFirst" 
+>
+
+<view class='modal-body'>
+<view>{{callback.disabled_tips}}</view>     
 </view>
 
 </dialog>

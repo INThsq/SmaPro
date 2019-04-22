@@ -1,6 +1,6 @@
 <!-- 引用组件的页面模版 -->
 <view class="wrapper">
-  <view class='back' bindtap='back'>
+  <view class='back' bindtap='{{tab==1?"backs":"back"}}'>
     <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
   </view>
   <view class="tetxs" wx:if="{{gift_praise_type == 0}}">未领礼物</view>
@@ -48,7 +48,6 @@
           <image src="{{item.image}}"></image>
           <view>
             <view class="name">{{item.title}}</view>
-            <!-- <text class="size">颜色:白色,尺码:XL</text> -->
             <view class="price"><text style='font-size:10px;'>￥</text>{{item.price}} X {{item.buy_num}}</view>
           </view>
         </view>

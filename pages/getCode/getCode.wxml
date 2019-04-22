@@ -35,7 +35,7 @@
         <view class='right'>
             <text class='tel'>{{info.username}}</text>
             <view class='ctrl'>
-            <text class='id' style="font-size:8px!important;">顾问编号:{{info.number}}</text>
+            <text class='id' style="font-size:10px!important;">顾问编号:{{info.number}}</text>
             <text class='btnes' bindtap='Ctrlc'  data-text='{{info.number}}'>复制</text>
             </view>
             

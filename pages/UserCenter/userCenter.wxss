@@ -165,7 +165,7 @@ navigator{
 .arrwo{
   /* height: 24rpx; */
   position: absolute;
-  bottom:-11rpx;
+  bottom:-10rpx;
   left: 0;
   width: 100%;
   z-index: 999;

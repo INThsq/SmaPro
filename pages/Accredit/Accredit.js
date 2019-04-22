@@ -132,7 +132,6 @@ Page({
             isShow: true
           })
           var code = res.code;
-          console.log(code)
           userInfo.code = code;
           if (recInfo.number) {
             var data = {

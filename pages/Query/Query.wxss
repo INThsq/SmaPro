@@ -1,5 +1,6 @@
 /* pages/Query/Query.wxss */
 @import "../../public/compback/compback.wxss";
+/* @import "../Querys/Query.wxss"; */
 .container,.NoInfo{
   margin-top: 142rpx;
 }
@@ -7,6 +8,45 @@
   display: flex;
   justify-content: center;
   flex-direction:column;
+}
+.placeholder{
+
+  border-right:none!important;
+
+}
+.top{
+  margin-bottom: 60rpx;
+}
+.bottom{
+  padding:0 30rpx 0 34rpx;
+  box-sizing: border-box;
+}
+.bot-title{
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.bot-title .block{
+  display: flex;
+  width: 3px;
+  height: 13px;
+  background: #F43736;
+}
+.bot-cont{
+  display: flex;
+  flex-direction: column;
+}
+.bot-cont text{
+  display: flex;
+  color: #666;
+  font-size: 29.17rpx;
+  margin-bottom: 10rpx;
+  line-height: 24px;
+}
+.bot-title text{
+  font-size:31rpx;
+  font-weight: bold;
+  margin-left: 14rpx;
 }
 .NoInfo view{
   display:flex;

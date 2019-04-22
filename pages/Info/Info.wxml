@@ -46,5 +46,10 @@
     </view>
 
 
+    <!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
 
 

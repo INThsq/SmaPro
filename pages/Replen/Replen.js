@@ -18,7 +18,6 @@ Page({
     let callback = JSON.parse(options.callback);
     callback.create_time = utils.formatTime(callback.create_time, 'Y-M-D')
     callback.expire_time = utils.formatTime(callback.expire_time, 'Y-M-D')
-
     callback.signing_time = utils.formatTime(callback.signing_time, 'Y-M-D')
     this.setData({
       callback:callback
@@ -33,10 +32,23 @@ Page({
    })
  },
   Detail(e) {
+    let is_disabled = this.data.callback.is_disabled;
+    if(is_disabled){
+      this.setData({
+        isShows:true
+      })
+    }else{
     app.get = 1;
     let id = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: '../Details/Details?id=' + id,
+    })
+    }
+  },
+  //确定取消弹出层
+  Sure(){
+    this.setData({
+      isShows:false
     })
   },
   //生成随机字符串

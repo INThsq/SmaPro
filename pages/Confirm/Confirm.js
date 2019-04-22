@@ -463,6 +463,7 @@ Page({
                   paySign: payment.paySign,
                   success(res) {
                     if (res.errMsg == "requestPayment:ok") { 
+                      console.log('topay'+jump_type)
                     setTimeout(()=>{
                       switch (jump_type) {
                         case 2:
@@ -615,6 +616,7 @@ Page({
           //  this.show(res.data.msg);
            var mall_order =res.data.data.callback.mall_order; 
            wx.setStorageSync('mall_order', mall_order)
+          console.log(jump_type)
           setTimeout(()=>{
            switch(jump_type){
              case 4:
@@ -696,8 +698,8 @@ Page({
         goods_num: this.data.num,
         pay_type: this.data.type,
         is_discount:is_discount,
-		mall_order_id:this.data.detail.mall_order.id,
-		order_num:this.data.detail.mall_order.order_num,
+      mall_order_id:this.data.detail.mall_order.id,
+      order_num:this.data.detail.mall_order.order_num,
       }
       //判断支付方式
       let pay_type = Number(this.data.type);
@@ -709,6 +711,7 @@ Page({
        switch (pay_type){
         case 1:
         that.toBalances(data);
+        break;
          case 4:
            that.switchDotCenter();
            break;
@@ -721,12 +724,13 @@ Page({
             header: that.data.header,
             data: data,
             success: res => {
-              
+
               if(res.data.code == 200){
                 let payment = res.data.data.callback.payment;
                 let mall_order = res.data.data.callback.mall_order;
                 wx.setStorageSync('mall_order', mall_order) 
                 this.hideModal();
+              
                 //调起微信支付
                 wx.requestPayment({
                   timeStamp: payment.timeStamp,
@@ -735,7 +739,9 @@ Page({
                   signType: payment.signType,
                   paySign: payment.paySign,
                   success(res) {
+                    console.log(res)
                     if (res.errMsg == "requestPayment:ok") { 
+                      console.log(jump_type)
                     setTimeout(()=>{
                       switch (jump_type) {
                         case 2:
@@ -764,6 +770,7 @@ Page({
                     
                   },
                   fail(res) {
+                    console.log('sss');
                     app.tz = 1;
                       wx.navigateTo({
                         url: '../Order/Order?state=1',
@@ -802,6 +809,7 @@ Page({
            var mall_order =res.data.data.callback.mall_order; 
            wx.setStorageSync('mall_order', mall_order)
           setTimeout(()=>{
+          
            switch(jump_type){
              case 2:
                wx.navigateTo({

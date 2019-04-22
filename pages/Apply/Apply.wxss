@@ -1,6 +1,6 @@
 /* pages/ZtApply/Apply.wxss */
 @import "../Address_es/Address_es";
-@import "../Confirm/Confirm";
+@import "../Confirm/Confirm.wxss";
 @import "../../static/css/index.wxss";
 textarea{
   color:#999!important;

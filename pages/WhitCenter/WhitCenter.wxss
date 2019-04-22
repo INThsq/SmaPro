@@ -132,7 +132,9 @@
   }
   .modal-body cover-view{
     font-size:25rpx;
-    text-align: center;
+    text-align: left;
+    display:block;
+		white-space: pre-wrap;
   }
   .modal-header cover-view:first-child{
     font-size:33.3rpx;
@@ -381,7 +383,7 @@ action-sheet{
 }
 .local{
   display: flex;
-  padding:14rpx 30rpx 44rpx;
+  padding:14rpx 34rpx 44rpx;
   box-sizing: border-box;
   flex-direction:row;
   align-items: center;
@@ -397,8 +399,11 @@ action-sheet{
   margin-right: 18rpx;
 }
 .local-Two{
-  font-size: 33.3rpx;
+  font-size: 36rpx;
   color: white;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .local-Thr{
   width: 34rpx;
@@ -408,6 +413,7 @@ action-sheet{
   display: flex;
   flex-direction: row;
   align-items: center;
+  width:80%;
 }
 .search{
   padding: 0 30rpx;

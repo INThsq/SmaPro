@@ -24,20 +24,12 @@ Page({
     this.fansList(1,1);
   },
 
-  //滑动切换
-  swiperTab: function (e) {
-    var that = this;
-    that.setData({
-      currentTab: e.detail.current
-    });
-  },
-
   //点击切换
   clickTab: function (e) {
     var type = e.currentTarget.dataset.type;
       this.setData({
         type:type,
-        currentTab: e.target.dataset.current
+        currentTab:e.currentTarget.dataset.current
       })
     this.fansList(type, 1);
   },
@@ -151,10 +143,21 @@ Page({
           isShow:false
         })
         if (res.data.code == 200) {
+          
           for(let r=0;r<res.data.data.callback.fans_list.length;r++){
+                if(res.data.data.callback.fans_list.length >= 10){
+                  this.setData({
+                    up:"下拉加载更多~"
+                  })
+                }else{
+                  this.setData({
+                    up:"暂时没有更多内容了~"
+                  })
+                }
                 res.data.data.callback.fans_list[r].create_time = utils.formatTime(res.data.data.callback.fans_list[r].create_time, 'Y-M-D h:m:s')
           }
           this.setData({
+            page: res.data.data.callback.now_page,
             fansList: res.data.data.callback.fans_list
           })
         }else{
@@ -202,8 +205,52 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-      let type = this.data.type;
-      
+      let page = this.data.page;
+      let param_type = this.data.type;
+      let fansList = this.data.fansList;
+      if(fansList.length <10){
+        wx.stopPullDownRefresh();
+        this.setData({
+          up:'暂时没有更多内容了~'
+        })
+      }else{
+        page ++;
+        this.header(app.globalData.url + 'fansList');
+        wx.request({
+          url: app.globalData.url + 'fansList',
+          method: 'GET',
+          header: this.data.header,
+          data: {
+            param_type: param_type,
+            now_page:page
+          },
+          success: res => {
+            this.setData({
+              isShow: false
+            })
+        if (res.data.code == 200) {
+
+          for (let r = 0; r < res.data.data.callback.fans_list.length; r++) {
+            if (res.data.data.callback.fans_list.length >= 10) {
+              this.setData({
+                up: "下拉加载更多~"
+              })
+            } else {
+              this.setData({
+                up: "暂时没有更多内容了~"
+              })
+            }
+            res.data.data.callback.fans_list[r].create_time = utils.formatTime(res.data.data.callback.fans_list[r].create_time, 'Y-M-D h:m:s')
+            fansList.push(res.data.data.callback.fans_list[r])
+          }
+          this.setData({
+            page: res.data.data.callback.now_page,
+            fansList: fansList
+          })
+        }
+      }
+    })
+    }
   },
 
   /**

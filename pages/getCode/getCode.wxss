@@ -18,7 +18,7 @@
   display: flex;
 }
 .ctrl .btnes{
-  line-height:normal!important;
+  line-height: 34rpx!important;
   padding:0 10rpx;
   border-radius:4px;
   font-size:20rpx;

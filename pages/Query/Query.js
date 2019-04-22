@@ -17,11 +17,14 @@ Page({
     let order_num = options.order_num;
     let scene_status = options.scene_status;
     let scene_type = options.scene_type;
-    this.setData({
-      order_num:order_num,
-      scene_status:scene_status,
-      scene_type:scene_type
-    })
+    if(order_num){
+      this.setData({
+        order_num: order_num,
+        scene_status: scene_status,
+        scene_type: scene_type
+      })
+    }
+   
   },
 
   //扫描二维码

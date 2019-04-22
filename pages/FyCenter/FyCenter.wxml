@@ -42,7 +42,7 @@
         </navigator>
          <navigator  hover-class="none"  class="item" bindtap='Record'>
             <view class='num'>{{top.settle_order}}</view>
-            <view style='font-size:29.17rpx;'>待核销(单)</view>
+            <view style='font-size:29.17rpx;'>待结算(单)</view>
         </navigator>
         <navigator  hover-class="none" class="item" bindtap='Notgifts'>
            <view class='num'>{{top.giveaway_total}}</view>

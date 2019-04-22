@@ -95,6 +95,10 @@ bottom: 0;
   position:relative;
 
 }
+video{
+  width:100%!important;
+  height: 100%!important;
+}
 .bb{
   opacity: 1!important;
 }

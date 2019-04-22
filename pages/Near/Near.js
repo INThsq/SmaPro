@@ -101,14 +101,15 @@ Page({
       }
     })
   },
-  calling(){
+  calling(e){
+		let phone =e.currentTarget.dataset.tel;
     wx.makePhoneCall({
-      phoneNumber: '11322222', //此号码并非真实电话号码，仅用于测试
+      phoneNumber:phone, //此号码并非真实电话号码，仅用于测试
       success: function () {
         console.log("拨打电话成功！")
       },
       fail: function () {
-        console.log("拨打电话失败！")
+					this.shows('电话号码有误')
       }
     })
   },
@@ -173,7 +174,6 @@ Page({
   },
   //微信获取经纬度
   getLocation: function () {
-    
     let that = this;
     wx.getLocation({
       type: 'gcj02',

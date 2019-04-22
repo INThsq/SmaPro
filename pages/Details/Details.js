@@ -717,7 +717,7 @@ Page({
         //   title: '商品详情'
         // })
         that.clear();
-      }, 300);
+      }, 500);
   },
   backes(){
     wx.pageScrollTo({
@@ -736,7 +736,7 @@ Page({
         //   title: '商品详情'
         // })
         that.clear();
-      }, 300);
+      }, 500);
   },
   clear() {
     var that = this

@@ -19,13 +19,29 @@ Page({
     new app.ToastPannels();
     let scene_type = options.scene_type;
     let settle_status = this.data.currentTab;
+    let way = options.way;
     this.setData({
-      scene_type:scene_type
+      scene_type:scene_type,
+      way:way
     })
     this.settleList(settle_status,1)
   },
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
+  },
+  back(){
+    let way = this.data.way;
+    console.log(way)
+    if (way == 0){
+      wx.navigateBack({
+        delta:1
+      })
+    }else{
+      wx.navigateBack({
+        delta:2
+      })
+    }
+    
   },
   //结算列表
   settleList(settle_status,now_page){
@@ -56,8 +72,8 @@ Page({
   //确认核销
   Confirm(e){
     console.log(e)
-    let giveaway_handle_id = e.currentTarget.dataset.autid;
-    let mall_dot_authorize_id = e.currentTarget.dataset.handle;
+    let giveaway_handle_id = e.currentTarget.dataset.handle;
+    let mall_dot_authorize_id = e.currentTarget.dataset.autid;
     this.setData({
       giveaway_handle_id:giveaway_handle_id,
       mall_dot_authorize_id:mall_dot_authorize_id
@@ -98,6 +114,7 @@ Page({
             this.setData({
               currentTab:1
             })
+            this.settleList(1,1)
           }
          
         }

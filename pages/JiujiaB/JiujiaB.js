@@ -85,6 +85,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   playvedio: function (e) {
+    
     let vediocon = wx.createVideoContext("myvedio", this)
     vediocon.play()
     this.setData({
@@ -96,7 +97,6 @@ Page({
     new app.ToastPannels();
     let member_mall_id = options.member_mall_id;
     if(member_mall_id){
-      console.log('1')
       let money = options.money;
       let name = options.name;
       let account_balance = options.account_balance;
@@ -113,7 +113,6 @@ Page({
     }else{
       let member_mall_id = options.id;
       this.getMallDot(member_mall_id)
-      console.log('2')
     }
   },
   choose(e) {
@@ -133,7 +132,7 @@ Page({
   //跳转协议
   Equit(e){
     console.log(e)
-    let src = e.currentTarget.dataset.src;
+    let src = e.currentTarget.dataset.id;
     wx.navigateTo({
       url:"../Webview/Webview?h5="+src
     })
@@ -141,6 +140,19 @@ Page({
   Bind(e){
     this.setData({
       scrollTop:e.detail.scrollTop
+    })
+  },
+  //拨打电话
+  detail(){
+    var telephone = wx.getStorageSync('telephone');
+    wx.makePhoneCall({
+      phoneNumber: telephone, //此号码并非真实电话号码，仅用于测试
+      success: function () {
+        console.log("拨打电话成功！")
+      },
+      fail: function () {
+        console.log("拨打电话失败！")
+      }
     })
   },
   Go() {
@@ -151,8 +163,10 @@ Page({
     let account_balance = this.data.account_balance;
     let content = wx.getStorageSync('content');
     let check = this.data.check;
-    let is_open_giveaway = this.data.callback.is_open_giveaway
+    let is_open_giveaway = this.data.callback.is_open_giveaway;
+    let is_disabled = this.data.callback.is_disabled;
     if (content) {
+      if(!is_disabled){
       if(!is_open_giveaway){
         this.Modal.showModal();
       }else{
@@ -168,13 +182,15 @@ Page({
         break;
       }
     }
-
-     
-    } else {
-      wx.navigateTo({
-        url: '../Accredit/Accredit',
-      })
-    }
+  }else{
+    this.Modals.showModal();
+  }
+}
+   else {
+    wx.navigateTo({
+      url: '../Accredit/Accredit',
+    })
+  }
 
   },
   _confirmEventFirst: function () {
@@ -187,12 +203,33 @@ Page({
     this.Modal.hideModal();
 
   },
-   
+  CancelEvent(){
+    this.Modals.hideModal()
+  },
+  ConfirmEventFirst(){
+    let name = this.data.name;
+    let telephone = this.data.telephone;
+    let money = this.data.money;
+    let member_mall_id = this.data.member_mall_id;
+    let account_balance = this.data.account_balance;
+    let content = wx.getStorageSync('content');
+    this.Modals.hideModal();
+    if(content){
+      wx.navigateTo({
+        url: '../Apply/Apply?name=' + name + '&telephone=' + telephone + '&money=' + money + '&member_mall_id=' + member_mall_id + '&account_balance=' + account_balance,
+      })
+    }else{
+      wx.navigateTo({
+        url: '../Accredit/Accredit',
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
+    this.Modals = this.selectComponent("#modals");
 
   },
   //活动
@@ -245,6 +282,7 @@ Page({
         isShow:false
       })
          if(res.data.code==200){
+           wx.setStorageSync('Call',res.data.data.callback)
            this.setData({
             callback:res.data.data.callback,
             money:res.data.data.callback.mall_dot.money,

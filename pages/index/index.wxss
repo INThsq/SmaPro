@@ -9,6 +9,9 @@
 .packet{
   z-index: 9999!important;
 }
+page{
+  padding-bottom: 0!important;
+}
 .up-text{
   display: block;
   width: 100%;
@@ -702,7 +705,7 @@ top:2px;
   background: white;
    overflow: hidden;
   box-sizing: border-box;
-  top:141rpx;
+  top:140rpx;
 }
 .tab-bar::after{
   position: absolute; 
