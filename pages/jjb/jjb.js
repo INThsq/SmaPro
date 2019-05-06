@@ -18,11 +18,12 @@ Page({
    */
   onLoad: function (options) {
     new app.ToastPannels();
-    let data = JSON.parse(options.data);
-    // let data = wx.getStorageSync('datas')
-    this.setData({
-      data:data
-    })
+    if(options.data){
+      let data = JSON.parse(options.data);
+      this.setData({
+        data: data
+      })
+    }
   },
   //播放视频
   playvedio: function (e) {

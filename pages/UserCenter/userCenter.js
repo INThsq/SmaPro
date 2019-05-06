@@ -344,9 +344,17 @@ Page({
 	},
 	//会员中心跳转
 	toAttention() {
-		wx.navigateTo({
-			url: '../MemCenter/MemCenter',
-		})
+    var content = wx.getStorageSync('content');
+    if(content){
+      wx.navigateTo({
+        url: '../MemCenter/MemCenter',
+      })
+    }else{
+      wx.navigateTo({
+       url: '../ Accredit / Accredit',
+      })
+    }
+		
 	},
 	//页面跳转
 	jump() {

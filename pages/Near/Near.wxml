@@ -77,14 +77,14 @@
       </view>
       <view class="tetxs">选择城市</view>
     </view>
-
-  <scroll-view  class='Area-cont' style='height:100vh;' scroll-y="true" >
-      <!-- 当前定位城市 -->
+ <!-- 当前定位城市 -->
       <view class='Now'>
           <text class='Now-title'>当前定位城市</text>
           <text class='Now-city'>{{region_city}}</text>
            <text class='Over-title'>已开通城市</text>
       </view>
+  <scroll-view  class='Area-cont' style='height:100vh;' scroll-y="true" >
+     
       <!-- 已开通城市 -->
       <view class='Over-city'>
           <block wx:for="{{cityList}}" wx:key="index">

@@ -72,6 +72,12 @@ Page({
     }
     if (val.length > 12) {
       this.show('您输入的内容太长,建议在20字以内哦~')
+    }else if(val.length == 0){
+      let region_id = this.data.region_id;
+      let region_city = this.data.region_city;
+      let lnglat = this.data.lnglat;
+      this.mallDotList(region_id, region_city, lnglat, 1, '')
+
     }
   },
   //删除
@@ -80,6 +86,10 @@ Page({
         searchValue:'',
         del:true
       })
+    let region_id = this.data.region_id;
+    let region_city = this.data.region_city;
+    let lnglat = this.data.lnglat;
+    this.mallDotList(region_id, region_city, lnglat, 1, '')
   },
   //选择位置位置
   chooseLocation: function (e) {

@@ -108,7 +108,7 @@
     border-radius: 5px;
 }
 .swiper-tab-item{
-    width: 30%; 
+    width:25%; 
     color:#FF4A47;
     border-right: 1px solid #FF4A47;
 }

@@ -544,7 +544,7 @@ Page({
               }, 3000)
               break;
             case 6:
-              that.show(res.data.msg)
+              this.shows(res.data.msg)
               wx.clearStorageSync('content');
               setTimeout(function () {
                 wx.navigateTo({

@@ -73,14 +73,19 @@ Page({
               oauth_data: oauth_data
             },
             success:res=>{
-              
-              wx.showToast({
-                title:res.data.msg
-              })
-              wx.setStorageSync('mobile', res.data.data.callback.mobile)
               that.setData({
-                hides:true
+                hides: true
               })
+              if(res.data.code==200){
+                wx.showToast({
+                  title: res.data.msg
+                })
+                wx.setStorageSync('mobile', res.data.data.callback.mobile)
+              }else{
+                this.shows(res.data.msg)
+              }
+            
+              
             }
           })
         }

@@ -10,18 +10,78 @@ Page({
     header:"",
     noncestr:'',
     fansTotal:'',
-    fansList:''
+    fansList:'',
+    histroy: true,
+    del: true,
+    One: false
   },
   /**
    * 页面的初始数据
    */
+  //判断删除符号
+  keyword(e) {
+    let val = e.detail.value;
+    if (val.length > 0) {
+      this.setData({
+        del: false
+      })
+    } else {
+      this.setData({
+        del: true,
+        One: false,
+        conts: true
+      })
+    }
 
+    if (val.length > 20) {
+      this.show('您输入的内容太长,建议在20字以内哦~')
+    }
+  },
+  //判断删除符号
+  keyword(e) {
+    let val = e.detail.value;
+    if (val.length > 0) {
+      this.setData({
+        del: false
+      })
+    } else {
+      this.setData({
+        del: true,
+        One: false,
+        conts: true
+      })
+    }
+    if (val.length > 20) {
+      this.shows('您输入的内容太长,建议在20字以内哦~')
+    }else{
+      this.setData({
+        keywords:val
+      })
+      // this.fansList(1,1,val)
+    }
+  },
+  searchSubmitFn(){
+    let keywords = this.data.keywords;
+    this.fansList(1,1,keywords)
+  },
+  //删除字段
+  del() {
+    this.setData({
+      keywords: '',
+      
+      del: true,
+      One: false,
+      conts: true
+    })
+    this.fansList(1, 1, '')
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    new app.ToastPannels();
     this.fansTotal();
-    this.fansList(1,1);
+    this.fansList(1,1,'');
   },
 
   //点击切换
@@ -81,7 +141,7 @@ Page({
     })
   },
   //获取粉丝订单
-  fansList(param_type, now_page){
+  fansList(param_type, now_page,keywords){
     this.setData({
       isShow:true
     })
@@ -92,7 +152,8 @@ Page({
       header: this.data.header,
       data: {
         param_type: param_type,
-        now_page: now_page
+        now_page: now_page,
+        keywords:keywords
       },
       success: res => {
         this.setData({
@@ -209,6 +270,7 @@ Page({
       let page = this.data.page;
       let param_type = this.data.type;
       let fansList = this.data.fansList;
+      let keywords = this.data.keywords;
       if(fansList.length <15){
         wx.stopPullDownRefresh();
         this.setData({
@@ -223,7 +285,8 @@ Page({
           header: this.data.header,
           data: {
             param_type: param_type,
-            now_page:page
+            now_page:page,
+            keywords:keywords
           },
           success: res => {
             this.setData({

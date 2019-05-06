@@ -18,9 +18,13 @@ Page({
     
     this.getMemberGroup();
     let content = wx.getStorageSync('userInfo');
-    let name = content.userInfo.nickName;
+    if(content){
+      let name = content.userInfo.nickName;
+      this.setData({
+        name:name
+      })
+    }
     this.setData({
-      name:name,
       Tname: app.globalData.Tname
     })
   },
