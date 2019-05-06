@@ -1,25 +1,90 @@
-// pages/CerSuc/CerSuc.js
-var util = require('../../utils/md5.js');
-var utils = require('../../utils/util.js');
-var app = getApp();
+// pages/FormId/FormId.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    formIdArray:'',
   },
+
+  saveFormId: function (v) {
+    if (v.detail.formId != 'the formId is a mock one') {
+      console.log(v.detail.formId)
+    }
+  },
+  templateSend: function (e) {
+    var openId ='of77M4njRdQvn8ifBLaOo6yJvuos';
+    // 表单需设置report-submit="true"
+    var formId = e.detail.formId; 
+    var access_token = this.data.access_token;
+    var data={
+                "touser":openId,
+                "template_id":"K4cJyYwhfQPNrAnbV9MWWRglpwUaa7HPM1qfQ2gXvNY",
+                "form_id":formId,
+                "page": "/pages/index/index",
+                      "data": {
+                          "keyword1": {
+                            "value": "iNT"
+                          },
+                          "keyword2": {
+                            "value": "2015年01月05日 12:30"
+                          },
+                        "keyword3": {
+                          "value": "个人邀请"
+                        }
+                        },
+                "emphasis_keyword": "keyword1DATA"
+            }
+            wx.request({
+              url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token='+access_token,
+              method:'post',
+              data:data,
+              header: {
+                'content-type': 'json'
+              },
+              success:res=>{
+                console.log(res)
+              }
+            })
+    
+  },
+
+  //获取access_token
+  getAccess(){
+    let appId = 'wx05423f696872e38c';
+    let secret = '1fff7b6ed7ac4d71ec772684cebc1420';
+    wx.request({
+      url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential',
+      data:{
+        appid:appId,
+        secret:secret
+      },
+      method:'get',
+      header:{
+        'content-type': 'json'
+      },
+      success:res=>{
+        this.setData({
+          access_token: res.data.access_token
+        })
+      },
+      fail:res=>{
+       
+      }
+    })
+  },
+  //发送模板消息
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.authRealnameInfo();
-    let type = options.type;
+    let openid = wx.getStorageSync('openid');
     this.setData({
-      type:type
+      openid:openid
     })
+    this.getAccess();
   },
 
   /**
@@ -42,33 +107,7 @@ Page({
   onHide: function () {
 
   },
-  authRealnameInfo(){
-    this.header(app.globalData.url +'authRealnameInfo');
-    wx.request({
-      url: app.globalData.url + 'authRealnameInfo',
-      method:'get',
-      header:this.data.header,
-      success:res=>{
-        if(res.data.code ==200){
-          this.setData({
-            content:res.data.data.content
-          })
-        }
-      }
-    })
-  },
-  back(){
-    let type = this.data.type;
-      if(type == 1){
-        wx.switchTab({
-          url: '../UserCenter/userCenter',
-        })
-      }else{
-        wx.navigateBack({
-          delta:1
-        })
-      }
-  },
+
   /**
    * 生命周期函数--监听页面卸载
    */
@@ -89,7 +128,13 @@ Page({
   onReachBottom: function () {
 
   },
-  //生成随机字符串
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
   randomWord() {
     var noncestr;
     noncestr = '';
@@ -101,7 +146,7 @@ Page({
     }
     this.data.noncestr = noncestr.toLowerCase();
   },
-  // 生成header
+  //生成header
   header(url) {
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
@@ -125,7 +170,6 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
-      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -133,8 +177,7 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype,
-        "Cookie": session_id
+        "logintype": logintype
       }
     } else {
       var header = {
@@ -143,15 +186,11 @@ Page({
         "noncestr": noncestr,
       }
     }
+
+
+
     this.setData({
       header: header
     })
-  },    
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  },
 })

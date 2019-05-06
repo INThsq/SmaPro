@@ -18,6 +18,55 @@
    margin-left: var(--marqueeWidth--);
   }
  }
+ page{
+   overflow:hidden!important;
+ }
+ .Cover{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background:rgba(0, 0, 0, .8);
+    overflow: hidden;
+    z-index: 1000;
+    color: #fff;
+ }
+ .cover-list{
+   background-color:#FFFFFF;
+    position:relative;
+    padding:13.5px 0;
+    text-align:center;
+    font-size:18px;
+    display:inline-block;
+    color: #000;
+    width: 100%;
+ }
+ .cover-list::after{
+    position: absolute; 
+  content: '';
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #f3f3f3;
+  -webkit-transform: scale(1, 0.5);
+  transform: scale(1, 0.5);
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+ }
+ .Cover .canel{
+   width: 100%;
+   font-size:33.3rpx;
+    color:#8D8D8D;
+    display: inline-block;
+    text-align: center;
+    line-height:100rpx;
+    padding:0!important;
+    letter-spacing:1px;
+    background: white;
+
+ }
  .marquee_container image{
     width:30rpx;
   height: 26rpx;
@@ -394,7 +443,7 @@ action-sheet{
   display: flex;
 }
 .local-One{
-  width: 28rpx;
+  width: 30rpx;
   height: 38rpx;
   margin-right: 18rpx;
 }

@@ -21,16 +21,11 @@ Page({
   },
   //返回上一页
   back:function(){
-    // let tz = this.data.tz;
-    // if(tz == 1){
+   
       wx.switchTab({
         url: '../UserCenter/userCenter',
       })
-    // }else{
-    //   wx.navigateBack({
-    //     delta: 1,
-    //   })
-    // }
+    
   },
   check(e){
     let order_num =e.currentTarget.dataset.id;
@@ -230,6 +225,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
     this.Modal = this.selectComponent("#modal");
     this.Modals = this.selectComponent("#modals");
     this.Offline = this.selectComponent('#Offline');
@@ -335,6 +331,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -342,7 +339,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype":logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -351,9 +349,6 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })

@@ -114,6 +114,9 @@ Page({
   },
   // 分销中心
   distribution(member_mall_id) {
+    this.setData({
+      isShow:true
+    })
     var scenes = 0;
     var data = {};
     switch (scenes) {
@@ -146,6 +149,9 @@ Page({
       method: 'get',
       data: data,
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           wx.setStorageSync('data',data)
           app.data = data
@@ -196,11 +202,17 @@ Page({
     let content = wx.getStorageSync('content');
     if(content){
       this.header(app.globalData.url + 'switchDotCenter');
+      this.setData({
+        isShow:true
+      })
       wx.request({
         url: app.globalData.url + 'switchDotCenter',
         method: 'get',
         header: this.data.header,
         success: res => {
+            this.setData({
+              isShow:false
+            })
             if(res.data.code == 200){
                 if(res.data.data.callback.length <1){
                   this.show('您还未开通相关门店,请前去开通或联系客服')
@@ -229,6 +241,9 @@ Page({
   },
   dotCenter(mall_dot_authorize_id, order_num) {
     this.header(app.globalData.url + 'dotCenter');
+    this.setData({
+      isShow:true
+    })
     wx.request({
       url: app.globalData.url + 'dotCenter',
       header: this.data.header,
@@ -238,6 +253,9 @@ Page({
         order_num: order_num
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if(res.data.code == 200){
           app.top = res.data.data.callback
           wx.setStorageSync('top', res.data.data.callback)
@@ -258,7 +276,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    console.log('北京市，三生三世'.indexOf('北京'));
+    app.scene_type =0 ;
     this.setData({
       Tname: app.globalData.Tname
     })
@@ -682,7 +701,7 @@ Page({
       }   
       break;   
       //跳转8800开通页面
-    
+  
       case "enterdot":
       wx.navigateTo({
         url:"../JiujiaB/JiujiaB?id="+ e.currentTarget.dataset.type

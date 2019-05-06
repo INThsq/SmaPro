@@ -389,52 +389,51 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
     // 生成header
-    header(url) {
-      var timestamp = Date.parse(new Date());
-      timestamp = timestamp / 1000;
-      this.randomWord();
-      var noncestr = this.data.noncestr;
-      var api_url = url;
-      var key = 'myzy3224326de100671291c7d1a6353ff6db';
-      var arr = [api_url, key, this.data.noncestr, timestamp];
-      var str = '';
-      for (let i in arr) {
-        str += arr[i];
+  header(url) {
+    var timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    this.randomWord();
+    var noncestr = this.data.noncestr;
+    var api_url = url;
+    var key = 'myzy3224326de100671291c7d1a6353ff6db';
+    var arr = [api_url, key, this.data.noncestr, timestamp];
+    var str = '';
+    for (let i in arr) {
+      str += arr[i];
+    }
+    //md5加密生成
+    var password = '';
+    password = util.hexMD5(str);
+    password = password.toUpperCase();
+    //发起请求
+    var content = wx.getStorageSync('content');
+    if (content) {
+      var uuid = content.data.uuid;
+      var token = content.data.token;
+      var expiry_time = content.data.expiry_time;
+      var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+        "uuid": uuid,
+        "token": token,
+        "expirytime": expiry_time,
+        "logintype": logintype,
+        "Cookie": session_id
       }
-      //md5加密生成
-      var password = '';
-      password = util.hexMD5(str);
-      password = password.toUpperCase();
-      //发起请求
-      var content = wx.getStorageSync('content');
-      if (content) {
-        var uuid = content.data.uuid;
-        var token = content.data.token;
-        var expiry_time = content.data.expiry_time;
-        var logintype = content.data.login_type;
-        var header = {
-          "sign": password,
-          "timestamp": timestamp,
-          "noncestr": noncestr,
-          "uuid": uuid,
-          "token": token,
-          "expirytime": expiry_time,
-          "logintype":logintype
-        }
-      } else {
-        var header = {
-          "sign": password,
-          "timestamp": timestamp,
-          "noncestr": noncestr,
-        }
+    } else {
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
       }
-  
-  
-  
-      this.setData({
-        header: header
-      })
-    },
+    }
+    this.setData({
+      header: header
+    })
+  },
   //拨打电话
   calling: function (e) {
     // var phone = e.currentTarget.dataset.phone;

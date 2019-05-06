@@ -13,6 +13,7 @@ Page({
     isShow:false
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -21,6 +22,24 @@ Page({
       this.logisticsQuery(order_num)
        
   },
+  //点击复制功能
+  Ctrlc(e) {
+    let text = e.currentTarget.dataset.text;
+    wx.setClipboardData({
+      data: text,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            wx.showToast({
+              title: '复制成功'
+            })
+          }
+        })
+      }
+
+    })
+  },
+  
   //查看物流
   logisticsQuery(order_num){
     this.setData({
@@ -33,6 +52,7 @@ Page({
       header: this.data.header,
       data: {
         order_num: order_num
+        // debug_logistics:true
       },
       success: res => {
         this.setData({
@@ -138,6 +158,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -145,7 +166,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -154,9 +176,6 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })

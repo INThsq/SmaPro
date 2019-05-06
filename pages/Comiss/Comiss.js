@@ -166,6 +166,7 @@ Page({
             if (res.data.data.callback.length < 1) {
               this.shows('您还未开通相关门店,请前去开通或联系客服')
             } else {
+              this.dotCenter(res.data.data.callback[0].mall_dot_authorize_id, res.data.data.callback[0].order_num)
               wx.navigateTo({
                 url: '../WhitCenter/WhitCenter?list=' + JSON.stringify(res.data.data.callback),
               })
@@ -176,6 +177,39 @@ Page({
         }
       })
     } 
+  },
+  dotCenter(mall_dot_authorize_id, order_num) {
+    this.header(app.globalData.url + 'dotCenter');
+    this.setData({
+      isShow: true
+    })
+    wx.request({
+      url: app.globalData.url + 'dotCenter',
+      header: this.data.header,
+      method: 'get',
+      data: {
+        mall_dot_authorize_id: mall_dot_authorize_id,
+        order_num: order_num
+      },
+      success: res => {
+        this.setData({
+          isShow: false
+        })
+        if (res.data.code == 200) {
+          app.top = res.data.data.callback
+          wx.setStorageSync('top', res.data.data.callback)
+        } else if (res.data.code == 401) {
+          this.show(res.data.msg)
+        } else {
+          this.show(res.data.msg)
+          wx.navigateTo({
+            url: '/pages/Accredit/Accredit'
+          })
+        }
+
+      }
+
+    })
   },
   //展开福利
   Sum(){

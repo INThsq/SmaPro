@@ -10,22 +10,40 @@
 <view class='container'>
     <!-- 商品 -->
     <view class='logistics-top'>
+
         <view class='top-left'>
           <image src='{{lists.goods_img}}'></image>
           <text class='num'>共{{lists.goods_buy_num}}件商品</text>
         </view>
         <view class='top-right'>
         <!-- 已发货有物流 -->
-        <block wx:if="{{lists.is_logistics == 1}}">
-        <view class='company'>物流公司 :  <text>顺丰快递</text></view>
-        <view class='num'>物流单号 :  <text>{{lists.logistics_num}}</text></view>
+        <block wx:if="{{lists.sync_status == 1&& lists.logistics_num}}">
+        <view class='company'>物流公司 :  <text>{{lists.kuaidi_name}}</text></view>
+        <view class='num'>
+          <view class='num-left'>
+          物流单号 :  <text style='margin-left:15rpx!important;'>{{lists.logistics_num}}</text>
+          </view>
+          <view class='num-right'>
+            <text class='btnes' bindtap='Ctrlc'  data-text='{{lists.logistics_num}}'>复制</text>
+          </view>
+        
+        </view>
         <view class='tel'>物流状态 :  <text>{{lists.logistics_status}}</text></view>
         </block>
         <!-- 刚揽收 -->
         <block wx:else>
-          <view class='order-num'>订单编号 : <text>{{lists.logistics_status.order_num||lists.order_num}}
-          </text></view>
-          <view class='order-time'>订单时间 : <text>{{lists.pay_time}}</text></view>
+          <view class='order-num'>
+          <view class='num-left'>
+          订单编号 : <text>{{lists.order_num}}
+          </text>
+          </view>
+           <view class='num-right'>
+            <text class='btnes' bindtap='Ctrlc'  data-text='{{lists.order_num}}'>复制</text>
+          </view>
+          </view>
+          <view class='order-time'>订单时间 :<text>{{lists.pay_time}}</text></view>
+          <view class='order-time'>订单状态 :<text>{{lists.logistics_status}}</text></view>
+
         </block>
         </view>
     
@@ -38,11 +56,13 @@
     <!-- <view class='spans'></view> -->
     <view class='logistics-conts'>
     <view class='spans'></view>
+   
+
+    <block wx:if="{{lists.sync_status == 1&&lists.logistics_num!=''}}">
     <view class='items'>
     <!-- 查看物流 -->
-
     <!-- 最新 -->
-    <view class='item top' wx:if="{{lists.is_logistics == 1}}">
+    <view class='item top'>
             <view class='col1'>
             </view>
             <view class='col2'>
@@ -59,7 +79,7 @@
     </view>
 
     <!-- 运输中 -->
-    <view class='item middle' wx:for="{{listT}}" wx:key="{{index}}" wx:if="{{lists.is_logistics == 1}}">
+    <view class='item middle' wx:for="{{listT}}" wx:key="{{index}}">
         <view class='col1'>
             </view>
             <view class='col2'>
@@ -73,9 +93,10 @@
             </view>
     </view>
     </view>
-    
-    <!-- 发货 -->
-    <view class='item top' wx:if="{{lists.is_logistics == 0}}">
+    </block>
+       <!-- 发货 -->
+    <block wx:else>
+    <view class='item top'>
       <view class='col1'>
       </view>
       <view class='col2'>
@@ -86,8 +107,8 @@
             <text class='time'>{{lists.pay_time}}</text>
         </view>
       </view>
-</view>
-    <view class='item bottom' wx:if="{{lists.is_logistics == 0}}">
+    </view>
+    <view class='item bottom'>
             <view class='col1'>
             </view>
             <view class='col2'>
@@ -100,6 +121,8 @@
               </view>
             </view>
         </view>
+    </block>
+  
     </view> 
 
 </view>

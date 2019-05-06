@@ -19,6 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    new app.ToastPannels();
     var content = wx.getStorageSync('content');
     var nickname = content.data.content.userinfo.member_oauth[0].nickname;
     var imgurl = content.data.content.userinfo.member_oauth[0].headimgurl;
@@ -51,36 +52,41 @@ Page({
   },
 
   getPhoneNumber: function (e) {
-  var that = this;
-  that.header(app.globalData.url+'bingPhone');
-    wx.login({
-      success:res=>{
-        var code = res.code;
-        var oauth_data = '';
-        oauth_data = JSON.stringify({
-          code:code,
-          iv:e.detail.iv,
-          encryptedData:e.detail.encryptedData
-        })
-        wx.request({
-          url:app.globalData.url+'bingPhone',
-          method: 'POST',
-          header:that.data.header,
-          data: {
-            oauth_data: oauth_data
-          },
-          success:res=>{
-            wx.showToast({
-              title:res.data.msg
-            })
-            wx.setStorageSync('mobile', res.data.data.callback.mobile)
-            that.setData({
-              hides:true
-            })
-          }
-        })
-      }
-    })
+    let encryptedData = e.detail.encryptedData;
+    if(encryptedData){
+    var that = this;
+    that.header(app.globalData.url+'bingPhone');
+      wx.login({
+        success:res=>{
+          var code = res.code;
+          var oauth_data = '';
+          oauth_data = JSON.stringify({
+            code:code,
+            iv:e.detail.iv,
+            encryptedData:e.detail.encryptedData
+          })
+          wx.request({
+            url:app.globalData.url+'bingPhone',
+            method: 'POST',
+            header:that.data.header,
+            data: {
+              oauth_data: oauth_data
+            },
+            success:res=>{
+              
+              wx.showToast({
+                title:res.data.msg
+              })
+              wx.setStorageSync('mobile', res.data.data.callback.mobile)
+              that.setData({
+                hides:true
+              })
+            }
+          })
+        }
+      })
+    }
+
   },
   Certification(){
     let is_card = this.data.is_card;
@@ -159,7 +165,7 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
    // 生成header
-   header(url) {
+  header(url) {
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
     this.randomWord();
@@ -182,6 +188,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -189,7 +196,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype":logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -198,9 +206,6 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })

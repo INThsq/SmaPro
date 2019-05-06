@@ -25,6 +25,7 @@ App({
     this.globalData.noncestr = noncestr.toLowerCase();
   },
  onLoad(){
+  
   new app.ToastPannel();
   new app.ToastPannels();
    wx.login({
@@ -42,6 +43,12 @@ App({
    let order_num = options.query.order_num;
  },
   onLaunch: function (options) {
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.platform)
+        wx.setStorageSync('platform', res.platform)
+      }
+    })
     if (wx.canIUse('getUpdateManager')) {
       const updateManager = wx.getUpdateManager()
       updateManager.onCheckForUpdate(function (res) {

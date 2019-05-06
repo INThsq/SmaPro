@@ -17,7 +17,7 @@ Page({
   onLoad: function (options) {
     let callback = JSON.parse(options.callback);
     callback.create_time = utils.formatTime(callback.create_time, 'Y-M-D')
-    callback.expire_time = utils.formatTime(callback.expire_time, 'Y-M-D')
+    callback.expiry_time = utils.formatTime(callback.expiry_time, 'Y-M-D')
     callback.signing_time = utils.formatTime(callback.signing_time, 'Y-M-D')
     this.setData({
       callback:callback
@@ -26,10 +26,19 @@ Page({
 
   //门店补货
  Details(e){
-   let id = e.currentTarget.dataset.id;
-   wx.navigateTo({
-     url: '../Details/Details?id='+id,
-   })
+   let is_disabled = this.data.callback.is_disabled;
+   if (is_disabled) {
+     this.setData({
+       isShows: true
+     })
+   }else{
+     let id = e.currentTarget.dataset.id;
+     app.scene_type = 1;
+     wx.navigateTo({
+       url: '../Details/Details?id=' + id,
+     })
+   }
+  
  },
   Detail(e) {
     let is_disabled = this.data.callback.is_disabled;
@@ -38,6 +47,8 @@ Page({
         isShows:true
       })
     }else{
+      app.scene_type = 1;
+
     app.get = 1;
     let id = e.currentTarget.dataset.id;
     wx.navigateTo({

@@ -110,6 +110,8 @@ Page({
       header: this.data.header,
       method: 'get',
       success:res=>{
+        if(res.data.data.callback.member_group){
+
         let list = res.data.data.callback.member_group;
         for (var x in list) {
           if (list[x].is_current == 1){
@@ -123,7 +125,10 @@ Page({
         })
         list.splice(0,1);
         this.setData({
-          list:list,
+          list:list
+        })
+        }
+        this.setData({
           callback:res.data.data.callback
         })
       }

@@ -46,53 +46,9 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
 
-  // 生成header
-  header(url) {
-    var timestamp = Date.parse(new Date());
-    timestamp = timestamp / 1000;
-    this.randomWord();
-    var noncestr = this.data.noncestr;
-    var api_url = url;
-    var key = 'myzy3224326de100671291c7d1a6353ff6db';
-    var arr = [api_url, key, this.data.noncestr, timestamp];
-    var str = '';
-    for (let i in arr) {
-      str += arr[i];
-    }
-    //md5加密生成
-    var password = '';
-    password = util.hexMD5(str);
-    password = password.toUpperCase();
-    //发起请求
-    var content = wx.getStorageSync('content');
-    if (content) {
-      var uuid = content.data.uuid;
-      var token = content.data.token;
-      var expiry_time = content.data.expiry_time;
-      var logintype = content.data.login_type;
-      var header = {
-        "sign": password,
-        "timestamp": timestamp,
-        "noncestr": noncestr,
-        "uuid": uuid,
-        "token": token,
-        "expirytime": expiry_time,
-        "logintype":logintype
-      }
-    } else {
-      var header = {
-        "sign": password,
-        "timestamp": timestamp,
-        "noncestr": noncestr,
-      }
-    }
-  
-  
-  
-    this.setData({
-      header: header
-    })
-  },
+ 
+
+ 
 
   //跳转粉丝订单
   Fanorder() {
@@ -145,7 +101,7 @@ Page({
         if (res.data.code == 200) {
           
           for(let r=0;r<res.data.data.callback.fans_list.length;r++){
-                if(res.data.data.callback.fans_list.length >= 10){
+                if(res.data.data.callback.fans_list.length >= 15){
                   this.setData({
                     up:"下拉加载更多~"
                   })
@@ -200,7 +156,52 @@ Page({
   onPullDownRefresh: function () {
 
   },
-
+  // 生成header
+  header(url) {
+    var timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    this.randomWord();
+    var noncestr = this.data.noncestr;
+    var api_url = url;
+    var key = 'myzy3224326de100671291c7d1a6353ff6db';
+    var arr = [api_url, key, this.data.noncestr, timestamp];
+    var str = '';
+    for (let i in arr) {
+      str += arr[i];
+    }
+    //md5加密生成
+    var password = '';
+    password = util.hexMD5(str);
+    password = password.toUpperCase();
+    //发起请求
+    var content = wx.getStorageSync('content');
+    if (content) {
+      var uuid = content.data.uuid;
+      var token = content.data.token;
+      var expiry_time = content.data.expiry_time;
+      var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+        "uuid": uuid,
+        "token": token,
+        "expirytime": expiry_time,
+        "logintype": logintype,
+        "Cookie": session_id
+      }
+    } else {
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+      }
+    }
+    this.setData({
+      header: header
+    })
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -208,7 +209,7 @@ Page({
       let page = this.data.page;
       let param_type = this.data.type;
       let fansList = this.data.fansList;
-      if(fansList.length <10){
+      if(fansList.length <15){
         wx.stopPullDownRefresh();
         this.setData({
           up:'暂时没有更多内容了~'
@@ -231,7 +232,7 @@ Page({
         if (res.data.code == 200) {
 
           for (let r = 0; r < res.data.data.callback.fans_list.length; r++) {
-            if (res.data.data.callback.fans_list.length >= 10) {
+            if (res.data.data.callback.fans_list.length >= 15) {
               this.setData({
                 up: "下拉加载更多~"
               })

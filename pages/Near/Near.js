@@ -61,11 +61,13 @@ Page({
     if (val.length > 0) {
       this.setData({
         del: false,
+        
         searchValue:val
       })
     } else {
       this.setData({
         del: true,
+        searchValue:''
       })
     }
     if (val.length > 12) {
@@ -109,7 +111,6 @@ Page({
         console.log("拨打电话成功！")
       },
       fail: function () {
-					this.shows('电话号码有误')
       }
     })
   },
@@ -119,6 +120,7 @@ Page({
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
   },
+ 
   //位置授权
   getUserLocation(){
     wx.getSetting({
@@ -202,11 +204,6 @@ Page({
     let now_page = 1;
     let keywords ='';
     that.header(app.globalData.url +'position');
-    let cookie = getApp().cookie;
-    let header = that.data.header;
-    if (cookie) {
-      header.Cookie = cookie;
-    }
     wx.request({
       url: app.globalData.url +'position',
       header:that.data.header,
@@ -261,11 +258,6 @@ Page({
       isShow:true
     })
     this.header(app.globalData.url +'mallDotList');
-    let cookie = getApp().cookie;
-    let header = this.data.header;
-    if (cookie) {
-      header.Cookie = cookie;
-    }
     wx.request({
       url: app.globalData.url +'mallDotList',
       method:'get',
@@ -279,11 +271,29 @@ Page({
       },
       success:res=>{
         this.setData({
-          isShow: false,
-          mall_dot_list: res.data.data.callback.mall_dot_list
+          isShow:false
         })
+        if(res.data.code == 200){
+            if (res.data.data.callback.mall_dot_list.length >= 15) {
+                this.setData({
+                  up: "下拉加载更多~"
+                })
+              } else {
+                this.setData({
+                  up: "暂时没有更多内容了~"
+                })
+                  }
+        this.setData({
+          isShow: false,
+          mall_dot_list: res.data.data.callback.mall_dot_list,
+          page: res.data.data.callback.now_page
+
+        })
+      }else{
+        this.shows(res.data.msg)
       }
-    })
+      }
+      })
   },
   //获取城市列表
   switchLocale(){
@@ -313,7 +323,63 @@ Page({
     let region_city = that.data.region_city;
     var lnglat = that.data.lnglat;
     let now_page = 1;
+    this.setData({
+      keywords:keywords
+    })
     that.mallDotList(region_id, region_city, lnglat, now_page, keywords)
+  },
+  //下拉刷新
+  onReachBottom() {
+    let region_id = this.data.region_id;
+    let region_city = this.data.region_city;
+    let lnglat = this.data.lnglat;
+    let page = this.data.page;
+    let mall_dot_list = this.data.mall_dot_list;
+    let keywords = this.data.searchValue;
+    if(mall_dot_list.length>15){
+      wx.stopPullDownRefresh();
+      this.setData({
+        up: '暂时没有更多内容了~'
+      })
+    }else{
+      page++;
+    this.header(app.globalData.url + 'mallDotList');
+    wx.request({
+      url: app.globalData.url + 'mallDotList',
+      method: 'get',
+      header: this.data.header,
+      data: {
+        region_id: region_id,
+        region_city: region_city,
+        lnglat: lnglat,
+        now_page: page,
+        keywords: keywords
+      },
+      success: res => {
+        if (res.data.code == 200) {
+          for(let r=0;r<res.data.data.callback.mall_dot_list.length;r++){
+            if (res.data.data.callback.mall_dot_list.length >= 15) {
+              this.setData({
+                up: "下拉加载更多~"
+              })
+            } else {
+              this.setData({
+                up: "暂时没有更多内容了~"
+              })
+            }
+            mall_dot_list.push(res.data.data.callback.mall_dot_list[r])
+            this.setData({
+              isShow: false,
+              mall_dot_list: mall_dot_list,
+              page: res.data.data.callback.now_page
+
+            })
+          }
+            
+        }
+      }
+    })
+    }
   },
   //生成随机字符串
   randomWord() {
@@ -351,6 +417,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -358,7 +425,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

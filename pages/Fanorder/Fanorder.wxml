@@ -48,6 +48,8 @@
         </view>
         </block>
         </view>
+           <view class='up-text' style='background:white!important;'>{{up}}</view>
+
 </view>
      
 

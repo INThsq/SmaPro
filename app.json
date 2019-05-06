@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/FormId/FormId",
+    "pages/WhitCenter/WhitCenter",
     "pages/JiujiaB/JiujiaB",
     "pages/jjb/jjb",
-    "pages/WhitCenter/WhitCenter",
     "pages/Certification/Certification",
     "pages/Query/Query",
     "pages/Querys/Query",
@@ -94,8 +95,8 @@
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
-  "networkTimeout":{
-    "request":5000
+  "networkTimeout": {
+    "request": 5000
   },
   "tabBar": {
     "color": "#666",
@@ -134,5 +135,6 @@
         "selectedIconPath": "static/imgs/icon_tab_8 copy.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

@@ -1,8 +1,13 @@
 <!--pages/UserCenter/userCenter.wxml-->
 <!-- 用户信息 -->
-<view class="head">
+<scroll-view scroll-y='true'>
+<view class="head" >
+  <!-- <view class='head-top repeat'  bindtap='jump' wx:if = "{{usrState == 0}}"></view> -->
+  <!-- <view class='head-top repeat'  bindtap='BindPhone' wx:if = "{{usrState == 3 || usrState == 4}}"></view> -->
+
   <view class='head-top' style='background:url("{{bg}}") no-repeat center; background-size:cover;'>
   <view class='arrwo'>
+   <!-- style='bottom:{{platform == "android"?"-10rpx":"-12rpx"}}' -->
   <image src='../../static/imgs/icon_wdym_gdt.png'></image>
   </view>
     <!-- <text>再消费100升级黑卡</text> -->
@@ -15,7 +20,7 @@
     
     
     <!-- //未登录 -->
-    <view class="head-left" bindtap='jump' wx:if = "{{usrState == 0}}">
+    <view class="head-left"  bindtap='jump'  wx:if = "{{usrState == 0}}">
         <view>
           <image src="http://oss.myzy.com.cn/wechat/images/img_wdeyemian_touxiang.png" alt="" class="tx" />
         </view>
@@ -27,11 +32,12 @@
     </view>
 
   <!-- 已登录并且授权 -->
-    <view class="head-left" wx:elif="{{usrState == 3 || usrState == 4}}" >
+
+    <view class="head-left" bindtap='BindPhone' wx:if="{{usrState == 3 || usrState == 4}}" >
         <navigator url="../index/index">
           <image src="{{userInfo[0].headimgurl}}" alt="" class="tx" />
         </navigator>
-        <view class="head-info" bindtap='BindPhone'>
+        <view class="head-info">
             <navigator>
               <view class="name">{{userInfo[0].nickname}}</view>
               <!--  -->
@@ -252,7 +258,7 @@
       </view> 
 
       <block wx:for="{{content.data.content.application}}" wx:key="{{index}}">
-      <view class='sy' bindtap='Steed' data-name="{{item.name}}">
+      <view class='sy' bindtap='Steed' data-name="{{item.name}}"  data-types='{{item.jump}}' data-type="{{item.unique_name}}">
           <navigator  hover-class="none">
           <image src='{{item.image}}'></image>
           <view class='sy_title'>
@@ -299,3 +305,4 @@
 <view class="load {{isShow ? 'show' : ''}}" >
   <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
   </view>
+</scroll-view>

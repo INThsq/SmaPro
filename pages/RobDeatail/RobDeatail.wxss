@@ -17,6 +17,7 @@ page{
 .title{
   justify-content: space-between!important;
 }
+
 .fade_in {
   animation-delay:2s;
   animation: fadeIn 2s both;

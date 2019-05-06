@@ -20,13 +20,13 @@
         <!-- 签约 -->
         <view class="qy">
                 <view class="name">签约日期：{{callback.create_time}}</view>
-                <view class="name">合同期限：{{callback.create_time}} 至 {{callback.expire_time}}</view>
+                <view class="name">合同期限：{{callback.create_time}} 至 {{callback.expiry_time}}</view>
                 <view class="name">押金额度：{{callback.money}}元</view>
             </view>
 
         <!-- 统计 -->
         <view class="tj">
-                <view class="name">商品名称：{{callback.name}}</view>
+                <view class="name">商家名称：{{callback.name}}</view>
                 <!-- <view class="name">补货数量：30箱</view> -->
                 <view class="name">剩余次数：{{callback.supply_num}}次</view>
 

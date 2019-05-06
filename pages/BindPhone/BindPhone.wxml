@@ -59,4 +59,6 @@
 
 </dialog>
 
-  
+   <!-- 提示框 -->
+   <import src="../../public/appToasts/appToasts.wxml"/>
+   <template is="toasts" data="{{ ..._toast_ }}"/>

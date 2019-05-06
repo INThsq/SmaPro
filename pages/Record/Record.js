@@ -20,11 +20,15 @@ Page({
     let scene_type = options.scene_type;
     let settle_status = this.data.currentTab;
     let way = options.way;
+    let id = options.id;
+    let num = options.num;
     this.setData({
       scene_type:scene_type,
-      way:way
+      way:way,
+      id:id,
+      num:num
     })
-    this.settleList(settle_status,1)
+    this.settleList(settle_status,1,scene_type,id,num)
   },
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
@@ -44,7 +48,7 @@ Page({
     
   },
   //结算列表
-  settleList(settle_status,now_page){
+  settleList(settle_status, now_page, scene_type, mall_dot_authorize_id, order_num){
     this.setData({
       isShow:true
     })
@@ -54,7 +58,10 @@ Page({
         header:this.data.header,
         data:{
           settle_status:settle_status,
-          now_page:now_page
+          now_page:now_page,
+          scene_type: scene_type,
+          mall_dot_authorize_id: mall_dot_authorize_id,
+          order_num: order_num
         },
         method:'get',
         success:res=>{
@@ -84,7 +91,9 @@ Page({
   _confirmEventFirst: function () {
     let giveaway_handle_id = this.data.giveaway_handle_id;
     let mall_dot_authorize_id = this.data.mall_dot_authorize_id;
-    this.finishSettle(giveaway_handle_id,mall_dot_authorize_id)
+    let scene_type = this.data.scene_type;
+    let num = this.data.num;
+    this.finishSettle(giveaway_handle_id,mall_dot_authorize_id,scene_type,num)
   this.Modal.hideModal();
   },
     _cancelEvent: function () {
@@ -92,7 +101,7 @@ Page({
     },
   
   //门店确认核销
-  finishSettle(giveaway_handle_id,mall_dot_authorize_id){+
+  finishSettle(giveaway_handle_id, mall_dot_authorize_id, scene_type, order_num){+
       this.setData({
         isShow:true
       })
@@ -114,7 +123,7 @@ Page({
             this.setData({
               currentTab:1
             })
-            this.settleList(1,1)
+            this.settleList(1,1,scene_type,mall_dot_authorize_id,order_num)
           }
          
         }
@@ -125,7 +134,10 @@ Page({
   clickTab: function (e) {
     var that = this;
     var currentTab = e.target.dataset.current;
-    this.settleList(currentTab,1);
+    let scene_type = this.data.scene_type;
+    let id = this.data.id;
+    let num = this.data.num;
+    this.settleList(currentTab, 1, scene_type, id, num)
     if (this.data.currentTab === currentTab) {
       return false;
     } else {

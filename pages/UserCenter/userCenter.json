@@ -2,6 +2,7 @@
   "navigationStyle": "custom",
 	"enablePullDownRefresh":true,
 	"backgroundTextStyle":"dark",
+  "disableScroll":false,
   "usingComponents": {
     "dialog": "../../public/Dialog/dialog"
   }

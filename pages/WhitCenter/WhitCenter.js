@@ -40,10 +40,17 @@ Page({
       })
     }
    
-  },     
+  },  
+  Canel(){
+    this.setData({
+      actionSheetHidden:true
+    })
+  },  
   Record(){
+    let id = this.data.id;
+    let num = this.data.num;
     wx.navigateTo({
-      url: '../Record/Record?scene_type=1&&way=0',
+      url: '../Record/Record?scene_type=1&&way=0&&id='+id+'&&num='+num,
     })
   },
   //页面跳转
@@ -116,14 +123,15 @@ Page({
     new app.ToastPannels();
     let that = this;
     let top = getApp().top||wx.getStorageSync('top');
-    
+    console.log(top)
    let list =JSON.parse(options.list);
    let shop = list[0];
    let img = wx.getStorageSync('img');
    let imgs = wx.getStorageSync('imgs');
     that.dotCenter(shop.mall_dot_authorize_id, shop.order_num)
    that.setData({
-
+     id: list[0].mall_dot_authorize_id,
+     num:list[0].order_num,
      list:list,
      shop:shop,
      img:img,
@@ -131,13 +139,14 @@ Page({
      top:top,
      text: top.system_notice.content
    })
+    wx.setStorageSync('mall_dot_authorize_id', list[0].mall_dot_authorize_id)
+    wx.setStorageSync('order_num', list[0].order_num)
    top.task_list.map((item,key) => {
      this.drawCanvas(item.scale * 100, item.total, `runCanvae${item.total}${key}`);
     })
   },
   //跳转提现页面
   Apply(){
-  
     let money = this.data.callback.mall_dot.money;
     wx.navigateTo({
       url: '../WhitCash/WhitCash?money='+money+'&type=1',
@@ -164,7 +173,7 @@ Page({
         }
         let grade = Math.round(src * n / 1.5 * 100);
         //百分数
-        ctx2.arc(w, h, w - 8, 0.75 * Math.PI, (0.75 + src * n) * Math.PI); //每个间隔绘制的弧度
+        ctx2.arc(w, h, w - 8, 1.5 * Math.PI, (1.5 + src * n) * Math.PI,false); //每个间隔绘制的弧度
         ctx2.setStrokeStyle("#FF9948");
         ctx2.setLineWidth("3");
         ctx2.setLineCap("round");
@@ -213,9 +222,13 @@ Page({
     var id = e.target.dataset.id;
     var num = e.target.dataset.num;
     let name = e.target.dataset.name;
+    wx.setStorageSync('mall_dot_authorize_id', id)
+    wx.setStorageSync('order_num',num)
     this.setData({
       actionSheetHidden: !this.data.actionSheetHidden,
-      shop:name
+      shop:name,
+      id:id,
+      num:num
     })
     this.dotCenter(id,num)
   },
@@ -237,6 +250,9 @@ Page({
         this.setData({
           isShow:false
         })
+        res.data.data.callback.task_list.map((item, key) => {
+          this.drawCanvas(item.scale * 100, item.total, `runCanvae${item.total}${key}`);
+        })
         this.setData({
           callback:res.data.data.callback
         })
@@ -250,7 +266,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    let mall_dot_authorize_id = wx.getStorageSync('mall_dot_authorize_id');
+    if(mall_dot_authorize_id){
+      let order_num = wx.getStorageSync('order_num');
+      this.dotCenter(mall_dot_authorize_id,order_num)
+    }
   },
   //生成随机字符串
   randomWord() {
@@ -288,6 +308,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -295,7 +316,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

@@ -17,7 +17,8 @@
     </view>
   </view>
 
-<!-- 标题 -->
+
+
 <view class="title">
     <view class="left">
        {{detail.goods_details.title}}
@@ -83,10 +84,9 @@
 
 <view style='position:relative' data-id="{{detail.goods_details.goods_id}}" catchtap='goOpen' wx:if="{{give_count_list.length>=3}}">
     <cover-view class="controls"></cover-view>
-    <swiper class='presented-list' 
-      vertical="true" 
-      intervals="2000"
-      current="{{control.current}}"
+    <swiper class='presented-list'  easing-function	="linear"
+      vertical="true"
+      current=""
       next-margin="200rpx"
       circular="true"
       autoplay='false'

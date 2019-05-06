@@ -108,6 +108,9 @@ display: block;
 .num-left .name{
   font-size: 26rpx;color: #333;
   line-height: 2;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .num-right{
   padding-left:5%;

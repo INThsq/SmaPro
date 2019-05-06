@@ -151,7 +151,6 @@ Page({
     }
 
     that.setData(data)
-    console.log(that.data.defaultCity)
   },
 
   //重新选择
@@ -381,11 +380,25 @@ Page({
   save: function (e) {
     var mobile = /^[1][3,4,5,7,8][0-9]{9}$/;
     var isMobile = mobile.exec(this.data.addressDetails.mobile);
+    console.log(this.data.choose.sheng)
+    console.log(this.data.choose.shi)
+
+    console.log(this.data.choose.qu)
+
     if (!isMobile) {
      
       this.shows('手机号格式有误！')
 
-    } else {
+    } else if (!this.data.choose.sheng){
+      this.shows('请填写完整的收货地址!')
+     } 
+    else if (!this.data.choose.shi) {
+      this.shows('请填写完整的收货地址!')
+    } 
+    else if (!this.data.choose.qu) {
+      this.shows('请填写完整的收货地址!')
+    } 
+     else {
       let region_path_name = this.data.choose.sheng.short_name + ',' + this.data.choose.shi.short_name + ',' + this.data.choose.qu.short_name;
       let region_path_id = this.data.choose.sheng.id + ',' + this.data.choose.shi.id + ',' + this.data.choose.qu.id
       let datas = {
@@ -421,14 +434,8 @@ Page({
         }
       })
 
-
-      // app.datas = datas;
-      // var a = getApp().datas;
-      // wx.navigateTo({
-      //   url: '../Address/Address',
-      // })
     }
-    // var datas = getApp().datas;
+    var datas = getApp().datas;
     // console.log(datas);
   },
   /**
@@ -439,7 +446,7 @@ Page({
     //获取一级地区
     this.getArea();
     var datas = getApp().datas;
-    if(datas){
+    if(datas&&app.globalData.addressStart!= '1'){
       var region_path_name_str = datas.region_path_name;
       var region_path_name_arr = new Array();
       region_path_name_arr = region_path_name_str.split(',');
@@ -572,6 +579,7 @@ Page({
     var token = content.data.token;
     var expiry_time = content.data.expiry_time;
     var logintype = content.data.login_type;
+    var session_id = wx.getStorageSync('session_id');
     var header = {
       "sign": password,
       "timestamp": timestamp,
@@ -579,7 +587,8 @@ Page({
       "uuid": uuid,
       "token": token,
       "expirytime": expiry_time,
-      "logintype":logintype
+      "logintype":logintype,
+      "Cookie":session_id
     }
   } else {
     var header = {

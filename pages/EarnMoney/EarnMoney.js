@@ -8,6 +8,7 @@ Page({
    */
   data: {
       data:1,
+
       height: 352, 
       flag:false,
       attentionAnim:'',
@@ -19,14 +20,36 @@ Page({
       obj : [ ],
       isShow:false,
       code:200,
-      gift:[
-        {name:'INT成功领取礼物'}
-        ],
+    latitude:'',
+    longitude:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
+
+  getLocation: function (gift_queue_id, queue_num, userInfo, referee_data) {
+    let that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      success(re) {
+        var latitude = re.latitude;
+        var longitude = re.longitude;
+        that.wxLogin(gift_queue_id, queue_num, userInfo, referee_data, latitude, longitude)
+      },
+      fail(re) {
+        var latitude = '';
+        var longitude = '';
+        that.wxLogin(gift_queue_id, queue_num, userInfo, referee_data, latitude, longitude)
+      }
+
+    })
+  },
+  GoIndex(){
+    wx.switchTab({
+      url:'../index/index'
+    })
+  },
   onLoad: function (options) {
      new app.ToastPannels();
     let content = wx.getStorageSync('content');
@@ -53,6 +76,10 @@ Page({
     // //有场景显示
     if (scene == 1036 || scene == 1037 || scene == 1011 || scene == 1008 || scene == 1007) {
       this.getGifts(gift_queue_id)
+    }else{
+      this.setData({
+        scene:scene
+      })
     }
   },
   //赠送商家入驻
@@ -270,7 +297,7 @@ Page({
             let userInfo = wx.getStorageSync('userInfo');
             var referee_data = this.data.referee_data;
 
-          this.wxLogin(gift_queue_id,queue_num,userInfo,referee_data)
+          this.getLocation(gift_queue_id,queue_num,userInfo,referee_data)
             
         }
       }
@@ -307,32 +334,34 @@ Page({
     let state = this.data.let
 
     this.setData({
-      userInfo: e.detail.userInfo
+      userInfo: e.detail.userInfo,
+      isShow:true
     })
     var userInfo = e.detail;
-    this.setData({
-      isShow: true
-    })
-    wx.login({
-      success:res=>{
-        var code = res.code;
-        userInfo.code = code;
-        wx.setStorageSync('userInfo', e.detail);
+    wx.setStorageSync('userInfo', e.detail);
+   
+    setTimeout(()=>{
         if(state == 1){
           wx.navigateTo({
             url: '../Notgifts/Notgifts',
           })
         }else{
-          this.wxLogin(gift_queue_id, queue_num, userInfo, referee_data)
+          this.getLocation(gift_queue_id, queue_num, userInfo, referee_data)
         }
 
-      }
-    })
+    }, 2000)
+
      
   },
 
     //登录信息
-  wxLogin(gift_queue_id,queue_num,userInfo,referee_data){
+  wxLogin(gift_queue_id, queue_num, userInfo, referee_data, latitude, longitude){
+    wx.login({
+      success: res => {
+        var code = res.code;
+        userInfo.code = code;
+        userInfo.latitude = latitude;
+        userInfo.longitude = longitude;
         wx.request({
           url: app.globalData.url + 'wxLogin',
           method: 'POST',
@@ -346,7 +375,7 @@ Page({
           },
           success: res => {
             this.setData({
-              isShow:false
+              isShow: false
             })
             //返回值为401的情况下  未授权  跳转授权页面
             if (res.data.code == 401) {
@@ -354,6 +383,8 @@ Page({
               this.shows(res.data.msg)
 
             } else if (res.data.code == 200) {
+              wx.setStorageSync('session_id', 'PHPSESSID=' + res.data.data.session_id + '; path=/; HttpOnly');
+              app.session_id = 'PHPSESSID=' + res.data.data.session_id + '; path=/; HttpOnly';
               this.setData({
                 uuid: res.data.data.uuid,
                 token: res.data.data.token,
@@ -406,19 +437,25 @@ Page({
                       data: res.data
                     })
                     this.setData({
-                      content:res.data,
-                      cont:2
+                      content: res.data,
+                      cont: 2
                     })
 
                   }
                   this.getGifts(gift_queue_id)
+                  if(this.data.code != 402){
                   this.receiveGift(gift_queue_id, queue_num)
+                  }
                 }
               })
 
             }
           }
         })
+
+      }
+    })
+       
     
   },
   /**

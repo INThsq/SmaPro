@@ -197,7 +197,7 @@
   </view>
  <view class='way-cont'>
       
-<block wx:for="{{detail.settlement_type}}" wx:index="index">
+<block wx:for="{{detail.settlement_type}}" wx:index="index" wx:key="index">
  <view class='way-list'  bindtap='menuTap' data-type="{{item.pay_type}}" data-current="{{index}}">
   <view class='way-left'>
   <block wx:if="{{menuTapCurrent == index||item.is_default}}">
@@ -205,6 +205,7 @@
     </block>
     <block wx:else>
     <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+    
     </block>
   </view>
   <view class='way-icon'>

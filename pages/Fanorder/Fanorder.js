@@ -33,7 +33,19 @@ Page({
           isShow:false
         })
         if(res.data.code == 200){
+          for(let l=0;l<res.data.data.callback.order_list.length;l++){
+            if(res.data.data.callback.order_list.length >=15){
+              this.setData({
+                up: "下拉加载更多~"
+              })
+            } else {
+              this.setData({
+                up: "暂时没有更多内容了~"
+              })
+            }
+          }
           this.setData({
+            page: res.data.data.callback.now_page,
             order_list:res.data.data.callback.order_list
           })
         }else{
@@ -81,7 +93,51 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    let page = this.data.page;
+    let order_list = this.data.order_list;
+    if(order_list.length<15){
+      wx.stopPullDownRefresh();
+      this.setData({
+        up: '暂时没有更多内容了~'
+      })
+    }else{
+      page++;
+      this.header(app.globalData.url + 'fansOrder');
+      wx.request({
+        url: app.globalData.url + 'fansOrder',
+        method: 'GET',
+        header: this.data.header,
+        data: {
+          param_type: param_type,
+          now_page: page
+        },
+        success: res => {
+          this.setData({
+            isShow: false
+          })
+          if (res.data.code == 200) {
 
+            for (let r = 0; r < res.data.data.callback.order_list.length; r++) {
+              if (res.data.data.callback.order_list.length >= 15) {
+                this.setData({
+                  up: "下拉加载更多~"
+                })
+              } else {
+                this.setData({
+                  up: "暂时没有更多内容了~"
+                })
+              }
+            
+              order_list.push(res.data.data.callback.order_list[r])
+            }
+            this.setData({
+              page: res.data.data.callback.now_page,
+              order_list: order_list
+            })
+          }
+    }
+      })
+    }
   },
 
   /**

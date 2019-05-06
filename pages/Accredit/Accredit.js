@@ -20,8 +20,9 @@ Page({
     member_mall: '',
     recInfo: '',
     hide: false,
-    Authorize: true
-
+    Authorize: true,
+    latitude:'',
+    longitude:''
   },
   //生成随机字符串
   randomWord() {
@@ -85,28 +86,28 @@ Page({
       header: header
     })
   },
-  getLocation: function () {
-
+  
+  getLocation: function (userInfo, recInfo, dot_num) {
     let that = this;
     wx.getLocation({
       type: 'gcj02',
-      success(res) {
-        var latitude = res.latitude;
-        var longitude = res.longitude;
-        let lnglat = longitude + ',' + latitude;
-        that.setData({
-          latitude: latitude,
-          longitude: longitude,
-          lnglat: lnglat
-        })
+      success(re) {
+        var latitude = re.latitude;
+        var longitude = re.longitude;
+        that.wxLogin(userInfo,recInfo,latitude,longitude,dot_num)
       },
-      fail(res) {
+      fail(re) {
+        var latitude = '';
+        var longitude = '';
+        that.wxLogin(userInfo, recInfo, latitude, longitude, dot_num)
       }
+
     })
   },
+
   //获取授权信息
   bindGetUserInfo: function (e) {
-    this.getLocation();
+    
     var dot_num = this.data.dot_num;
     var recInfo = this.data.recInfo;
     
@@ -122,141 +123,11 @@ Page({
       userInfo: e.detail.userInfo
     })
     var userInfo = e.detail;
-    // userInfo.code =  getApp().globalData.code;
-
     userInfo.referee_id = referee_id;
     if (e.detail.userInfo) {
-      wx.login({
-        success: res => {
-          this.setData({
-            isShow: true
-          })
-          var code = res.code;
-          userInfo.code = code;
-          if (recInfo.number) {
-            var data = {
-              login_type: 2,
-              client_type: 3,
-              client_version: '1.0.0',
-              oauth_data: JSON.stringify(userInfo),
-              referee_data: JSON.stringify(recInfo)
-            }
-           
-          }else{
-            var data = {
-              login_type: 2,
-              client_type: 3,
-              client_version: '1.0.0',
-              oauth_data: JSON.stringify(userInfo)
-            }
-            
-          }
-          wx.request({
-            url: app.globalData.url + 'wxLogin',
-            method: 'POST',
-            header: app.globalData.header,
-            data:data,
-            success: res => {
+      this.getLocation(userInfo, recInfo,dot_num);
+      
 
-              //返回值为401的情况下  未授权  跳转授权页面
-              if (res.data.code == 401) {
-                this.setData({
-                  isShow: false
-                  
-                })
-                // var res = res.data.data;
-                this.shows(res.data.msg)
-                wx.switchTab({
-                  url: '../userCenter/userCenter',
-                })
-              } else if (res.data.code == 200) {
-              
-                app.token = res.data.data.token;
-                //已登录情况下为2  后台获取到的信息渲染到页面上
-                //生成header
-                var uuid = res.data.data.uuid;
-                var token = res.data.data.token;
-                var expiry_time = res.data.data.expiry_time;
-                //本地存储
-                wx.setStorageSync('uuid', uuid);
-                wx.setStorageSync('token', token);
-                wx.getStorageSync('expiry_time', expiry_time);
-                wx.setStorageSync('member_mall', res.data.data.member_mall);
-
-                var timestamp = Date.parse(new Date());
-                timestamp = timestamp / 1000;
-                this.randomWord();
-                var noncestr = this.data.noncestr;
-                var api_url = app.globalData.url + 'user';
-                var key = 'myzy3224326de100671291c7d1a6353ff6db';
-                var arr = [api_url, key, this.data.noncestr, timestamp];
-                var str = '';
-                for (let i in arr) {
-                  str += arr[i];
-                }
-                // md5加密生成
-                var password = '';
-                password = util.hexMD5(str);
-                password = password.toUpperCase();
-                wx.request({
-                  url: app.globalData.url + 'user',
-                  method: 'GET',
-                  header: {
-                    "sign": password,
-                    "timestamp": timestamp,
-                    "noncestr": noncestr,
-                    "uuid": uuid,
-                    "token": token,
-                    "expirytime": expiry_time,
-                    "request_type": 1,
-                    "logintype": 2
-                  },
-                  success: res => {
-                    if (res.data.code == 200) {
-                      wx.setStorage({
-                        key: 'content',
-                        data: res.data
-                      })
-                      if(dot_num){
-                        setTimeout(function () {
-                          app.scene =0;
-                          wx.navigateTo({
-                            url: '../Query/Query?dot_num=' + dot_num
-                          })
-                          wx.setStorageSync('text', '登录成功')
-                        }, 1500)
-                      }else{
-
-                        setTimeout(function () {
-                          wx.switchTab({
-                            url: '../index/index',
-                          })
-                          wx.setStorageSync('text', '登录成功')
-                        }, 1500)
-
-                      }
-                      
-                      this.setData({
-                        isShow: true
-                      })
-                    } else {
-                        
-                      this.shows(res.data.msg);
-                          this.setData({
-                            isShow: false
-                            
-                          })
-                    }
-
-
-                  }
-                })
-
-              }
-            }
-          })
-        }
-      })
     } else {
       this.setData({
         isShow: false
@@ -269,8 +140,147 @@ Page({
 
       }, 1500);
     }
+    
   },
- 
+  wxLogin(userInfo, recInfo, latitude, longitude,dot_num){
+    wx.login({
+      success: res => {
+        this.setData({
+          isShow: true
+        })
+        var code = res.code;
+        userInfo.code = code;
+        userInfo.latitude = latitude;
+        userInfo.longitude = longitude;
+        console.log(latitude)
+        if (recInfo.number) {
+          var data = {
+            login_type: 2,
+            client_type: 3,
+            client_version: '1.0.0',
+            oauth_data: JSON.stringify(userInfo),
+            referee_data: JSON.stringify(recInfo)
+          }
+
+        } else {
+          var data = {
+            login_type: 2,
+            client_type: 3,
+            client_version: '1.0.0',
+            oauth_data: JSON.stringify(userInfo)
+          }
+
+        }
+        wx.request({
+          url: app.globalData.url + 'wxLogin',
+          method: 'POST',
+          header: app.globalData.header,
+          data: data,
+          success: res => {
+
+            //返回值为401的情况下  未授权  跳转授权页面
+            if (res.data.code == 401) {
+              this.setData({
+                isShow: false
+
+              })
+              // var res = res.data.data;
+              this.shows(res.data.msg)
+              wx.switchTab({
+                url: '../userCenter/userCenter',
+              })
+            } else if (res.data.code == 200) {
+
+              app.token = res.data.data.token;
+              //已登录情况下为2  后台获取到的信息渲染到页面上
+              //生成header
+              var uuid = res.data.data.uuid;
+              var token = res.data.data.token;
+              var expiry_time = res.data.data.expiry_time;
+              //本地存储
+              wx.setStorageSync('uuid', uuid);
+              wx.setStorageSync('token', token);
+              wx.setStorageSync('openid', res.data.data.member_oauth.openid);
+
+              wx.getStorageSync('expiry_time', expiry_time);
+              wx.setStorageSync('member_mall', res.data.data.member_mall);
+              wx.setStorageSync('session_id', 'PHPSESSID=' + res.data.data.session_id +'; path=/; HttpOnly');
+              app.session_id = 'PHPSESSID=' +res.data.data.session_id +'; path=/; HttpOnly';
+              var timestamp = Date.parse(new Date());
+              timestamp = timestamp / 1000;
+              this.randomWord();
+              var noncestr = this.data.noncestr;
+              var api_url = app.globalData.url + 'user';
+              var key = 'myzy3224326de100671291c7d1a6353ff6db';
+              var arr = [api_url, key, this.data.noncestr, timestamp];
+              var str = '';
+              for (let i in arr) {
+                str += arr[i];
+              }
+              // md5加密生成
+              var password = '';
+              password = util.hexMD5(str);
+              password = password.toUpperCase();
+              wx.request({
+                url: app.globalData.url + 'user',
+                method: 'GET',
+                header: {
+                  "sign": password,
+                  "timestamp": timestamp,
+                  "noncestr": noncestr,
+                  "uuid": uuid,
+                  "token": token,
+                  "expirytime": expiry_time,
+                  "request_type": 1,
+                  "logintype": 2
+                },
+                success: res => {
+                  if (res.data.code == 200) {
+                    wx.setStorage({
+                      key: 'content',
+                      data: res.data
+                    })
+                    if (dot_num) {
+                      setTimeout(function () {
+                        app.scene = 0;
+                        wx.navigateTo({
+                          url: '../Query/Query?dot_num=' + dot_num
+                        })
+                        wx.setStorageSync('text', '登录成功')
+                      }, 1500)
+                    } else {
+
+                      setTimeout(function () {
+                        wx.switchTab({
+                          url: '../index/index',
+                        })
+                        wx.setStorageSync('text', '登录成功')
+                      }, 1500)
+
+                    }
+
+                    this.setData({
+                      isShow: true
+                    })
+                  } else {
+
+                    this.shows(res.data.msg);
+                    this.setData({
+                      isShow: false
+
+                    })
+                  }
+
+
+                }
+              })
+
+            }
+          }
+        })
+      }
+    })
+  },
   //发送模板消息
   /**
    * 触发微信提醒
@@ -319,7 +329,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+   
   },
   //授权推荐
   wxAuthorize(auth_code, referee_data){
@@ -352,36 +362,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-    // this.bindGetUserInfo();
-    //
-    if (this.data.Authorize) {
-      this.setData({
-        isShow:false
-      })
-    } else {
-    }
-    var animation = wx.createAnimation({
-      duration: 500,
-      timingFunction: 'ease',
-    })
-
-    this.animation = animation
-
-    // animation.scale(2, 2).rotate(45).step()
-
-    this.setData({
-      animationData: animation.export()
-    })
-    var n = 0;
-    //连续动画需要添加定时器,所传参数每次+1就行
-    setInterval(function () {
-      n = n + 1;
-      this.animation.rotate(10 * (n)).step()
-      this.setData({
-        animationData: this.animation.export()
-      })
-    }.bind(this), 40)
   },
 
 

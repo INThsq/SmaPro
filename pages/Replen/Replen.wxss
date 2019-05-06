@@ -45,7 +45,7 @@
   }
   .modal-body cover-view{
     font-size:25rpx;
-    text-align: center;
+    text-align:left;
   }
   .modal-header cover-view:first-child{
     font-size:33.3rpx;

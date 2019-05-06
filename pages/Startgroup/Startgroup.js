@@ -41,6 +41,7 @@ Page({
   },
   //生成二维码
   GetCode(e){
+    console.log(this.data.giftGiving.is_inline)
     let is_inline = this.data.giftGiving.is_inline.is_disabled
     if(is_inline){
       this.shows(this.data.giftGiving.is_inline.is_disabled)
@@ -93,8 +94,10 @@ Page({
       type:type
     })
     new app.ToastPannels();
-    let goods = wx.getStorageSync('goods') || JSON.parse(options.goods);
     //判断类型
+    let goods = wx.getStorageSync('goods') || JSON.parse(options.goods);
+    console.log(goods);
+    if(goods){
     let virtual_type = goods.virtual_type;
     var imgs= options.img;
     var price = options.price;
@@ -125,7 +128,7 @@ Page({
         break;
     }
        
-    
+    }
   },
   //开团信息
   giftGiving(mall_goods_id){
@@ -454,6 +457,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -461,7 +465,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

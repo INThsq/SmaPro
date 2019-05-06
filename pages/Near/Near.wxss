@@ -5,12 +5,17 @@
 .search{
   height:45px!important;
   position: fixed;
-  top:141rpx!important;
+  top:139rpx!important;
   border-radius:0!important;
   z-index: 123;
   background: white;
   width: 100%;
 
+}
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
 }
 .local image{
   width: 20rpx;
@@ -261,13 +266,30 @@ color: #333;
   transform-origin: center bottom;
  }
 .Area-cont{
-  padding:141rpx 30rpx 0 30rpx;
+  padding:141rpx 0 0 0;
   box-sizing: border-box;
   height:clac(100vh - 100rpx);
 }
 .Now,.Over-city,.Area-cont{
   display: flex;
   flex-direction:column;
+}
+.Now{
+  margin-top: 0;
+  position: fixed;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+  width: 100%;
+  background: white;
+  z-index: 99;
+}
+.Over-city{
+  padding-top: 300rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+  z-index: 80;
 }
 .Now-title,.Over-title{
   margin-top: 42rpx;

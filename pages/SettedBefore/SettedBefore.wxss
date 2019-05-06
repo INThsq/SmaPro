@@ -3,27 +3,25 @@
   margin-top: 140rpx;
 }
 .top{
-  padding-top:62rpx;
+  padding-top:42rpx;
   background: white;
   text-align: center;
   font-weight: bold;
   color: #E02929;
 }
 .title{
-  font-size:60rpx;
-  
+  font-size:56rpx;
 }
 .check{
   text-align: center;
   padding:32rpx 0;
   background: white;
-  
 }
 .check text{
   display:inline-block;
   height: 25px;
   box-sizing: border-box;
-  
+  align-items: center;
   padding: 12rpx 22rpx;
   line-height:14px;
   border-radius: 12px;
@@ -34,6 +32,7 @@
 .check image{
   width: 26px;
 height: 18px;
+vertical-align: middle;
 margin-right: 14rpx;
 }
 .lc{

@@ -67,8 +67,8 @@ Page({
      let curs = options.curs;
      let tab =options.tab;
      if(tab){
-       
        this.setData({
+         curs:curs,
          tab:tab,
           gift_praise_type:3
        })
@@ -84,10 +84,11 @@ Page({
      }
    }else{
      let cur = options.cur;
-     console.log(page)
+    
      if (cur) {
        this.setData({
-         currentTab: 1
+         currentTab: 1,
+         cur: cur
        })
        this.unclaimed(cur,page)
      } else {
@@ -100,8 +101,23 @@ Page({
  onReachBottom: function () {
     let page = this.data.page;
     page++;
-    let praise_status = this.data.id;
-    this.unclaimed(page,praise_status)
+    let gift_praise_type = this.data.gift_praise_type;
+    if(gift_praise_type == 1){
+      let curs = this.data.curs;
+      if(curs){
+        this.giveList(curs, page)
+      }else{
+        this.giveList(-1,page)
+      }
+    }else{
+      let cur = this.data.cur;
+      if(cur){
+        this.unclaimed(cur, page)
+      }else{
+        this.unclaimed(-1,page)
+      }
+
+    }
  },
  //上传核销
  Upload(e){
@@ -164,7 +180,7 @@ Page({
         if(res.data.code ==200){
           let gift_praise_list = res.data.data.callback.gift_praise_list;
 
-          if(this.data.page == 1){
+          if (now_page == 1){
             this.setData({
               gift_praise_list: res.data.data.callback.gift_praise_list,
               gift_praise_type: res.data.data.callback.gift_praise_type,
@@ -172,7 +188,9 @@ Page({
             })
           }else if(res.data.data.callback.gift_praise_list.length == 0){
               return false;
+              console.log('ddd')
           }else{
+            console.log('sss')
             const list = res.data.data.callback.gift_praise_list.map(item=>{
                 gift_praise_list.push(item)
             })
@@ -396,6 +414,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -403,7 +422,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -412,9 +432,6 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })

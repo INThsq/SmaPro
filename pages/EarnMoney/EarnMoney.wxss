@@ -24,6 +24,11 @@
   width:44rpx;
   height:32rpx;
 }
+.SetCode{
+  position: fixed;
+  top: 0;
+  
+}
 .show{
   display: block!important;
 }
@@ -371,6 +376,9 @@ z-index:998;
 }
 .left-conts .info-name{
     color: #333;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap
 }
 .left-conts .infos{
   color: #999;
@@ -415,4 +423,56 @@ z-index:998;
 }
 .hide{
   overflow: hidden;
+}
+.Set-top image{
+  display: flex;
+}
+.SetCode{
+  display: flex;
+  flex-direction: column;
+  padding:330rpx  30rpx 0 30rpx;
+  box-sizing: border-box;
+}
+.Set-top image{
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+}
+.Set-top{
+  display: flex;
+  justify-content: center;
+}
+.Set-cont{
+  margin-top:66rpx;
+}
+.Set-cont .Set-title{
+  font-size: 36rpx;
+  display: flex;
+  justify-content:center;
+}
+.Set-cont .Set-conts{
+  font-size:28rpx;
+  margin-top: 32rpx;
+  padding:0 40rpx;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+.Set-btns{
+  box-sizing: border-box;
+  position: fixed;
+  bottom:30rpx;
+  width:100%;
+  padding:  0 30rpx;
+  left: 0;
+}
+.Set-btns view{
+  height:42px;
+background:#F43736;
+border-radius:4px;
+width: 100%!important;
+color: white;
+font-size: 33.3rpx;
+line-height: 84rpx;
+justify-content: center;
+display: flex;
 }

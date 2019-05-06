@@ -51,7 +51,6 @@
     <view class='imggs'>
     <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_2.png'></image></view>
     <view class="marquee_text">{{callback.system_notice.content}}</view>
-    <view class='right'></view>
 </view>
       <!-- 悬浮框 -->
   <view class='speion' wx:if="{{callback.waring_tip!=''}}">
@@ -126,15 +125,25 @@
 
 
 <!--默认action-sheet为隐藏，由button触发-->
-<action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
+<!-- <action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
   
     <block wx:for="{{list}}" wx:key="{{index}}">
     <action-sheet-item data-name="{{item.dot_name}}" data-id="{{item.mall_dot_authorize_id}}" data-num="{{item.order_num}}"  bindtap="itemChange">{{item.dot_name}}</action-sheet-item>
     </block>
-    <!--自动隐藏action-sheet-->
     <action-sheet-cancel>取消</action-sheet-cancel>
-</action-sheet>
+</action-sheet> -->
 
+<cover-view class='Cover' hidden="{{actionSheetHidden}}" >
+<cover-view style='position: absolute;bottom:0;width:100%;'>
+<block wx:for="{{list}}" wx:key="{{index}}">
+    <cover-view class='cover-list' data-name="{{item.dot_name}}" data-id="{{item.mall_dot_authorize_id}}" data-num="{{item.order_num}}"  bindtap="itemChange">{{item.dot_name}}</cover-view>
+    </block>
+    <cover-view style='height:16rpx;background:#FAFAFA'></cover-view>
+    <cover-view class='canel' bindtap='Canel'>取消</cover-view>
+
+</cover-view>
+
+</cover-view>
 
 
  <!-- toast -->

@@ -89,6 +89,7 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
   // 生成header
+  //生成header
   header(url) {
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
@@ -112,6 +113,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -119,7 +121,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

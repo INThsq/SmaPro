@@ -10,7 +10,7 @@ Page({
     control: {
       current:'',
     },
-    interval: 1000, //时间间隔
+    interval: 1000, 
     annoType: false,
     imgUrls: [],
     autoplay: false,
@@ -20,7 +20,7 @@ Page({
     control:{
       current:'',
     },
-    intervals:0, //时间间隔
+    intervals:0, 
     controlType:{
       nextMargin:'200rpx'
     }
@@ -46,14 +46,12 @@ Page({
       if (that.data.control.current > 0) {
         that.setData({
           control: {
-            showNums: that.data.control.showNums,
             current: that.data.control.current - 1
           }
         })
       } else if (that.data.control.current == 0) {
         that.setData({
           control: {
-            showNums: that.data.control.showNums,
             current: that.data.give_count_list.length - 1
           }
         })
@@ -96,6 +94,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -103,7 +102,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -112,7 +112,6 @@ Page({
         "noncestr": noncestr,
       }
     }
-
     this.setData({
       header: header
     })

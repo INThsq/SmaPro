@@ -25,9 +25,12 @@ Page({
     app.adress = 1;
     var a = getApp().chooseType;
     var that = this;    
-    that.setData({
-      chooseType: a
-    }) 
+    if(a){
+      that.setData({
+        chooseType: a
+      })
+    }
+     
     if (a!=='1'){
     
       var datas = getApp().datas;
@@ -43,21 +46,27 @@ Page({
   },
   
   back(){
-   
     let types = getApp().types;
-    console.log(types)
     if(types == 2){
+    
       let datas = this.data.datas;
-      var shuju = ''
-      for(let d=0;d<datas.length;d++){
-        if(datas[d].is_default ==1){
-          shuju = datas[d]
+      if(datas.length >0){
+        var shuju = ''
+        for (let d = 0; d < datas.length; d++) {
+          if (datas[d].is_default == 1) {
+            shuju = datas[d]
+          }
         }
+        var flag = true;
+        wx.navigateTo({
+          url: '../Confirm/Confirm?id=' + shuju.member_address_id + "&address=" + shuju.region_path_name + shuju.address + "&mobile=" + shuju.mobile + "&realname=" + shuju.realname + "&flag=" + flag,
+        })
+      }else{
+        wx.navigateTo({
+          url: '../Confirm/Confirm?addrss=null',
+        })
       }
-      var flag = true;
-      wx.navigateTo({
-        url: '../Confirm/Confirm?id='+shuju.member_address_id+"&address="+shuju.region_path_name+shuju.address+"&mobile="+shuju.mobile+"&realname="+shuju.realname+"&flag="+flag,
-      })
+      
      
     }else{
       wx.navigateBack({
@@ -126,6 +135,7 @@ Page({
     var token = content.data.token;
     var expiry_time = content.data.expiry_time;
     var logintype = content.data.login_type;
+    var session_id = wx.getStorageSync('session_id');
     var header = {
       "sign": password,
       "timestamp": timestamp,
@@ -133,7 +143,8 @@ Page({
       "uuid": uuid,
       "token": token,
       "expirytime": expiry_time,
-      "logintype":logintype
+      "logintype":logintype,
+      "Cookie": session_id
     }
   } else {
     var header = {
@@ -142,9 +153,6 @@ Page({
       "noncestr": noncestr,
     }
   }
-
-
-
   this.setData({
     header: header
   })
@@ -229,6 +237,7 @@ Page({
       index:index
     })
     this.Modal.showModal();
+    this.getsAdress();
     },
   // 确定删除
   _confirmEventFirst() {
@@ -249,14 +258,13 @@ Page({
           this.setData({
             datas:datas
           })
-          this.getsAdress();
         }else{
           utils.error(res);
         }
         
       }
       })
-    this.getAdress();
+    this.getsAdress();
     this.Modal.hideModal();
   },
   // 取消删除
@@ -294,58 +302,11 @@ Page({
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
   },
-  // 获取微信地址
-  getAdress(){
-    wx.getSetting({
-      success(res) {
-        var that = this;
-        console.log("vres.authSetting['scope.address']：", res.authSetting['scope.address'])
-        if (res.authSetting['scope.address']) {
-          
-          wx.chooseAddress({
-            success:res => {
-              app.wxdata = res;
-             wx.navigateTo({
-               url: '../Confirm/Confirm',
-             })
-              
-            }
-          })
-          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-
-        } else {
-          if (res.authSetting['scope.address'] == false) {
-            console.log("222")
-            wx.openSetting({
-              success(res) {
-                console.log(res.authSetting)
-
-              }
-            })
-          } else {
-            console.log("eee")
-            wx.chooseAddress({
-              success(res) {
-                console.log(res.userName)
-                console.log(res.postalCode)
-                console.log(res.provinceName)
-                console.log(res.cityName)
-                console.log(res.countyName)
-                console.log(res.detailInfo)
-                console.log(res.nationalCode)
-                console.log(res.telNumber)
-              }
-            })
-          }
-        }
-      }
-    })
-  },
+ 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getsAdress();
 
   },
 

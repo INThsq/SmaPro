@@ -22,8 +22,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     let types =getApp().types;
-    console.log(types)
+    let scene_type = getApp().scene_type;
     let touch = wx.getStorageSync('touch');
     var goods_id = options.goods_id;
     var sku_ids = getApp().sku_ids;
@@ -53,7 +54,7 @@ Page({
       });
       for(var s=0;s<settlement_type.length;s++){
         if (settlement_type[s].is_default&&settlement_type[s].pay_type == 1){
-          if (Number(balance) < Number(totalPrice)) {
+          if (Number(balance) < Number(totalPrice)&& scene_type!= 1) {
             this.setData({
               grey: true
             })
@@ -91,7 +92,7 @@ Page({
       });
       for (var s = 0; s < settlement_type.length; s++) {
         if (settlement_type[s].is_default && settlement_type[s].pay_type == 1) {
-          if (Number(balance) < Number(totalPrice)) {
+          if (Number(balance) < Number(totalPrice) && scene_type != 1) {
             this.setData({
               grey: true
             })
@@ -113,17 +114,27 @@ Page({
     }
     
     if(flag){
+      var ads = options.addrss;
+      if(ads){
+        this.setData({
+          ['detail.address']:ads
+        })
+      }else{
         var ad = {
-          'realname':options.realname,
-          'mobile':options.mobile,
-          'address':options.address,
-          'id':options.id
+          'realname': options.realname,
+          'mobile': options.mobile,
+          'address': options.address,
+          'id': options.id
         }
         var detail = 'detail.address'
         this.setData({
-            [detail]:ad
+          [detail]: ad
         })
+      }
+        
     }
+
+  
     
   },
   //选择类型
@@ -142,7 +153,6 @@ Page({
     var current = e.currentTarget.dataset.current;//获取到绑定的数据
     var balance = this.data.detail.balance;
     if (settlement_type[current].pay_type==1){
-      console.log(settlement_type[current].pay_type)
       if(Number(balance)<Number(totalPrice)){
         this.setData({
           grey:true
@@ -266,6 +276,8 @@ Page({
     if(this.data.detail.address == null){
       this.shows('请选择您的收货地址')
      
+    }else if (this.data.detail.address.address.indexOf('undefined') > 0){
+      this.shows('收货地址异常,请重新填写')
     }else{
       this.showModal();
 
@@ -406,6 +418,14 @@ Page({
   //支付
   topay:function(){
     let grey = this.data.grey;
+    let scene_type = getApp().scene_type;
+    console.log('scene_type'+scene_type)
+    let mall_dot_authorize_id = 0;
+    if(scene_type == 1){
+      mall_dot_authorize_id = wx.getStorageSync('mall_dot_authorize_id')
+    }else{
+      mall_dot_authorize_id = 0;
+    }
     if(!grey){
     this.setData({
       isShow: true
@@ -423,7 +443,8 @@ Page({
         total_fee: this.data.totalPrice,
         goods_num: this.data.num,
         pay_type: this.data.type,
-        is_discount:is_discount
+        is_discount:is_discount,
+        mall_dot_authorize_id: mall_dot_authorize_id
       }
       //判断支付方式
       let pay_type = Number(this.data.type);
@@ -886,7 +907,7 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
    // 生成header
-   header(url) {
+  header(url) {
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
     this.randomWord();
@@ -909,6 +930,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -916,7 +938,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype":logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -925,9 +948,6 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })

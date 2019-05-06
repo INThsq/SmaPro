@@ -25,11 +25,11 @@
     </view>
       <view class='right'>
       <view class='right_one'>
-        <text class='right_title' style='font-size:29.17rpx!important;'>{{bill.name}}</text>
+        <text class='right_title' style='font-size:29.17rpx!important;'>{{bill.title}}</text>
         <text class='right_money' style='font-size:37rpx!important;'>{{bill.turnover}}</text>
       </view>
       <view class='right_two'>
-      [{{bill.remark}}]
+      [{{bill.name}}]
       </view>
       <view class='right_three'>
       {{bill.create_time}}

@@ -5,7 +5,6 @@
   </view>
   <view class="tetxs" wx:if="{{gift_praise_type == 0}}">未领礼物</view>
   <view class="tetxs" wx:else>赠送礼品</view>
-
 </view>
 
 <!-- 选项卡  用户  0时-->
@@ -18,6 +17,7 @@
      <view class="swiper-tab-item {{currentTab==3?'active':''}}"   data-current="3" data-id="2" bindtap="clickTab">已投诉</view>
 </view>
 </view>
+
 
  <view class='order-conts'  wx:if ="{{gift_praise_list.length == 0}}">
           <view class='noW' >

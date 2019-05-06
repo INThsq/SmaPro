@@ -1,5 +1,5 @@
 <!--pages/EarnMoney/EarnMoney.wxml-->
-<scroll-view style='height:100vh' scroll-y="true" bindscroll="scrollTopFun" wx:if="{{code == 200}}">
+<scroll-view style='height:100vh' scroll-y="true" bindscroll="scrollTopFun" wx:if="{{code == 200 && scene!= 1012}}">
 
 <!-- 组件模板 -->
 <view class="{{top>100 ? ' wrappers' : 'wrapper'}}" data-top="{{top}}">
@@ -176,3 +176,19 @@
   <view class="loads {{isShow ? 'show' : ''}}" >
       <image class="bth_images2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
       </view>
+
+
+
+ <!-- 长按二维码识别 -->
+ <view class='SetCode' wx:if="{{scene == 1012}}">
+    <view class='Set-top'>
+      <image src='http://oss.myzy.com.cn/wechat/images/icon_succefful.png'></image>
+    </view>
+    <view class='Set-cont'>
+    <view class='Set-title'>识别成功,请规范使用</view>
+    <view class='Set-conts'>温馨提示：此活动当前仅支持线下进行,如开放线上请关注官方通知即可。</view>
+    </view> 
+    <view class='Set-btns'>
+      <view class='Set-btn' bindtap='GoIndex'>知道了，返回首页</view>
+    </view>
+ </view>

@@ -19,6 +19,10 @@
   <view class='type'>
     <view class='list'>
       <text class='left'>类型</text>
+      <text class='right'>{{detail.name}}</text>
+    </view>
+     <view class='list'>
+      <text class='left'>备注</text>
       <text class='right'>{{detail.remark}}</text>
     </view>
     <view class='list'>
@@ -33,5 +37,6 @@
       <text class='left'>剩余零钱</text>
       <text class='right'>{{detail.money_proof}}</text>
     </view>
+    
   </view>
 </view>

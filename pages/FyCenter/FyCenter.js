@@ -40,7 +40,7 @@ Page({
   //跳转核销记录
   Record(){
     wx.navigateTo({
-      url: '../Record/Record?scene_type=0&&way=0',
+      url: "../Record/Record?scene_type=0&&way=0&&id=0&&num=''",
     })
   },
   //赠送记录
@@ -63,6 +63,7 @@ Page({
    */
   onLoad: function (options) {
     let data = wx.getStorageSync('data');
+    if(data){
     this.setData({
       isShow:true,
       scene: data.scene,
@@ -70,6 +71,7 @@ Page({
       member_mall_id: data.member_mall_id,
       goods_id: data.goods_id
     })
+    }
     new app.ToastPannels();
     if(options.top){
       var top = JSON.parse(options.top)
@@ -236,7 +238,7 @@ Page({
         }
         let grade = Math.round(src * n / 1.5 * 100);
         //百分数
-        ctx2.arc(w, h, w - 8, 0.75 * Math.PI, (0.75 + src * n) * Math.PI); //每个间隔绘制的弧度
+        ctx2.arc(w, h, w - 8, 1.5 * Math.PI, (1.5 + src * n) * Math.PI, false); //每个间隔绘制的弧度
         ctx2.setStrokeStyle("#F43736");
         ctx2.setLineWidth("3");
         ctx2.setLineCap("round");
