@@ -123,7 +123,7 @@ Page({
     new app.ToastPannels();
     let that = this;
     let top = getApp().top||wx.getStorageSync('top');
-    console.log(top)
+    console.log(options)
    let list =JSON.parse(options.list);
    let shop = list[0];
    let img = wx.getStorageSync('img');
@@ -154,6 +154,10 @@ Page({
   },
   //绘制内容
   drawCanvas(e, scale, id) {
+    // drawCanvas({
+    //   reserve:false,
+    //   actions: []
+    // })
     let that = this;
     let canvasid = id
     let allSrc = 0.015 * e; //应该绘制的弧度
@@ -254,7 +258,9 @@ Page({
           this.drawCanvas(item.scale * 100, item.total, `runCanvae${item.total}${key}`);
         })
         this.setData({
-          callback:res.data.data.callback
+          callback:res.data.data.callback,
+          top:res.data.data.callback
+          
         })
       }
 

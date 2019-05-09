@@ -12,14 +12,13 @@
 <!-- 内容 -->
 <view class='container'>
 
-
-    <view class='expend' wx:for="{{money_bill}}" wx:key="index">
-    <text class='exp_title'>{{item.month_money_bill.money_bill[0].month}}月</text>
-    <text class='exp_cont' decode="{{true}}">收入 ￥{{item.month_money_bill.enter_money_total}} &nbsp;&nbsp;  支出 ￥{{item.month_money_bill.out_money_total}}</text>
+    <view class='expend' wx:for="{{money_bill}}" wx:key="index" >
+    <text class='exp_title'>{{month}}月</text>
+    <text class='exp_cont' decode="{{true}}">收入 ￥{{enter}} &nbsp;&nbsp;  支出 ￥{{out}}</text>
     </view>
      <view class='expend_container' wx:if="{{money_bill.length > 0}}">
      <block wx:for="{{money_bill}}" wx:key="index">
-    <view class='list' bindtap='getDetail' data-index="{{index}}"   wx:for="{{item .month_money_bill.money_bill}}" wx:for-index="billindex"  wx:for-item="bill" data-id="{{bill.bill_id}}" wx:key="bill" >
+    <view class='list' bindtap='getDetail' data-month='{{bill.month}}' data-enter='{{bill.enter}}' data-out="{{bill.out}}" touchend="BindMove" bindtouchmove="BindMove" data-index="{{index}}"   wx:for="{{item .month_money_bill.money_bill}}" wx:for-index="billindex"  wx:for-item="bill" data-id="{{bill.bill_id}}" wx:key="bill" >
     <view class='left'>
     <image src='http://oss.myzy.com.cn/wechat/images/touxiang.png'></image> 
     </view>

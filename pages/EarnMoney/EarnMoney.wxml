@@ -173,9 +173,12 @@
 </view>
 
  <!-- load -->
-  <view class="loads {{isShow ? 'show' : ''}}" >
+ <view class='cover-load' wx:if="{{isShow}}">
+<view class="loads {{isShow ? 'show' : ''}}" >
       <image class="bth_images2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
       </view>
+ </view>
+  
 
 
 

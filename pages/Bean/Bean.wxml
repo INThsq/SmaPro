@@ -25,11 +25,11 @@
   <!-- 待提现 -->
   <block wx:for="{{support.support_List}}" wx:key="index">
   <view class="item" bindtap='wait' data-status="{{item.status}}">
-    <view class="left">
+    <view class="left"  style='text-align:left!important;'>
       <text class="left-title" wx:if="{{item.status == 0}}">待提现</text>
       <text class="left-title" wx:if="{{item.status == 1}}">提现中</text>
       <text class="left-title" wx:if="{{item.status == 2}}" >已助力提现</text>
-      <text class="left-num">{{item.activity_money}}</text>
+      <text class="left-num" >{{item.activity_money}}</text>
     </view>
     <view class="right">
       <image class="rights" src='http://oss.myzy.com.cn/wechat/images/icon_xiangqing_wdym.png'></image> 

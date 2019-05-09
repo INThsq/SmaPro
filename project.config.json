@@ -78,7 +78,7 @@
 					"id": 4,
 					"name": "开团",
 					"pathName": "pages/EarnMoney/EarnMoney",
-					"query": "gift_queue_id=241",
+					"query": "gift_queue_id=131",
 					"scene": 1036,
 					"referrerInfo": {
 						"appId": "wx05423f696872e38c"

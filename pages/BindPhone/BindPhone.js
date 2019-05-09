@@ -19,6 +19,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let referee_key_name = options.referee_key_name;
+    let referee_nickname = options.referee_nickname;
     new app.ToastPannels();
     var content = wx.getStorageSync('content');
     var nickname = content.data.content.userinfo.member_oauth[0].nickname;
@@ -39,7 +41,9 @@ Page({
     this.setData({
       nickname:nickname,
       imgurl:imgurl,
-      is_card:is_card
+      is_card:is_card,
+      referee_nickname: referee_nickname,
+      referee_key_name: referee_key_name
     })
     var mobile = content.data.content.userinfo.mobile;
     if(mobile !="未绑定手机"){
@@ -92,6 +96,12 @@ Page({
       })
     }
 
+  },
+  //绑定顾问
+  BindRefer(){
+    wx.navigateTo({
+      url: '../Querys/Query',
+    })
   },
   Certification(){
     let is_card = this.data.is_card;

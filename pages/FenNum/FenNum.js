@@ -13,7 +13,8 @@ Page({
     fansList:'',
     histroy: true,
     del: true,
-    One: false
+    One: false,
+    keywords:''
   },
   /**
    * 页面的初始数据
@@ -87,11 +88,12 @@ Page({
   //点击切换
   clickTab: function (e) {
     var type = e.currentTarget.dataset.type;
+    var keywords = this.data.keywords;
       this.setData({
         type:type,
         currentTab:e.currentTarget.dataset.current
       })
-    this.fansList(type, 1);
+    this.fansList(type, 1,keywords);
   },
   //生成随机字符串
   randomWord() {

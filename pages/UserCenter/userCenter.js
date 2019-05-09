@@ -234,20 +234,16 @@ Page({
 			method: 'GET',
 			header: that.data.header,
 			success: res => {
-				this.setData({
-					isShow: false
-				})
+		
 				if (res.data.code == 200) {
 					this.setData({
 						isShow: false
 					})
 					wx.setStorageSync('info', res.data.data.content)
-					setTimeout(function() {
 						wx.navigateTo({
 							url: "../getCode/getCode?code=1"
 						})
 
-					}, 1500)
 
 				} else {
 					utils.error(res);
@@ -261,7 +257,9 @@ Page({
 	},
 	//绑定手机号跳转
 	BindPhone() {
-		utils.skip('../BindPhone/BindPhone')
+    let referee_key_name = this.data.referee_key_name;
+    let referee_nickname = this.data.referee_nickname;
+    utils.skip('../BindPhone/BindPhone?referee_key_name=' + referee_key_name +'&referee_nickname='+referee_nickname);
 	},
 	query() {
 		utils.skip('../Querys/Query')
@@ -403,9 +401,13 @@ Page({
 			success: res => {
 				wx.setStorageSync('codes', res.code)
 			}
+
 		})
 		// 生命周期函数--监听页面显示
 		var content = wx.getStorageSync('content');
+    this.setData({
+      content:content
+    })
 		// 没有授权登录
 		if (content) {
 			this.setData({
@@ -416,6 +418,7 @@ Page({
 		} else {
 			// 已经获取授权登录
 			this.setData({
+      
 				usrState: 0
 			})
 		}
@@ -469,6 +472,7 @@ Page({
 		var telephone = wx.getStorageSync('telephone');
 		var telephone_tip = wx.getStorageSync('telephone_tip');
     var platform = wx.getStorageSync('platform');
+    var content = wx.getStorageSync('content')
 		this.setData({
       bg:bg,
       platform: platform,
@@ -476,7 +480,8 @@ Page({
 			telephone_tip: telephone_tip,
 			Tname: app.globalData.Tname,
 			Beans: app.globalData.Beans,
-			Bean: app.globalData.Bean
+			Bean: app.globalData.Bean,
+      content: content
 		})
 		app.types = 1;
 		app.gift_praise_list = 0;
@@ -579,7 +584,9 @@ Page({
             order_total: res.data.data.content.order_total,
             bill_type_group:res.data.data.content.reward.bill_type_group,
             bill_type_ids:res.data.data.content.reward.bill_type_ids,
-            mobile:res.data.data.content.userinfo.mobile
+            mobile:res.data.data.content.userinfo.mobile,
+            referee_key_name:res.data.data.content.referee_key_name,
+            referee_nickname:res.data.data.content.referee_nickname
 					})
 					wx.setStorage({
 						key: 'content',

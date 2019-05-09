@@ -8,7 +8,6 @@ Page({
    */
   data: {
       data:1,
-
       height: 352, 
       flag:false,
       attentionAnim:'',
@@ -20,6 +19,7 @@ Page({
       obj : [ ],
       isShow:false,
       code:200,
+    buttonClicked:true,
     latitude:'',
     longitude:'',
   },
@@ -30,17 +30,26 @@ Page({
 
   getLocation: function (gift_queue_id, queue_num, userInfo, referee_data) {
     let that = this;
+    that.setData({
+      buttonClicked: false
+    })
     wx.getLocation({
       type: 'gcj02',
       success(re) {
         var latitude = re.latitude;
         var longitude = re.longitude;
-        that.wxLogin(gift_queue_id, queue_num, userInfo, referee_data, latitude, longitude)
+        that.wxLogin(gift_queue_id, queue_num, userInfo, referee_data, latitude, longitude);
+        that.setData({
+          isShow: false
+        })
       },
       fail(re) {
         var latitude = '';
         var longitude = '';
         that.wxLogin(gift_queue_id, queue_num, userInfo, referee_data, latitude, longitude)
+        that.setData({
+          isShow:false
+        })
       }
 
     })
@@ -224,7 +233,8 @@ Page({
             queue_num: res.data.data.callback.get_gifts.queue_num,
             money:Number(res.data.data.callback.gift_money_total),
             referee_data: res.data.data.callback.referee_data,
-            ['getGifts.receive_gifts_status']: res.data.data.callback.receive_gifts_status
+            ['getGifts.receive_gifts_status']: res.data.data.callback.receive_gifts_status,
+            buttonClicked:true
           })
         }
           else if(res.data.code == 402){
@@ -232,6 +242,9 @@ Page({
                 url: '../Startgroup/Startgroup?id=' + res.data.data.callback.mall_goods_id + '&type=1'
               })
           }else{
+          this.setData({
+            buttonClicked: true
+          })
              this.shows(res.data.msg);
              setTimeout(function(){
                 wx.switchTab({
@@ -246,7 +259,8 @@ Page({
   //立即领取
   receiveGift(gift_queue_id, queue_num){
     this.setData({
-      isShow:true
+      isShow:true,
+      buttonClicked:false
     })
     let that = this
     let money = that.data.money
@@ -326,7 +340,7 @@ Page({
   },
 
   //获取授权信息
-  bindGetUserInfo: function (e) {
+  bindGetUserInfo: function (e) {    
     var referee_data = this.data.referee_data
     var gift_queue_id = this.data.gift_queue_id
     var queue_num = this.data.queue_num
@@ -339,16 +353,18 @@ Page({
     })
     var userInfo = e.detail;
     wx.setStorageSync('userInfo', e.detail);
-   
+    var buttonClicked = this.data.buttonClicked;
     setTimeout(()=>{
         if(state == 1){
           wx.navigateTo({
             url: '../Notgifts/Notgifts',
           })
         }else{
-          this.getLocation(gift_queue_id, queue_num, userInfo, referee_data)
-        }
+          if (buttonClicked){
+            this.getLocation(gift_queue_id, queue_num, userInfo, referee_data)
 
+          }
+        }
     }, 2000)
 
      
@@ -356,6 +372,9 @@ Page({
 
     //登录信息
   wxLogin(gift_queue_id, queue_num, userInfo, referee_data, latitude, longitude){
+    this.setData({
+      buttonClicked:false
+    })
     wx.login({
       success: res => {
         var code = res.code;
@@ -374,22 +393,31 @@ Page({
             referee_data: JSON.stringify(referee_data)
           },
           success: res => {
-            this.setData({
-              isShow: false
-            })
+           
             //返回值为401的情况下  未授权  跳转授权页面
             if (res.data.code == 401) {
+              this.setData({
+                isShow: false
+
+              })
               wx.removeStorageSync('content')
               this.shows(res.data.msg)
-
+              this.setData({
+                buttonClicked:true
+              })
             } else if (res.data.code == 200) {
+              this.setData({
+                isShow: true
+
+              })
               wx.setStorageSync('session_id', 'PHPSESSID=' + res.data.data.session_id + '; path=/; HttpOnly');
               app.session_id = 'PHPSESSID=' + res.data.data.session_id + '; path=/; HttpOnly';
               this.setData({
                 uuid: res.data.data.uuid,
                 token: res.data.data.token,
                 expiry_time: res.data.data.expiry_time,
-                logintype: res.data.data.expiry_time
+                logintype: res.data.data.expiry_time,
+                buttonClicked:false
               })
               //已登录情况下为2  后台获取到的信息渲染到页面上
               //生成header
@@ -429,9 +457,7 @@ Page({
                   if (res.data.code == 200) {
                     wx.setStorageSync('bg', res.data.data.content.background)
 
-                    this.setData({
-                      isShow: false
-                    })
+        
                     wx.setStorage({
                       key: 'content',
                       data: res.data

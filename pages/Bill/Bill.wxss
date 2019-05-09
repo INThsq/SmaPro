@@ -7,7 +7,7 @@
   display: block;
 }
 .expend{
-  padding: 12rpx 30rpx;
+  padding:20rpx 30rpx;
   position: fixed;
   width: 100%;
   background:#FAFAFA;
@@ -38,6 +38,7 @@ margin-top: 124px;
 .expend .exp_cont{
   color: #999;
   font-size: 25rpx;
+  margin-top: 10rpx;
 }
 .expend_container image{
   width: 80rpx;

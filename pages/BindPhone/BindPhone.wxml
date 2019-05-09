@@ -36,6 +36,15 @@
         </view>
       </view>
     </view>
+
+     <view class='list' style='margin-top:20rpx;'  bindtap='{{referee_nickname=="null"?"BindRefer":""}}'>
+      <view class='list-s'>
+        <text class='lefts'>{{referee_key_name}}</text>
+        <view>{{referee_nickname=="null"?"暂未绑定":referee_nickname}}
+        <text class='rights iconfont icon-arrow'></text>
+        </view>
+      </view>
+    </view>
 </view>
 
 <view class='bottom'>

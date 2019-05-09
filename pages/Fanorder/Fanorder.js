@@ -108,7 +108,6 @@ Page({
         method: 'GET',
         header: this.data.header,
         data: {
-          param_type: param_type,
           now_page: page
         },
         success: res => {

@@ -20,10 +20,17 @@ Page({
     let group = options.group;
     let ids = options.ids;
     if(group){
+      this.setData({
+        group:group,
+        ids:ids
+      })
       this.getBill(1,group,ids)
     }else{
       this.getBill(1,0,0);
-
+      this.setData({
+        group: 0,
+        ids: 0
+      })
     }
   },  
   move(e){
@@ -55,12 +62,23 @@ Page({
           var money_bills = res.data.data.content;
           for(let i = 0;i < money_bills.length; i++){
             for (let z = 0; z < money_bills[i].month_money_bill.money_bill.length ; z++){
-              money_bills[i].month_money_bill.money_bill[z].create_time = utils.formatTime(money_bills[i].month_money_bill.money_bill[z].create_time, 'M-D h:m:s')
+              money_bills[i].month_money_bill.money_bill[z].create_time = utils.formatTime(money_bills[i].month_money_bill.money_bill[z].create_time, 'M-D h:m:s');
+              money_bills[i].month_money_bill.money_bill[z].enter = money_bills[i].month_money_bill.enter_money_total;
+              money_bills[i].month_money_bill.money_bill[z].out = money_bills[i].month_money_bill.out_money_total;
+
             }
           }
           this.setData({
             money_bill: money_bills,
+            now_page:res.data.data.now_page
           })
+          if (money_bills.length>0){
+            this.setData({
+              month: money_bills[0].month_money_bill.money_bill[0].month,
+              enter: money_bills[0].month_money_bill.enter_money_total,
+              out: money_bills[0].month_money_bill.out_money_total
+            })
+          }
         }else{
           utils.error(res);
         }
@@ -151,7 +169,18 @@ Page({
   onUnload: function () {
 
   },
-
+  BindMove(e){
+    let month = e.currentTarget.dataset.month;
+    let money_bill = this.data.money_bill;
+    let enter = e.currentTarget.dataset.enter;
+    let out = e.currentTarget.dataset.out;
+    this.setData({
+      money_bill: money_bill,
+      month:month,
+      enter:enter,
+      out:out
+    })
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
@@ -163,9 +192,44 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    let group = this.data.group;
+    let ids = this.data.ids;
+    let page = this.data.now_page;
+    page++;
+    this.header(app.globalData.url + 'getBillList'),
+      wx.request({
+        url: app.globalData.url + 'getBillList',
+        method: 'GET',
+        data: {
+          now_page: page,
+          bill_type_ids: group,
+          bill_type_group: ids
+        },
+        header: this.data.header,
+        success: res => {
+          if (res.data.code == 200) {
+            //时间戳转换
+            var list =  this.data.money_bill;
+            var money_bills = res.data.data.content;
+            for (let i = 0; i < money_bills.length; i++) {
+              for (let z = 0; z < money_bills[i].month_money_bill.money_bill.length; z++) {
+                money_bills[i].month_money_bill.money_bill[z].create_time = utils.formatTime(money_bills[i].month_money_bill.money_bill[z].create_time, 'M-D h:m:s');
+                money_bills[i].month_money_bill.money_bill[z].enter = money_bills[i].month_money_bill.enter_money_total;
+                money_bills[i].month_money_bill.money_bill[z].out = money_bills[i].month_money_bill.out_money_total;
+                list[0].month_money_bill.money_bill.push(money_bills[i].month_money_bill.money_bill[z])
 
+              }
+
+            }
+            this.setData({
+              money_bill: list,
+              now_page: res.data.data.now_page
+            })
+          }
+        }
+      })
   },
-
+  //
   /**
    * 用户点击右上角分享
    */

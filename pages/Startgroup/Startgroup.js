@@ -41,8 +41,9 @@ Page({
   },
   //生成二维码
   GetCode(e){
-    console.log(this.data.giftGiving.is_inline)
     let is_inline = this.data.giftGiving.is_inline.is_disabled
+    let share_gift_tips = this.data.giftGiving.share_gift_tips
+
     if(is_inline){
       this.shows(this.data.giftGiving.is_inline.is_disabled)
     }else{

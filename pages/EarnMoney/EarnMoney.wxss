@@ -20,6 +20,15 @@
   left:15px;
   margin-top:4rpx;
 }
+.cover-load{
+  width: 100vh;
+  height: 100vh;
+  background: transparent;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 .back image{
   width:44rpx;
   height:32rpx;

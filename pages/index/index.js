@@ -54,6 +54,7 @@ Page({
       swiperCurrents: e.detail.current
     })
   },
+
  //点击跳转消息
   More(){
       let id =this.data.wxIndex.more_notice;
@@ -218,11 +219,9 @@ Page({
                   this.show('您还未开通相关门店,请前去开通或联系客服')
                 }else{
                   this.dotCenter(res.data.data.callback[0].mall_dot_authorize_id, res.data.data.callback[0].order_num)
-                  setTimeout(function(){
                     wx.navigateTo({
                       url: '../WhitCenter/WhitCenter?list=' + JSON.stringify(res.data.data.callback),
                     })
-                  },500)
                   
                 }
              

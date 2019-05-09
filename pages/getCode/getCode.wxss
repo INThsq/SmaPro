@@ -120,7 +120,7 @@ button{
 }
 .btns{
   position: absolute;
-  bottom: 146rpx;
+  bottom: 126rpx;
   padding: 0 64rpx;
   width: 100%;
   box-sizing: border-box;

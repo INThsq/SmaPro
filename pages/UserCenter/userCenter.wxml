@@ -248,7 +248,7 @@
           </navigator>
       </view> 
 
-       <view class='sy' bindtap='query' wx:if="{{content.data.content.userinfo.referee_id=='0'||content.data.content.userinfo.referee_id==''}}">
+       <view class='sy' bindtap='query' wx:if="{{!content.data.content.userinfo.bind_referee&&content}}">
           <navigator  hover-class="none">
           <image src='../../static/imgs/icon_wdym_guwen.png'></image>
           <view class='sy_title'>
@@ -257,7 +257,7 @@
           </navigator>
       </view> 
 
-      <block wx:for="{{content.data.content.application}}" wx:key="{{index}}">
+      <block wx:if="{{content}}" wx:for="{{content.data.content.application}}" wx:key="{{index}}">
       <view class='sy' bindtap='Steed' data-name="{{item.name}}"  data-types='{{item.jump}}' data-type="{{item.unique_name}}">
           <navigator  hover-class="none">
           <image src='{{item.image}}'></image>
