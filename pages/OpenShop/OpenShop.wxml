@@ -8,6 +8,7 @@
 </view>
 
 <!-- 内容 -->
+
 <view class='container'>
     <view class='item' catchtap='listenerButton'>
       <view class='text'>店铺头像</view>
@@ -29,10 +30,10 @@
   <!-- 店铺认证 -->
   <view class='item'>
     <view class='text'>
-    店铺认证
+    认证信息
     </view>
     <view class='texts'>
-    个人店铺
+    个人
     </view>
   </view>
   <!-- 经营类目 -->
@@ -46,7 +47,7 @@
   <!-- 店铺类型 -->
   <view class='shop-type'>
       <view class='text'>店铺类型</view>
-      <view class='menu_box'>
+      <view class='menu_box' style='width:auto!important;'>
 
          <view class='menu1' bindtap='menuTap' data-current="0" data-type='{{res.data.set_store.store_type[0].type}}'>
         <block wx:if="{{menuTapCurrent== 0}}">
@@ -57,7 +58,7 @@
           </block>
         {{res.data.set_store.store_type[0].name}}</view>
 
-        <view class='menu2'  bindtap='menuTap' data-current="1" data-type="{{res.data.set_store.store_type[1].type}}">
+        <view class='menu2' wx:if="{{res.data.set_store.store_type[1].name}}"  bindtap='menuTap' data-current="1" data-type="{{res.data.set_store.store_type[1].type}}">
          <block wx:if="{{menuTapCurrent== 1}}">
          <image src='http://oss.myzy.com.cn/wechat/images/icon_kd_xuanzhong.png'></image>
          </block>
@@ -104,7 +105,7 @@
       <text> {{res.data.set_store.store_type[0].price}}</text>
     </view>
     <view class='btn' bindtap='setted'>
-     {{res.data.set_store.store_type[0].price_tip}}
+      立即开通
     </view>
   </view>
   </block>
@@ -152,6 +153,7 @@
   <view animation="{{animationData}}" class="commodity_attr_box"  wx:if="{{showModalStatus}}">
   <view class='titles' bindtap="close" style='padding:20rpx 0 22rpx;'>
       <image style='width:14px;height:14px' src='http://oss.myzy.com.cn/wechat/images/icon_del_vip.png'></image>
+      <text>确认付款</text>
   </view>
   <!-- 方式 -->
   <view class='way'>
@@ -159,44 +161,34 @@
   选择支付方式
   </view>
  <view class='way-cont'>
-        <view class='way-list'  bindtap='menuTaps' data-current="0" data-pay="3">
-            <view class='way-left'>
-             <block wx:if="{{menuTapCurrents== 0}}">
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
-              </block>
-              <block wx:else>
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
-              
-              </block>
-            </view>
-            <view class='way-icon'>
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixin.png'></image>
-            </view>
-            <view class='way-text'>
-              <text>微信支付</text>
-              <text class='small'>推荐已安装微信用户使用</text>
-            </view>
-        </view>
-        <view class='way-list'  bindtap='menuTaps' data-current="1" data-pay="1">
-            <view class='way-left'>
-            <block wx:if="{{menuTapCurrents== 1}}">
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
-              </block>
-              <block wx:else>
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
-              
-              </block>
-            </view>
-            <view class='way-icon'>
-              <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_yue.png'></image>
-            </view>
-           
-            <view class='way-text way-texts'>
-              <text>余额支付 (剩余:￥{{res.data.set_store.balance}}）</text>
-              <text class='small'>账户余额支付</text>
-            </view>
-        </view>
- </view>
+    <block wx:for="{{settlement_type}}" wx:index="index">
+    <view class='way-list'  bindtap='menuTaps' data-type="{{item.pay_type}}" data-current="{{index}}">
+      <view class='way-left'>
+      <block wx:if="{{menuTapCurrents == index||item.is_default}}">
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+        </block>
+        <block wx:else>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+        </block>
+      </view>
+      <view class='way-icon'>
+        <image src='{{item.pay_img}}'></image>
+      </view>
+      <block wx:if="{{nedPay !== 0}}">
+      <view class='way-text'>
+        <text>{{item.pay_title}}</text>
+        <text class='small'>{{item.pay_subtitle}}</text>
+      </view>
+      </block>
+      <block wx:else>
+      <view class='way-text way-texts'>
+        <text>{{item.pay_title}}</text>
+        <text class='small'>{{item.pay_subtitle}}</text>
+      </view>
+      </block>
+    </view>
+    </block>
+</view>
   
 <!-- 需付款 -->
   <view class='way-pay'>
@@ -214,8 +206,8 @@
 
 
   <!-- toast -->
-  <import src="../../public/appToast/appToast.wxml"/>
-  <template is="toast" data="{{ ..._toast_ }}"/>
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
 
    <!-- load -->
   <view class="load {{isShow ? 'show' : ''}}" >
@@ -233,9 +225,11 @@
   </view>
   <picker-view class="nyz_area_pick_view" indicator-style="height: 35px;" bindchange="handleNYZAreaChange" value="{{value}}">
     <picker-view-column>
-      <view class="nyz_area_colum_view" wx:for="{{provinces}}" wx:key="{{index}}" data-classify="{{item.classify_id}}">{{item.name}}</view>
+      <view class="nyz_area_colum_view" wx:for="{{provinces}}" wx:key="{{index}}" data-name='{{item.name}}' data-classify="{{item.classify_id}}">
+      {{item.name}}</view>
     </picker-view-column>
   </picker-view>
 </view>
+
 
 

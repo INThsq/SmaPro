@@ -1,4 +1,5 @@
 /* pages/UserCenter/userCenter.wxss */
+@import "../../static/css/index.wxss";
 .conts{
   padding:10rpx 34rpx 34rpx;
   margin-top:141rpx;

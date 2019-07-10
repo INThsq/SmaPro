@@ -20,20 +20,55 @@
   left:15px;
   margin-top:4rpx;
 }
+.cover-load{
+  width: 100vh;
+  height: 100vh;
+  background: transparent;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 .back image{
   width:44rpx;
   height:32rpx;
 }
+.SetCode{
+  position: fixed;
+  top: 0;
+  
+}
 .show{
   display: block!important;
 }
-.bth_image2{
+.bth_image2,.bth_images2{
   width: 64rpx;
   height: 64rpx;
   margin-right: 40rpx;
   vertical-align: middle;
   animation: xuanuan 2s linear infinite;
 }
+.loads{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display:none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+.show{
+  display: block;
+}
+
 .load{
   width:470rpx;
   height: 144rpx;
@@ -60,7 +95,7 @@
   }
 }
 .head{
-  height:312rpx;
+  height:290rpx;
   background:url('http://oss.myzy.com.cn/wechat/images/icon_fenxiang_beijing.png')no-repeat center;
   background-size: 100% 100%; 
   position: relative;
@@ -177,6 +212,9 @@ button{
   font-size: 33.3rpx;
   line-height:40px;
   letter-spacing: .5px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 .detail-title{
   font-size: 25rpx;
@@ -186,7 +224,8 @@ button{
 }
 .greys{
   color: white;
-  background: #D1D1D1
+  background: #D1D1D1;
+  border:1px solid #D1D1D1;
 }
 .free{
   font-size: 25rpx;
@@ -249,6 +288,7 @@ margin-bottom: 30rpx;
 }
 .get{
   width:100%;
+  background: white;
 height:38px;
 box-shadow:0px 2px 4px 0px rgba(255,188,188,0.5);
 border-radius:4px;
@@ -262,6 +302,10 @@ margin-bottom: 30rpx;
 .no-data{
   text-align: center;
 }
+.button-hover {
+  background:transparent!important;
+}
+
 .no-data image{
   width: 72rpx;
   height: 86rpx;
@@ -277,6 +321,7 @@ margin-bottom: 30rpx;
   font-size: 25rpx;
   color: #333;
   margin-bottom: 14rpx;
+  line-height: 18px;
 }
 .activity .help-hr{
   margin-bottom:38rpx;
@@ -340,6 +385,9 @@ z-index:998;
 }
 .left-conts .info-name{
     color: #333;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap
 }
 .left-conts .infos{
   color: #999;
@@ -384,4 +432,56 @@ z-index:998;
 }
 .hide{
   overflow: hidden;
+}
+.Set-top image{
+  display: flex;
+}
+.SetCode{
+  display: flex;
+  flex-direction: column;
+  padding:330rpx  30rpx 0 30rpx;
+  box-sizing: border-box;
+}
+.Set-top image{
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+}
+.Set-top{
+  display: flex;
+  justify-content: center;
+}
+.Set-cont{
+  margin-top:66rpx;
+}
+.Set-cont .Set-title{
+  font-size: 36rpx;
+  display: flex;
+  justify-content:center;
+}
+.Set-cont .Set-conts{
+  font-size:28rpx;
+  margin-top: 32rpx;
+  padding:0 40rpx;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+.Set-btns{
+  box-sizing: border-box;
+  position: fixed;
+  bottom:30rpx;
+  width:100%;
+  padding:  0 30rpx;
+  left: 0;
+}
+.Set-btns view{
+  height:42px;
+background:#F43736;
+border-radius:4px;
+width: 100%!important;
+color: white;
+font-size: 33.3rpx;
+line-height: 84rpx;
+justify-content: center;
+display: flex;
 }

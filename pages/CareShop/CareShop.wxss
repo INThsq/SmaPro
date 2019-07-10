@@ -1,25 +1,53 @@
 /* pages/CareShop/CareShop.wxss */
 @import "../index/index.wxss";
+@import "../../static/css/index.wxss";
 .logo image{
   width: 90rpx;
   height: 90rpx;
   border-radius: 4px;
   display: inline-block;
+  border:1px solid #FAFAFA;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.fade_in {
+  animation-delay:2s;
+  animation: fadeIn 2s both;
+}
+.order-list image{
+  animation: fade-in 2s linear;
+
 }
 .logo{
   display: block;
   text-align: center;
   padding:30rpx 0 20rpx;
+  position: relative;
 }
 .ys{
   color: #999!important;
 }
 .CareShop{
-  margin-top:124rpx;
+  margin-top:140rpx;
   background: white;
-  border-top: .5px solid #f3f3f3;
   text-align: center;
   margin-bottom: 16rpx;
+  position: relative;
+}
+.logo::after{
+   position: absolute; 
+    content: '';
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 1px;
+    background-color: #f7f7f7;
+    -webkit-transform: scale(1, 0.5);
+    transform: scale(1, 0.5);
+    -webkit-transform-origin: center top;
+    transform-origin: center top;
 }
 .title,.small{
   text-align: center;

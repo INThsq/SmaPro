@@ -2,11 +2,45 @@
 /**index.wxss**/
 @import "../SettedBefore/SettedBefore.wxss";
 @import  "../Confirm/Confirm.wxss";
-
+@import '../../public/compback/compback.wxss';
 .swipercontent {
   position: relative;
 }
-
+.show{
+  display: block!important;
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+}
+.load{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display: none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
 swiper{
   width: 100%;
   height:170rpx;
@@ -22,7 +56,22 @@ swiper image {
   bottom: 20rpx;
   display: flex;
 }
-
+.income{
+  position: relative;
+}
+.income::after{
+  position: absolute; 
+  content: '';
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 1px;
+  background-color: #f3f3f3;
+  -webkit-transform: scale(1, 0.5);
+  transform: scale(1, 0.5);
+  -webkit-transform-origin: center bottom;
+  transform-origin: center bottom;
+}
 .dot{
   margin: 0 8rpx;
   width: 14rpx;
@@ -41,7 +90,7 @@ swiper image {
   color: #333;
 }
 .income{
-  padding:22rpx 30rpx;
+  padding:30rpx 30rpx 20rpx ;
   background: white;
   border-bottom: 1px solid #FAFAFA;
 
@@ -49,7 +98,6 @@ swiper image {
 .income >view{
   display: flex;
   justify-content: space-between;
-  line-height:1.6;
 
 }
 .ords{
@@ -77,21 +125,39 @@ swiper image {
 }
 
 .navCont .item{
-    padding:20rpx 0;
+    padding:24rpx 0 22rpx;
     font-size:24rpx;
     text-align:center;
     flex: 1;
 }
 .navCont .item view{
-  display: block;
+  display:flex;
   color: #666;
-  font-size:29.17rpx;
+  font-size:25rpx;
   line-height:2.2;
+  justify-content: center;
+}
+.left{
+  line-height: 33px!important;
 }
 .num{
   font-size: 34rpx!important;
-  color: #333;
+  color: #333!important;
+  line-height: 24px!important;
 }
+.bottom{
+  display: flex;
+  align-items: center;
+}
+.top{
+  /* margin-bottom: 12rpx; */
+  line-height: 20px;
+}
+.bottom .right{
+  display: flex;
+  align-items: center;
+}
+
 .preview{
   margin-top: 16rpx;
   display: flex;
@@ -173,7 +239,7 @@ swiper image {
   margin-right: 18rpx;
 }
 .ords{
-  padding:24rpx 0;
+  padding-top: 18rpx;
   background: white;
 }
 .warn{

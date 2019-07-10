@@ -20,7 +20,7 @@
       <view class='title'>
       已申请提现
       </view>
-      <view class='items'>
+      <!-- <view class='items'>
             <view class='item'>
               <text class='iteml'>邀请助力8428375622468...</text>
               <text class='itemr'>+2.03</text>
@@ -29,7 +29,7 @@
               <text class='itemls'>2018-10-26 19:04</text>
               <text class='itemrs'>2.20</text>
             </view>
-      </view>
+      </view> -->
       </view>
       </block>
       
@@ -39,7 +39,7 @@
 
       <!-- 内容  已助力提现 -->
       <block wx:if="{{status == 2}}" >
-        <view class='container'>
+        <view class='container' wx:if="{{bill_list.length>0}}" >
         
         <view class='items' wx:for="{{bill_list}}">
               <view class='item'>
@@ -52,6 +52,14 @@
               </view>
         </view>
         </view>
+
+        <view wx:else class="container" style="height:calc(100vh - 160rpx);background:white;display: flex;align-items: center;justify-content: center;">
+            <view class="Now">
+              <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+              <text>抱歉，暂无数据</text>
+            </view>
+        </view>
+
 </block>
 
     <!-- 内容  提现中 -->

@@ -1,0 +1,45 @@
+<!--pages/NewsCont/NewsCont.wxml-->
+<view class="wrapper">
+    <view class='back' bindtap='back'>
+      <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+    </view>
+    <view class="tetxs">通知消息</view>
+  </view>
+
+
+<!-- 内容部分 -->
+<view class='container'>
+ 
+<block wx:for="{{list}}" wx:key="index">
+
+ <view class='date'>
+      <text>{{item.update_time}}</text>
+  </view>
+  <view class='cont'>
+  <view class='top-cont' data-url='{{item.notice_article}}'  bindtap='H5'>
+  <view class='title {{item.is_read == 1?"grey":""}}'>{{item.title}}</view>
+    <view class='dates'>{{item.creates_time}}</view>
+    <view class='conts {{item.is_read == 1?"grey":""}}' wx:if="{{item.content!=''}}">{{item.content}}</view>
+    <block wx:if="{{item.type == 1}}">
+    <view class='newImg'>
+      <image src="{{item.figure}}" class='new-image'></image>
+    </view>
+    </block>
+  </view>
+  <view class='bot-cont'  data-url='{{item.notice_article}}'  bindtap='H5'>
+        <view class="icon">
+            <text class='all {{item.is_read == 1?"grey":""}}'>查看详情</text> 
+        </view> 
+  </view>
+ 
+  </view>
+  </block>
+
+</view>
+     
+
+
+<!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+    </view>

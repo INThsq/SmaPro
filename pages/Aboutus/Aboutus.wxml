@@ -27,13 +27,13 @@
   </view>
   <view>
   <text class='left'>客服电话</text>
-  <text class="tel right">4008-010-168</text>
+  <text class="tel right">4006-010-978</text>
   </view>
 </view>
 
 
 
 <view class='copyright'>
-  <text class='all'>惠选购 版权所有</text>
-  <view class='time'>Copyright@2018 MYZY.COM.CN All Rights Reserved</view>
+  <text class='all'>{{Tname}} 版权所有</text>
+  <view class='time'>Copyright@2018  ZhongXinHeLi.Com All Rights Reserved</view>
 </view>

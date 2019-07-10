@@ -1,16 +1,34 @@
 <!--pages/jjb.wxml-->
-<!-- 引用组件的页面模版 -->
-<view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>久加宝</view> 
-  </my-component>
-</view>
+
 
 <!-- 内容部分 -->
 <view class='container'>
   <!-- 视频 -->
-   <video id="myVideo"  src="{{data.video}}"  objectFit='cover'   controls  page-gesture = "true" enable-progress-gesture = true></video>
+    <view class='swipercontent'>
+      <swiper  class='swiper' autoplay="false"  interval="5000000"   bindchange='swiperTab'>
+        <swiper-item class="swiper-video">  
+          <video id="myvedio" hidden="{{video}}"  bindended="endvedio" controls  page-gesture="true" enable-progress-gesture = true src='{{data.video}}'  controls='true' binderror="videoErrorCallback"></video>
+          <view wx:if="{{show}}"  bindtap="playvedio" class='coversrc' style='position:absolute'>
+            <image class='img' src='{{data.video_src}}'></image>
+            
+            <view class='playbtn'>
+               <image src='http://oss.myzy.com.cn/wechat/images/icon_shipinbofang.png'></image>
+            </view>
+        </view>
+        </swiper-item>    
+         <block wx:for="{{data.images}}" wx:for-index="index" wx:key="index">    
+          <swiper-item>    
+            <image src="{{item}}" class="slide-image" mode="aspectFill"/>    
+          </swiper-item>    
+        </block> 
+      </swiper>
+     
+      <cover-view class='back' catchtap='back'>
+        <cover-image class="images" src='http://oss.myzy.com.cn/wechat/images/info-back.png'></cover-image>
+      </cover-view>
+    </view>
+
+
    <!-- 促销特权 -->
    <view class='sale'>
    <!-- 标题信息 -->
@@ -64,15 +82,15 @@
 
 <!-- 勾选框 -->
 <view class='check' bindtap='choose'>
-    <image src="{{url}}" data-src='{{url}}'></image>
-    <text style='margin-left:3px;'>勾选即代表<text style='color:blue'>《久加宝促销权益》</text></text>
+    <image src="{{url}}" data-src='{{url}}' ></image>
+    <view style='margin-left:3px;'>购买即视为同意<text style='color:blue' bindtap='Equit' data-src="{{data.activity_url}}">《开通权限协议书》</text></view>
 </view>
     </view>
 
    <!-- 底部按钮 -->
    <view class='btns'>
     <view class='btn-left' bindtap='detail' data-id='{{data.goods_id}}'>商品详情</view>
-    <view class='btn-right bb'  bindtap='detail' data-id='{{data.goods_id}}'>立即购买 ￥{{data.price}}</view>
+    <view class='btn-right bb'  bindtap='details' data-id='{{data.goods_id}}'>立即购买 ￥{{data.price}}</view>
    </view>
 
    <view class='arrow'>

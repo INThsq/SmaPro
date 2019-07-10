@@ -8,7 +8,8 @@ Page({
     selected1: false,
     num:0,
     del:true,
-    picture:'http://oss.myzy.com.cn/wechat/images/icon_xiala_xia.png'
+    picture:'http://oss.myzy.com.cn/wechat/images/icon_xiala_xia.png',
+    up:'下拉加载更多~'
   },
   selected: function (e) {
     this.setData({
@@ -55,7 +56,161 @@ Page({
       url: '../Recom/Recom',
     })
   },
- 
+  //下拉刷新
+  onReachBottom(){
+    let now_page = this.data.now_page;
+    now_page++;
+    this.header(app.globalData.url + 'giveaway');
+    wx.request({
+      url: app.globalData.url + 'giveaway',
+      method: 'get',
+      header: this.data.header,
+      data: {
+        keywords: keywords,
+        now_page: now_page
+      },
+      success: res => {
+        if (res.data.code == 200) {
+          let lists = this.data.list;
+          let list = res.data.data.callback.list;
+          if(list.length<1){
+            this.setData({
+              up:'暂时没有更多了~'
+            })
+          }else{
+
+            for (let l = 0; l < list.length; l++) {
+              lists.push(list[l])
+            }
+            for(let p =0;p<lists.length;p++){
+              let welfare = lists[p].welfare;
+              let we = [];
+              if (welfare) {
+                for (let n = 0; n < welfare.length; n++) {
+                  we.push(welfare[n].split('|'));
+                }
+                lists[l].welfare = we;
+              }
+            }
+            this.setData({
+              list:lists,
+              up:'下拉加载更多~'
+            })
+            
+          }
+        }
+      }
+    })
+  },
+  //赠送商家入驻
+  activity() {
+    this.header(app.globalData.url + 'activity');
+    wx.request({
+      url: app.globalData.url + 'activity',
+      method: 'get',
+      header: this.data.header,
+      success: res => {
+        if (res.data.code == 200) {
+          let type = res.data.data.callback.type;
+          switch (type) {
+            case 0:
+              app.scenes = 1;
+              wx.setStorageSync('datas', res.data.data.callback)
+              wx.navigateTo({
+                url: '../jjb/jjb?data=' + JSON.stringify(res.data.data.callback),
+              })
+              break;
+            case 1:
+              wx.navigateTo({
+                url: '../FyCenter/FyCenter',
+              })
+              app.scenes = 0;
+              break;
+          }
+        } else {
+          this.show(res.data.code)
+        }
+      }
+    })
+  },
+  //搜索关键词
+  searchSubmitFn(e){
+    let keyword = this.data.searchValue;
+    this.giveaway(keyword,1)
+  },
+  //进入活动
+  ComeAct(){
+    this.activity();
+  },
+  //进入门店中心
+  ComeCenter:utils.throttle(function (e){
+    this.switchDotCenter();
+  },1000),
+  //门店管理
+  switchDotCenter() {
+    this.setData({
+      isShow:true
+    })
+    let content = wx.getStorageSync('content');
+    if (content) {
+      this.header(app.globalData.url + 'switchDotCenter');
+      wx.request({
+        url: app.globalData.url + 'switchDotCenter',
+        method: 'get',
+        header: this.data.header,
+        success: res => {
+          this.setData({
+            isShow:false
+          })
+          if (res.data.code == 200) {
+            if (res.data.data.callback.length < 1) {
+              this.shows('您还未开通相关门店,请前去开通或联系客服')
+            } else {
+              this.dotCenter(res.data.data.callback[0].mall_dot_authorize_id, res.data.data.callback[0].order_num)
+              wx.navigateTo({
+                url: '../WhitCenter/WhitCenter?list=' + JSON.stringify(res.data.data.callback),
+              })
+            }
+          } else {
+            utils.error(res);
+          }
+        }
+      })
+    } 
+  },
+  dotCenter(mall_dot_authorize_id, order_num) {
+    this.header(app.globalData.url + 'dotCenter');
+    this.setData({
+      isShow: true
+    })
+    wx.request({
+      url: app.globalData.url + 'dotCenter',
+      header: this.data.header,
+      method: 'get',
+      data: {
+        mall_dot_authorize_id: mall_dot_authorize_id,
+        order_num: order_num
+      },
+      success: res => {
+        this.setData({
+          isShow: false
+        })
+        if (res.data.code == 200) {
+          app.top = res.data.data.callback
+          wx.setStorageSync('top', res.data.data.callback)
+        } else if (res.data.code == 401) {
+          this.show(res.data.msg)
+        } else {
+          this.show(res.data.msg)
+          wx.navigateTo({
+            url: '/pages/Accredit/Accredit'
+          })
+        }
+
+      }
+
+    })
+  },
   //展开福利
   Sum(){
     let num = this.data.num;
@@ -103,6 +258,9 @@ Page({
   },
   //赠送活动
   giveaway(keywords, now_page){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url +'giveaway');
     wx.request({
       url: app.globalData.url +'giveaway',
@@ -113,34 +271,72 @@ Page({
         now_page:now_page
       },
       success:res=>{
+        this.setData({
+          isShow:false
+        })
         if(res.data.code == 200){
           let list  = res.data.data.callback.list;
-          if(list.length>0){
+          if(list.length>0||list.length<10){
             for (let l = 0; l < list.length; l++) {
               let welfare = list[l].welfare;
               let we = [];
-              for (let n = 0; n < welfare.length; n++) {
-                we.push(welfare[n].split('|'));
+              if(welfare){
+                for (let n = 0; n < welfare.length; n++) {
+                  we.push(welfare[n].split('|'));
+                }
+                res.data.data.callback.list[l].welfare = we;
+
               }
-              res.data.data.callback.list[l].welfare = we;
               this.setData({
-                list: list
+                list: list,
+                up: '暂时没有更多内容了~',
+                 now_page: res.data.data.callback.now_page,
               })
             }
-          }
-          
-          
+          }        
         }
-        console.log(res)
       }
-      
-
     })
   },
   onLoad(){
-    this.giveaway('',1)
+    this.giveaway('',1);
+    new app.ToastPannels();
   },
-
+  Tj(e){
+    let id = e.target.dataset.id;
+    this.getMallDot(id);
+  },
+  //自提点
+  getMallDot(member_mall_id){
+    this.setData({
+      isShow:true
+    })
+    this.header(app.globalData.url +'getMallDot');
+    wx.request({
+      url: app.globalData.url +'getMallDot',
+      header:this.data.header,
+      data:{
+        member_mall_id: member_mall_id
+      },
+      method:'get',
+      success:res=>{
+        this.setData({
+          isShow:false
+        })
+           if(res.data.code==200){
+             let mall = res.data.data.callback.mall_dot;
+             let url = '../JiujiaB/JiujiaB?member_mall_id=' + mall.member_mall_id + '&money=' + mall.money + '&telephone=' + mall.telephone + '&name=' + mall.name + '&money=' + mall.money + '&account_balance=' + res.data.data.callback.account_balance + '&buy_tips=' + res.data.data.callback.buy_tips;
+             app.jjb=1;
+            wx.navigateTo({
+              url:url,
+            })
+           }else{
+             this.shows(res.data.msg);
+            
+           }
+      }
+    })
+  },
   //生成随机字符串
   randomWord() {
     var noncestr;

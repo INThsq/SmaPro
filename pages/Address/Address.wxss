@@ -1,4 +1,6 @@
 /* pages/Address/Address.wxss */
+@import"../../public/compback/compback.wxss";
+@import "../../static/css/index.wxss";
 .container{
   margin-top:140rpx;
   height:89.5vh;
@@ -141,9 +143,8 @@ width: 100%!important;
 }
 .adds{
   padding: 0 30rpx!important;
-box-sizing: border-box;
+  box-sizing: border-box;
  position: fixed;
-bottom:30rpx;
-width: 100%;
-
+  bottom:30rpx;
+  width: 100%;
 }

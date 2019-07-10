@@ -1,12 +1,13 @@
 <!--pages/Address/Address.wxml-->
 
 <!-- 引用组件的页面模版 -->
-<view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>收货地址</view> 
-  </my-component>
+<view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">收货地址</view>
 </view>
+
 
 
 <!-- 内容 -->
@@ -14,10 +15,15 @@
 <view class='container' wx:if="{{datas == null|| datas.length<1}}">
     <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
     <text>抱歉，暂无数据</text>
-    <view class='btns'>
+    <!-- <view class='btns'>
   <button class='getAdress' bindtap='getAdress'>微信获取地址</button>
   <button class='addAdress' bindtap='addAdress'>手动添加地址</button>
+</view> -->
+<view class='adds'>
+<button class='add'  bindtap='addAdress'>手动添加地址</button>
 </view>
+
+<!-- </view> -->
 </view>
 
 <!-- 有信息 -->
@@ -84,4 +90,11 @@
 
  <import src="../../public/appToasts/appToasts.wxml"/>
   <template is="toasts" data="{{ ..._toast_ }}"/>
+
+  
+  <!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+    </view>
+  
   

@@ -139,13 +139,7 @@ Page({
       side: slide
     }
     let header = this.data.header;
-    this.setData({
-      ['header.content-type']: 'multipart/form-data',
-    })
-    let cookie = wx.getStorageSync('cookie');
-    if (cookie) {
-      header.Cookie = cookie;
-    }
+   
     wx.uploadFile({
       url: app.globalData.url + 'ocrImage',
       method:'post',
@@ -154,8 +148,6 @@ Page({
       filePath: tempFilePaths,
       formData: data,
       success:res=>{
-        let cookie = this.data.cookie;
-        
           this.setData({
           hide: true
         })
@@ -191,10 +183,6 @@ Page({
   realname(){
     this.header(app.globalData.url +'realname');
     let header = this.data.header;
-    let cookie = wx.getStorageSync('cookie');
-    if (cookie) {
-      header.Cookie =  cookie;
-    }
     wx.request({
       url: app.globalData.url + 'realname',
       header:header,
@@ -203,7 +191,7 @@ Page({
         if(res.data.code == 200){
           this.show(res.data.msg)
           wx.navigateTo({
-            url: '../CerSuc/CerSuc',
+            url: '../CerSuc/CerSuc?type=1',
           })
         }else{
           this.show(res.data.msg)
@@ -235,6 +223,7 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
   // 生成header
+  //生成header
   header(url) {
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
@@ -258,6 +247,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -265,7 +255,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

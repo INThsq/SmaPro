@@ -1,21 +1,22 @@
 <!--pages/Balance/Balance.wxml-->
 <!-- 引用组件的页面模版 -->
-<view bindtap='Back'>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>余额</view> 
-  </my-component>
+<view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">余额</view>
 </view>
+
 
 <!-- 内容部分 -->
 <view class='bal-conts'>  
   <text class='title'>总资产(元)</text>
   <text class='money'>{{balance}}</text>
   <button class='btn deposit ' bindtap='recharge'>充值</button>
-  <button class='btn recharge' bindtap='deposit' style="margin-bottom:10px;">提现</button>
+  <button class='btn recharge' bindtap='deposit' data-forward='{{forward_count}}' style="margin-bottom:10px;">提现</button>
   <button class='btn recharge' bindtap='bankCard'>银行卡</button>
 
-  <text class='ques'>常见问题</text>
+  <view class='ques' data-url="{{answers}}"  bindtap='getH5'>常见问题</view>
 </view>
 
 <view class='detail' bindtap='toBill'>
@@ -27,9 +28,43 @@
   <view class='rights iconfont icon-arrow'></view>
 </view>
 
-
+ <!-- 慕态框 -->
+   <view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+    <!--弹出框  -->
+    <view animation="{{animationData}}"  class="commodity_attr_box tx-box" wx:if="{{showModalStatus}}">
+      <view class='titles'>
+        <text class='title_left' bindtap='hideModal'>取消</text>
+        <text class='title_center'>选择提现方式</text>
+      </view>
+      <view class='conts'>
+      <block wx:for="{{putForward.put_forward.bank}}" wx:key="{{index}}">
+        <view class='item' data-id='{{index}}' bindtap='Choose'>
+          <image src='{{item.bank_icon}}'></image>
+          <view class='item_right'>
+            <text class='i_O' decode="{{true}}">{{item.bank}}&emsp;{{item.nature}}&emsp;({{item.num}})</text>
+          </view>
+        </view>
+        </block>
+      </view>
+      <block wx:for="{{list}}" wx:key="{{index}}">
+      <view class='item' bindtap='Choose'  data-jump='{{item.jump}}'>
+          <image src='{{item.image}}' class='way'></image>
+          <view class='item_right'>
+            <text class='choose_one' decode="{{true}}">{{item.name}}</text>
+            <!-- <text class='choose_two' decode="{{true}}">(暂未开通)</text> -->
+          </view>
+        </view>
+      </block>
+    </view>
 
 
    <!-- toast -->
    <import src="../../public/appToasts/appToasts.wxml"/>
    <template is="toasts" data="{{ ..._toast_ }}"/>
+
+
+   
+   <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+    </view>

@@ -1,8 +1,13 @@
 <!--pages/UserCenter/userCenter.wxml-->
 <!-- 用户信息 -->
-<view class="head">
-  <view class='head-top' style='background:url("http://oss.myzy.com.cn/wechat/images/icon_sc_6_bj.png") no-repeat center; background-size:cover;'>
+<scroll-view scroll-y='true'>
+<view class="head" >
+  <!-- <view class='head-top repeat'  bindtap='jump' wx:if = "{{usrState == 0}}"></view> -->
+  <!-- <view class='head-top repeat'  bindtap='BindPhone' wx:if = "{{usrState == 3 || usrState == 4}}"></view> -->
+
+  <view class='head-top' style='background:url("{{bg}}") no-repeat center; background-size:cover;'>
   <view class='arrwo'>
+   <!-- style='bottom:{{platform == "android"?"-10rpx":"-12rpx"}}' -->
   <image src='../../static/imgs/icon_wdym_gdt.png'></image>
   </view>
     <!-- <text>再消费100升级黑卡</text> -->
@@ -15,7 +20,7 @@
     
     
     <!-- //未登录 -->
-    <view class="head-left" bindtap='jump' wx:if = "{{usrState == 0}}">
+    <view class="head-left"  bindtap='jump'  wx:if = "{{usrState == 0}}">
         <view>
           <image src="http://oss.myzy.com.cn/wechat/images/img_wdeyemian_touxiang.png" alt="" class="tx" />
         </view>
@@ -27,11 +32,12 @@
     </view>
 
   <!-- 已登录并且授权 -->
-    <view class="head-left" wx:elif="{{usrState == 3 || usrState == 4}}" >
+
+    <view class="head-left" bindtap='BindPhone' wx:if="{{usrState == 3 || usrState == 4}}" >
         <navigator url="../index/index">
           <image src="{{userInfo[0].headimgurl}}" alt="" class="tx" />
         </navigator>
-        <view class="head-info" bindtap='BindPhone'>
+        <view class="head-info">
             <navigator>
               <view class="name">{{userInfo[0].nickname}}</view>
               <!--  -->
@@ -43,7 +49,6 @@
             
             <view class="tel" wx:if="{{!mobile}}">未绑定手机号</view>
             <view class="tel"  wx:else>{{mobile}}</view>
-
         </view>
     </view>
 
@@ -60,11 +65,7 @@
             <view class="tel">未登录</view>
         </view>
     </view>
-
-
     </view>
-     
-    
 </view>
 
 
@@ -73,15 +74,14 @@
 <view class='accout'>
     <view class='accout_item' bindtap='toBalance'>
       <navigator hover-class="none">
-
         <text class='money' wx:if="{{usrState == 3}}">{{money == "0.00" ? "0.00" : money}}</text>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_wushuju.png' wx:if = "{{usrState == 0}}" class='sl'></image>
         <text class='m_text'>账户余额(元)</text>
       </navigator>
     </view>
-    <view class='accout_item' hover-class="none">
+    <view class='accout_item' hover-class="none" data-group="{{content.data.content.reward.bill_type_group}}" data-ids="{{content.data.content.reward.bill_type_ids}}" bindtap="Bill">
       <navigator>
-        <text class='money' wx:if="{{usrState == 3}}">{{points == "0.00" ? "0.00" : points}}</text>
+        <text class='money' wx:if="{{usrState == 3}}">{{content.data.content.reward.reward_total}}</text>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_wushuju.png' wx:if = "{{usrState == 0}}" class='sl'></image>
         <text class='m_text'>累计收益(元)</text>
       </navigator>
@@ -90,7 +90,7 @@
       <navigator>
         <text class='money' wx:if="{{usrState == 3}}">{{virtual_money == "0.00" ? "0.00" :virtual_money}}</text>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_wushuju.png' wx:if = "{{usrState == 0}}"    class='sl'></image>
-        <text class='m_text'>惠选豆(券)</text>
+        <text class='m_text'>{{Bean}}</text>
       </navigator>
     </view>
 </view>
@@ -143,18 +143,27 @@
     </view>
 </view>
 
+<!-- 分销 -->
+ <view class="order" bindtap='Dis' style='margin-bottom:16rpx!improtant;'  wx:if="{{usrState == 3 && mall_giveaway_log.is_show_giveaway == 1}}">
+        <view class="myOrder">我的分销</view>
+        <view class="icon">
+            <text class='all' wx:if="{{usrState == 3 && mall_giveaway_log.is_open_giveaway }}"  style='color:#999'>已开通</text> 
+            <text class='all' wx:if="{{usrState == 3 && !mall_giveaway_log.is_open_giveaway}}"  style='color:#FF0000'>未开通</text> 
 
+            <text class="iconfont icon-arrow"></text>
+        </view> 
+    </view>
+  <view class='black' wx:if="{{usrState == 3 && mall_giveaway_log.is_show_giveaway == 1}}" style='height:16rpx;background:#fafafa;'></view>
 <!-- 礼尚往来  One -->
 <view class='courtesy'>
-  <view class="courtesy_title" bindtap='Ronmoney'>
+  <view class="courtesy_title" wx:if="{{usrState == 3 && is_show == 1}}" bindtap='Ronmoney'>
   <view class="myCour">会员服务</view>
    <view class="icon">
             <image src='http://oss.myzy.com.cn/wechat/images/icon_sc_6.png'></image>
         </view> 
-        
     </view>
 
-    <view class='courtesy_cont One'>
+    <view wx:if="{{usrState == 3&& is_show == 1}}" class='courtesy_cont One'>
       <view class='sy' bindtap='navCour'>
           <navigator  hover-class="none">
           <image src='../../static/imgs/icon_sc_7.png'></image>
@@ -238,26 +247,41 @@
           </view>
           </navigator>
       </view> 
+
+       <view class='sy' bindtap='query' wx:if="{{!content.data.content.userinfo.bind_referee&&content}}">
+          <navigator  hover-class="none">
+          <image src='../../static/imgs/icon_wdym_guwen.png'></image>
+          <view class='sy_title'>
+          绑定顾问
+          </view>
+          </navigator>
+      </view> 
+
+      <block wx:if="{{content}}" wx:for="{{content.data.content.application}}" wx:key="{{index}}">
+      <view class='sy' bindtap='Steed' data-name="{{item.name}}"  data-types='{{item.jump}}' data-type="{{item.unique_name}}">
+          <navigator  hover-class="none">
+          <image src='{{item.image}}'></image>
+          <view class='sy_title'>
+          {{item.name}}
+          </view>
+          </navigator>
+      </view> 
+      </block>
      
-        <view class='sy' bindtap='aboutUs'>
+        <view class='sy' bindtap='aboutUs' >
           <navigator  hover-class="none">
           <image src='../../static/imgs/icon_wdym_gywm.png'></image>
           <view class='sy_title'>
           关于我们
           </view>
           <view class='small'>
-          惠选购
+          {{Tname}}
           </view>
           </navigator>
       </view> 
-      
+
     </view>
-
-
-
 </view>
-
-
 
    <!-- toast -->
    <import src="../../public/appToast/appToast.wxml"/>
@@ -272,7 +296,13 @@
             >
 
     <view class='modal-body'>
-        <view>客服电话400 8010 168</view>     
+        <view>{{telephone_tip}}</view>     
     </view>
 
 </dialog>
+
+<!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+</scroll-view>

@@ -1,4 +1,5 @@
 /* pages/Robmoney/Robmoney.wxss */
+@import "../../static/css/index.wxss";
 .container{
   margin-top: 140rpx;
 }

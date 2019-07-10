@@ -1,13 +1,14 @@
 <!-- 未开通 -->
 <block wx:if="{{member_mall}}">
 <!--pages/UserCenter/userCenter.wxml-->
-<view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>商家中心</view> 
-  </my-component>
+ <view class="wrapper">
+   <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">商家中心</view>
 </view>
 
+  
 <view style="margin-top:140rpx">
 <!-- 警告框 -->
 <view class='warn' wx:if="{{res.expire_time.expire_status == 1}}">
@@ -51,19 +52,19 @@
     <view class="navCont">
         <navigator hover-class="none"  class="item">
             <view class='num'>{{res.seller_total.click_rate}}</view>
-            <view>今日访客</view>
+            <view style='font-size:25rpx!important;'>今日访客</view>
         </navigator>
          <navigator  hover-class="none"  class="item" >
             <view class='num'>{{res.seller_total.order_total}}</view>
-            <view>今日订单</view>
+            <view style='font-size:25rpx!important;'>今日订单</view>
         </navigator>
         <navigator  hover-class="none" class="item">
            <view class='num'>{{res.seller_total.order_moeny}}</view>
-            <view>今日交易额</view>
+           <view style='font-size:25rpx!important;'>今日交易额</view>
         </navigator>
         <navigator  hover-class="none"  class="item">
             <view class='num'>{{res.seller_total.reward_money}}</view>
-            <view>今日佣金</view>
+            <view style='font-size:25rpx!important;'>今日佣金</view>
         </navigator>
         
     </view>
@@ -102,19 +103,19 @@
     <view class="navCont">
         <navigator hover-class="none"  class="item">
             <view class='num'>{{res.seller_order[0].total_num}}</view>
-            <view>待支付</view>
+            <view style='font-size:25rpx!important;'>待支付</view>
         </navigator>
         <navigator  hover-class="none"  class="item" >
             <view class='num'>{{res.seller_order[2].total_num}}</view>
-            <view>待发货</view>
+            <view style='font-size:25rpx!important;'>待发货</view>
         </navigator>
         <navigator  hover-class="none" class="item">
            <view class='num'>{{res.seller_order[6].total_num}}</view>
-            <view>已完成</view>
+           <view style='font-size:25rpx!important;'>已完成</view>
         </navigator>
         <navigator  hover-class="none"  class="item">
             <view class='num'>{{res.seller_order[5].total_num}}</view>
-            <view>待退款</view>
+            <view style='font-size:25rpx!important;'>待退款</view>
         </navigator>
         
     </view>
@@ -219,7 +220,7 @@
           
         </view>
 
-      <button bindtap='go'>立即开通</button>
+      <button bindtap='go'>立即入驻</button>
 
     </view>
 </view>
@@ -231,9 +232,7 @@
 </block>
 
 
-   <!-- toast -->
-   <import src="../../public/appToast/appToast.wxml"/>
-   <template is="toast" data="{{ ..._toast_ }}"/>
+  
 
 
    <!-- 选择支付方式 -->
@@ -303,5 +302,12 @@
   </view>
   </view>
   </view>
-
+  
+<!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
+       <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
    

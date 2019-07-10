@@ -28,7 +28,7 @@ Page({
     })
     this.giftGroupList(goods_type);
     this.toGiftGroupList(0, 0, goods_type, 1);
-    new app.ToastPannel();
+    new app.ToastPannels();
     
   },
 
@@ -108,6 +108,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -115,7 +116,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -124,15 +126,15 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })
   },
   //获取礼品列表分组信息
   giftGroupList(goods_type) {
+    this.setData({
+      isShow:true
+    })
     var that = this;
     this.header(app.globalData.url + 'giftGroupList');
     wx.request({
@@ -143,6 +145,9 @@ Page({
         goods_type: goods_type
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           that.setData({
             actionSheetItems: res.data.data,
@@ -156,6 +161,9 @@ Page({
   },
   //获取免费礼品信息
   toGiftGroupList(classify_id, member_group_id, goods_type, now_page) {
+    this.setData({
+      isShow:true
+    })
     var that = this;
     this.header(app.globalData.url + 'giftGoodsList');
     wx.request({
@@ -169,11 +177,12 @@ Page({
         now_page: now_page
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           var detail = res.data.data.goods_list;
           let date = Math.round(new Date().getTime() / 1000).toString();
-
-          console.log(res.data.data)
           for (var i = 0; i < detail.length; i++) {
             var s = detail[i]
             if (s.tomorrow_time) {
@@ -243,7 +252,7 @@ Page({
     let list = this.data.listData;
     // 
     if (list[type].sell_out_ratio == 1 ) {
-      this.show(list[type].sell_out_error)
+      this.shows(list[type].sell_out_error)
     } else{
       //跳转携参
       wx.navigateTo({

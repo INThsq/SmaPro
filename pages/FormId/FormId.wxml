@@ -1,0 +1,23 @@
+<!--pages/FormId/FormId.wxml-->
+ <form bindsubmit="templateSend" report-submit="true">
+      <button type='primary' formType="submit" size='mini'>发送模板消息</button>
+    </form>
+     <form bindsubmit="saveFormId" report-submit="true">
+      <button type='primary' formType="submit" size='mini'>发送模板消息</button>
+    </form>
+      <view class='account_number'>
+    <text>账号：</text>
+    <form bindsubmit="saveFormId" report-submit="{{true}}" class='form_class'>
+      <button formType="submit" class='form_button'>
+        <input bindinput='inputAccount' placeholder-style="color:#bbbbbb" placeholder='请输入账号'></input>
+      </button>
+    </form>
+  </view>
+  <view class='account_number'>
+    <text>密码：</text>
+    <form bindsubmit="saveFormId" report-submit="{{true}}" class='form_class'>
+      <button formType="submit" class='form_button'>
+        <input bindinput='inputPsw' password='{{true}}' placeholder-style="color:#bbbbbb" placeholder='请输入密码'></input>
+      </button>
+    </form>
+  </view>

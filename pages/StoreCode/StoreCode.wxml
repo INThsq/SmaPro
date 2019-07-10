@@ -1,0 +1,26 @@
+<!--pages/StoreCode/StoreCode.wxml-->
+<view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+  </view>
+  <view class="tetxs">门店二维码</view>
+</view>
+
+  <!-- 内容部分 -->
+  <view class="containers">
+    
+    <view class="card">
+        <view class="name"><text style='font-weight:bold'>门店名称：</text>{{callback.dot_name}}</view>
+        <view class="number"><text style='font-weight:bold'>门店编号：</text>{{callback.dot_num}}</view>
+        <view class="card_img">
+        <image src="{{callback.qr_code}}"></image>
+        </view>
+        <view class="sao">使用微信扫一扫获取提货信息</view>
+    </view>
+
+  </view>
+
+   <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>

@@ -1,0 +1,71 @@
+<!--pages/Query/Query.wxml-->
+<view>
+  <my-component>
+     <view>绑定顾问</view> 
+  </my-component>
+</view>   
+
+<!-- 内容部分 -->
+<view class='container' >
+  <view class='top'>
+    <!-- 搜索框 -->
+        <view class='search'>
+            <form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
+                  <input  confirm-type="search" placeholder-class='placeholder' placeholder='请输入绑定编号'  type="number" value="{{referee}}" class='topInput'  name='input' bindinput='keyword' bindconfirm="searchSubmitFn"/>
+                  <!-- <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_7.png' bindtap="ScanCode"  class='searches'></image> -->
+          </form>
+      </view>
+
+      <!-- 按钮 -->
+      <view class='top-btn'>
+          <view class='button' wx:if="{{referee!=''}}" bindtap='Query'>绑定顾问</view>
+          <view class='button'wx:else style="opacity:0.6;">绑定顾问</view>
+
+      </view>
+  </view>
+
+
+  <!-- 文字部分 -->
+  <view class='bottom'>
+      <view class='bot-title'>
+        <view class='block'></view>
+        <text>绑定流程</text>
+      </view>
+      <view class='bot-cont'>
+        <text>1、向推荐人获取二维码使用扫一扫或直接输入编号</text>
+        <text>2、编号核对，点击“绑定顾问”按钮即可</text>
+      </view>
+
+
+ <view class='bot-title' style='margin-top:20px'>
+        <view class='block'></view>
+        <text>温馨提示</text>
+      </view>
+      <view class='bot-cont'>
+        <text>一旦绑定顾问编号成功并且购买平台任何产品则永远无法变更，反之可任意变更顾问编号。</text>
+        <text>绑定成功可向您的顾问咨询官方最新动态/软件操作相关信息,每位用户只能绑定一位顾问，请仔细核对且认证考虑是否绑定此顾问编码，然后再确定绑定</text>
+      </view>
+</view>
+  </view>
+
+
+
+<!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+
+  <!-- 自定义模态框 -->
+  <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+
+    <view class='modal-body'>
+        <view>您确定绑定当前顾问编号吗？</view>     
+    </view>
+
+</dialog>
+

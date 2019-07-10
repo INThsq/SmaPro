@@ -1,0 +1,46 @@
+/* pages/ZtApply/Apply.wxss */
+@import "../Address_es/Address_es";
+@import "../Confirm/Confirm.wxss";
+@import "../../static/css/index.wxss";
+textarea{
+  color:#999!important;
+}
+.name{
+  margin-top: 16rpx!important;
+}
+.item:nth-of-type(3) text{
+  margin-right:56rpx!important;
+}
+.item:nth-of-type(4) text{
+  margin-right:0!important;
+}
+.choose{
+  display: flex;
+  width:34rpx;
+  height: 42rpx;
+  position: absolute;
+  right:30rpx;
+}
+.item{
+  align-items: center;
+  position: relative;
+}
+.red{
+  color:#F43736;
+}
+textarea{
+  color: #333;
+}
+.Yj{
+  margin-top: 16rpx;
+  border-bottom:none!important;
+}
+.Yj text{
+  margin-right: 0!important;
+}
+.placeholderStyle{
+  color: #999!important;
+}
+textarea,.remarks{
+  color: #333!important;
+}

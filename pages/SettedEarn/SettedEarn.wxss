@@ -93,7 +93,7 @@
   height: 24rpx;
   position: absolute;
   right:62%;
-  top:25%;
+  top:22%;
 }
 .swiper-tab{
     background: white;
@@ -108,7 +108,7 @@
     border-radius: 5px;
 }
 .swiper-tab-item{
-    width: 30%; 
+    width:25%; 
     color:#FF4A47;
     border-right: 1px solid #FF4A47;
 }

@@ -74,7 +74,7 @@
           
         </view>
 
-      <button bindtap='go'>立即开通</button>
+      <button bindtap='go'>立即入驻</button>
 
     </view>
 </view>

@@ -1,0 +1,83 @@
+/* pages/StoreCode/StoreCode.wxss */
+@import '../../public/compback/compback.wxss';
+.containers{
+    height:calc(100vh - 141rpx);
+    background:rgba(0,0,0,1)!important;
+    opacity:0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 141rpx;
+}
+.show{
+  display: block!important;
+}
+.bth_image2{
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 40rpx;
+  vertical-align: middle;
+  animation: xuanuan 2s linear infinite;
+}
+.load{
+  width:470rpx;
+  height: 144rpx;
+  background:rgba(53,53,53,.7);
+  border-radius: 6px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left:-235rpx;
+  margin-top: -77rpx;
+  padding: 40rpx; 
+  display: none;
+  box-sizing: border-box;
+  color: #f3f3f3;
+  font-size: 33.3rpx;
+  z-index:3000;
+}
+@keyframes xuanuan{
+  0%{
+    transform: rotate(0)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
+}
+.wrapper{
+    background:rgba(0,0,0,1);
+    opacity:0.8;
+    color: #fff!important;
+}
+
+.card{
+    width:646rpx;
+    height:890rpx;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    padding:68rpx 68rpx 34rpx 68rpx;
+    box-sizing: border-box;
+}
+.card_img{
+    display: flex;
+    justify-content: center;
+    margin-top: 38rpx;
+}
+.card_img image{
+  border:1px solid #f3f3f3;
+  width: 500rpx!important;
+  height: 500rpx!important;
+}
+.card view{
+    line-height:24px;
+    font-size: 33.3rpx;
+    margin-bottom: 16rpx;
+}
+.sao{
+    font-size: 29.17rpx;
+    line-height: 20px;
+    margin-top:36rpx;
+    display:flex;
+    justify-content: center;
+}

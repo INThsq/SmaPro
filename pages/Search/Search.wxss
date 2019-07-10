@@ -3,6 +3,9 @@
 .container{
   margin-top: 142rpx;
 }
+page{
+  overflow-y:inherit!important;
+}
 .search,.historyContent{
   padding: 0 30rpx;
   box-sizing: border-box;
@@ -31,7 +34,16 @@
   position: absolute!important;
   right:48rpx!important;
   top:14rpx!important;
-  z-index: 999!important
+  z-index: 99999!important
+}
+.dels{
+  width:30px;
+  background:transparent;
+  position: absolute;
+  height: 30px;
+  right:48rpx;
+  top:0;
+  z-index: 999;
 }
 .cont{
   background: white;

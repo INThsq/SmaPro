@@ -1,11 +1,8 @@
-/* pages/OpenShop/OpenShop.wxss */
-@import  "../Confirm/Confirm.wxss";
-
+/* @import  "../Confirm/Confirm.wxss"; */
 .container{
-
   margin-top: 140rpx;
 }
-.commodity_screen {
+ .commodity_screen {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -16,7 +13,7 @@
   overflow: hidden;
   z-index: 1000;
   color: #fff;
-}
+} 
 .item{
   height: 48px;
   background: white;
@@ -50,70 +47,13 @@ action-sheet{
   padding: 20rpx 30rpx;
   box-sizing: border-box;
 }
-.nyz_area_view{
-  width: 100%;
-  position: fixed;
-  bottom:0px;
-  left: 0px;
-  background-color: #fff;
-  z-index: 21;
-}
-
-.nyz_area_pick_view{
-  height:200px;
-  width: 100%;
-}
-
-.nyz_area_colum_view{
-  line-height: 35px;
-  text-align: center;
-  font-size: 29.17rpx;
-  color:#333;
-}
-
 .hide{
   display: none;
 }
-
 .show{
   display: block;
 }
 
-.nyz_area_view_btns{
-  background-color: #fff;
-  border-bottom: 1px solid #eeeeee;
-  font-size: 30rpx;
-  padding:24rpx 0rpx;
-}
-
-.nyz_area_view_btns>text{
-  display: inline-block;
-  word-spacing: 4rpx;
-  letter-spacing: 4rpx;
-}
-
-.nyz_area_view_btn_cancle{
-  color: #939393;
-  padding-right: 20rpx;
-  padding-left: 25rpx;
-}
-
-.nyz_area_view_btn_sure{
-  float: right;
-  padding-left: 20rpx;
-  padding-right: 25rpx;
-  color: #FF2742;
-}
-
-.nyz_area_mask{
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(8, 8, 8, 0.8);
-  position: absolute;
-  top: 0rpx;
-  left: 0rpx;
-  z-index: 20;
-}
 input{
   width:400rpx;
   height:100%; 
@@ -278,6 +218,117 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   z-index: 1000;
   color: #fff;
 }
+/*对话框 */
+.commodity_attr_box {
+  height:722rpx;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: #fff;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+
+/* commodity_screen */
+.titles{
+  padding: 20rpx 0 22rpx;
+  border-bottom: 1px solid #F3F3F3;
+}
+.way-title{
+  font-size:29.17rpx;
+  color: #333;
+  line-height: 20px;
+  padding: 24rpx 0;
+}
+.way-list{
+  display: flex;
+  padding: 36rpx 0 26rpx;
+  border-bottom: 1px solid #F3F3F3;
+}
+.way-list image{
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.way-left image{
+width:40rpx;
+  height:40rpx;
+  margin-right: 30rpx;
+  display:inline-block;
+  line-height: 40rpx;
+  margin-top: 10rpx;
+}
+
+.way-text{
+  margin-top: -14rpx;
+}
+.way-texts text{
+  color:#999!important;
+}
+.way-text text{
+  display: block;
+  margin-left: 30rpx;
+}
+.way-text text:first-child{
+  color: #333;
+  font-size: 29.17rpx;
+}
+.way-text text:last-child{
+  color: #999;
+  font-size: 29.17rpx;
+  line-height: 20px;
+  margin-top: 8rpx;
+}
+.way-pay .w{
+  font-size:25rpx!important;
+
+}
+.titles{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.titles image{
+  position: absolute;
+  top:30rpx;
+  left:0;
+}
+.titles text{
+  font-size: 29.17rpx;
+  font-weight: bold;
+}
+.way-pay{
+  padding-top:80rpx;
+  box-sizing: border-box;
+  text-align: center;
+}
+.pay-btn{
+  height: 42px;
+  color: white;
+  background:#F43736;
+border-radius:4px;
+font-size: 33.3rpx;
+line-height: 42px;
+
+}
+.pay{
+position:absolute;
+bottom:30rpx;
+width: 100%;
+box-sizing: border-box;
+left: 0;
+padding: 0 30rpx;
+}
+.way{
+  height:600rpx;
+}
+button::after{
+  border: none;
+}
 
 /**index.wxss**/
 .userinfo {
@@ -334,4 +385,70 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   100%{
     transform: rotate(360deg)
   }
+}
+
+/* common/nyz_area_picker/nyz_area_picker.wxss */
+.nyz_area_view{
+  width: 100%;
+  position: fixed;
+  bottom:0px;
+  left: 0px;
+  background-color: #fff;
+  z-index: 21;
+}
+
+.nyz_area_pick_view{
+  height: 180px;
+  width: 100%;
+}
+
+.nyz_area_colum_view{
+  line-height: 35px;
+  text-align: center;
+  font-size: 28rpx;
+}
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: block;
+}
+
+.nyz_area_view_btns{
+  background-color: #fff;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 30rpx;
+  padding: 18rpx 0rpx;
+}
+
+.nyz_area_view_btns>text{
+  display: inline-block;
+  word-spacing: 4rpx;
+  letter-spacing: 4rpx;
+}
+
+.nyz_area_view_btn_cancle{
+  color: #939393;
+  padding-right: 20rpx;
+  padding-left: 25rpx;
+}
+
+.nyz_area_view_btn_sure{
+  float: right;
+  padding-left: 20rpx;
+  padding-right: 25rpx;
+  color:#FF2742;
+
+}
+
+.nyz_area_mask{
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(8, 8, 8, 0.8);
+  position: absolute;
+  top: 0rpx;
+  left: 0rpx;
+  z-index: 20;
 }

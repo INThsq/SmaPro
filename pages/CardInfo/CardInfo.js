@@ -121,11 +121,6 @@ Page({
     })
     this.header(app.globalData.url + 'checkBank')
     let header = this.data.header;
-    let cookie = getApp().cookie;
-    console.log(cookie)
-    if (cookie) {
-      header.Cookie = cookie;
-    }
     wx.request({
       url: app.globalData.url + 'checkBank',
       method: 'GET',
@@ -135,8 +130,7 @@ Page({
       },
       success: res => {
         this.setData({
-          isShow:false,
-          cookie: res.header['Set-Cookie']
+          isShow:false
         })
         if (res.data.code == 200) {
             this.setData({
@@ -155,10 +149,6 @@ Page({
   bindBank(realname, bank_card, mobile, id_card){
     this.header(app.globalData.url + 'bindBank');
     let header = this.data.header;
-    let cookie = this.data.cookie;
-    if(cookie){
-      header.Cookie = cookie;
-    }
     this.setData({
       ['header.content-type']: 'application/x-www-form-urlencoded',
     })
@@ -175,7 +165,7 @@ Page({
       success:res=>{
         if(res.data.code == 200){
           wx.navigateTo({
-            url: '../CardSucc/CardSucc',
+            url: '../CardSucc/CardSucc?type=1',
           })
         }else{
           this.shows(res.data.msg)
@@ -268,6 +258,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -275,7 +266,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

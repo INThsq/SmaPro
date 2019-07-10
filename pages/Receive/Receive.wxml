@@ -1,0 +1,27 @@
+<!--pages/Receive/Receive.wxml-->
+<view>
+  <my-component>
+     <view>领取码管理</view> 
+  </my-component>
+</view>   
+
+
+<!-- 内容部分 -->
+<view class='container'>
+  <view class='top'>
+    <!-- 搜索框 -->
+        <view class='search'>
+            <form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
+                  <input confirm-type="search" placeholder-class='placeholder' placeholder='请输入领取换码'  type="search" value="{{searchValue}}" class='topInput' name='input' bindinput='keyword' bindconfirm="searchSubmitFn"/>
+                  <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_7.png' bindtap="ScanCode"  class='searches'></image>
+          </form>
+      </view>
+
+      <!-- 按钮 -->
+      <view class='top-btn'>
+          <view class='button'>领取查询</view>
+      </view>
+  </view>
+
+</view>
+

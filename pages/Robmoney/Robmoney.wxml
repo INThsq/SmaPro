@@ -18,7 +18,7 @@
         如何免费赠送挣佣金
         <!-- <image src='http://oss.myzy.com.cn/wechat/images/icon_ttqq_guizes.png'></image> -->
         </view>
-        <view class='guize'>活动规则</view>
+        <!-- <view class='guize'>活动规则</view> -->
         <!-- 内容 -->
         <view class='top-conts'>
             <view class='item'>
@@ -115,5 +115,10 @@
 </action-sheet>
 
   <!-- toast -->
-  <import src="../../public/appToast/appToast.wxml"/>
-  <template is="toast" data="{{ ..._toast_ }}"/>
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+
+   <!-- load -->
+ <view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>

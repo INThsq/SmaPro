@@ -13,6 +13,7 @@ Page({
    */
   onLoad: function (options) {
       let h5 = options.h5;
+      console.log(options)
       this.setData({
         h5:h5
       })

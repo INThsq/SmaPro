@@ -1,4 +1,13 @@
 /* pages/UserCenter/userCenter.wxss */
+@import "../../static/css/index.wxss";
+
+view{
+  font-family:"SourceHanSansSC-Regular";
+}
+ page{
+  top:-1px;
+}
+/* pages/UserCenter/userCenter.wxss */
 view{
   font-family:"SourceHanSansSC-Regular";
 }
@@ -14,7 +23,6 @@ view{
 .order-item{
     background:#fff;
     margin-bottom: 16rpx;
-    
 }
   .order,.courtesy_title{
       display:flex;
@@ -24,7 +32,6 @@ view{
       box-sizing: border-box;
       line-height:85.5rpx;
       position: relative;
-      /* border-bottom:.5px solid #F3F3F3; */
   }
  .order::after,.courtesy_title::after{
  position: absolute; 
@@ -164,7 +171,7 @@ navigator{
 .arrwo{
   /* height: 24rpx; */
   position: absolute;
-  bottom:-11rpx;
+  bottom:-10rpx;
   left: 0;
   width: 100%;
   z-index: 999;
@@ -214,7 +221,7 @@ navigator{
 .navCont{
   padding: 0 10px 10rpx;
 }
-.Two .sy:nth-child(4){
+.Two .sy:nth-child(4n){
   margin-right: 0;
   
 }
@@ -405,4 +412,7 @@ margin-left: 30rpx;
     margin-bottom:30rpx!important;
     padding-top:16rpx;
 
+}
+.sy:nth-child(8){
+  margin-right: 0!important;
 }

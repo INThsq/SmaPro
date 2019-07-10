@@ -1,10 +1,12 @@
 <!--pages/BankCard/BankCard.wxml-->
-<view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>银行卡</view> 
-  </my-component>
+
+<view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs" >银行卡</view>
 </view>
+
 
 <!-- 内容区域 -->
 <view class='container'>
@@ -17,7 +19,7 @@
 
   <!-- 列表 -->
   <view class='cards'  wx:else>
-      <view class='list' wx:for="{{bankList}}">
+      <view class='list' wx:for="{{bankList}}" wx:key="index"> 
         <image class='list_img' src='{{item.bank_backdrop}}'></image>
         <view class='list_cont'>
         <image src='{{item.bank_icon}}'></image>

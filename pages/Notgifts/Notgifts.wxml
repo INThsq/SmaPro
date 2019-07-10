@@ -1,101 +1,190 @@
 <!-- 引用组件的页面模版 -->
-<view>
-  <my-component>
-    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
-     <view>未领礼物</view> 
-  </my-component>
+<view class="wrapper">
+  <view class='back' bindtap='{{tab==1?"backs":"back"}}'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs" wx:if="{{gift_praise_type == 0}}">未领礼物</view>
+  <view class="tetxs" wx:else>赠送礼品</view>
+</view>
+
+<!-- 选项卡  用户  0时-->
+<view wx:if="{{gift_praise_type == 0}}">
+<view class='tab' >
+    <view class="swiper-tab">
+     <view class="swiper-tab-item {{currentTab==0?'active':''}}"   data-current="0" data-id="-1" bindtap="clickTab">全部</view>
+     <view class="swiper-tab-item {{currentTab==1?'active':''}}"   data-current="1" data-id="0" bindtap="clickTab">待领取</view>
+     <view class="swiper-tab-item {{currentTab==2?'active':''}}"   data-current="2" data-id="1" bindtap="clickTab">已领取</view>
+     <view class="swiper-tab-item {{currentTab==3?'active':''}}"   data-current="3" data-id="2" bindtap="clickTab">已投诉</view>
+</view>
 </view>
 
 
-<!-- 订单主体 -->
-    <view class="order-info" style='margin-top:154rpx;'>
+ <view class='order-conts'  wx:if ="{{gift_praise_list.length == 0}}">
+          <view class='noW' >
+              <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+              <text>抱歉，暂无数据</text>
+  </view>
+  </view>
+
+ <view class='order-conts'>
+
+<!-- 订单主体 --> 
+    <view class="order-info"  wx:if="{{gift_praise_type == 0}}" style='margin-top:128rpx;'>
+    <block wx:for="{{gift_praise_list}}" wx:key="index">
     <view class='order-lists'>
       <view class="order-list">
         <view class="order-num">
         <view class='touxiang'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>fanyuxi官方店</text>
+          <image src='{{item.member_mall.logo}}'></image>
+          <text>{{item.member_mall.name}}</text>
         </view>
         <view class='wait'>
-        礼品
+        <block wx:if="{{item.praise_status == 0}}">待领取</block>
+        <block wx:if="{{item.praise_status == 1}}">已领取</block>
+        <block wx:if="{{item.praise_status == 2}}">已投诉</block>
         </view>
         </view>
         <view class="order-con">
-          <image src="../../static/imgs/goods3.png"></image>
+          <image src="{{item.image}}"></image>
           <view>
-            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-            <text class="size">颜色:白色,尺码:XL</text>
-            <text class="price">￥888</text>
+            <view class="name">{{item.title}}</view>
+            <view class="price"><text style='font-size:10px;'>￥</text>{{item.price}} X {{item.buy_num}}</view>
           </view>
         </view>
         <view class='order-fans'>
           <view  class='names'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>
-          INT(直属粉丝邀请)
-          </text>
+          <image src='{{item.member_oauth.headimgurl}}' style='margin-right:26rpx;'></image>{{item.member_oauth.nickname}}{{item.perfect}}
           </view>
           <view class='sf'>
-            免费领取
-            <text class='out'>(免运费)</text>
+            <text class='out' style='font-size:29.17rpx;color:#1E8713;font-weight:bold;'>免费领取</text>
           </view>
         </view>
       </view>
          <view class='btn'>
-            <button class='canel'>礼物变现</button>
-            <button class='pay'>填写收货地址</button>
+          <block wx:if="{{item.praise_status == 0}}">
+          <button class='canel' data-id="{{gift_praise_type}}" data-index="{{index}}" data-statu="{{item.praise_status}}" data-dot=""  data-order="{{item.order_num}}" bindtap="NoRec">未领取投诉</button>
+          </block>
+        <block wx:if="{{item.praise_status == 1}}">
+        <button class='canel' bindtap='Voucher' data-id="{{gift_praise_type}}" data-index="{{index}}" data-statu="{{item.praise_status}}" data-dot=""  data-order="{{item.order_num}}">提货凭证</button>
+        </block>
+        <block wx:if="{{item.praise_status == 2}}">
+        <button class='canel' bindtap="Revoke" data-statu="{{item.praise_status}}" data-index="{{index}}" data-go="1" data-order="{{item.order_num}}" data-id="{{gift_praise_type}}">撤销投诉</button>
+           </block>
           </view>
+          
     </view>
+    </block>
+    </view>
+    </view>  
+</view>
 
 
+
+
+
+
+
+<!-- 分销者 -->
+<view wx:if="{{gift_praise_type == 1}}">
+<view class='tab' >
+    <view class="swiper-tab">
+     <view class="swiper-tab-item {{currentTabs==0?'active':''}}" data-id="-1"  data-currents="0" bindtap="clickTabs">全部</view>
+     <view class="swiper-tab-item {{currentTabs==1?'active':''}}" data-id="0"   data-currents="1" bindtap="clickTabs">已赠送</view>
+     <view class="swiper-tab-item {{currentTabs==2?'active':''}}" data-id="1"   data-currents="2" bindtap="clickTabs">凭证已上传</view>
+     <view class="swiper-tab-item {{currentTabs==3?'active':''}}" data-id="2"   data-currents="3" bindtap="clickTabs">投诉中</view>
+
+</view>
+</view>
+
+ <view class='order-conts' style='margin-top:0!important'>
+          <view class='noW' wx:if ="{{gift_praise_list.length == 0}}">
+              <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+              <text>抱歉，暂无数据</text>
+  </view>
+
+<!-- 订单主体 -->
+    <view class="order-info" wx: style='margin-top:128rpx;'>
+    <block wx:for="{{gift_praise_list}}" wx:key="index">
     <view class='order-lists'>
       <view class="order-list">
         <view class="order-num">
         <view class='touxiang'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>fanyuxi官方店</text>
+          <image src='{{item.member_mall.logo}}'></image>
+          <text>{{item.member_mall.name}}</text>
         </view>
-        <view class='wait'>
-        礼品
+        <view class='wait' style="color:#FC0C16!important">
+        <block wx:if="{{item.praise_status == 0}}" style="color:#FC0C16!important">佣金{{item.reward_money}}元<block wx:if="{{currentTabs==0}}">(已赠送)</block></block>
+        <block wx:if="{{item.praise_status == 1}}" style="color:#FC0C16!important">佣金{{item.reward_money}}元<block wx:if="{{currentTabs==0}}">(凭证已上传)</block></block>
+        <block wx:if="{{item.praise_status == 2}}" style="color:#FC0C16!important">佣金{{item.reward_money}}元<block wx:if="{{currentTabs==0}}">(投诉中)</block></block>
         </view>
         </view>
         <view class="order-con">
-          <image src="../../static/imgs/goods3.png"></image>
+          <image src="{{item.image}}"></image>
           <view>
-            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-            <text class="size">颜色:白色,尺码:XL</text>
-            <text class="price">￥888</text>
+            <view class="name">{{item.title}}</view>
+            <!-- <text class="size">颜色:白色,尺码:XL</text> -->
+            <view class="price"><text style='font-size:10px;'>￥</text>{{item.price}} X {{item.buy_num}}</view>
           </view>
         </view>
         <view class='order-fans'>
           <view  class='names'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>
-          INT(直属粉丝)
-          </text>
+          <image src='{{item.member_oauth.headimgurl}}' style='margin-right:26rpx;'></image>{{item.member_oauth.nickname}}{{item.perfect}}
           </view>
           <view class='sf'>
-            免费领取
-            <text class='out'>(免运费)</text>
+            <text class='out' style='font-size:29.17rpx;font-weight:bold;'>免费领取</text>
           </view>
         </view>
       </view>
-      <view class='btn'>
-            <button class='canel'>礼物变现</button>
-            <button class='pay'>填写收货地址</button>
+         <view class='btn'>
+          <block wx:if="{{item.praise_status == 0}}">
+          <button class='canel' data-id="{{gift_praise_type}}" data-statu="{{item.praise_status}}"   data-order="{{item.order_num}}"  bindtap="Upload">上传核销</button>
+          </block>
+        <block wx:if="{{item.praise_status == 1}}">
+         <button class='canel' bindtap='Voucher' data-id="{{gift_praise_type}}" data-statu="{{item.praise_status}}" data-dot="{{item.dot_num}}"  data-order="{{item.order_num}}">提货凭证</button>
+        </block>
+        <block wx:if="{{item.praise_status == 2}}">
+        <button class='canel'>等待撤销</button>
+           </block>
           </view>
-      </view>
-      </view>
-     
+          
+    </view>
+    </block>
+    </view>
+    </view>  
+</view>
 
-  <button class='btn recharge' bindtap='deposit'>提现</button>
+ <!-- 弹出窗 -->
+ <!-- 自定义模态框  取消订单-->
+ <dialog id="modal"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="_cancelEvent"  
+            bind:confirmEvent="_confirmEventFirst" 
+            >
+    <view class='modal-body'>
+        <text>您确定未领取吗？</text>
+    </view>
+</dialog>
 
-  <button class='btn recharge' bindtap='deposit'>提现</button>
+ <!-- 自定义模态框  确认收货-->
+  <dialog id="modals"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认"
+            bind:cancelEvent="cancel"  
+            bind:confirmEvent="confirm">
+    <view class='modal-body'>
+        <view>您确定撤销投诉吗？</view>     
+    </view>
+</dialog> 
 
-<button class='btn recharge' bindtap='deposit'>提现</button>
+<!-- 提示框 -->
+<import src="../../public/appToasts/appToasts.wxml"/>
+<template is="toasts" data="{{ ..._toast_ }}"/>
 
-
-
-
-
+<!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
 

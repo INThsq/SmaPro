@@ -1,4 +1,6 @@
 /* pages/CerSuc/CerSuc.wxss */
+@import '../../public/compback/compback.wxss';
+
 .container{
   margin-top: 144rpx;
   padding: 0 78rpx 0 96rpx;

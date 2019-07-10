@@ -1,11 +1,11 @@
 <!--pages/RobDeatail/RobDeatail.wxml-->
-<view class='container'>
+<view class='container' style='padding-bottom:0!important;'>
     <!-- 轮播图 -->
 <view class='swipercontent'>
-    <swiper class='swiper' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
+    <swiper class='swiper' autoplay="{{autoplay}}" interval="3000" duration="{{duration}}" current="{{swiperCurrent}}" bindchange="swiperChange">
       <block wx:for="{{imgUrls}}" wx:key="unique">
         <swiper-item>
-          <image src="{{item}}" class="slide-image" width="355" height="150"/>
+          <image src="{{item}}" class="slide-image fade_in " width="355" height="150"/>
         </swiper-item>
       </block>
     </swiper>
@@ -17,10 +17,10 @@
     </view>
   </view>
 
-<!-- 标题 -->
+
+
 <view class="title">
     <view class="left">
-        <text class='circle'>自营</text>
        {{detail.goods_details.title}}
     </view>
     <view class="right" bindtap='detail' data-id="{{detail.goods_details.goods_id}}">
@@ -30,6 +30,7 @@
 </view> 
 
 <!-- 免费赠送 -->
+
 <view class='free'>
 {{detail.goods_details.sell_out_tips}}
 </view>
@@ -53,46 +54,40 @@
 
 <!-- 正在赠送 -->
 <view class='presented'>
-  <image src='http://oss.myzy.com.cn/wechat/images/icon_xq_ren.png'></image>
-  {{detail.give_count_list.length}}人正在赠送
+  <image src='http://oss.myzy.com.cn/wechat/images/icon_xq_ren.png'></image>{{detail.give_count_title}}
 </view>
 
-<!-- 生成海报 -->
-<view class='poster'>
-    生成海报
-</view>
-
-<!-- 赠送列表 -->
-<!-- <view class='presented-list'> -->
- <!--  -->
-  <!-- <view class='list' id='list' animation="{{animationData}}">
-    <view wx:for="{{give_count_list}}" wx:key="{{index}}">
-        <view class='lists'>
-      <view class='list-left'>
-        <image src='{{item.headimgurl}}'></image>
-        <text>{{item.nickname}}</text>
-      </view>
-      <view class='list-right'>
-        已送出
-        <text class='span'>{{item.order_count}}</text> 件
-      </view>
-    </view>
-    </view>
+<view style='position:relative' data-id="{{detail.goods_details.goods_id}}" catchtap='goOpen' wx:if="{{give_count_list.length<3}}">
+ 
+  <!-- 
+    presented-list的高度 = swiper-item高度 *（ 需要显示的个数 + 1 ）
+    next-margin大小 = swiper-item高度 * 需要显示的个数
+  -->
+  <view class='list' id='list' >
+    <block wx:for="{{give_count_list}}">
+      <view class='lists' style="height:94rpx!important">
+           <view class='list-left'>
+            <image src='{{item.headimgurl}}'></image>
+            <text>{{item.nickname}}</text>
+          </view>
+          <view class='list-right'>
+            已送出
+            <text class='span'>{{item.order_count}}</text> 件
+          </view>
+        </view>
+    </block>
     <view>
     </view>
-    </view> -->
-  <!-- </view> -->
+  </view>
+</view>
 
 
-<!--pages/test2/test2.wxml-->
-
-<view style='position:relative' data-id="{{detail.goods_details.goods_id}}" catchtap='goOpen'>
+<view style='position:relative' data-id="{{detail.goods_details.goods_id}}" catchtap='goOpen' wx:if="{{give_count_list.length>=3}}">
     <cover-view class="controls"></cover-view>
-    <swiper class='presented-list' 
-      vertical="true" 
-      intervals="1000"
-      current="{{control.current}}"
-      next-margin="90rpx"
+    <swiper class='presented-list'  easing-function	="linear"
+      vertical="true"
+      current=""
+      next-margin="200rpx"
       circular="true"
       autoplay='false'
       >
@@ -101,7 +96,7 @@
         next-margin大小 = swiper-item高度 * 需要显示的个数
       -->
       <view class='list' id='list' >
-        <block wx:for="{{give_count_list}}">
+        <block wx:for="{{give_count_list}}" wx:key="index">
           <swiper-item class='lists'>
                <view class='list-left'>
                 <image src='{{item.headimgurl}}'></image>
@@ -120,7 +115,7 @@
   </view>
 
 <!-- 留白 -->
-<view class='banck'>
+<view class='banck'  wx:if ="{{content&&detail.gift_goods_list.length>0}}">
 </view>
 
 <!-- 免费商品 -->
@@ -132,7 +127,6 @@
   <view class='free-hit'>
   {{detail.give_gift_tips}}
   </view>
-  <!-- 列表 -->
   <!-- 列表 -->
 <view class='list-conts'>
     <!-- 已售完状态 -->
@@ -162,8 +156,7 @@
             <text class="{{item.sell_out_ratio==1?'wz greys':'wz'}}">距离下场:</text>
             <text class='hours'>{{item.hh}}</text> :
             <text class='min'>{{item.mm}}</text> :
-            <text class='second'>{{item.ss}}</text> :
-            <text class='second'>{{item.ms}}</text> 
+            <text class='second'>{{item.ss}}</text>
 
           </view>
         </view>
@@ -194,5 +187,10 @@
     </button>
 </view>
   <!-- toast -->
-  <import src="../../public/appToast/appToast.wxml"/>
- <template is="toast" data="{{ ..._toast_ }}"/>
+  <import src="../../public/appToasts/appToasts.wxml"/>
+ <template is="toasts" data="{{ ..._toast_ }}"/>
+
+  <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+</view>

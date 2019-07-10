@@ -16,6 +16,10 @@ Page({
    */
   onLoad: function (options) {
     this.authRealnameInfo();
+    let type = options.type;
+    this.setData({
+      type:type
+    })
   },
 
   /**
@@ -52,6 +56,18 @@ Page({
         }
       }
     })
+  },
+  back(){
+    let type = this.data.type;
+      if(type == 1){
+        wx.switchTab({
+          url: '../UserCenter/userCenter',
+        })
+      }else{
+        wx.navigateBack({
+          delta:1
+        })
+      }
   },
   /**
    * 生命周期函数--监听页面卸载
@@ -109,6 +125,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -116,7 +133,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -128,7 +146,8 @@ Page({
     this.setData({
       header: header
     })
-  },
+  },    
+
   /**
    * 用户点击右上角分享
    */

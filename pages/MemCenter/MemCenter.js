@@ -15,11 +15,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     this.getMemberGroup();
     let content = wx.getStorageSync('userInfo');
-    let name = content.userInfo.nickName;
+    if(content){
+      let name = content.userInfo.nickName;
+      this.setData({
+        name:name
+      })
+    }
     this.setData({
-      name:name
+      Tname: app.globalData.Tname
     })
   },
   // 返回上一页
@@ -108,6 +114,8 @@ Page({
       header: this.data.header,
       method: 'get',
       success:res=>{
+        if(res.data.data.callback.member_group){
+
         let list = res.data.data.callback.member_group;
         for (var x in list) {
           if (list[x].is_current == 1){
@@ -121,7 +129,10 @@ Page({
         })
         list.splice(0,1);
         this.setData({
-          list:list,
+          list:list
+        })
+        }
+        this.setData({
           callback:res.data.data.callback
         })
       }

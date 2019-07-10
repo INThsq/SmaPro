@@ -11,13 +11,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    new app.ToastPannel();
+    new app.ToastPannels();
   },
   Apply(){
-    this.show('申请售后成功  跳转待支付列表');
+    this.shows('申请售后成功  跳转待支付列表');
     wx.navigateTo({
       url: '../Order/Order?state=1',
     })
+    app.tz =1;
   },
   back(){
       wx.navigateTo({

@@ -1,6 +1,9 @@
 // pages/Near/Near.js
 var app = getApp();
+var util = require('../../utils/md5.js');
+var utils = require('../../utils/util.js'); 
 var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
+let key = getApp().key;
 var qqmapsdk = new QQMapWX({
   key: '4IOBZ-P77KI-DFEG5-5JCRB-FTFGQ-RAFIY' // 必填
 });
@@ -13,34 +16,68 @@ Page({
         latitude:'',
         longitude:'',
         del:true,
-
+        pro:true,
+        isShow:true,
+        before:true,
+        region_city:'定位中 ...',
+        
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getUserLocation();
-    new app.ToastPannel();
-    // wx.showModal({
-    //   content:'您所在的城市北京暂无消息'
-    // })
-  },    
-
+    new app.ToastPannels();
+    this.getLocation();
+    this.switchLocale();
+  },
+  back(){
+    let jjb = getApp().jjb;
+    if(jjb==1){
+      wx.switchTab({
+        url: '../index/index',
+      })
+      app.jjb=0
+    }else{
+      wx.navigateBack({
+        delta:1
+      })
+    }
+  } ,   
+  //选择地址显示
+  ChooseProvince(){
+    this.setData({
+      pro:false
+    })
+  },
+  //关闭模态框
+  CloseModal(){
+    this.setData({
+      pro:true
+    })
+  },
   //获取input 内值
   keyword(e) {
     let val = e.detail.value;
     if (val.length > 0) {
       this.setData({
         del: false,
+        
         searchValue:val
       })
     } else {
       this.setData({
         del: true,
+        searchValue:''
       })
     }
     if (val.length > 12) {
       this.show('您输入的内容太长,建议在20字以内哦~')
+    }else if(val.length == 0){
+      let region_id = this.data.region_id;
+      let region_city = this.data.region_city;
+      let lnglat = this.data.lnglat;
+      this.mallDotList(region_id, region_city, lnglat, 1, '')
+
     }
   },
   //删除
@@ -49,6 +86,10 @@ Page({
         searchValue:'',
         del:true
       })
+    let region_id = this.data.region_id;
+    let region_city = this.data.region_city;
+    let lnglat = this.data.lnglat;
+    this.mallDotList(region_id, region_city, lnglat, 1, '')
   },
   //选择位置位置
   chooseLocation: function (e) {
@@ -72,14 +113,14 @@ Page({
       }
     })
   },
-  calling(){
+  calling(e){
+		let phone =e.currentTarget.dataset.tel;
     wx.makePhoneCall({
-      phoneNumber: '11322222', //此号码并非真实电话号码，仅用于测试
+      phoneNumber:phone, //此号码并非真实电话号码，仅用于测试
       success: function () {
         console.log("拨打电话成功！")
       },
       fail: function () {
-        console.log("拨打电话失败！")
       }
     })
   },
@@ -89,13 +130,7 @@ Page({
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-   
-  },
+ 
   //位置授权
   getUserLocation(){
     wx.getSetting({
@@ -139,81 +174,294 @@ Page({
           })
         } else if (res.authSetting['scope.userLocation'] == undefined) {
           //调用wx.getLocation的API
+          this.getUserLocation();
         }
         else {
           this.getLocation();
           //调用wx.getLocation的API
+          this.getUserLocation();
         }
       }
     })
   },
   //微信获取经纬度
   getLocation: function () {
-    var vm = this;
+    let that = this;
     wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        console.log(JSON.stringify(res))
-        var latitude = res.latitude
-        var longitude = res.longitude
-        var speed = res.speed
-        var accuracy = res.accuracy;
-        vm.getLocal(latitude, longitude)
-      },
-      fail: function (res) {
-        console.log('fail' + JSON.stringify(res))
-      }
-    })
-  },
-  //获取当前地理位置
-  getLocal(latitude,longitude){
-    qqmapsdk.reverseGeocoder({
-      location:{
-        latitude:latitude,
-        longitude: longitude
-      },
-      success:(res)=>{
-        let province = res.result.address_component.province;
-        province = province.replace('市','');
-        this.setData({
-          province:province
+      type: 'gcj02',
+      success(res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+        let lnglat = longitude +','+latitude;
+        that.setData({
+          latitude:latitude,
+          longitude:longitude,
+          lnglat:lnglat
         })
+        that.position(lnglat);
+      },
+      fail(res){
       }
     })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  //获取当前定位城市
+  position(lnglat){
+    this.setData({
+      isShow:true
+    })
+    let that = this;
+    var  lnglat = that.data.lnglat;
+    let now_page = 1;
+    let keywords ='';
+    that.header(app.globalData.url +'position');
+    wx.request({
+      url: app.globalData.url +'position',
+      header:that.data.header,
+      method:'get',
+      data:{
+        lnglat: lnglat
+      },
+      success:res=>{
+        this.setData({
+          isShow:false
+        })
+        if(res.data.code == 200){
+          console.log(res.data.data)
+          let region_id = res.data.data.callback.region_id;
+          let region_city = res.data.data.callback.region_city;
+          let local = res.data.data.callback;
+          if(local.area != null){
+            this.setData({
+              local: local.area
+            })
+          } else if (local.poi != null){
+              this.setData({
+                local: local.poi
+              })
+          } else if (local.town != null) {
+            this.setData({
+              local: local.town
+            })
+          } else if (local.village != null) {
+            this.setData({
+              local: local.village
+            })
+          }else{
+            this.setData({
+              local: local.region_city
+            })
+          }
+          this.mallDotList(region_id, region_city, lnglat, now_page, keywords)
+          that.setData({
+            before:false,
+            region: res.data.data.callback,
+            region_city: res.data.data.callback.region_city,
+            region_id: res.data.data.callback.region_id
+          })
+        }
+      }
+    })
   },
+  //获取自提点列表
+  mallDotList(region_id, region_city,lnglat,now_page,keywords){
+    this.setData({
+      isShow:true
+    })
+    this.header(app.globalData.url +'mallDotList');
+    wx.request({
+      url: app.globalData.url +'mallDotList',
+      method:'get',
+      header:this.data.header,
+      data:{
+        region_id:region_id,
+        region_city:region_city,
+        lnglat:lnglat,
+        now_page:now_page,
+        keywords:keywords
+      },
+      success:res=>{
+        this.setData({
+          isShow:false
+        })
+        if(res.data.code == 200){
+            if (res.data.data.callback.mall_dot_list.length >= 15) {
+                this.setData({
+                  up: "下拉加载更多~"
+                })
+              } else {
+                this.setData({
+                  up: "暂时没有更多内容了~"
+                })
+                  }
+        this.setData({
+          isShow: false,
+          mall_dot_list: res.data.data.callback.mall_dot_list,
+          page: res.data.data.callback.now_page
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+        })
+      }else{
+        this.shows(res.data.msg)
+      }
+      }
+      })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  //获取城市列表
+  switchLocale(){
+    this.setData({
+      isShow:true
+    })
+    this.header(app.globalData.urls +'switchLocale');
+    wx.request({
+      url: app.globalData.urls +'switchLocale',
+      method:'get',
+      header:this.data.header,
+      success:res=>{
+        this.setData({
+          isShow:false
+        })
+          this.setData({
+            cityList: res.data.data.switch_locale
+          })
+      }
+    })
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  //搜索位置
+  searchSubmitFn: function (e) {
+   let that = this;
+    let keywords = e.detail.value;
+    let region_id = that.data.region_id;
+    let region_city = that.data.region_city;
+    var lnglat = that.data.lnglat;
+    let now_page = 1;
+    this.setData({
+      keywords:keywords
+    })
+    that.mallDotList(region_id, region_city, lnglat, now_page, keywords)
   },
+  //下拉刷新
+  onReachBottom() {
+    let region_id = this.data.region_id;
+    let region_city = this.data.region_city;
+    let lnglat = this.data.lnglat;
+    let page = this.data.page;
+    let mall_dot_list = this.data.mall_dot_list;
+    let keywords = this.data.searchValue;
+    if(mall_dot_list.length>15){
+      wx.stopPullDownRefresh();
+      this.setData({
+        up: '暂时没有更多内容了~'
+      })
+    }else{
+      page++;
+    this.header(app.globalData.url + 'mallDotList');
+    wx.request({
+      url: app.globalData.url + 'mallDotList',
+      method: 'get',
+      header: this.data.header,
+      data: {
+        region_id: region_id,
+        region_city: region_city,
+        lnglat: lnglat,
+        now_page: page,
+        keywords: keywords
+      },
+      success: res => {
+        if (res.data.code == 200) {
+          for(let r=0;r<res.data.data.callback.mall_dot_list.length;r++){
+            if (res.data.data.callback.mall_dot_list.length >= 15) {
+              this.setData({
+                up: "下拉加载更多~"
+              })
+            } else {
+              this.setData({
+                up: "暂时没有更多内容了~"
+              })
+            }
+            mall_dot_list.push(res.data.data.callback.mall_dot_list[r])
+            this.setData({
+              isShow: false,
+              mall_dot_list: mall_dot_list,
+              page: res.data.data.callback.now_page
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+            })
+          }
+            
+        }
+      }
+    })
+    }
+  },
+  //生成随机字符串
+  randomWord() {
+    var noncestr;
+    noncestr = '';
+    var noncestrLength = 8;
+    var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    for (var i = 0; i < noncestrLength; i++) {
+      var index = Math.floor(Math.random() * 36);
+      noncestr += random[index];
+    }
+    this.data.noncestr = noncestr.toLowerCase();
+  },
+  //生成header
+  header(url) {
+    var timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    this.randomWord();
+    var noncestr = this.data.noncestr;
+    var api_url = url;
+    var key = 'myzy3224326de100671291c7d1a6353ff6db';
+    var arr = [api_url, key, this.data.noncestr, timestamp];
+    var str = '';
+    for (let i in arr) {
+      str += arr[i];
+    }
+    //md5加密生成
+    var password = '';
+    password = util.hexMD5(str);
+    password = password.toUpperCase();
+    //发起请求
+    var content = wx.getStorageSync('content');
+    if (content) {
+      var uuid = content.data.uuid;
+      var token = content.data.token;
+      var expiry_time = content.data.expiry_time;
+      var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+        "uuid": uuid,
+        "token": token,
+        "expirytime": expiry_time,
+        "logintype": logintype,
+        "Cookie": session_id
+      }
+    } else {
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+      }
+    }
+    this.setData({
+      header: header
+    })
+  },
+  //切换标识
+  Cur(e){
+    let cur = e.target.dataset.cur;
+    let id = e.target.dataset.id;
+    let city = e.target.dataset.city;
+    this.setData({
+      cur:cur,
+      region_city:city
+    })
+    this.mallDotList(id,city,'',1,'')
+    this.setData({
+      pro: true
+    })
   }
+
 })

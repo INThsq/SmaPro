@@ -15,14 +15,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var cz = getApp().txmoney;
+    var cz = options.money;
+    var service = options.service;
     var that = this;
     that.setData({
       //充值保留两位小数
       txmoney: Number(cz).toFixed(2),
+      service:service
     })
   },
-
+  back(){
+    wx.navigateTo({
+      url: '../Balance/Balance',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

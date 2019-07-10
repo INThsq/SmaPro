@@ -17,7 +17,7 @@
     <image src='{{store_info.logo}}'></image>
     </view>
 <!-- title -->
-  <view class='title' style='padding:0!important;'>
+  <view class='title' style='padding:0!important;justify-content:center!important;'>
   <text>{{store_info.name}}</text>
   
   </view>

@@ -8,12 +8,55 @@ Page({
     data: {
       currentTab: 0,
       callback:'',
-      header:''
+      header:'',
+      showModalStatus:false
+
     },
   /**
    * 页面的初始数据
    */
-
+  //显示对话框
+  showModal: function () {
+    // 显示遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+      showModalStatus: true
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+  },
+  //隐藏对话框
+  hideModal: function () {
+    // 隐藏遮罩层
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    this.setData({
+      animationData: animation.export(),
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        showModalStatus: false
+      })
+    }.bind(this), 200)
+  },
 
 
 
@@ -60,13 +103,42 @@ Page({
 
   },
   //提现
-  withdraw: function () {
+  Deposit: function (e) {
+    let content = wx.getStorageSync('content');
+    if (content) {
+      var callback = this.data.callback.application;
+      let jump = callback[0].jump;
+      if (callback.length == 1) {
+        wx.navigateTo({
+          url: '../Deposit/Deposit?jump=' + jump,
+        })
+      } else {
+        this.setData({
+          showModalStatus: true
+        });
+      }
+    } else {
+      wx.navigateTo({
+        url: '../Accredit/Accredit',
+      })
+    }
+  },
+
+  Choose(e) {
+    this.setData({
+      showModalStatus: false
+    })
+    let jump = e.currentTarget.dataset.jump;
     wx.navigateTo({
-      url: '../Deposit/Deposit',
+      url: '../Deposit/Deposit?jump=' + jump,
     })
   },
+ 
   //获取数据
   getDraw(day) {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url + 'benefits');
     wx.request({
       url: app.globalData.url + 'benefits',
@@ -76,6 +148,9 @@ Page({
         day:day
       },
       success: res => {
+        this.setData({
+          isShow: false
+        })
         if (res.data.code == 200) {
           this.setData({
             callback: res.data.data.callback

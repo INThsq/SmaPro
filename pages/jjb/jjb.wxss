@@ -2,13 +2,67 @@
 page{
   background: white;
 }
-.container{
-  margin-top:144rpx;
-  position: relative;
+.coversrc{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
 }
-video{
+.swiper{
+  width: 100%;
+  height:744.5rpx;
+}
+.img{
+  width: 100%;
+  opacity:1;
+}
+.back{
+  position: fixed;
+  left:15px;
+  top:60rpx;
+  width:70rpx;
+  height:54rpx;
+  background:rgba(0,0,0,1);
+  border-radius:100px;
+  opacity:0.3;
+  align-items: center; /*垂直居中*/
+  justify-content: center; /*水平居中*/
+  display: flex;
+  z-index:99999;
+   }
+   .back cover-image{
+  width:40rpx;
+  height:28rpx;
+  display: flex;
+}
+/* video{
   width: 100%;
   height:180px;
+} */
+/* .swiper {
+  height:180px;
+  width: 100%;
+} */
+.swiper image {
+  height: 100%;
+  width: 100%;
+}
+.swiper video {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.swiper{
+  position: relative;
+}
+.playbtn{
+  position: absolute;
+  top:50%;
+  left:50%;
+  width: 3rem;
+  height:3rem;
+  margin-top:-1.5rem;
+  margin-left: -1.5rem;
 }
 .conts-img{
   width:100%;
@@ -74,6 +128,9 @@ position: relative;
   width: 100%;
   position: relative;
 }
+.container{
+  position: relative;
+}
 .arrow{
   position:absolute;
   right: 22rpx;
@@ -100,7 +157,7 @@ position: relative;
   align-items: center;
   justify-content: center;
   margin-top: 100rpx;
-  margin-bottom: 40rpx;
+  margin-bottom:60rpx;
 }
 .check image{
   width: 26rpx;

@@ -23,7 +23,7 @@ Page({
     },
     sku_ids: '',
     shop_id: '',
-    autoplay: true,
+    autoplay: false,
     interval: 5000,
     duration: 1000,
     swiperCurrent: 0,
@@ -52,35 +52,12 @@ Page({
       url: '../Details/Details?id=' + id,
     })
   },
-  //解决swiper卡死 闪屏
-  changeGoodsSwip: function (detail) {
-    if (detail.detail.source == "touch") {
-      //当页面卡死的时候，current的值会变成0 
-      if (detail.detail.current == 0) {
-        //有时候这算是正常情况，所以暂定连续出现3次就是卡了
-        let swiperError = this.data.swiperError
-        swiperError += 1
-        this.setData({ swiperError: swiperError })
-        if (swiperError >= 3) { //在开关被触发3次以上
-          console.error(this.data.swiperError)
-          this.setData({ currentTarget: this.data.preIndex });//，重置current为正确索引
-          this.setData({ swiperError: 0 })
-        }
-      } else {//正常轮播时，记录正确页码索引
-        this.setData({ preIndex: detail.detail.current });
-        //将开关重置为0
-        this.setData({ swiperError: 0 })
-      }
-    }
-  },
-
   // 进入店铺
    EnterShop(e){
-     let mall_id = e.target.dataset.id;
+     let mall_id = e.currentTarget.dataset.id;
      app.mall_id = mall_id;
       wx.switchTab({
         url: '../CareShop/CareShop',
-
       })
  },
   //点击确认支付   
@@ -89,6 +66,7 @@ Page({
     let id = this.data.shop_id;
     let sku_attr = this.data.sku_ids;
     let goods_num = this.data.num;
+    console.log(this.data.num)
     let skus = '';
     let goods_len = this.data.goods_sku.length;
     switch(goods_len){
@@ -173,9 +151,17 @@ Page({
     }
   },
   back: function () {
-    wx.navigateBack({
-      delta: 1,
-    })
+    let types = getApp().types;
+    if(types == 2){
+      wx.switchTab({
+        url:'../index/index'
+      })
+    }else{
+      wx.navigateBack({
+        delta: 1,
+      })
+    }
+    
   },
   //选择规格
   chooseSize() {
@@ -206,6 +192,7 @@ Page({
       num: num,
       minusStatus: minusStatus
     });
+    
   },
   /* 点击加号 */
   bindPlus: function () {
@@ -281,12 +268,18 @@ Page({
    */
   onLoad: function (options) {
     let get = getApp().get;
-    if(get){
+    if(get == 1){
       this.showModal();
+      app.get=0;
+    }else{
+      this.hideModal();
     }
     var id = options.id;
+    var telephone_tip = wx.getStorageSync('telephone_tip');
     this.setData({
-      shop_id: id
+      telephone_tip:telephone_tip,
+      shop_id: id,
+      autoplay:true
     })
     this.getGoodsDetails(id);
     this.getGoodsSku(id);
@@ -370,6 +363,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -377,7 +371,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype":logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -386,15 +381,15 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })
   },
   //获取首页数据
   getGoodsDetails(id) {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url+'getGoodsDetails');
     wx.request({
       url:app.globalData.url+'getGoodsDetails',
@@ -404,8 +399,29 @@ Page({
         goods_id: id
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
+          if (res.data.data.callback.mot_goods_num){
+            this.setData({
+              num:res.data.data.callback.mot_goods_num
+            })
+          }
           let content = res.data.data.callback.goods_details.mall_goods_describe.content;
+          if(res.data.data.callback.goods_details.is_distribution == '1'||res.data.data.callback.goods_details.is_mall_dot == '1'||res.data.data.callback.goods_details.is_give_goods == '1'){
+            this.setData({
+              touch:false
+            })
+            wx.setStorageSync('touch',false)
+          }else if(res.data.data.callback.goods_details.is_distribution == 0 && res.data.data.callback.goods_details.is_mall_dot == 0 && res.data.data.callback.goods_details.is_give_goods == 0){
+
+            this.setData({
+              touch:true
+            })
+            wx.setStorageSync('touch',true)
+
+          }
           WxParse.wxParse('article', 'html', content, this, 5);
           this.setData({
             detail: res.data.data.callback,
@@ -474,6 +490,8 @@ Page({
   },
   //获取商品数据
   settlement(goods_id, sku_ids,goods_num) {
+    app.sku_ids = sku_ids;
+    app.goods_num = app.goods_num;
     var that = this;
     that.setData({
       isShow:true
@@ -489,36 +507,35 @@ Page({
           goods_num: goods_num
       },
       success: res => {
+        that.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
-          let mall = res.data.data.settlement.mall_goods;
-          let discount_money = res.data.data.settlement.discount_money;
-          console.log(res.data.data.settlement.discount_money)
+          let mall = res.data.data.callback.mall_goods;
+          let discount_money = res.data.data.callback.discount_money;
+          console.log(res.data.data.callback.discount_money)
           let total = (Number(mall.market_price) - Number(mall.subsidy_money)) * (mall.goods_num) ;
-          wx.setStorageSync('price', res.data.data.settlement.mall_goods.sale_price);
-          wx.setStorageSync('detail', res.data.data.settlement);
+          wx.setStorageSync('price', res.data.data.callback.mall_goods.sale_price);
+          wx.setStorageSync('detail', res.data.data.callback);
           wx.setStorageSync('totalPrice', total.toFixed(2));
           wx.setStorageSync('market_price', mall.market_price);
           wx.setStorageSync('subsidy_money', mall.subsidy_money);
           wx.setStorageSync('goods_num', mall.goods_num);
           wx.setStorageSync('discount_money', discount_money);
-
-          that.setData({
-            isShow:false
-          })
+          wx.setStorageSync('coupon_money', res.data.data.callback.coupon_money)
+          
           wx.navigateTo({
-               url: '../Confirm/Confirm',
+            url: '../Confirm/Confirm?goods_id=' + goods_id,
           })
           app.types = 2;
 
          } 
           else{
-          that.setData({
-            isShow: true
-          })
+            
           var erroe_code = res.data.code;
           switch (erroe_code) {
             case 5:
-              that.show(res.data.msg)
+              this.shows(res.data.msg)
               wx.clearStorageSync('content');
               setTimeout(function () {
                 wx.navigateTo({
@@ -527,7 +544,7 @@ Page({
               }, 3000)
               break;
             case 6:
-              that.show(res.data.msg)
+              this.shows(res.data.msg)
               wx.clearStorageSync('content');
               setTimeout(function () {
                 wx.navigateTo({
@@ -656,7 +673,10 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.setData({
+      swiperCurrent:0,
+      autoplay:false
+    })
   },
 
   /**
@@ -696,7 +716,7 @@ Page({
         //   title: '商品详情'
         // })
         that.clear();
-      }, 300);
+      }, 500);
   },
   backes(){
     wx.pageScrollTo({
@@ -715,7 +735,7 @@ Page({
         //   title: '商品详情'
         // })
         that.clear();
-      }, 300);
+      }, 500);
   },
   clear() {
     var that = this

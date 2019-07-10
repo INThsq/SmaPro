@@ -1,0 +1,122 @@
+<!--pages/ZtApply/Apply.wxml-->
+<view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>自提点申请</view> 
+  </my-component>
+</view>
+
+<!-- 内容 -->
+<view class="addAddress-container">
+<!-- 收货人 -->
+    <view class='item'>
+        <text>加盟商家</text>
+         <text style='width:100%!important;'>{{name}}</text>
+    </view>
+
+ <!-- 店铺名称 -->
+      <view class='item name'>
+        <text>店铺名称</text>
+         <input placeholder="例如：建邦华府店" type='text' placeholder-class="placeholderStyle" bindinput='inputDotName' data-item='name'/>
+    </view>
+
+    <!-- 手机号 -->
+      <view class='item'>
+        <text>联系电话</text>
+         <input placeholder="11位手机号" type='number' placeholder-class="placeholderStyle" bindinput='inputTel' data-item='mobile'/>
+    </view>
+
+    <!-- 所在区域 -->
+    <view class='item'>
+          <text>地区信息</text>
+          <view class='area'  decode="{{true}}" wx:if="{{!province}}" style='color:#999;'>地区信息</view>
+          <view class='area'  decode="{{true}}" wx:else>{{province}} {{city}} {{district}}</view>
+          <image class='choose' bindtap="chooseLocation" src='http://oss.myzy.com.cn/wechat/images/icon_local.png'></image>
+    </view>
+    <!-- 详细地址 -->
+    <view class='remarks-wrap'>
+    <textarea wx:if="{{!isShowText}}" placeholder='请填写详细地址：如道路、门牌号等' class='remarks' bindblur='onRemarkInput' bindconfirm='onShowText'     focus='{{onFacus}}' maxlength='500'  value='{{local}}'></textarea>
+    <text wx:else class='remarks' bindtap='onShowText'>{{local}}</text>
+  </view>
+
+  <!-- 申请押金 -->
+  <view class='Yj item'>
+    <text>申请押金</text>
+    <view class='area red'>{{money}}元</view>
+  </view>
+
+    <!-- 申请开通 -->
+    <view class='btn'><button bindtap='Open'>申请开通</button></view>
+  </view>
+
+    <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+ <template is="toasts" data="{{ ..._toast_ }}"/>
+
+ <!-- 模态框 -->
+<view class="commodity_screen"  wx:if="{{showModalStatus}}"></view>
+  <!--弹出框  -->
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <view class='titles'bindtap="close">
+     <image style='width:14px;height:14px' src='http://oss.myzy.com.cn/wechat/images/icon_del_vip.png'></image>
+      <text>确认付款</text>
+  </view>
+  <!-- 方式 -->
+  <view class='way'><view class='way-title'> 选择支付方式</view>
+ <view class='way-cont'>
+        <block wx:for="{{call.settlement_type}}" wx:index="index">
+            <view class='way-list'  bindtap='menuTap' data-type="{{item.pay_type}}" data-current="{{index}}">
+              <view class='way-left'>
+              <block wx:if="{{menuTapCurrent == index||item.is_default}}">
+                <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_xuanzhong.png'></image>
+                </block>
+                <block wx:else>
+                <image src='http://oss.myzy.com.cn/wechat/images/icon_zhifu_weixuan.png'></image>
+                </block>
+              </view>
+              <view class='way-icon'>
+                <image src='{{item.pay_img}}'></image>
+              </view>
+
+            <block wx:if="{{nedPay !== 0}}">
+  <view class='way-text'>
+    <text style='color:{{pay_type==1&&grey?"#999":"#333"}}'>{{item.pay_title}}</text>
+    <text class='small'>{{item.pay_subtitle}}</text>
+  </view>
+  </block>
+  <block wx:else>
+  <view class='way-text way-texts'>
+    <text>{{item.pay_title}}</text>
+    <text class='small'>{{item.pay_subtitle}}</text>
+  </view>
+
+  </block>
+</view>
+
+</block>
+</view>
+<!-- 需付款 -->
+
+  <view class='way-pay'>
+    <text class='w'>需付款</text>
+    <text class='m'>￥</text>
+    <text class='q'>{{money}}</text>
+  </view>
+
+  <!-- 支付按钮 -->
+  <view class='pay'>
+   <button class='pay-btn' style='opacity:{{grey?"0.7":"1"}};background:{{grey?"#E2E2E2":"#F43736"}}' wx:if="{{types == 1}}" bindtap='topays'>立即支付</button>
+ <button class='pay-btn' style='opacity:{{grey?"0.7":"1"}};background:{{grey?"#E2E2E2":"#F43736"}}' wx:else bindtap='topay'>立即支付</button>
+  </view>
+
+  </view>
+  </view>
+
+
+
+   <!-- load -->
+   <view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+    </view>
+ 
+  

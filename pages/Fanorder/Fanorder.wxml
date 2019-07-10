@@ -8,93 +8,59 @@
 
 <!-- 订单主体 -->
 
-<view class='container'>
+<!-- <view class='container'>
     <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
     <text>抱歉，暂无数据</text>
+</view> -->
+
+
+<view class='container'>
+    <view class="order-info" wx: style='margin-top:128rpx;'>
+        <block wx:for="{{order_list}}" wx:key="index">
+        <view class='order-lists'>
+          <view class="order-list">
+            <view class="order-num">
+            <view class='touxiang'>
+              <image src='{{item.member_mall.logo}}'></image>
+              <text>{{item.member_mall.name}}</text>
+            </view>
+            <view class='wait' style="color:#FC0C16!important">
+            <block  style="color:#FC0C16!important">佣金{{item.referee_reward}}元</block>
+            </view>
+            </view>
+            <view class="order-con">
+              <image src="{{item.image}}"></image>
+              <view>
+                <view class="name">{{item.title}}</view>
+                <text class="size">{{item.sku_names}}</text>
+                <view class="price"><text style='font-size:10px;'>￥</text>{{item.price}} X {{item.buy_num}}</view>
+              </view>
+            </view>
+            <view class='order-fans'>
+              <view  class='names' style="font-size:25rpx!important;">
+              <image src='{{item.member_oauth.headimgurl}}' style='margin-right:26rpx;'></image>{{item.member_oauth.nickname}}{{item.perfect}}
+              </view>
+              <view class='sf'>
+                <text class='out' style='font-size:25rpx;!important;'>实付:￥{{item.total_price}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+        </block>
+        </view>
+           <view class='up-text' style='background:white!important;'>{{up}}</view>
+
 </view>
-
-
- <!-- <view class='order-conts'>
-    <view class="order-info">
-    <view class='order-lists'>
-      <view class="order-list">
-        <view class="order-num">
-        <view class='touxiang'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>fanyuxi官方店</text>
-        </view>
-        <view class='wait'>
-        商品
-        </view>
-        </view>
-        <view class="order-con">
-          <image src="../../static/imgs/goods3.png"></image>
-          <view>
-            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-            <text class="size">颜色:白色,尺码:XL</text>
-            <text class="price">￥888</text>
-          </view>
-        </view>
-        <view class='order-fans'>
-          <view  class='names'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>
-          INT(直属粉丝邀请)
-          </text>
-          </view>
-          <view class='sf'>
-          实付:￥888.00
-          </view>
-        </view>
-      </view>
-      <view class='predeit'>
-        预计佣金:
-        <text class='pre-mon'>+35.80</text>
-      </view>
-    </view>
-
-
-    <view class='order-lists'>
-      <view class="order-list">
-        <view class="order-num">
-        <view class='touxiang'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>fanyuxi官方店</text>
-        </view>
-        <view class='wait'>
-        赠品
-        </view>
-        </view>
-        <view class="order-con">
-          <image src="../../static/imgs/goods3.png"></image>
-          <view>
-            <view class="name">小天鹅（littleSwan）频滚筒洗衣机（银色）wifi智能控...</view>
-            <text class="size">颜色:白色,尺码:XL</text>
-            <text class="price">￥888</text>
-          </view>
-        </view>
-        <view class='order-fans'>
-          <view  class='names'>
-          <image src='../../static/imgs/touxiang.jpg'></image>
-          <text>
-          INT(直属粉丝)
-          </text>
-          </view>
-          <view class='sf'>
-          实付:￥888.00
-          </view>
-        </view>
-      </view>
-      <view class='predeit'>
-        预计佣金:
-        <text class='pre-mon'>+35.80</text>
-      </view>
-    </view>
-      
-        
-      </view>
- </view>
-      -->
      
+
+<!-- 提示框 -->
+<import src="../../public/appToasts/appToasts.wxml"/>
+<template is="toasts" data="{{ ..._toast_ }}"/>
+
+<!-- load -->
+<view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
 
 

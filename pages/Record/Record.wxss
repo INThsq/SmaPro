@@ -1,0 +1,92 @@
+/* pages/Record/Record.wxss */
+@import "../Notgifts/Notgifts.wxss";
+@import "../../static/css/index.wxss";
+@import "../../public/compback/compback.wxss";
+
+.swiper-tab-item{
+    width: 50%!important;
+}
+
+.info-top{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding:20rpx 30rpx;
+    position: relative;
+
+}
+.info-top::after{
+    position: absolute; 
+    content: '';
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: #f2f2f2;
+    -webkit-transform: scale(1, 0.5);
+    transform: scale(1, 0.5);
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+}
+.info-items{
+    box-sizing: border-box;
+    background: white;
+    margin-bottom: 16rpx;
+}
+.info-left{
+    font-size: 29.17rpx;
+    color: #333;
+    line-height: 20px;
+}
+.info-title{
+  margin-bottom: 12rpx;
+}
+.info-right,.info-num,.info-peo{
+    font-size: 25rpx;
+    color: #666;
+    line-height: 18px;
+}
+.info-num{
+  margin-bottom: 8rpx;
+}
+.info-title{
+    display: flex;
+    justify-content: space-between;
+}
+.info-btn{
+    display: flex;
+    justify-content: space-between;
+}
+.info-btn .btn-left{
+    font-size:29.17rpx;
+    color: #333333;
+}
+.info-btn .btn-left text{
+    color: #EE1E2A;
+}
+.info-btn{
+    padding: 18rpx 30rpx;
+    box-sizing: border-box;
+    align-items: center;
+}
+.btn-get{
+    width:156rpx;
+    height: 56rpx;
+    font-size: 29.17rpx;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius:4px;
+    border:1px solid rgba(195,195,195,1);       
+}
+.btn-gets{
+    width:160rpx;
+    height: 60rpx;
+    font-size:25rpx;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius:4px;
+    color: white;
+    background: #F43736;
+}

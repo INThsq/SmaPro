@@ -1,0 +1,46 @@
+<!--pages/News/News.wxml-->
+     <view>
+  <my-component>
+    <!-- 这部分内容将被放置在组件 <slot> 的位置上 -->
+     <view>消息</view> 
+  </my-component>
+</view>
+
+
+
+<!-- 内容部分 -->
+<view class='container' >
+
+<view class='order-conts' wx:if ="{{noticle_type.length == 0}}">
+          <view class='noW' >
+              <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+              <text>抱歉，暂无数据</text>
+              </view>
+        </view>
+        <block wx:for="{{noticle_type}}" wx:key="index" wx:if ="{{noticle_type.length > 0}}">
+          <view class='item' bindtap="Detail" data-id="{{item.notice.notice_type_id}}">
+            <view class='item-left' >
+            <view class='span'  wx:if="{{item.notice.read_count!=0&&item.notice.read_count}}">
+              {{item.notice.read_count}}
+            </view>
+            <image src='{{item.image}}'></image>
+            </view>
+            <view class='item-right'>
+                <view class='title'>
+                  <text class='one'>{{item.name}}</text>
+                  <text class='two'>{{item.notice.push_time}}</text>
+                </view>
+                <view class='titles'>{{item.notice.title?item.notice.title:'暂无消息'}}</view>
+            </view>
+          </view>
+          </block>
+
+</view>
+
+ <!-- load -->
+ <view class="load {{isShow ? 'show' : ''}}" >
+  <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+  </view>
+
+
+

@@ -1,4 +1,7 @@
 // pages/Fanorder/Fanorder.js
+var util = require('../../utils/md5.js')
+var utils = require('../../utils/util.js')
+var app = getApp();
 Page({
 
   /**
@@ -12,9 +15,45 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    new app.ToastPannels();
+    this.fansOrder();
   },
-
+  //粉丝订单
+  fansOrder(){
+    this.setData({
+      isShow:true
+    })
+    this.header(app.globalData.url+'fansOrder');
+    wx.request({
+      url:app.globalData.url+'fansOrder',
+      method: 'GET',
+      header: this.data.header,
+      success:res=>{
+        this.setData({
+          isShow:false
+        })
+        if(res.data.code == 200){
+          for(let l=0;l<res.data.data.callback.order_list.length;l++){
+            if(res.data.data.callback.order_list.length >=15){
+              this.setData({
+                up: "下拉加载更多~"
+              })
+            } else {
+              this.setData({
+                up: "暂时没有更多内容了~"
+              })
+            }
+          }
+          this.setData({
+            page: res.data.data.callback.now_page,
+            order_list:res.data.data.callback.order_list
+          })
+        }else{
+          this.shows(res.data.msg)
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -54,7 +93,50 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    let page = this.data.page;
+    let order_list = this.data.order_list;
+    if(order_list.length<15){
+      wx.stopPullDownRefresh();
+      this.setData({
+        up: '暂时没有更多内容了~'
+      })
+    }else{
+      page++;
+      this.header(app.globalData.url + 'fansOrder');
+      wx.request({
+        url: app.globalData.url + 'fansOrder',
+        method: 'GET',
+        header: this.data.header,
+        data: {
+          now_page: page
+        },
+        success: res => {
+          this.setData({
+            isShow: false
+          })
+          if (res.data.code == 200) {
 
+            for (let r = 0; r < res.data.data.callback.order_list.length; r++) {
+              if (res.data.data.callback.order_list.length >= 15) {
+                this.setData({
+                  up: "下拉加载更多~"
+                })
+              } else {
+                this.setData({
+                  up: "暂时没有更多内容了~"
+                })
+              }
+            
+              order_list.push(res.data.data.callback.order_list[r])
+            }
+            this.setData({
+              page: res.data.data.callback.now_page,
+              order_list: order_list
+            })
+          }
+    }
+      })
+    }
   },
 
   /**
@@ -62,5 +144,64 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+   //生成随机字符串
+   randomWord() {
+    var noncestr;
+    noncestr = '';
+    var noncestrLength = 8;
+    var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    for (var i = 0; i < noncestrLength; i++) {
+      var index = Math.floor(Math.random() * 36);
+      noncestr += random[index];
+    }
+    this.data.noncestr = noncestr.toLowerCase();
+  },
+   // 生成header
+   header(url) {
+    var timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    this.randomWord();
+    var noncestr = this.data.noncestr;
+    var api_url = url;
+    var key = 'myzy3224326de100671291c7d1a6353ff6db';
+    var arr = [api_url, key, this.data.noncestr, timestamp];
+    var str = '';
+    for (let i in arr) {
+      str += arr[i];
+    }
+    //md5加密生成
+    var password = '';
+    password = util.hexMD5(str);
+    password = password.toUpperCase();
+    //发起请求
+    var content = wx.getStorageSync('content');
+    if (content) {
+      var uuid = content.data.uuid;
+      var token = content.data.token;
+      var expiry_time = content.data.expiry_time;
+      var logintype = content.data.login_type;
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+        "uuid": uuid,
+        "token": token,
+        "expirytime": expiry_time,
+        "logintype":logintype
+      }
+    } else {
+      var header = {
+        "sign": password,
+        "timestamp": timestamp,
+        "noncestr": noncestr,
+      }
+    }
+
+
+
+    this.setData({
+      header: header
+    })
+  },
 })

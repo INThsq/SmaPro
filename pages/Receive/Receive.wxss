@@ -1,0 +1,2 @@
+/* pages/Receive/Receive.wxss */
+@import "../Query/Query.wxss";

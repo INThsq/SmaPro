@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    hides:true,
     hour: '00',
     minutes: '00',
     seconds: '00',
@@ -21,7 +22,8 @@ Page({
     timestamp:0,
     visible: false,
     imageshare:'',
-    isShow:true
+    isShow:false,
+    back:false
   },
 
   /**
@@ -33,7 +35,58 @@ Page({
       scrollTop: scrollTop
     })
   },
+  //禁用按钮提示
+  Now(){
+    this.shows(this.data.giftGiving.is_online.disabled_tip)
+  },
+  //生成二维码
+  GetCode(e){
+    let is_inline = this.data.giftGiving.is_inline.is_disabled
+    let share_gift_tips = this.data.giftGiving.share_gift_tips
+
+    if(is_inline){
+      this.shows(this.data.giftGiving.is_inline.is_disabled)
+    }else{
+    let type = e.currentTarget.dataset.type
+    let state = e.target.dataset.state
+    this.setData({
+      type:type
+    })
+    switch(state){
+      case 0:
+        this.openGiftSharing(this.data.mall_goods_id);
+        this.setData({
+          hides: false,
+          back: true
+        })
+        break;
+      case 2:
+        this.shows(share_gift_tips)
+        break;
+      case 1:
+        this.Modal.showModal();
+        break;
+      case 3:
+        this.shows(share_gift_tips)
+    }    
+    }
+  },
+  close(){
+    this.setData({
+      hides:true,
+      back:false
+    })
+  },
   onLoad: function (options) {
+    
+    this.setData({
+      isShow:true
+    })
+    setTimeout(() => {
+      this.setData({
+        isShow: false
+      })
+    },2000)
     let mall_goods_id = options.id;
     let type = options.type;
     this.giftGiving(mall_goods_id);
@@ -41,15 +94,20 @@ Page({
       mall_goods_id:mall_goods_id,
       type:type
     })
-    new app.ToastPannel();
-    let goods = wx.getStorageSync('goods') || JSON.parse(options.goods);
+    new app.ToastPannels();
     //判断类型
+    let goods = wx.getStorageSync('goods') || JSON.parse(options.goods);
+    console.log(goods);
+    if(goods){
     let virtual_type = goods.virtual_type;
+    var imgs= options.img;
+    var price = options.price;
     switch (virtual_type) {
       //实物
       case 0:
-        let imges = goods.images[0];
-        let price = goods.price;
+        let imges = goods.images[0]||imgs;
+        let price = goods.price||price;
+        
         this.setData({
           template: new Card().palette({
             imges: imges,
@@ -59,8 +117,8 @@ Page({
         });
         break;
       case 1:
-        var imges = goods.images[0];
-        var price = goods.price;
+        var imges = goods.images[0]||imgs;
+        var price = goods.price||price;
         this.setData({
           template: new Card().palette({
             imges: imges,
@@ -70,16 +128,13 @@ Page({
         });
         break;
     }
-        setTimeout(()=>{
-          this.setData({
-            isShow: false
-          })
-        },1500)
-    
+       
+    }
   },
   //开团信息
   giftGiving(mall_goods_id){
     var that = this;
+    var gift_queue_id = this.data.gift_queue_id;
     that.header(app.globalData.url +'giftGiving')
     wx.request({
       url: app.globalData.url +'giftGiving',
@@ -90,6 +145,18 @@ Page({
       },
        success: res =>{
          if(res.data.code == 200){
+           if (res.data.data.callback.share_gift.gift_queue_id){
+             this.setData({
+               gift_queue_id: res.data.data.callback.share_gift.gift_queue_id,
+               timestamp:res.data.data.callback.share_gift.expire_time
+             })
+           }
+           if (res.data.data.callback.gift_praise.length == 0){
+             if(!res.data.data.callback.is_online.is_disabled){
+             this.openGiftSharing(mall_goods_id)
+
+             }
+           }
            that.setData({
              giftGiving: res.data.data.callback,
              //可赠送人数
@@ -99,11 +166,6 @@ Page({
              //标识
              share_gift: res.data.data.callback.share_gift,
              gift_praise: res.data.data.callback.gift_praise,
-             timestamp: res.data.data.callback.share_gift.expire_time,
-             //开团队列id
-             gift_queue_id: res.data.data.callback.share_gift.gift_queue_id,
-             //开团队列编号
-             order_num: res.data.data.callback.share_gift.order_num
            })
          } else {
            
@@ -121,51 +183,59 @@ Page({
   //立即开团
   openGiftSharing(mall_goods_id){
     let that = this
+    let state = this.data.state
     that.header(app.globalData.url + 'openGiftSharing')
     wx.request({
       url: app.globalData.url +'openGiftSharing',
       method:'POST',
       header:that.data.header,
       data:{
-        mall_goods_id:mall_goods_id
+        mall_goods_id:mall_goods_id,
       },
       success:res=>{
         if(res.data.code == 200){
+          if(state == 3){
+            this.giftGiving(res.data.data.callback.mall_goods.member_mall_id)
+            this.setData({
+              state:1
+            })
+          }
         app.share_relation = res.data.data.callback.share_relation;
          that.setData({
-           share_relation: res.data.data.callback.share_relation
+           share_relation: res.data.data.callback.share_relation, 
+           code:res.data.data.callback.qr_code
          })
           let gift_praise = res.data.data.callback.gift_praise;
           if(gift_praise){
             that.setData({
-              addNum: Number(res.data.data.callback.give_num) - Number(gift_praise.length),
-              gift_praise:gift_praise,
+              share:1,
+              // addNum: Number(res.data.data.callback.give_num) - Number(gift_praise.length),
+              gift_queue_id: res.data.data.callback.share_gift.gift_queue_id
             })
           }else{
             that.setData({
-              addNum: Number(res.data.data.callback.give_num) - 0,
-              gift_praise:'',
+              share:1,
+              // addNum: Number(res.data.data.callback.give_num) - 0,
+              
             })
 
           }
         that.setData({
           //可赠送人数
           //上锁人数
-          lockNum: Number(10) - Number(res.data.data.callback.give_num),
+          // lockNum: Number(10) - Number(res.data.data.callback.give_num),
           //标识
           share_gift: res.data.data.callback.share_gift,
           timestamp: res.data.data.callback.share_gift.expire_time,
           //开团队列id
           gift_queue_id: res.data.data.callback.share_gift.gift_queue_id,
           //开团队列编号
-          order_num: res.data.data.callback.share_gift.order_num
+          // order_num: res.data.data.callback.share_gift.order_num
         })
+          app.gift_queue_id = res.data.data.callback.share_gift.gift_queue_id
         } else {
           // utils.error(res);
-          this.show(res.data.msg);
-          wx.navigateTo({
-            url: '../Accredit/Accredit',
-          })
+          this.shows(res.data.msg);
         }
       }
     })
@@ -224,29 +294,52 @@ Page({
     }
    
   },
+  
   //立即开团状态
+
   State(e){
     let state = e.target.dataset.state
+    let type = e.currentTarget.dataset.type
+    this.setData({
+      type:type
+    })
+    let share_gift_tips = this.data.giftGiving.share_gift_tips
     switch(state){
       case 0:
-      this.openGiftSharing(this.data.mall_goods_id);
+          this.openGiftSharing(this.data.mall_goods_id);
       break;
-      case 1:
-        this.show('级别不够无法解锁,赶紧升级吧~');
-        break;
       case 2:
+        // this.shows('级别不够无法解锁,赶紧升级吧~');
+        this.shows(share_gift_tips)
+        break;
+      case 1:
         this.Modal.showModal();
         break;
       case 3:
-        this.show('暂不支持分享,维护中...')  
-
+        // this.shows('暂不支持分享,维护中...')  
+        this.shows(share_gift_tips)
     }
   },
   _confirmEventFirst: function () {
-    this.openGiftSharing(this.data.mall_goods_id)
-    this.Modal.hideModal();
+    let type= this.data.type
+    this.setData({
+      state:3
+    })
+    if(type == 1){
+        this.openGiftSharing(this.data.mall_goods_id);
+        this.Modal.hideModal();
+    }else{
+        this.openGiftSharing(this.data.mall_goods_id);
+        this.setData({
+          hides: false,
+          back: true
+        })
+        this.Modal.hideModal();
+    }
+    
   },
   _cancelEvent: function () {
+    this.Modal.hideModal();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -295,7 +388,12 @@ Page({
   onReachBottom: function () {
 
   },
-
+  Web(e){
+    let url = e.currentTarget.dataset.url;
+    wx.navigateTo({
+      url: '../Webview/Webview?h5='+url,
+    })
+  },
   /**
    * 
    * 用户点击右上角分享
@@ -304,17 +402,11 @@ Page({
  * 用户点击右上角分享
  */
   onShareAppMessage: function (ops) {
-    
     let gift_queue_id = this.data.gift_queue_id;
-    let order_num = this.data.order_num;
     let name = this.data.giftGiving.member_oauth.nickname;
-    let mall_goods_id = this.data.mall_goods_id;
-    let goods = wx.getStorageSync('goods');
-    let path = '/pages/EarnMoney/EarnMoney?gift_queue_id=' + gift_queue_id + '&order_num=' + order_num +'&goods='+ JSON.stringify(goods);
-    console.log(path)
+    let path = '/pages/EarnMoney/EarnMoney?gift_queue_id=' + gift_queue_id;
     let imageshare = this.data.imageshare;
-    console.log(imageshare)
-    
+    console.log(path)
     return {
       title: '你的好友['+name+']免费发福利啦,赶紧领取包邮哦~', // 转发后 所显示的title
       path:path, // 相对的路径
@@ -366,6 +458,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -373,7 +466,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

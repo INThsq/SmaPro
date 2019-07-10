@@ -1,11 +1,10 @@
 var util = require('md5.js');
 const app = getApp();
-
+import { ToastPannels } from '../public/appToasts/appToasts';
 function formatNumber(n) {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-
 /**
  * 时间戳转化为年 月 日 时 分 秒
  * number: 传入时间戳
@@ -29,9 +28,27 @@ function formatTime(number, format) {
   }
   return format;
 }
+function throttle(fn, gapTime) {
+  if (gapTime == null || gapTime == undefined) {
+      gapTime = 1500
+  }
+
+  let _lastTime = null
+
+  // 返回新的函数
+  return function () {
+      let _nowTime = + new Date()
+      if (_nowTime - _lastTime > gapTime || !_lastTime) {
+          fn.apply(this, arguments)   //将this和参数传给原函数
+          _lastTime = _nowTime
+      }
+  }
+}
 //抛出异常
 function error(res) {
+	ToastPannels;
   new app.ToastPannel();
+  app.error = 1;
   var erroe_code = res.data.code;
   switch (erroe_code) {
     case 5:
@@ -47,13 +64,15 @@ function error(res) {
       })
       break;
   }
-  wx.clearStorageSync('content');
+  wx.removeStorage({
+    key: 'content',
+  })
   setTimeout(function () {
     wx.navigateTo({
       url: '../Accredit/Accredit',
     })
-  }, 1500)
-
+  }, 500)
+ 
 }
 //全局跳转
 function skip(url) {
@@ -68,50 +87,42 @@ function skip(url) {
     })
   }
 }
-//分享
-function onShareAppMessage(title, path, callback, imageUrl) {
-  //设置一个默认分享背景图片
-  let defaultImageUrl = 'http://oss.myzy.com.cn/wechat/images/wechat.png';
-  return {
-    title: title,
-    path: path,
-    imageUrl: imageUrl || defaultImageUrl,
-    success(res) {
-      console.log("转发成功！");
-      if (!res.shareTickets) {
-        //分享到个人
-        api.shareFriend().then(() => {
-          console.warn("shareFriendSuccess!");
-          //执行转发成功以后的回调函数
-          callback && callback();
-        });
-      } else {
-        //分享到群
-        let st = res.shareTickets[0];
-        wx.getShareInfo({
-          shareTicket: st,
-          success(res) {
-            let iv = res.iv
-            let encryptedData = res.encryptedData;
-            api.groupShare(encryptedData, iv).then(() => {
-              console.warn("groupShareSuccess!");
-              //执行转发成功以后的回调函数
-              callback && callback();
-            });
-          }
-        });
-      }
-    },
-    fail: function (res) {
-      console.log("转发失败！");
-    }
-  };
+// 解析链接中的参数
+let getQueryString = function (url, name) {
+  var reg = new RegExp('(^|&|/?)' + name + '=([^&|/?]*)(&|/?|$)', 'i')
+  var r = url.substr(1).match(reg)
+  if (r != null) {
+    return r[2]
+  }
+  return null;
+}
+//全局域名
+const Api_url="https://api.myzy.com.cn";
+//网络请求封装
+function getRequest(url,header,parmas){
+	let promise = new Promise(function(resolve,reject){
+		wx.request({
+			url:Api_url+url,
+			method:'get',
+			header:header,
+			data:parmas,
+			success:res=>{
+				resolve(res)
+			},
+			fail:res=>{
+				reject(res)
+			}
+		})
+	})
+	return  promise
 }
 
-
+// 继承
 module.exports = {
   formatTime: formatTime,
   error: error,
   skip: skip,
-  onShareAppMessage: onShareAppMessage
+  getQueryString: getQueryString,
+  throttle: throttle,
+	getRequest:getRequest
 }

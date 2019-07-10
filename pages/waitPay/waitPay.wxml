@@ -1,10 +1,10 @@
 <!--pages/waitPay/waitPay.wxml-->
 <!-- 组件模板 -->
-<view class="wrapper" >
+<view class="wrapper" style='background:transparent!important'>
    <view class=' back' bindtap='back'>
     <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
   </view> 
-  <view class="tetxs">
+  <view class="tetxs" style='color:white!important'>
     {{Waitpay.callback.order_queue.status}}
   </view>
 </view>
@@ -58,14 +58,15 @@
   </view>
   </block>
 
+
   <!-- 物流 -->
   <view class='address-yes'  >
       <view class='yes-left'>
         <image src='http://oss.myzy.com.cn/wechat/images/icon_querenzhifu_dizhi.png'></image>
       </view>
       <view class='yes-right'>
-       <text class='right-user'>收货人：{{Waitpay.callback.mall_logistics.realname}}   {{Waitpay.callback.mall_logistics.telephone}}</text>
-        <text>{{Waitpay.callback.mall_logistics.address}}</text>
+       <text class='right-user'>收货人：  {{Waitpay.callback.mall_logistics.realname}} {{Waitpay.callback.mall_logistics.telephone}}</text>
+        <text>{{Waitpay.callback.mall_logistics.region_names_path}} {{Waitpay.callback.mall_logistics.address}}</text>
       </view>
       
   </view>
@@ -116,27 +117,28 @@
     <text>订单编号：{{Waitpay.callback.order_num}}</text>
     <text>支付方式：{{Waitpay.callback.pay_type}}</text>
     <text>下单时间：{{Waitpay.callback.create_time}}</text>
-    <text>发货时间：{{Waitpay.callback.logistics_info.time}}</text>
-    <text>运单编号：{{Waitpay.callback.order_num}}</text>
+    <text>发货时间：{{Waitpay.callback.mall_logistics.logistics_time}}</text>
+    <text>运单编号：{{Waitpay.callback.mall_logistics.logistics_num}}</text>
     </block>
 
   </view>
   <!-- 按钮 -->
   <view class='thing'>
-      <view class='del' wx:if="{{Waitpay.callback.order_status == 2||Waitpay.callback.order_status == 3}}">延长收货</view>
+      <!-- <view class='del' wx:if="{{Waitpay.callback.order_status == 2||Waitpay.callback.order_status == 3}}">延长收货</view> -->
       <view wx:if="{{Waitpay.callback.order_status == 0}}"  data-id='{{Waitpay.callback.order_num}}' bindtap="Canel" class='del'>取消订单</view>
      <view wx:if="{{Waitpay.callback.order_status == 0}}" bindtap="toConfirm" data-id='{{Waitpay.callback.order_num}}'  class='pays'>去支付</view>
      <view class='del' data-id='{{Waitpay.callback.order_num}}' bindtap='check' wx:if="{{Waitpay.callback.order_queue.status == '已付款' ||Waitpay.callback.order_status == 3}}">查看物流</view>
 
       <view wx:if="{{Waitpay.callback.order_queue.status == '已付款'}}" class='pays'>提醒发货</view>
-      <view wx:if="{{Waitpay.callback.order_status == 3}}" class='pays'>确认收货</view>
+      <view wx:if="{{Waitpay.callback.order_status == 3}}" style='margin-right:0!improtant;' class='pays'  bindtap='_Modals'  data-order="{{Waitpay.callback.order_num}}">确认收货</view>
 
   </view>
 </view>
 
+
   <!-- toast -->
-  <import src="../../public/appToast/appToast.wxml"/>
-  <template is="toast" data="{{ ..._toast_ }}"/>
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
 
    <!-- 自定义模态框 -->
   <dialog id="modal"
@@ -152,3 +154,20 @@
     </view>
 
 </dialog>
+
+
+
+<!-- 自定义模态框  确认收货-->
+  <dialog id="modals"
+            title="温馨提示"
+            cancelText="取消"
+            confirmText="确认收货"
+            bind:cancelEvent="cancel"  
+            bind:confirmEvent="confirm">
+    <view class='modal-body'>
+        <view>请收到商品检查无误后,再确认收货!</view>     
+    </view>
+</dialog> 
+
+
+<!-- 提示框 -->

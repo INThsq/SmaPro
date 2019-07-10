@@ -10,20 +10,15 @@
 <!-- 内容 -->
 <view class='acc_conts'>
     <view class='acc_header'>
-      <!-- <image src='{{avatarUrl}}'></image> -->
         <open-data type='userAvatarUrl'></open-data>
     </view>
-    
     <view class="name">
      <open-data type="userNickName" lang="zh_CN"></open-data>
     </view>
-
-      <!-- <text class='state'>您尚未登录惠选购商城账号</text> -->
-
+      <text class='state'>您尚未登录{{Tname}}商城账号</text>
  
     <!-- 已授权 扫码进入   -->
-    
-    <view class='refer' wx:if="{{recInfo !=''}}">
+    <view class='refer' wx:if="{{recInfo.number}}">
       <view class='left'>
         <image src='{{recInfo.headimgurl}}'></image>
       </view>
@@ -35,7 +30,6 @@
 
      
     <!-- 没有授权 -->
-      <text class='state'>您尚未登录惠选购商城账号</text>
     
       <view class='btns'>
       <!-- <button class='login'  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信手机号快捷登录</button> -->
@@ -46,10 +40,15 @@
 
 
 <!-- loading -->
-<view class="load" hidden='{{hide}}'>
+<!-- <view class="load" hidden='{{hide}}'>
   <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
 
-  </view>
+  </view> -->
+
+   <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+      <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+      </view>
 <!-- 
   <form  report-submit="true" bindsubmit="formSubmit" bindreset="formReset">
       <button class='login' formType="submit"  open-type="getUserInfo" bindgetuserinfo="bindGetUserInfos">授权登录</button>

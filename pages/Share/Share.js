@@ -17,6 +17,7 @@ Page({
     info:{
       ctitle: 'TA们刚刚提现了',
     },
+    
     control: {
       current: '',
     },
@@ -104,6 +105,7 @@ Page({
   },
   //向下滚动
   inter() {
+
     let that = this
     setInterval(function(){
       if (that.data.control.current > 0) {

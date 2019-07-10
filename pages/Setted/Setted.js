@@ -18,7 +18,16 @@ Page({
     res: '',
     menuTapCurrents: '',
     pay_type: 3,
-    type:1
+    type:1,
+    isShow:false
+  },
+  back(){
+    let m = this.data.member_mall;
+    if(m){
+      wx.switchTab({
+        url:'../UserCenter/userCenter'
+      })
+    }
   },
 //跳转
   ShopMan(){
@@ -40,6 +49,33 @@ Page({
   swiperChange: function (e) {
     this.setData({
       swiperCurrent: e.detail.current
+    })
+  },
+  //获取页面数据
+  getJson() {
+    var that = this;
+    that.setData({
+      isShow: true,
+    })
+    that.header(app.globalData.url + 'setStore');
+    wx.request({
+      url: app.globalData.url + 'setStore',
+      method: 'GET',
+      header: that.data.header,
+      success: res => {
+        this.setData({
+          isShow:false
+        })
+        if (res.data.code == 200) {
+          wx.navigateTo({
+            url: '../OpenShop/OpenShop?res=' + JSON.stringify(res.data),
+          })
+        }else if(res.data.code == 401){
+          this.shows(res.data.msg)
+        } else {
+              utils.error(res);
+        }
+      }
     })
   },
   //商家中心
@@ -140,16 +176,14 @@ Page({
 
   go: function () {
     let content = wx.getStorageSync('content');
-    if (content) {
-      wx.navigateTo({
-        url: '../OpenShop/OpenShop',
-      })
-    } else {
+    if(content){
+      this.getJson();
+
+    }else{
       wx.navigateTo({
         url: '../Accredit/Accredit',
       })
     }
-
   },
   navCour(e) {
     let type = e.currentTarget.dataset.type;
@@ -184,7 +218,7 @@ Page({
                 url: '../Setted/Setted',
               })
             }else{
-              this.show(res.data.msg)
+              this.shows(res.data.msg)
             }
             }
         })
@@ -211,7 +245,7 @@ Page({
             ['res.expire_time.expire_status']:0
           })
         }else{
-          this.show(res.data.msg);
+          this.shows(res.data.msg);
           this.hideModal();
           wx.showTabBar();
         }
@@ -224,7 +258,7 @@ Page({
    */
   
   onLoad: function (options) {
-    new app.ToastPannel();
+    new app.ToastPannels();
     let store =getApp().store;
     this.setData({
       store:store

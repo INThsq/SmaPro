@@ -1,4 +1,6 @@
 /* pages/BankCard/BankCard.wxss */
+@import '../../public/compback/compback.wxss';
+
 .container{
   margin-top: 144rpx;
 }

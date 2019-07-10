@@ -67,7 +67,6 @@ font-size: 56rpx;
 .tx-jine{
 font-size: 32rpx;
 color: #333;
-letter-spacing: 1rpx;
 height: 80rpx;
 line-height: 80rpx;
 }
@@ -87,7 +86,6 @@ line-height: 80rpx;
 .about,.abouts{
   font-size: 26rpx;
   color: #666;
-  letter-spacing: 1rpx;
   margin-top: 24rpx;
 
   

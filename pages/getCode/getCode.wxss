@@ -1,5 +1,6 @@
 /* pages/getCode/getCode.wxss */
 @import"../EarnMoney/EarnMoney.wxss";
+@import"../../static/css/index.wxss";
 .code{
   position: relative;
   top: -260rpx;
@@ -8,6 +9,24 @@
 .code-top{
   padding:0 32rpx;
   height:32rpx;
+}
+.ctrl{
+  display: flex;
+  align-items: center;
+}
+.ctrl text{
+  display: flex;
+}
+.ctrl .btnes{
+  line-height: 34rpx!important;
+  padding:0 10rpx;
+  border-radius:4px;
+  font-size:20rpx;
+  color: #999;
+  border:.5px solid #999;
+  margin-left: 30rpx;
+  height: 34rpx;
+  align-items: center;
 }
 .code-top image{
   height: 32rpx;
@@ -27,16 +46,32 @@ position: relative;
 .code-bot-cont{
 background:url('http://oss.myzy.com.cn/wechat/images/img_erweimabaida.png')no-repeat center;
  background-size: 100% 100%; 
-height: 800rpx;
+/* height: 860rpx; */
+}
+.get-code image{
+  position: relative;
+}
+.Mask{
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  background:url('http://oss.myzy.com.cn/wechat/images/img_mengban.png')no-repeat center;
+  background-size:100% 100%;
+  justify-content: center;
+  align-items: center;
 }
 .code-info{
-  padding: 44rpx 0 44rpx 48rpx;
+  /* padding: 44rpx 0 44rpx 48rpx; */
+  padding:58rpx 0 44rpx 58rpx;
   display: flex;
 }
 .code-info text{
   display: block;
   font-size: 25rpx;
-  line-height: 18px;
+  line-height:20px;
 }
 .code-info text:first-child{
   color: #333;
@@ -51,9 +86,17 @@ height: 800rpx;
   margin-right: 20rpx;
   vertical-align: middle;
 }
+.get-code .images{
+  width: 418rpx;
+  height: 418rpx;
+  display: flex;
+  border:.5px solid #ddd;
+  justify-content: center;
+  align-items: center;
+}
 .get-code image{
-  width: 360rpx;
-  height: 360rpx;
+   width:414rpx;
+  height: 414rpx;
   display: flex;
 }
 .get-code{
@@ -61,6 +104,11 @@ height: 800rpx;
   width: 100%;
   justify-content: center;
   margin-bottom: 60rpx;
+  position: relative;
+}
+.Mask text{
+  color: #666;
+  font-size: 25rpx;
 }
 button::after{
   border:none;
@@ -72,7 +120,7 @@ button{
 }
 .btns{
   position: absolute;
-  bottom: 146rpx;
+  bottom: 126rpx;
   padding: 0 64rpx;
   width: 100%;
   box-sizing: border-box;
@@ -86,6 +134,6 @@ button{
   line-height:18px;
 }
 .tip{
-  padding:70rpx 52rpx;
+  padding:60rpx 52rpx;
   box-sizing: border-box;
 }

@@ -1,4 +1,5 @@
 /* pages/Certification/Certification.wxss */
+
 page{
   background: white;
 }
@@ -12,7 +13,6 @@ page{
   font-size:33.3rpx;
   color: #FF1700;
   padding: 48rpx 0 82rpx;
-
 }
 .bth_image2{
   width: 64rpx;
@@ -21,6 +21,13 @@ page{
   vertical-align: middle;
   animation: xuanuan 2s linear infinite;
 
+}
+.btns{
+  padding:0 30rpx;
+  box-sizing: border-box;
+  width:100%;
+  position: absolute;
+  bottom:144rpx
 }
 .load{
   z-index: 999;
@@ -38,6 +45,7 @@ page{
   color: #f3f3f3;
   font-size: 33.3rpx;
 }
+
 @keyframes xuanuan{
   0%{
     transform: rotate(0)
@@ -74,16 +82,16 @@ button::after{
   margin-top:88rpx;
 }
 .tool image{
-  width: 20rpx;
-  height: 24rpx;
+  width: 22rpx;
+  height: 26rpx;
   margin-right: 10rpx;
 }
 .tool{
-  font-size: 25rpx;
+  font-size: 29.17rpx;
   color: #999;
   text-align: center;
   position: absolute;
-  bottom:32rpx;
+  bottom:60rpx;
   width: 100%;
 }
 action-sheet-item{

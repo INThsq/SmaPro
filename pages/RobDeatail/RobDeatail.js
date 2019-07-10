@@ -10,23 +10,21 @@ Page({
     control: {
       current:'',
     },
-    interval: 1000, //时间间隔
-    controlType:{
-      nextMargin:'250rpx'
-    },
+    interval: 1000, 
     annoType: false,
     imgUrls: [],
-    autoplay: true,
-    interval:1900,
+    autoplay: false,
+    interval:3000,
     duration: 1000,
     swiperCurrent: 0,
     control:{
       current:'',
     },
-    intervals:0, //时间间隔
+    intervals:0, 
     controlType:{
-      nextMargin:'94rpx'
+      nextMargin:'200rpx'
     }
+    
   },
   //轮播图事件
   swiperChange: function (e) {
@@ -44,7 +42,7 @@ Page({
  //向下滚动事件
   inter() {
     let that = this
-    setInterval(function(){
+    setInterval(function () {
       if (that.data.control.current > 0) {
         that.setData({
           control: {
@@ -96,6 +94,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -103,7 +102,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -112,13 +112,15 @@ Page({
         "noncestr": noncestr,
       }
     }
-
     this.setData({
       header: header
     })
   },
   //获取礼品详情
   giftDetails(goods_id){
+    this.setData({
+      isShow:true
+    })
     var that = this;
     that.header(app.globalData.url + 'giftDetails');
     wx.request({
@@ -129,6 +131,9 @@ Page({
         goods_id:goods_id
       },
       success: res => {
+        this.setData({
+        isShow:false
+      })
         if (res.data.code == 200) {
           var detail = res.data.data.gift_goods_list;
           let date = Math.round(new Date().getTime() / 1000).toString();
@@ -147,7 +152,8 @@ Page({
               that.setData({
                 detail:res.data.data,
                 imgUrls:res.data.data.goods_details.images,
-                give_count_list: res.data.data.give_count_list
+                give_count_list: res.data.data.give_count_list,
+                lock:res.data.data.goods_details.is_unlock
               })
           wx.setStorageSync('goods', res.data.data.goods_details);
           that.setData({
@@ -167,7 +173,7 @@ Page({
     let list = this.data.listData;
     // 
     if (list[type].sell_out_ratio == 1) {
-      this.show(list[type].sell_out_error)
+      this.shows(list[type].sell_out_error)
     } else {
       //跳转携参
       wx.navigateTo({
@@ -188,23 +194,42 @@ Page({
       let lock = this.data.lock;
       let tip = this.data.tip; 
       if (content !== '' && lock == 1){
-            wx.navigateTo({
-              url: '../Startgroup/Startgroup?id=' + e.currentTarget.dataset.id,
-            })
+           this.giftGiving(e.currentTarget.dataset.id);
       }else if(content == ''){
             wx.navigateTo({
               url: '../Accredit/Accredit',
             })
       }else{
-            this.show(tip)
+            this.shows(tip)
       }
     },
-
+//开团信息
+giftGiving(mall_goods_id){
+  var that = this;
+  that.header(app.globalData.url +'giftGiving')
+  wx.request({
+    url: app.globalData.url +'giftGiving',
+    method:'get',
+    header:that.data.header,
+    data:{
+      mall_goods_id:mall_goods_id
+    },
+     success: res =>{
+       if(res.data.code == 200){
+        wx.navigateTo({
+          url: '../Startgroup/Startgroup?id=' +mall_goods_id,
+        })
+         }else if(res.data.code==401){
+           this.shows(res.data.msg)
+         }else{}
+        }
+  })
+},
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    new app.ToastPannel();
+    new app.ToastPannels();
     let id = options.id;
     let lock = options.lock;
     let tip = options.tip;
@@ -213,7 +238,10 @@ Page({
     this.setData({
       content:content,
       lock:lock,
-      tip:tip
+      tip:tip,
+      autoplay:true,
+    swiperCurrent: 0
+
     })
   },
   /**
@@ -280,7 +308,10 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+      this.setData({
+        swiperCurrent:0,
+        autoplay:false
+      })
   },
 
   /**

@@ -1,7 +1,8 @@
 {
-  "navigationBarTitleText": "粉丝",
-  "navigationStyle": "custom",
-  "usingComponents": {
+   "navigationBarTitleText": "粉丝",
+   "navigationStyle": "custom",
+   "enablePullDownRefresh": true,
+   "usingComponents": {
     "my-component": "../../public/compback/compback"
   }
 }

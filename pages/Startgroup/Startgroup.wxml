@@ -1,4 +1,5 @@
 <!--pages/Startgroup/Startgroup.wxml-->
+<view hidden='{{back}}'>
     <view class="{{scrollTop > 88?'wrapper red':'wrapper'}}">
   <view class='back' bindtap='back'>
     <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
@@ -6,9 +7,11 @@
   <view class="tetxs">免费赠送</view>
 </view>
 
+
     <!-- 背景 -->
     <view class='container'>
-      <view class='title'>规则</view>
+
+      <view class='title' bindtap='Web' data-url='{{giftGiving.activity_url}}'>规则</view>
       <!-- 信息 -->
       <view class='conts'>
         <view class='info'>
@@ -28,28 +31,32 @@
         </view>
         <!-- 右边信息 -->
         <view class='info-right'>
-        <block  wx:for="{{gift_praise}}" wx:key="{{index}}">
+        <block  wx:for="{{gift_praise}}" wx:key="index">
            <image  class="xu" src='{{item.headimgurl}}'></image></block>
-           <!-- <image class="shi" src='http://oss.myzy.com.cn/wechat/images/touxiang.jpg'></image> -->         
            <image wx:for="{{addNum}}" class="xu" src='{{addImg}}'></image>
-           <image wx:for="{{lockNum}}" class="xu" src='{{lockImg}}'></image>
-
+           <image wx:for="{{lockNum}}" wx:key="index" class="xu" src='{{lockImg}}'></image>
         </view>
 
       </view>
       <!-- 邀请 -->
       <view class='yq'>
-      已邀请<text class='num'>{{giftGiving.gift_total}}</text>人,已可获得 <text class='money'>￥{{giftGiving.gift_money_total}}</text> 佣金(可提现)
+      已邀请<text class='num'>{{giftGiving.gift_praise.length}}</text>人,已可获得 <text class='money'>￥{{giftGiving.gift_money_total}}</text> 佣金(可提现)
       </view>
       <view class='end' wx:if="{{share_gift.gift_queue_id}}">
-        距离结束:   <text class='time'>{{dtime}}</text>
+        距离本轮结束:   <text class='time'>{{dtime}}</text>
       </view>
       <!-- 立即开团 -->
       <view class='ss'>
-      <button data-state="{{giftGiving.share_gift_status}}" wx:if="{{giftGiving.share_gift_status == 0}}" open-type='share' data-name="shareBtn" class='now' bindtap='State' >立即开团</button>
+      <block wx:if="{{giftGiving.is_online.is_disabled}}">
+        <button   bindtap='Now' class='{{giftGiving.is_online.is_disabled?"menow nows":"now nows"}}' >立即开团</button>
+      </block>
+      <block wx:else>
+      <button   data-state="{{giftGiving.share_gift_status}}" data-type="1" wx:if="{{giftGiving.share_gift_status == 0}}" open-type='share' data-name="shareBtn" class='now nows' bindtap='State'>立即开团</button>
        <!--   -->
-    <button wx:else data-state="{{giftGiving.share_gift_status}}"   bindtap='State' class='now' >立即开团</button>
-      <view class='menow' >我也要开团，助力升级分享</view>
+    <button wx:else data-state="{{giftGiving.share_gift_status}}"  data-type="1"  bindtap='State' class='now nows' >立即开团</button>
+    </block>
+
+      <button style='font-size:16px!important' class='{{giftGiving.is_online.is_disabled?"now":"menow"}}'  data-state="{{giftGiving.share_gift_status}}" data-type="2" bindtap='GetCode'>当面送，无需加好友哦~</button>
       </view>
       </view>
     </view>
@@ -57,10 +64,11 @@
     <view  bindtap='choseimg' bindtap='choseimg' style='position: fixed;top:999999999999999999999rpx;"'>
       <painter  customStyle='margin-left:40rpx' palette="{{template}}" bind:imgOK="onImgOK" />
     </view>
+    </view>
 
-    <!-- 吐司提示 -->
-    <import src="../../public/appToast/appToast.wxml"/>
-    <template is="toast" data="{{ ..._toast_ }}"/>
+   <!-- 吐司提示 -->
+   <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
   
     <!-- 自定义模态框 -->
     <dialog id="modal"
@@ -74,12 +82,33 @@
       <view class='modal-body'>
           <view>本轮分享已完成,是否发起新的开团</view>     
       </view>
-
   </dialog>
 
 <!-- 加载中 -->
   <view class="load {{isShow ? 'show' : ''}}" >
       <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
       </view>
+
+
+      <view hidden="{{hides}}">
+          <view class="wrapper">
+              <view class='back' bindtap='close'>
+                <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+              </view>
+              <view class="tetxs" style="color:#333">免费赠送</view>
+            </view>
+          <!-- 内容部分 -->
+          <view class="containers">
+            <view class="card">
+                <view class="name"><text style='font-weight:bold'>领取总数：</text>{{code.give_num}}</view>
+                <view class="number"><text style='font-weight:bold'>本轮剩余：</text>{{code.praise_num}}</view>
+                <view class="card_img">
+                <image src="{{code.share_url}}"></image>
+                </view>
+                <view class="sao">{{code.rule_explain}}</view>
+            </view>
+        
+          </view>
+          </view>
 
 

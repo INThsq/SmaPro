@@ -1,4 +1,7 @@
 /* pages/Balance/Balance.wxss */
+@import "../../public/compback/compback.wxss";
+@import "../Deposit/Deposit.wxss";
+@import "../../static/css/index.wxss";
 .bal-conts{
   margin-top:130rpx; 
   padding:92rpx 30rpx 40rpx 30rpx; 
@@ -46,6 +49,25 @@ button::after{
   bottom: 20px;
   left: 50%;
   margin-left:-50rpx;
+}
+.way{
+  width: 24px;
+  height: 24px;
+}
+.tx-box{
+  height:auto!important;
+  padding-bottom: 47px;
+}
+.title_center{
+  font-size: 33.3rpx!important;
+}
+.choose_one{
+  color: #999;
+  font-size:29.17rpx;
+}
+.choose_two{
+  margin-left: 10rpx;
+  color: #EF3038;
 }
 .detail{
   display: flex;

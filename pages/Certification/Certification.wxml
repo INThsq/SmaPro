@@ -9,7 +9,7 @@
 
 <!-- 内容部分 -->
 <view class='container'>
-  <view class='title'>拍照上传您的身份证</view>
+  <view class='title'>拍照/上传您的身份证</view>
   <!-- 上传照片 -->
   <view class='photo' data-id='1' style='margin-bottom:88rpx;'  catchtap='listenerButton'>
   <image class='jj' src='http://oss.myzy.com.cn/wechat/images/imag_shenfenzheng_bg.png'></image>
@@ -20,14 +20,18 @@
   <image class='jj' src='http://oss.myzy.com.cn/wechat/images/imag_shenfenzheng_bg.png'></image>
       <image class="pp" src='{{avatarUrl2}}'></image>
   </view>
-  <!-- 按钮 -->
-  <button class='bind' bindtap='Sure'>确定</button>
-
-  <view class='tool'>
-  <image src='http://oss.myzy.com.cn/wechat/images/icon_anquan.png'></image>
-信息已加密，仅用于银行验证
-</view>
+  
 </view>   
+
+<!-- 按钮 -->
+<view class="btns"><button class='bind' bindtap='Sure'>确定</button></view>
+
+
+<view class='tool'>
+<image src='http://oss.myzy.com.cn/wechat/images/icon_anquan.png'></image>
+信息仅用于身份验证，保障您的信息安全
+
+</view>
 
 <!-- 拍照 -->
 <!--默认action-sheet为隐藏，由button触发-->
@@ -45,6 +49,8 @@
   <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
   </view>
 
-   <import src="../../public/appToast/appToast.wxml"/>
-  <template is="toast" data="{{ ..._toast_ }}"/>
+  <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+  
   

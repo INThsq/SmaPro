@@ -1,0 +1,177 @@
+<!--pages/WhitCenter/WhitCenter.wxml-->
+    <view class="wrapper">
+      <view class='back' bindtap='back'>
+        <image src='http://oss.myzy.com.cn/wechat/images/info-back.png'></image>
+      </view>
+     <view class="tetxs" bindtap='listenerButton'>{{shop.dot_name?shop.dot_name:shop}}
+      <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_6.png' class="arrow"></image>
+     </view>
+</view> 
+
+
+<!-- 内容部分 -->
+<view class='container'>
+  <!-- 顶部内容 -->
+    <view class='top'>
+        <view class='local'>
+          <view class='local-left'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_4.png' class='local-One'></image>
+          <text class='local-Two'>{{callback.mall_dot.pois_address}}</text>
+          </view>
+          <view class='local-right' bindtap='StoreCode' data-id='{{callback.mall_dot.mall_dot_authorize_id}}'>
+          <image class='local-Thr' src="http://oss.myzy.com.cn/wechat/images/img_dianpu_3.png"></image>
+          </view>
+        </view>
+        <!-- 搜索框 -->
+        <view class='search'>
+            <form class='searchForm' bindsubmit='searchSubmitFn' confirm-type="search">
+                  <input  placeholder-class='placeholder' placeholder='请输入核销码或分佣金者编号'  type="search" value="{{searchValue}}" class='topInput' name='input' bindinput='keyword' bindconfirm="searchSubmitFn"/>
+                  <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_7.png' bindtap="ScanCode"  class='searches'></image>
+          </form>
+      </view>
+      <!-- 数据显示 -->
+      <view class='Num'>
+          <view class='item'>
+            <text class='num'>{{callback.mall_dot.money}}</text>
+            <text class='wenzi'>余额</text>
+          </view>
+          <view class='item'>
+            <text class='num'>{{callback.mall_dot.workload}}</text>
+            <text class='wenzi'>待核销</text>
+          </view>
+          <view class='item'>
+            <text class='num'>{{callback.mall_dot.supply_num}}</text>
+            <text class='wenzi'>补货次数(剩余)</text>
+          </view>
+      </view>
+    </view>
+    <!-- 系统提示 -->
+    <!--  -->
+    <view class="marquee_container" style="--marqueeWidth--:-40em">
+    <view class='imggs'>
+    <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_2.png'></image></view>
+    <view class="marquee_text">{{callback.system_notice.content}}</view>
+</view>
+      <!-- 悬浮框 -->
+  <view class='speion' wx:if="{{callback.waring_tip!=''}}">
+      <view class='spe-left'>
+        <image src='http://oss.myzy.com.cn/wechat/images/icon_tishi.png'></image>
+        <text>{{callback.waring_tip}}</text>
+      </view>
+      <view class='spe-right' bindtap='Record'>
+          立即处理
+      </view>
+  </view>
+    <view class='cont'>
+        <view class='cont-items' bindtap='Record'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_8.png'></image>
+          <text>核销记录</text>
+        </view>
+
+        <view class='cont-items' bindtap="Replen" data-id='{{callback.mall_dot.mall_dot_authorize_id}}'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_9.png'></image>
+          <text>补货下单</text>
+        </view>
+
+        <view class='cont-items' bindtap='Apply'>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_10.png'></image>
+          <text>资金</text>
+        </view>
+    </view>
+
+    
+    <!-- 绩效统计 -->
+    <view class='Sum' wx:if="{{callback.task_title.is_show}}">
+        <view class='Sum-title'>
+        <view class='T-tl'>
+          <!-- <view class='block'></view> -->
+          <text>{{callback.task_title.subtitle}}</text>
+          <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_5.png' class='tit-img' bindtap='Title' data-id="1"></image>
+           
+        </view>
+            <view class='T-tr btn-s'  wx:if="{{callback.task_title.is_disabled}}"  bindtap='SetOrder'>{{callback.task_title.button}}</view>
+            <view bindtap='Title' class='T-tr btn-s grey' data-id="2" wx:else >{{callback.task_title.button}}</view>
+          
+          </view>
+    </view>
+  
+    <!-- 统计列表 -->
+    <view class='Sum-list'>
+        <block wx:for="{{top.task_list}}" wx:key="index">
+          <view class='Sunm-item'>
+           <view class='Sunm-left'> 
+            <canvas canvas-id='bgCanva{{item.total}}{{index}}'  class='canvasI'></canvas>
+            <canvas canvas-id="runCanvae{{item.total}}{{index}}" class='canvasII' ></canvas>
+            </view>  
+              <view class='item-right'>
+                <view class='title'> 
+                  <text>{{item.title}}</text>
+                  <image src='http://oss.myzy.com.cn/wechat/images/img_dianpu_5.png'></image>
+                </view>
+                <view class='title-bot'>
+                  <text class='bot-O'>{{item.finish_total}}</text>
+                  <text class='bot-T'>({{item.sub_title}})</text>
+                </view>
+            </view>
+              
+          </view>
+          </block>
+        </view>
+     
+
+
+
+</view>
+
+
+<!--默认action-sheet为隐藏，由button触发-->
+<!-- <action-sheet hidden="{{actionSheetHidden}}" bindchange="listenerActionSheet" >
+  
+    <block wx:for="{{list}}" wx:key="{{index}}">
+    <action-sheet-item data-name="{{item.dot_name}}" data-id="{{item.mall_dot_authorize_id}}" data-num="{{item.order_num}}"  bindtap="itemChange">{{item.dot_name}}</action-sheet-item>
+    </block>
+    <action-sheet-cancel>取消</action-sheet-cancel>
+</action-sheet> -->
+
+<cover-view class='Cover' hidden="{{actionSheetHidden}}" >
+<cover-view style='position: absolute;bottom:0;width:100%;'>
+<block wx:for="{{list}}" wx:key="{{index}}">
+    <cover-view class='cover-list' data-name="{{item.dot_name}}" data-id="{{item.mall_dot_authorize_id}}" data-num="{{item.order_num}}"  bindtap="itemChange">{{item.dot_name}}</cover-view>
+    </block>
+    <cover-view style='height:16rpx;background:#FAFAFA'></cover-view>
+    <cover-view class='canel' bindtap='Canel'>取消</cover-view>
+
+</cover-view>
+
+</cover-view>
+
+
+ <!-- toast -->
+  <import src="../../public/appToasts/appToasts.wxml"/>
+  <template is="toasts" data="{{ ..._toast_ }}"/>
+
+  <!-- 模态框 -->
+   <cover-view   hidden="{{!isShows}}"  class='modal'>
+      <cover-view  data-type="mask"  catchtap='hideModal' class='modal-mask' ></cover-view>
+      <cover-view  class='modal-layer  modal-layer-radius {{modalSize == "sm" ? " modal-layer-sm" : " modal-layer-md" }} ' >
+          <!-- 头部 -->
+          <cover-view class='modal-header'>        
+              <cover-view>温馨提示</cover-view>        
+          </cover-view>
+
+          <!-- 内容区域 -->
+          <cover-view class='modal-body'>         
+            <cover-view>{{Toast==1?top.task_title.remark:top.task_title.button_tip}}</cover-view>                         
+          </cover-view>
+          <cover-view class='modal-footer' bindtap='Sure'>
+                <cover-view>确定</cover-view>
+          </cover-view>
+      </cover-view>
+  </cover-view>
+
+
+   <!-- load -->
+   <view class="load {{isShow ? 'show' : ''}}" >
+    <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+    </view>
+

@@ -1,0 +1,35 @@
+.show{
+    display: block!important;
+  }
+  .bth_image2{
+    width: 64rpx;
+    height: 64rpx;
+    margin-right: 40rpx;
+    vertical-align: middle;
+    animation: xuanuan 2s linear infinite;
+  }
+  .load{
+    width:470rpx;
+    height: 144rpx;
+    background:rgba(53,53,53,.7);
+    border-radius: 6px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left:-235rpx;
+    margin-top: -77rpx;
+    padding: 40rpx; 
+    display: none;
+    box-sizing: border-box;
+    color: #f3f3f3;
+    font-size: 33.3rpx;
+    z-index:3000;
+  }
+  @keyframes xuanuan{
+    0%{
+      transform: rotate(0)
+    }
+    100%{
+      transform: rotate(360deg)
+    }
+  }

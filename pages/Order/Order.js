@@ -7,6 +7,7 @@ Page({
   data: {
     currentTab: 0,
     heightVal:500,
+    up:"下拉加载更多~"
   },
   /**
    * 页面的初始数据
@@ -14,18 +15,17 @@ Page({
   //提现
   withdraw: function () {
   },
+  //晒单
+  Drying(){
+    this.shows('暂未开放，请稍后关注哦~')
+  },
   //返回上一页
   back:function(){
-    let tz = this.data.tz;
-    if(tz == 1){
+   
       wx.switchTab({
         url: '../UserCenter/userCenter',
       })
-    }else{
-      wx.navigateBack({
-        delta: 1,
-      })
-    }
+    
   },
   check(e){
     let order_num =e.currentTarget.dataset.id;
@@ -35,6 +35,8 @@ Page({
   },
   //待支付
   toPay(e){
+    app.types = 2;
+    app.index = 1;
     let state = e.currentTarget.dataset.status;
     let order_num = e.currentTarget.dataset.order;
     if(state == 0 || state ==2){
@@ -49,7 +51,7 @@ Page({
   
   //提醒发货
   remind(){
-    this.show('已提醒卖家发货,请耐心等待')
+    this.shows('已提醒卖家发货,请耐心等待')
   },
 
 
@@ -60,30 +62,35 @@ Page({
    */
   onLoad: function (options) {
     let tz = getApp().tz;
+    if(tz){
     this.setData({
       tz:tz
     })
+    }
     //获取元素宽高
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
+          pixelRatio: res.pixelRatio,
+          windowHeight: res.windowHeight,
           windowWidth: res.windowWidth
         })
       },
     })
-        new app.ToastPannel();
+        new app.ToastPannels();
         var that = this;    
         var state = options.state;
-        console.log(state)
-        if(state == 0){
-          that.setData({
-            "currentTab": 0,
-          })
-         }else{
-          that.setData({
-            "currentTab":state
-          })
-         }
+        if(state){
+          if (state == 0) {
+            that.setData({
+              "currentTab": 0,
+            })
+          } else {
+            that.setData({
+              "currentTab": state
+            })
+          }
+        }
         //点击之后获取到的值
         var value = getApp().tab;
         var singleNavWidth = this.data.windowWidth /5;
@@ -147,29 +154,81 @@ Page({
   clickTab: function (e) {
     var that = this;
     var id = e.target.dataset.id;
+  
     var currentTab = e.target.dataset.current;
     var singleNavWidth = this.data.windowWidth /5;
-
+    this.setData({
+      navScrollLeft: (currentTab - 2) * singleNavWidth
+    })
     if (this.data.currentTab === currentTab) {
       return false;
+
     } else {
       that.setData({
         currentTab: e.target.dataset.current,
-        id:id,
-    //tab选项居中                            
-      navScrollLeft: (currentTab) * singleNavWidth,
+        id:id
       })
       that.getOrder(id)
     }
   },
-  
+  //线下自提
+  Off(e){
+    let order = e.target.dataset.id;
+    let index = e.target.dataset.index;
+    console.log(e)
+    this.setData({
+      order:order,
+      index:index
+    })
+    this.Offline.showModal();
+  },
+  //确定自提
+  confirmOff(){
+    let order = this.data.order;
+    this.selfMention(order);
+    this.Offline.hideModal();
+  },
+  //取消自提
+  cancelOff(){
+    this.Offline.hideModal();
+  },
+  //自提
+  selfMention(order){
+    let detail = this.data.listData; 
+    let index = this.data.index;
+    let singleNavWidth = this.data.windowWidth / 5;
+
+    this.header(app.globalData.url+'selfMention');
+    wx.request({
+      url:app.globalData.url+'selfMention',
+      header:this.data.header,
+      method:'post',
+      data:{
+        order_num:order
+      },
+      success:res=>{
+        if(res.data.code==200){
+          this.shows(res.data.msg)
+          this.getOrder(4)
+          this.setData({
+            currentTab:5,
+            navScrollLeft: 3 * singleNavWidth
+          })
+        }else{
+          this.shows(res.data.msg)
+        }
+      }
+    })
+  },
+  //
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
     this.Modal = this.selectComponent("#modal");
     this.Modals = this.selectComponent("#modals");
-
+    this.Offline = this.selectComponent('#Offline');
   },
   //确认收货弹窗
   _Modals: function (e){
@@ -190,6 +249,9 @@ Page({
   },
   //确认收货接口
   confirmReceipt(order_num){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url +'confirmReceipt');
     wx.request({
       url: app.globalData.url +'confirmReceipt',
@@ -199,10 +261,12 @@ Page({
       },
       method:'POST',
       success:res=>{
+        this.setData({
+          isShow:false
+        })
           if(res.data.code == 200){
             this.Modals.hideModal();
-            this.show(res.data.msg);
-          
+            this.shows(res.data.msg);
             this.getOrder(4)
             this.setData({
               "currentTab": 5,
@@ -267,6 +331,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -274,7 +339,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype":logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -283,15 +349,15 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })
   },
   //获取订单数据
   getOrder(order_status){
+    this.setData({
+      isShow:true
+    })
     var that = this;
     that.header(app.globalData.url + 'orderList');
     wx.request({
@@ -302,6 +368,9 @@ Page({
         order_status: order_status
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           var detail = res.data.data.callback.order_list;
           let date = Math.round(new Date().getTime() / 1000).toString();
@@ -393,6 +462,9 @@ Page({
   },
   //未支付订单详情
   orderArticle(order_num){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url +'orderArticle');
     wx.request({
       url: app.globalData.url + 'orderArticle',
@@ -402,6 +474,9 @@ Page({
         order_num: order_num
       },
       success:res=>{
+        this.setData({
+          isShow:false
+        })
         if(res.data.code ==200){
           let callback = JSON.stringify(res.data.data);
           wx.navigateTo({
@@ -417,6 +492,9 @@ Page({
   },
   // 去支付
   getWaitPay(order_num) {
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url + 'getWaitPay');
     wx.request({
       url: app.globalData.url + 'getWaitPay',
@@ -426,6 +504,9 @@ Page({
         order_num: order_num
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if(res.data.code == 200){
           wx.setStorageSync('details', res.data.data.callback);
           wx.setStorageSync('market_price', res.data.data.callback.mall_goods.sale_price);
@@ -443,6 +524,9 @@ Page({
   },
   //取消订单
   invalidOrder(order_num,index){
+    this.setData({
+      isShow:true
+    })
     this.header(app.globalData.url + 'invalidOrder');
     let detail = this.data.listData;
     wx.request({
@@ -453,6 +537,9 @@ Page({
         order_num: order_num
       },
       success: res => {
+        this.setData({
+          isShow:false
+        })
         if (res.data.code == 200) {
           detail.splice(index,1)
           this.setData({

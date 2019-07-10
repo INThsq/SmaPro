@@ -38,7 +38,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    new app.ToastPannel();
+    new app.ToastPannels();
   },
 
   /**
@@ -89,6 +89,7 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
   // 生成header
+  //生成header
   header(url) {
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
@@ -112,6 +113,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -119,7 +121,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -155,6 +158,9 @@ Page({
     // })
     // 
     this.Modal.hideModal();
+    this.setData({
+      isShow: true
+    })
     this.header(app.globalData.url + 'recharge');
     wx.request({
       url:app.globalData.url + 'recharge',
@@ -165,10 +171,10 @@ Page({
         pay_type:3
       },
       success:res=>{
+        this.setData({
+          isShow: false
+        })
         if(res.data.code == 200){
-          this.setData({
-            isShow:true
-          })
           let payment = res.data.data.callback;
             wx.requestPayment({
               timeStamp: payment.timeStamp,
@@ -182,16 +188,18 @@ Page({
                       wx.redirectTo({
                         url: '/pages/Balance/Balance',
                       })
-                    },2000)
+                    },500)
                 }
               }
             })
+            }else{
+              this.shows(res.data.msg)
             }
 
       }
     })
   },
   _cancelEvent: function () {
-    this.show('充值失败');
+    this.shows('充值失败,请联系客服');
   },
 })

@@ -1,0 +1,82 @@
+<!--pages/Record/Record.wxml-->
+ <view class="wrapper">
+  <view class='back' bindtap='back'>
+    <image src='http://oss.myzy.com.cn/wechat/images/goback.png'></image>
+  </view>
+  <view class="tetxs">核销记录</view>
+</view>
+  
+<!-- 选项卡 -->
+<view class='tab'>
+    <view class="swiper-tab">
+     <view class="swiper-tab-item {{currentTab==0?'active':''}}"   data-current="0" bindtap="clickTab">待结算</view>
+     <view class="swiper-tab-item {{currentTab==1?'active':''}}"   data-current="1" bindtap="clickTab">已结算</view>
+</view>
+</view>
+
+<!-- 内容 部分 -->
+
+<view class='tab_cont'  wx:if="{{settle_list.length==0}}"  style=" margin-top: 130rpx!important;">
+        <view class='conts'>
+            <view class='noW' style='height:calc(100vh - 130rpx)'>
+                <image src='http://oss.myzy.com.cn/wechat/images/adress.png'></image>
+                <text>抱歉，暂无数据</text>
+                </view>
+        </view>
+    </view>
+
+<view class="order-conts" style='margin-top:130rpx;' wx:else>
+    <block wx:for="{{settle_list}}" wx:key='{{index}}'>
+        <view class="info-items">
+            <view class="info-top">
+            <view class="info-title">
+                <text class="info-left">#{{item.handle_num}}</text>
+                <text class="info-right">{{item.create_time}}</text>
+            </view>
+        
+            <view class="info-num"  wx:if="{{scene_type == 0}}">结算数量：{{item.order_total}}单</view>
+            <view class="info-peo"  wx:if="{{scene_type == 0}}">审核门店：{{item.dot_name}}</view>
+
+            <view class="info-num"  wx:if="{{scene_type == 1}}">结算数量：{{item.order_total}}单</view>
+            <view class="info-peo"  wx:if="{{scene_type == 1}}">分销商：{{item.nickname}}</view>
+        </view>
+        <!-- 按钮部分 -->
+        <view class="info-btn">
+            <view class="btn-left">佣金：<text>{{item.money_total}}元</text></view>
+            <view class="btn-gets" wx:if="{{item.status == 0 && scene_type == 0}}">处理中</view>
+            <view class="btn-get" wx:if="{{item.status == 1 && scene_type == 0}}">查看明细</view>
+
+            <view class="btn-gets" bindtap="Confirm" data-handle="{{item.giveaway_handle_id}}"  data-autid="{{item.mall_dot_authorize_id}}" wx:if="{{item.status == 0&& scene_type == 1}}">确认结算</view>
+            <view class="btn-get" wx:if="{{item.status == 1 && scene_type == 1}}">查看明细</view>
+
+
+         </view> 
+</view>
+    </block>
+</view>
+
+
+
+  <!-- load -->
+  <view class="load {{isShow ? 'show' : ''}}" >
+        <image class="bth_image2"  animation="{{animationData}}"   src='http://oss.myzy.com.cn/wechat/images/icon_jiazaishuaxin.png'></image>正在加载…
+</view>
+
+<!-- 模态框 -->
+<dialog id="modal"
+title="温馨提示"
+cancelText="取消"
+confirmText="确认"
+bind:cancelEvent="_cancelEvent"  
+bind:confirmEvent="_confirmEventFirst" 
+>
+
+<view class='modal-body'>
+<view>确认核销此订单吗?</view>     
+</view>
+
+</dialog>
+
+
+<import src="../../public/appToasts/appToasts.wxml"/>
+<template is="toasts" data="{{ ..._toast_ }}"/>

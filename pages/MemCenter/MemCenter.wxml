@@ -21,18 +21,18 @@
       <view class='swiper_con'>
       <view class='con_top' style='margin-top:20rpx;'>
         <image src='{{data.image}}'></image>
-        <text class='phone'>惠选购  开启美好生活！</text>
+        <text class='phone' style='margin-top:10rpx;'>{{Tname}}  开启美好生活！</text>
       </view>
       <view class='cont_bot' wx:if="{{data.is_current == 1}}">
           <view class='bot_one'>已消费￥{{data.points}}元</view>
-          <view class='bot_two' style='font-weight:bold'>[再消费 <text>{{data.diff_points}}</text> 成为惠选购普卡]</view>
+          <view class='bot_two'>[再消费 <text style='font-weight:bold'>{{data.diff_points}}</text> 成为{{Tname}}普卡]</view>
       </view>
       <view class='cont_bot' wx:if="{{data.is_current == 0 && data.diff_points >0}}">
-          <view class='bot_one'>专享惠选购{{data.alias_name}}</view>
+          <view class='bot_one'>专享{{Tname}}{{data.alias_name}}</view>
           <view class='bot_two'>[消费达 <text style='font-weight:bold'>{{data.min_points}}</text> 可拥有]</view>
       </view>
       <view class='cont_bot' wx:if="{{data.diff_points <0}}">
-          <view class='bot_one'>专享惠选购{{data.alias_name}}</view>
+          <view class='bot_one'>专享{{Tname}}{{data.alias_name}}</view>
           <view class='bot_two'>[恭喜您已拥有{{data.alias_name}}]</view>
       </view>
       </view>
@@ -46,12 +46,12 @@
         <text class='phone'>{{item.number}}</text>
       </view>
       <view class='cont_bot' wx:if="{{item.is_current == 0}}">
-          <view class='bot_one'>专享惠选购{{item.alias_name}}</view>
+          <view class='bot_one'>专享{{Tname}}{{item.alias_name}}</view>
           <view class='bot_two'>[消费达 <text style='font-weight:bold'>{{item.min_points}}</text> 可拥有]</view>
       </view>
       <view class='cont_bot' wx:if="{{item.is_current == 1}}">
           <view class='bot_one'>已累计贡献值 {{item.points}} 分</view>
-          <view class='bot_two'>[再消费 <text style='font-weight:bold'>{{item.diff_points}}</text> 成为惠选购{{list[index +1].alias_name}}]</view>
+          <view class='bot_two'>[再消费 <text style='font-weight:bold'>{{item.diff_points}}</text> 成为{{Tname}}{{list[index +1].alias_name}}]</view>
       </view>
       </view>
     </swiper-item> 

@@ -18,17 +18,22 @@ Page({
     countDownSecond: '00',
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {  
-    new app.ToastPannel();
+    new app.ToastPannels();
     let Waitpay = JSON.parse(options.callback);
     var totalPrice = wx.setStorageSync('totalPrice', Waitpay.callback.total_price);
     var discount_money = wx.setStorageSync('discount_money', Waitpay.callback.discount_price);
     var price = wx.setStorageSync('price', Waitpay.callback.price);
     var discount_price = wx.setStorageSync('discount_money', Waitpay.callback.discount_price);
-    Waitpay.callback.create_time= utils.formatTime(Waitpay.callback.create_time, 'Y-M-D h:m:s');
+    Waitpay.callback.mall_logistics.logistics_time = utils.formatTime(Waitpay.callback.mall_logistics.logistics_time, 'Y-M-D h:m:s');
+    Waitpay.callback.create_time = utils.formatTime(Waitpay.callback.create_time, 'Y-M-D h:m:s');
+
+    Waitpay.callback.mall_logistics.region_names_path = Waitpay.callback.mall_logistics.region_names_path.replace(",","");
+
     this.time(Waitpay.callback.order_queue.expire_time)
    switch(Waitpay.callback.pay_type){
      case 1:
@@ -72,6 +77,7 @@ Page({
       zuli: zuli
     })
   },
+
   //跳转详情
   detail(e){
     let id = e.currentTarget.dataset.id;
@@ -114,6 +120,8 @@ Page({
    */
   onReady: function () {
     this.Modal = this.selectComponent("#modal");
+    this.Modals = this.selectComponent("#modals");
+     
   },
   Canel(e){
     let order_num =e.currentTarget.dataset.id;
@@ -142,7 +150,7 @@ Page({
     },
     success: res => {
       if (res.data.code == 200) {
-        this.show('取消成功');
+        this.shows('取消成功');
         wx.navigateTo({
           url:'../Order/Order'
         })
@@ -152,6 +160,52 @@ Page({
     }
   })
  },
+ //确认收货
+  _Modals(e){
+    let order = e.target.dataset.order;
+    this.setData({
+      order: order
+    }) 
+    this.Modals.showModal();
+  },
+  //确认收货
+  confirm(e) {
+    let order = this.data.order;
+    this.confirmReceipt(order)
+  },
+  //取消收货
+  cancel() {
+    this.Modals.hideModal();
+  },
+  //确认收货接口
+  confirmReceipt(order_num) {
+    this.setData({
+      isShow: true
+    })
+    this.header(app.globalData.url + 'confirmReceipt');
+    wx.request({
+      url: app.globalData.url + 'confirmReceipt',
+      header: this.data.header,
+      data: {
+        order_num: order_num
+      },
+      method: 'POST',
+      success: res => {
+        this.setData({
+          isShow: false
+        })
+        if (res.data.code == 200) {
+          this.Modals.hideModal();
+          this.shows(res.data.msg);
+          wx.navigateTo({
+            url: '../Order/Order?state=6',
+          })
+        } else {
+          this.Modals.hideModal();
+        }
+      }
+    })
+  },
   // 去支付
 getWaitPay(order_num){
     this.header(app.globalData.url +'getWaitPay');
@@ -295,6 +349,7 @@ getWaitPay(order_num){
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -302,7 +357,8 @@ getWaitPay(order_num){
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype": logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {

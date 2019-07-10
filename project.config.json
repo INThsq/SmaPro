@@ -1,17 +1,26 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
-		"minified": true,
+		"minified": false,
 		"newFeature": true,
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.2",
+	"libVersion": "2.6.4",
 	"appid": "wx05423f696872e38c",
 	"projectname": "qlqw_xcx",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"scripts": {},
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -26,7 +35,6 @@
 			"list": []
 		},
 		"game": {
-			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
@@ -70,18 +78,25 @@
 					"id": 4,
 					"name": "开团",
 					"pathName": "pages/EarnMoney/EarnMoney",
-					"query": "gift_queue_id=19&order_num=B3083588861229002019030848575355&goods={\"goods_id\":10,\"member_group_id\":2,\"goods_type\":2,\"virtual_type\":0,\"title\":\"汽车轮胎杯个性潮流车载水杯男士带盖便携随手杯韩版创意学生杯子\",\"price\":\"0.02\",\"images\":[\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382174.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382176.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382177.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1551714382178.jpeg\"],\"reward_money\":\"5.00\",\"sell_out\":\"已售2183件\",\"sell_out_tips\":\"免费赠送(包邮)\",\"is_unlock\":1,\"is_unlock_tips\":\"\"}",
+					"query": "gift_queue_id=131",
 					"scene": 1036,
 					"referrerInfo": {
 						"appId": "wx05423f696872e38c"
 					}
 				},
 				{
-					"id": -1,
+					"id": 5,
 					"name": "开团",
-					"pathName": "pages/Order/Order",
-					"query": "gift_queue_id=144&order_num=B2194139572911002019021951985048&goods={\"goods_id\":12,\"member_group_id\":2,\"goods_type\":2,\"virtual_type\":0,\"title\":\"MMCO领针织背心连衣裙中长款修身毛衣长裙毛线女装秋冬\",\"price\":\"20.00\",\"images\":[\"http://api.myzy.com.cn/uploads/member_mall/images/1/1546966775876.jpeg\",\"http://api.myzy.com.cn/uploads/member_mall/images/1/1546966775877.jpeg\"],\"reward_money\":\"5.00\",\"sell_out\":\"已售1320件\",\"sell_out_tips\":\"免费赠送(包邮)\",\"is_unlock\":1,\"is_unlock_tips\":\"\"",
-					"scene": null
+					"pathName": "pages/EarnMoney/EarnMoney",
+					"query": "gift_queue_id=4&goods={\"goods_id\":11,\"member_group_id\":1,\"goods_type\":2,\"virtual_type\":0,\"title\":\"久加宝，品牌促销免费送、送、送\",\"price\":\"30.00\",\"images\":[\"https://api.myzy.com.cn/uploads/member_mall/images/2/1553313534855.jpeg\",\"https://api.myzy.com.cn/uploads/member_mall/images/2/1553313534856.jpeg\"],\"is_give_goods\":1,\"reward_money\":\"5.00\",\"sell_out\":\"已售2454件\",\"sell_out_tips\":\"免费赠送\",\"is_unlock\":1,\"is_unlock_tips\":\"赶紧分享赚佣金吧~\"}",
+					"scene": 1011
+				},
+				{
+					"id": 6,
+					"name": "模拟更新",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": 1011
 				}
 			]
 		}

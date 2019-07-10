@@ -19,7 +19,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+   
     new app.ToastPannel();
+    this.setData({
+      Tname: app.globalData.Tname,
+      Beans: app.globalData.Beans,
+      Bean: app.globalData.Bean
+    })
     var flag = false;
     flag = options.flag;
     if (flag) {

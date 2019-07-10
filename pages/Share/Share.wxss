@@ -150,6 +150,7 @@ background: #C3C3C3!important;
   width: 52rpx;
   height: 52rpx;
   margin-top: 14rpx;
+  
 }
 .presented-list {
   height: 400rpx!important;

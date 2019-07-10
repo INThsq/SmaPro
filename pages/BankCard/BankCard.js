@@ -17,8 +17,23 @@ Page({
   onLoad: function (options) {
     this.getBankOwner();
     this.bankList();
+    let type = options.type;
+    this.setData({
+      type:type
+    })
   },
-
+  back(){
+    let type = this.data.type;
+    if (type == 1) {
+      wx.switchTab({
+        url: '../UserCenter/userCenter',
+      })
+    } else {
+      wx.navigateBack({
+        delta: 1
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

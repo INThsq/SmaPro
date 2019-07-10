@@ -5,6 +5,7 @@ page{
     margin:0;
     background: #fafafa;
     font-family:"SourceHanSansSC";
+    /* padding-bottom:50px; */
 }
 .button-hover{
   color:white;
@@ -46,7 +47,6 @@ page{
 .baseMarginTop{
     margin-top: 30rpx;
 }
-
 
 /*热门标签 span*/
 .hot{

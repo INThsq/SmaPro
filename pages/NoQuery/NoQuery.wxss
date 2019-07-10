@@ -1,0 +1,2 @@
+/* pages/NoQuery/NoQuery.wxss */
+@import "../Query/Query.wxss";

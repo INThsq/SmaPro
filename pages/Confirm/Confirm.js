@@ -11,10 +11,10 @@ Page({
     num:'',
     totalPrice:0,
     price:'',
-    menuTapCurrent:'0',
+    // menuTapCurrent:'1',
     nedPay:'0',
     detail:'',
-    type:3,
+    type:1,
     isShow: false,
     totalFlag:1
   },
@@ -22,8 +22,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let types =getApp().types;
     
+    let types =getApp().types;
+    let scene_type = getApp().scene_type;
+    let touch = wx.getStorageSync('touch');
+    var goods_id = options.goods_id;
+    var sku_ids = getApp().sku_ids;
+    var goods_num = getApp().goods_num;
+    app.goods_id = goods_id;
+    this.setData({
+      goods_id:goods_id,
+      touch:touch
+    })
     var flag = false;
     flag = options.flag;
     new app.ToastPannels();
@@ -34,14 +44,38 @@ Page({
       var virtual_money = detail.virtual_money;
       var residue = (Number(virtual_money) - Number(discount_money)).toFixed(2);
       var goods_num = detail.mall_goods.goods_num;
+      let settlement_type =detail.settlement_type;
+      let balance = detail.balance;
+     
+      var minusStatus = goods_num <= 1 ? 'disabled' : 'normal';
+      // 只有大于一件的时候，才能normal状态，否则disable状态
+      this.setData({
+        minusStatus: minusStatus
+      });
+      for(var s=0;s<settlement_type.length;s++){
+        if (settlement_type[s].is_default&&settlement_type[s].pay_type == 1){
+          if (Number(balance) < Number(totalPrice)&& scene_type!= 1) {
+            this.setData({
+              grey: true
+            })
+          } else {
+            this.setData({
+              grey: false
+            })
+          }
+        }
+      }
       this.setData({
           num:goods_num,
           detail:detail,
           totalPrice:totalPrice,
           residue:residue,
-          types:types
+          types:types,
+          goods_id:detail.mall_goods.goods_id
       })
+      
     }else{
+    
       var detail = wx.getStorageSync('detail');
       var totalPrice = wx.getStorageSync('totalPrice');
       var discount_money = wx.getStorageSync('discount_money');
@@ -49,38 +83,100 @@ Page({
     
       var residue = (Number(virtual_money) - Number(discount_money)).toFixed(2);
       var goods_num = detail.mall_goods.goods_num;
+      let settlement_type = detail.settlement_type;
+      let balance = detail.balance;
+      var minusStatus = goods_num <=1 ? 'disabled' : 'normal';
+      // 只有大于一件的时候，才能normal状态，否则disable状态
+      this.setData({
+        minusStatus: minusStatus
+      });
+      for (var s = 0; s < settlement_type.length; s++) {
+        if (settlement_type[s].is_default && settlement_type[s].pay_type == 1) {
+          if (Number(balance) < Number(totalPrice) && scene_type != 1) {
+            this.setData({
+              grey: true
+            })
+          } else {
+            this.setData({
+              grey: false
+            })
+          }
+        }
+      }
       // this.totalPrice();
       this.setData({
         num: goods_num,
         detail: detail,
         totalPrice: totalPrice,
-        residue: residue
+        residue: residue,
+        goods_id:detail.mall_goods.goods_id
       })
     }
     
     if(flag){
+      var ads = options.addrss;
+      if(ads){
+        this.setData({
+          ['detail.address']:ads
+        })
+      }else{
         var ad = {
-          'realname':options.realname,
-          'mobile':options.mobile,
-          'address':options.address,
-          'id':options.id
+          'realname': options.realname,
+          'mobile': options.mobile,
+          'address': options.address,
+          'id': options.id
         }
         var detail = 'detail.address'
         this.setData({
-            [detail]:ad
+          [detail]: ad
         })
+      }
+        
     }
+
+  
     
   },
   //选择类型
   menuTap: function (e) {
-    var current = e.currentTarget.dataset.current;//获取到绑定的数据
-    var type = e.currentTarget.dataset.type;
-    //改变menuTapCurrent的值为当前选中的menu所绑定的数据
+    let totalPrice = this.data.totalPrice;
+    let settlement_type = this.data.detail.settlement_type;
+    settlement_type =  settlement_type.map(item=>{
+        item.is_default = false
+        return item
+    })
     this.setData({
-      menuTapCurrent: current,
-      type:type
-    });
+      ['detail.settlement_type']:settlement_type,
+    })
+    //判断按钮状态
+
+    var current = e.currentTarget.dataset.current;//获取到绑定的数据
+    var balance = this.data.detail.balance;
+    if (settlement_type[current].pay_type==1){
+      if(Number(balance)<Number(totalPrice)){
+        this.setData({
+          grey:true
+        })
+      }else{
+        this.setData({
+          grey: false
+        })
+      }
+    }else{
+      this.setData({
+        grey: false
+      })
+    }
+      if(settlement_type[current].is_disabled){ 
+      }else{
+        var type = e.currentTarget.dataset.type;
+        this.setData({
+          menuTapCurrent: current,
+          type:type
+        });
+      }
+    //改变menuTapCurrent的值为当前选中的menu所绑定的数据
+   
     var chooseAddress = wx.getStorageSync('chooseAddress');
     
   },
@@ -116,7 +212,19 @@ Page({
   },
   //总额
   totalPrice(){
+      let type = this.data.detail.jump_type;
       let total = '';
+
+      if(type == 4){
+        let market_price = wx.getStorageSync("market_price");
+        let num = this.data.num;
+        let coupon_money = wx.getStorageSync('coupon_money');
+        total = Number(market_price)*Number(num)-Number(coupon_money);
+        this.setData({
+          totalPrice: total.toFixed(2)
+        })
+      }else{
+
       let totalFlag = this.data.totalFlag;
       let price = wx.getStorageSync("price");
       let market_price = wx.getStorageSync("market_price");
@@ -137,6 +245,7 @@ Page({
           })
           break;
       }
+    }
       
   },
   /* 点击加号 */
@@ -144,9 +253,11 @@ Page({
     var num = this.data.num;
     // 不作过多考虑自增1
     num++;
+    var minusStatus = num < 1 ? 'disabled' : 'normal';
     // 只有大于一件的时候，才能normal状态，否则disable状态
     this.setData({
       num: num,
+      minusStatus: minusStatus
     });
     this.totalPrice();
     
@@ -165,11 +276,40 @@ Page({
     if(this.data.detail.address == null){
       this.shows('请选择您的收货地址')
      
+    }else if (this.data.detail.address.address.indexOf('undefined') > 0){
+      this.shows('收货地址异常,请重新填写')
     }else{
       this.showModal();
 
     }
   }, 
+  //返回
+  back(){
+    let index = getApp().index;
+    let goods_id = this.data.goods_id;
+    if(index == 1){
+      wx.navigateBack({
+        delta:1
+      })
+      app.index =2;
+    }else{
+      wx.navigateTo({
+        url: '../Details/Details?id=' + goods_id
+      })
+    }
+    
+      // let adress = getApp().adress;
+      // if(adress == 1){
+      //   wx.navigateBack({
+      //     delta:5
+      //   })
+      //   app.adress =0;
+      // }else{
+      //   wx.navigateBack({
+      //     delta:1
+      //   })
+      // }
+  },
   //swtich状态更改
   checkboxChange(e) {
     if (e.detail.value) {
@@ -188,6 +328,9 @@ Page({
   },
   //jump_type为1查看订单的跳转方式
   paymentInfo(order_num, mall_goods_id, mall_sku_id) {
+    this.setData({
+      isShow: true
+    })
     var that = this;
     that.header(app.globalData.url + 'paymentInfo');
     wx.request({
@@ -217,7 +360,7 @@ Page({
           wx.navigateTo({
             url: '../Payment/Payment?paymentInfo=' + JSON.stringify(paymentInfo),
           })
-        }else if(res.da.code == 401){
+        }else if(res.data.code == 401){
           wx.navigateTo({
             url: '../Error/Error',
           })
@@ -274,9 +417,19 @@ Page({
   },
   //支付
   topay:function(){
-      this.setData({
-          isShow:true
-        })
+    let grey = this.data.grey;
+    let scene_type = getApp().scene_type;
+    console.log('scene_type'+scene_type)
+    let mall_dot_authorize_id = 0;
+    if(scene_type == 1){
+      mall_dot_authorize_id = wx.getStorageSync('mall_dot_authorize_id')
+    }else{
+      mall_dot_authorize_id = 0;
+    }
+    if(!grey){
+    this.setData({
+      isShow: true
+    })  
       let totalFlag = this.data.totalFlag;
       let is_discount = totalFlag;
       if(totalFlag == '0'){
@@ -290,23 +443,30 @@ Page({
         total_fee: this.data.totalPrice,
         goods_num: this.data.num,
         pay_type: this.data.type,
-        is_discount:is_discount
+        is_discount:is_discount,
+        mall_dot_authorize_id: mall_dot_authorize_id
       }
       //判断支付方式
       let pay_type = Number(this.data.type);
       let jump_type = this.data.detail.jump_type;
+    let goods_id = this.data.goods_id;
+    var that = this;
+
       //余额支付
        switch (pay_type){
         case 1:
-        this.toBalance(data);
+        that.toBalance(data);
         break;
+        case 4:
+           that.switchDotCenter();
+           break;
         //微信支付
         case 3:
-          this.header(app.globalData.url + 'goodsPayment');
+          that.header(app.globalData.url + 'goodsPayment');
           wx.request({
             url: app.globalData.url + 'goodsPayment',
             method: 'POST',
-            header: this.data.header,
+            header: that.data.header,
             data: data,
             success: res => {
               if(res.data.code == 200){
@@ -324,25 +484,25 @@ Page({
                   paySign: payment.paySign,
                   success(res) {
                     if (res.errMsg == "requestPayment:ok") { 
+                      console.log('topay'+jump_type)
                     setTimeout(()=>{
                       switch (jump_type) {
                         case 2:
                           wx.navigateTo({
                             url: '/pages/Share/Share?mall_sku_id=' + mall_order.mall_sku_id + '&total_fee=' + mall_order.total_fee + '&goods_num=' + mall_order.goods_num + '&order_num=' + mall_order.order_num + '&mall_goods_id=' + mall_order.mall_goods_id + '&is_discount=' + mall_order.is_discount,
                           });
-                          this.setData({
+                          that.setData({
                             isShow: false
                           })
                           break;
                         case 1:
-                          this.paymentInfo(mall_order.order_num, mall_order.mall_goods_id, mall_order.mall_sku_id)
+                          that.paymentInfo(mall_order.order_num, mall_order.mall_goods_id, mall_order.mall_sku_id)
 
                           break;
                         //3 进入分佣中心
-                        case 3:
-                          wx.navigateTo({
-                            url: '../FyCenter/FyCenter',
-                          })
+                        case 3: 
+                          that.distribution(goods_id, mall_order.mall_goods_id, mall_order.order_num)
+                          
                         break;
                       }
                     },2000)
@@ -362,9 +522,7 @@ Page({
                   }
                 })
               } else if (res.data.code == 401) {
-                wx.navigateTo({
-                  url: '../Error/Error',
-                })
+               this.shows(res.data.msg)
               }
             
             }
@@ -372,27 +530,120 @@ Page({
             break;
         
       }
+    }
   },
-  
+  //门店管理
+  switchDotCenter() {
+    let content = wx.getStorageSync('content');
+    if (content) {
+      this.header(app.globalData.url + 'switchDotCenter');
+      wx.request({
+        url: app.globalData.url + 'switchDotCenter',
+        method: 'get',
+        header: this.data.header,
+        success: res => {
+          if (res.data.code == 200) {
+            if (res.data.data.callback.length < 1) {
+              this.shows('您还未开通相关门店,请前去开通或联系客服')
+            } else {
+              this.dotCenter(res.data.data.callback[0].mall_dot_authorize_id, res.data.data.callback[0].order_num)
+              // setTimeout(function () {
+                app.dot=1;
+                 wx.reLaunch({
+                  url: '/pages/WhitCenter/WhitCenter?list=' + JSON.stringify(res.data.data.callback),
+                })
+              // }, 500)
+
+            }
+
+          } else {
+            this.show(res.data.msg)
+          }
+        }
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/Accredit/Accredit'
+      })
+    }
+
+  },
+  dotCenter(mall_dot_authorize_id, order_num) {
+    this.header(app.globalData.url + 'dotCenter');
+    wx.request({
+      url: app.globalData.url + 'dotCenter',
+      header: this.data.header,
+      method: 'get',
+      data: {
+        mall_dot_authorize_id: mall_dot_authorize_id,
+        order_num: order_num
+      },
+      success: res => {
+        app.top = res.data.data.callback
+        wx.setStorageSync('top', res.data.data.callback)
+      }
+
+    })
+  },
+  //分销中心
+  distribution(goods_id, mall_goods_id,order_num) {
+    this.setData({
+      isShow:true
+    })
+    this.header(app.globalData.url + 'distribution');
+    wx.request({
+      url: app.globalData.url + 'distribution',
+      header: this.data.header,
+      method: 'get',
+      data: {
+        scene:1,
+        goods_id: goods_id,
+        mall_goods_id: mall_goods_id,
+        order_num: order_num
+      },
+      success: res => {
+        this.setData({
+          isShow:false
+        })
+        if (res.data.code == 200) {
+          wx.navigateTo({
+            url: '../FyCenter/FyCenter?top=' + JSON.stringify(res.data.data.callback) + '&order_num = ' +order_num + ' & mall_goods_id=' + mall_goods_id + ' & goods_id=' + goods_id
+          })
+        }else{
+          wx.navigateTo({
+            url:'../Error/Error'
+          })
+        }
+      }
+    })
+  },
   toBalances(datas){
+    this.setData({
+      isShow: true
+    })
     this.header(app.globalData.url + 'orderPayment');
     let jump_type = this.data.detail.jump_type;
+    let goods_id = this.data.goods_id;
     wx.request({
       url: app.globalData.url + 'orderPayment',
       method: 'POST',
       header: this.data.header,
       data: datas,
       success: res => {
-        
          if(res.data.code == 200){
-           
+          this.setData({
+            isShow: false
+          })
           //  this.show(res.data.msg);
            var mall_order =res.data.data.callback.mall_order; 
            wx.setStorageSync('mall_order', mall_order)
+          console.log(jump_type)
           setTimeout(()=>{
            switch(jump_type){
+             case 4:
+               this.switchDotCenter();
+               break;
              case 2:
-               
                wx.navigateTo({
                  url: '../Share/Share?mall_sku_id=' + mall_order.mall_sku_id + '&total_fee=' + mall_order.total_fee + '&goods_num=' + mall_order.goods_num + '&order_num=' + mall_order.order_num + '&mall_goods_id=' + mall_order.mall_goods_id + '&is_discount=' + mall_order.is_discount,
                });
@@ -400,26 +651,21 @@ Page({
                  isShow: false
                })
                break;
-             case 1:
-               this.paymentInfo(mall_order.order_num, mall_order.mall_goods_id, mall_order.mall_sku_id)
-
-
-             break;
-             //3 进入分佣中心
-             case 3:
-               wx.navigateTo({
-                 url: '../FyCenter/FyCenter',
-               })
+               case 1:
+                this.paymentInfo(mall_order.order_num, mall_order.mall_goods_id, mall_order.mall_sku_id)
+                break;
+                //3 进入分佣中心
+                case 3:
+               this.distribution(goods_id, mall_order.mall_goods_id, mall_order.order_num)
                break;
            }
-           },2000)
+           },500)
 
          } else if (res.data.code == 401) {
+          this.shows(res.data.msg);
           
          }else{
-           this.setData({
-             isShow: false
-           })
+           
            var code = res.data.code;
           switch(code){
             case 401:
@@ -454,6 +700,8 @@ Page({
   },
   //待支付订单支付
    topays:function(){
+     let grey = this.data.grey;
+     if (!grey) {
      this.setData({
        isShow: true
      })
@@ -471,32 +719,39 @@ Page({
         goods_num: this.data.num,
         pay_type: this.data.type,
         is_discount:is_discount,
-		mall_order_id:this.data.detail.mall_order.id,
-		order_num:this.data.detail.mall_order.order_num,
+      mall_order_id:this.data.detail.mall_order.id,
+      order_num:this.data.detail.mall_order.order_num,
       }
       //判断支付方式
       let pay_type = Number(this.data.type);
       let jump_type = this.data.detail.jump_type;
+      let goods_id = this.data.goods_id;
+      var that = this;
+
       //余额支付
        switch (pay_type){
         case 1:
-        this.toBalances(data);
+        that.toBalances(data);
         break;
+         case 4:
+           that.switchDotCenter();
+           break;
         //微信支付
         case 3:
-          this.header(app.globalData.url + 'orderPayment');
+          that.header(app.globalData.url + 'orderPayment');
           wx.request({
             url: app.globalData.url + 'orderPayment',
             method: 'POST',
-            header: this.data.header,
+            header: that.data.header,
             data: data,
             success: res => {
-              
+
               if(res.data.code == 200){
                 let payment = res.data.data.callback.payment;
                 let mall_order = res.data.data.callback.mall_order;
                 wx.setStorageSync('mall_order', mall_order) 
                 this.hideModal();
+              
                 //调起微信支付
                 wx.requestPayment({
                   timeStamp: payment.timeStamp,
@@ -505,30 +760,29 @@ Page({
                   signType: payment.signType,
                   paySign: payment.paySign,
                   success(res) {
+                    console.log(res)
                     if (res.errMsg == "requestPayment:ok") { 
+                      console.log(jump_type)
                     setTimeout(()=>{
                       switch (jump_type) {
                         case 2:
                           wx.navigateTo({
                             url: '/pages/Share/Share?mall_sku_id=' + mall_order.mall_sku_id + '&total_fee=' + mall_order.total_fee + '&goods_num=' + mall_order.goods_num + '&order_num=' + mall_order.order_num + '&mall_goods_id=' + mall_order.mall_goods_id + '&is_discount=' + mall_order.is_discount,
                           });
-                          this.setData({
+                          that.setData({
                             isShow: false
                           })
                           break;
                         case 1:
-                          this.paymentInfo(mall_order.order_num, mall_order.mall_goods_id, mall_order.mall_sku_id)
-
-
+                          that.paymentInfo(mall_order.order_num, mall_order.mall_goods_id, mall_order.mall_sku_id)
                           break;
                         //3 进入分佣中心
                         case 3:
-                          wx.navigateTo({
-                            url: '../FyCenter/FyCenter',
-                          })
+                         that.distribution(goods_id, mall_order.mall_goods_id, mall_order.order_num)
+
                           break;
                       }
-                    },2000)
+                    },500)
                    
                     }else{
       
@@ -537,6 +791,7 @@ Page({
                     
                   },
                   fail(res) {
+                    console.log('sss');
                     app.tz = 1;
                       wx.navigateTo({
                         url: '../Order/Order?state=1',
@@ -544,9 +799,7 @@ Page({
                   }
                 })
               } else if (res.data.code == 401) {
-                wx.navigateTo({
-                  url: '../Error/Error',
-                })
+                this.shows(res.data.msg)
               }
             
             }
@@ -554,22 +807,30 @@ Page({
             break;
         
       }
+     }
   },
   //余额支付
   toBalance(datas){
+    this.setData({
+      isShow: true
+    })
     this.header(app.globalData.url + 'goodsPayment');
     let jump_type = this.data.detail.jump_type;
+    let goods_id = this.data.goods_id;
     wx.request({
       url: app.globalData.url + 'goodsPayment',
       method: 'POST',
       header: this.data.header,
       data: datas,
       success: res => {
-        
+        this.setData({
+          isShow: false
+        })
          if(res.data.code == 200){
            var mall_order =res.data.data.callback.mall_order; 
            wx.setStorageSync('mall_order', mall_order)
           setTimeout(()=>{
+          
            switch(jump_type){
              case 2:
                wx.navigateTo({
@@ -579,26 +840,28 @@ Page({
                  isShow: false
                })
                break;
+             case 4:
+               this.switchDotCenter();
+               break;
              case 1:
                this.paymentInfo(mall_order.order_num, mall_order.mall_goods_id, mall_order.mall_sku_id)
              break;
              //3 进入分佣中心
              case 3:
-               wx.navigateTo({
-                 url: '../FyCenter/FyCenter',
-               })
+               this.distribution(goods_id, mall_order.mall_goods_id, mall_order.order_num)
+          
                break;
            }
-           },2000)
+           },500)
 
          } else if (res.data.code == 401) {
-           wx.navigateTo({
-             url: '../Error/Error',
-           })
+          this.shows(res.data.msg);
+
          }else{
-           this.setData({
-             isShow: false
-           })
+          wx.navigateTo({
+            url: '../Error/Error',
+          })
+           
            var code = res.data.code;
           switch(code){
             case 401:
@@ -622,12 +885,7 @@ Page({
                  })
                }, 1500)
                break;
-            //3 进入分佣中心
-            case 3:
-              wx.navigateTo({
-                url: '../FyCenter/FyCenter',
-              })
-
+           
            }
 
           }
@@ -635,6 +893,7 @@ Page({
          }
         })
   },
+   
   //生成随机字符串
   randomWord() {
     var noncestr;
@@ -648,7 +907,7 @@ Page({
     this.data.noncestr = noncestr.toLowerCase();
   },
    // 生成header
-   header(url) {
+  header(url) {
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
     this.randomWord();
@@ -671,6 +930,7 @@ Page({
       var token = content.data.token;
       var expiry_time = content.data.expiry_time;
       var logintype = content.data.login_type;
+      var session_id = wx.getStorageSync('session_id');
       var header = {
         "sign": password,
         "timestamp": timestamp,
@@ -678,7 +938,8 @@ Page({
         "uuid": uuid,
         "token": token,
         "expirytime": expiry_time,
-        "logintype":logintype
+        "logintype": logintype,
+        "Cookie": session_id
       }
     } else {
       var header = {
@@ -687,9 +948,6 @@ Page({
         "noncestr": noncestr,
       }
     }
-
-
-
     this.setData({
       header: header
     })

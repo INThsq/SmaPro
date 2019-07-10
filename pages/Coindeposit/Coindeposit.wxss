@@ -1,4 +1,6 @@
 /* pages/Coindeposit/Coindeposit.wxss */
+@import "../../public/compback/compback.wxss";
+
 .coin-cont{
   padding:100rpx  40rpx 80rpx 40rpx;
   margin-top: 132rpx;
